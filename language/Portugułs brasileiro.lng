@@ -1,0 +1,359 @@
+;Traduzido por MCHAL - http://mchal.110mb.com / MCHAL.heliohost.org
+12=Teclas de Atalho
+303=&Comando:
+304=&Parâmetros:
+305=Iniciar e&m:
+307=Prioridade:
+308=&Janela:
+310=&Opacidade:
+309=Permitir a abertura de cópias (se for programa)
+311=Adicionar ao menu do ícone da Área de Noti&ficação
+312=Abrir com o Windows (se for programa)
+313=Confirmar a e&xecução deste comando
+314=Cate&goria:
+306=&Nota:
+1=OK
+2=Cancelar
+7=Ajuda
+
+327=Opções de Configuração
+15=Principais
+331=Abrir o HotkeyP com o &Windows
+320=Exibir ícone do &HotkeyP na Área de Notificação
+321=Indicar a ativação de comando por:
+334=O botão de &minimizar oculta a janela do HotkeyP
+335=O botão de &fechar oculta a janela do HotkeyP
+342=Inserir novo atalho a&baixo do atual
+357=&Rodar o HotkeyP com prioridade máxima
+340=Ren&omear as teclas especificadas abaixo:
+341=(Exemplo: Enter=Return; (183)=Calculadora;[35]=Colar)
+346=Exibir estes botões na janela de atalhos
+500=Editar
+502=Inserir
+503=Criar
+501=Apagar
+504=Duplicar
+505=Executar
+510=Opções
+368=Usar o controlador de teclas de atalho:
+396=N&unca
+398=&Só com as de multimídia
+399=Com todas (para &jogos etc.)
+386=Re&carregar o controlador a cada:
+
+16=Comandos Internos/Informes
+322=Status do áudio
+323=&Largura do quadro:
+345=Opa&cidade:
+324=&Visível por:
+332=&Exibir estas linhas no quadro do status:
+328=Cores:
+333=Fundo, texto, borda:
+339=Propriedades do texto
+344=&Opacidade:
+338=Fundo, texto, borda:
+325=Informe do espaço livre em disco
+330=Largura do q&uadro:
+343=Opac&idade:
+326=&Dígitos após decimal:
+329=Cores:
+353=Bloqueio da Área de Trabalho
+354=Vel. ani&m. aviso:
+355=&Sem áudio
+356=Imagem &BMP:
+350=Cor &aleatória
+351=Cor &fixa:
+373=Senha
+395=Ocultar a sen&ha
+
+17=Comandos do Mouse/Controle Remoto
+358=Cliques do Mouse
+347=&Retardá-los por:
+348=Não retardar os do botão:
+378=&E
+379=&M
+380=&D
+381=&4
+382=&5
+385=&Não retardar nestes aplicativos:
+349=Não retardar cliques em aplicativos em\r\n &tela inteira, exceto nestes:
+359=Comandos por controle remoto
+365=Status:
+360=&Ativar
+361=&WinLIRC exe:
+362=Ende&reço:
+363=&Porta:
+364=Esper&a:
+
+18=Joystick
+387=&Limite:
+389=&Desativar atalhos globais de joystick nestes aplicativos:
+390=D&esativar atalhos globais de joystick em aplicativos de tela inteira, exceto nestes:
+391=&Mover o ponteiro do mouse com o joystick
+388=&Fator:
+392=Na &horizontal:
+393=Na &vertical:
+394=ID do &Joystick:
+
+11=Sobre
+301=Versão
+
+370=Senha antiga:
+371=Nova senha:
+372=Redigite a nova senha:
+
+20=Renomear a categoria
+374=Nome:
+21=Mover atalhos selecionados para a categoria
+
+;menu
+401=&Janela
+400=&Idioma
+206=&Fonte...\tCtrl+F
+212=&Opções...\tCtrl+M
+203=&Fechar\tAlt+X
+204=&Ocultar\tEsc
+
+402=&Arquivo
+201=&Carregar teclas de atalho...\tCtrl+O
+202=&Salvar teclas de atalho...\tCtrl+S
+207=A&pagar teclas de atalho\tCtrl+N
+213=A&brir configuração...\tCtrl+I
+214=S&alvar configuração...\tCtrl+E
+205=&Remover configuração
+215=Abrir o sp&y.exe\tCtrl+Y
+
+397=Só com &teclas de sistema especiais
+403=&Teclas de Atalho
+104=I&nserir\tInsert
+108=&Apensar\tCtrl+W
+216=Du&plicar\tCtrl+D
+102=&Editar\tEnter
+103=Apa&gar\tDelete
+113=Reno&mear\tF2
+107=&Executar\tCtrl+R
+105=&Subir\tCtrl+up
+106=&Descer\tCtrl+down
+
+405=&Categoria
+220=&Criar para a seleção ou movê-la
+219=&Renomear
+221=&Apagar
+217=&Subir
+218=&Descer
+
+404=Aju&da
+208=&Ajuda\tF1
+200=&Que há de novo
+209=&Sobre...
+
+;systray icon menu
+210=&Abrir
+211=&Fechar
+
+;file extensions filters
+506=Teclas de atalho (*.htk)\0*.htk\0Todos os arquivos\0*.*\0
+507=Todos os arquivos\0*.*\0Executáveis\0*.exe;*.com;*.bat;*.scr\0
+508=Todos os arquivos\0*.*\0
+509=Arquivos do Registro (*.reg)\0*.reg\0Todos os arquivos\0*.*\0
+511=Imagem BMP (*.bmp)\0
+
+719=Mouse
+743=Não foi possível executar o %s !
+730=Não foi possível abrir o arquivo %s!
+731=O formato de %s é inválido!
+732=A versão de %s é inválida!
+733=Não foi possível criar o arquivo %s!
+734=Erro de gravação no arquivo %s
+735=Não foi possível gravar no Registro do Windows!
+736=Especifique a pasta de abertura
+737=O comando está vazio!
+738=Este tipo de arquivo não tem associação!
+739="%s" não existe!
+740=Pasta de abertura inválida/inexistente!
+741=Só executáveis podem ter a prioridade especificada!
+761=Só executáveis podem ter a opacidade especificada!
+742=Documentos não podem ter parâmetros!
+762=Só é possível mover os elementos se a lista\nestiver ordenada pela primeira coluna.
+764=Quer mesmo executar este comando?
+760=Quer mesmo apagar do Registro a configuração do HotkeyP?
+366=ativo
+367=inativo
+752=Mudo
+763=Não foi possível conectar ao WinLIRC!
+755=Erro em %s !\nLinha %d
+756=Erro em %s !\nA mensagem número %d é grande demais!
+757=Erro em %s !\nNúmero duplicado %d
+753=O arquivo %s é grande demais!
+754=Erro na leitura de %s
+744=Tecla desconhecida: %s!
+746=Não há janela em primeiro plano!
+745=Não achei a janela "%s"!
+748=O disco está sendo usado por outro executável!
+747=%s é drive de CD/DVD!
+749=Não achei a pasta ou o arquivo %s!
+750=Não consegui alterar a prioridade!
+759=Título: %s\r\nClasse da Janela: %s\r\nProcesso: %s\r\nMódulo: %s\r\nPrioridade: %s\r\nMemória: %d KB
+751=Não consegui fechar o executável!
+758=O número do multicomando é inválido!
+765=Quer mesmo apagar a categoria '%s'?
+766=Salvar a posição dos ícones da Área de Trabalho
+
+;columns
+721=Teclas de Atalho
+722=Nome/Descrição
+
+;process priority
+700=mínima
+701=normal
+702=alta
+703=máxima
+704=abaixo da normal
+705=acima da normal
+
+;window state
+710=normal
+711=maximizada
+712=minimizada
+
+;help file name
+13=language\\Ajuda.chm
+30=40.html
+14=WhatsNew.txt
+
+;command groups
+601=Sistema
+600=Painel de Controle
+602=Monitor
+605=Janela
+603=Mover
+604=Prioridade do executável
+606=Multimídia
+608=Macro
+607=Mouse
+
+;categories
+980=Padrão
+979=Tudo
+978=Teclado
+977=Mouse
+976=Joystick
+975=Comando remoto
+974=Comandos
+973=Programas
+972=Documentos
+971=Remissões (web)
+970=Execução automática
+969=Menu da Área de Notificação
+
+;commands
+1000=Abrir a gaveta do CD/DVD
+1001=Fechar a gaveta do CD/DVD
+1002=Desligar o computador
+1003=Recarregar o sistema
+1004=Pôr em modo de espera
+1005=Fazer o logoff
+1006=Iniciar a Proteção de tela
+1007=Maximizar
+1008=Minimizar
+1009=Fechar janela
+1010=Sempre na frente
+1011=Fechar executável
+1012=Painel de Controle
+1013=Volume +
+1014=Volume -
+1015=Volume Wave +
+1016=Volume Wave -
+1017=Áudio Mudo/Normal
+1018=Resolução da tela (+/-)
+1019=Pôr em modo de espera
+1020=Prioridade de executável
+1021=Enviar comando a janela
+1022=Esvaziar a Lixeira
+1023=Papel de parede aleatório
+1024=Exibir espaço livre em disco
+1025=Ocultar janela
+1026=Efetuar teclagem em janela
+1027=Macro
+1028=Para o centro da tela
+1029=Para o canto inferior esquerdo
+1030=Para a parte inferior da tela
+1031=Para o canto inferior direito
+1032=Para a esquerda
+1033=Para a direita
+1034=Para o canto superior esquerdo
+1035=Para a parte superior
+1036=Para o canto inferior direito
+1037=Mover o ponteiro do mouse
+1038=Exibir 'Desligar o computador'
+1039=Reproduzir CD
+1040=Faixa seguinte do CD
+1041=Parar a reprodução do CD
+1042=Faixa anterior do CD
+1043=Clicar o botão esquerdo
+1044=Clicar o botão do meio
+1045=Clicar o botão direito
+1046=Mínima
+1047=Normal
+1048=Alta
+1049=Máxima
+1050=Adicionar e remover programas
+1051=Propriedades de Vídeo
+1052=Opções da Internet
+1053=Propriedades do Mouse
+1054=Sons e dispositivos de áudio
+1055=Opções de Energia
+1056=Sistema
+1057=Propriedades de data e hora
+1058=Wave mudo
+1059=Abaixo da normal
+1060=Acima da normal
+1061=Efetuar multicomando
+1062=Abrir/fechar a gaveta do CD/DVD
+1063=Bloquear a Área de Trabalho
+1064=Pôr em modo de hibernação
+1065=Minimizar todas, menos a da frente
+1066=Exibir informações
+1067=Colar texto
+1068=Papel de parede seguinte
+1069=Papel de parede anterior
+1070=Efetuar série de comandos
+1071=Com o ponteiro
+1072=Redimensionar
+1073=Enviar comando à janela ativa
+1074=Efetuar digitação na janela ativa
+1075=Girar a roda verticalmente
+1076=Clicar duplamente
+1077=Opacidade/transparência
+1078=Volume
+1079=Clicar o quarto botão
+1080=Clicar o quinto botão
+1081=Exibir a Área de Trabalho
+1083=Tarefa anterior
+1084=Tarefa seguinte
+1085=Exibir texto
+1086=Desativar tecla
+1087=Desativar TODOS os comandos
+1088=Desativar comandos do mouse
+1089=Capturar imagem da Área de Trabalho
+1090=Capturar imagem da janela ativa
+1091=Ocultar ícone da Área de Notificação
+1092=Parar serviço
+1093=Iniciar serviço
+1094=Aplicar macro na janela ativa
+1095=Desativar atalhos do joystick
+1096=Desativar controle remoto
+1097=Desativar comandos do HotkeyP
+1099=Restaurar ícone da Área de Notificação
+1100=Velocidade do CD/DVD (+)
+1101=Ocultar aplicativo
+1102=Minimizar na Área de Notificação
+1103=Exibir/ocultar a lupa
+1104=Apagar a lista de documentos recentes
+1105=Apagar arquivos temporários
+1106=Salvar a posição dos ícones do Desktop
+1107=Restaurar a posição dos ícones do Desktop
+
+767=Não foi possível remover o disco %c: !
+1108=Girar a roda horizontalmente
+1109=Remover pen drive com segurança

@@ -1,0 +1,353 @@
+;Traduit par - Anthony de BestFree (http://bestfree.free.fr)
+12=Nouveau raccourci...
+303=&Fichier :
+304=&Paramètres :
+305=&Démarrer en :
+307=P&riorité :
+308=&Fenêtre :
+310=&Transparence :
+309=Autoriser les instances multiples
+311=Ajouter dans le menu du TrayIcon
+312=Activer automatiquement au démarrage de Windows
+313=Confirmer l'exécution du raccourci
+314=Catégorie :
+306=Nom :
+1=OK
+2=Annuler
+7=Aide
+
+327=Options...
+15=Général
+331=Activer lors du démarrage de Windows
+320=Afficher dans la zone de notification
+321=Durée d'animation du TrayIcon
+334=Bouton 'Minimiser' réduit hotkeyP dans TrayIcon
+335=Bouton 'Fermer' réduit hotkeyP dans TrayIcon
+342=Insérer un nouveau raccourci après le courant
+357=Activer HotkeyP comme processus prioritaire
+340=Renommer raccourcis :
+341=(Exemple: Enter=Entrer; (183)=Calculatrice; [35]=Coller)
+346=Boutons de la fenêtre principale
+500=Éditer
+502=Insérer
+503=Créer
+501=Supprimer
+504=Dupliquer
+505=Exécuter
+510=Options
+368=Utiliser Hook pour le clavier
+396=Jamais
+398=seulement pour les touches multimédia
+399=pour toutes les touches
+386=Redémarrer hook tous les :
+
+16=Commandes
+322=Volume audio
+323=Taille de la fenêtre :
+345=Transparence :
+324=Durée d'affichage :
+332=Montrer les paramètres audio pour :
+328=Couleurs :
+333=Fond, texte, bordure :
+339=Affichage du texte
+344=Transparence :
+338=Fond, texte, bordure :
+325=Espace disque libre
+330=Taille de la fenêtre :
+343=Transparence :
+326=Nombre de décimal :
+329=Couleur :
+353=Verrouiller la session Windows
+354=Délai affichage du texte :
+355=Muet
+356=Image BMP :
+350=Couleur aléatoire
+351=Couleur fixe :
+373=Mot de passe...
+395=Masquer mot de passe
+
+17=Souris/Télécommande
+358=Souris
+347=Délai d'activation :
+348=Aucun délai pour :
+378=E
+379=M
+380=D
+381=4
+382=5
+385=Aucun délai pour ces applications :
+349=Aucun délai en mode plein écran sauf pour ces applications :
+359=Contrôle de la télécommande
+365=Statut :
+360=Activer
+361=WinLIRC exe:
+362=Adresse :
+363=Port :
+364=Délai d'activation max. :
+
+18=Joystick
+387=Limite :
+389=Désactiver les raccourcis joystick pour ces applications:
+390=Désactiver les raccourcis joystick en mode plein écran sauf pour ces applications :
+391=Déplacer le curseur de souris via le joystick
+388=Multiplier :
+392=Axe horizontal :
+393=Axe vertical :
+394=ID Joystick :
+
+11=A propos...
+301=Version
+
+370=Ancien mot de passe :
+371=Nouveau mot de passe :
+372=Confirmer mot de passe :
+
+20=Renommer une catégorie
+374=Nom :
+21=Assigner à...
+
+;menu
+401=&Menu
+400=&Langue
+206=&Fontes...\tCtrl+F
+212=&Options...\tCtrl+M
+203=&Quitter\tAlt+X
+204=&Minimiser\tEsc
+
+402=&Fichier
+201=&Ouvrir un fichier...\tCtrl+O
+202=&Sauver dans un fichier...\tCtrl+S
+207=&Supprimer\tCtrl+N
+213=&Ouvrir une configuration...\tCtrl+I
+214=&Sauver la configuration...\tCtrl+E
+205=&Effacer la configuration
+215=Démarrer sp&y.exe\tCtrl+Y
+
+403=&Raccourci
+104=&Insérer un nouveau\tInsert
+108=&Créer un nouveau\tCtrl+W
+216=Du&pliquer\tCtrl+D
+102=&Editer\tEnter
+103=&Supprimer     \tDelete
+113=&Renommer\tF2
+107=Executer\tCtrl+R
+105=&Monter\tCtrl+up
+106=&Descendre\tCtrl+down
+
+405=&Catégorie
+220=&Assigner à une catégorie...
+219=&Renommer
+221=&Supprimer
+217=&Monter
+218=&Descendre
+
+404=&Aide
+208=&Index\tF1
+200=&Nouveautés...
+209=A &Propos...
+
+;systray icon menu
+210=&Ouvrir
+211=&Fermer
+
+;extensions Fichiers
+506=Fichiers raccourcis (*.htk)\0*.htk\0Tous les fichiers\0*.*\0
+507=Tous les fichiers\0*.*\0Executables\0*.exe;*.com;*.bat;*.scr\0
+508=Tous les fichiers\0*.*\0
+509=Fichiers de registre (*.reg)\0*.reg\0Tous les fichiers\0*.*\0
+511=Images BMP (*.bmp)\0
+
+719=Souris
+743=Impossible d'exécuter %s
+730=Impossible d'ouvrir %s
+731=Format %s invalide.
+732=%s, invalide !
+733=Il n'a pas été possible de créer l'archive %s
+734=Erreur d'enregistrement dans l'archive %s
+735=Impossible d'accéder à la base de registre de Windows.
+736=Spécifier un répertoire de démarrage.
+737=la commande est invalide.
+738=Ce type d'archive n'a pas association.
+739=Impossible de trouver %s
+740=Dossier d'ouverture invalide.
+741=Seuls les fichiers exécutables peuvent avoir la priorité spécifiée.
+761=Seuls les fichiers exécutables peuvent avoir la transparence spécifiée.
+762=Le mouvement de itens n'est possible que par le déplacement de la première colonne.
+764=Désirez-vous réellement exécuter cette commande ?
+760=Désirez-vous réellement supprimer le fichier de configuration ?
+366=activer
+367=désactiver
+752=Muet
+763=Impossible de se connecter avec WinLIRC.
+755=Erreur de %s\nLigne %d.
+756=Erreur de %s\nLa taille de %d est trop importante.
+757=Erreur de %s\n%d existe déjà.
+753=L'archive %s est trop grande,
+754=Erreur de lecture de %s
+744=Touche de raccourci inconnue : %s
+746=Il n'y a pas fenêtre au premier plan.
+745=la fenêtre "%s" n'a pas été trouvé.
+748=Le disque est utilisé par autre programme.
+747=%s est un lecteur de CD.
+749=Le dossier ou l'archive %s n'a pas été trouvé.
+750=Impossible de modifier la priorité !
+759=Títre: %s\r\nClasse de la fenêtre: %s\r\Processus: %s\r\nMode: %s\r\nPriorité: %s\r\nMemoire: %d KB.
+751=Impossible de fermer le programme !
+758=Le numéro indiqué dans la zone 'Multi-commandes' est invalide !
+765=Désirez-vous réellement supprimer la catégorie '%s'?
+766=La position des icônes du Bureau a bien été mémorisée.
+
+;colonnes
+720=
+721=Raccourci
+722=Description
+
+;priorité processus
+700=Basse
+701=Normale
+702=Haute
+703=Temps réel
+704=Inférieur à la normale
+705=Supérieur à la normale
+
+;window state
+710=normal
+711=maximiser
+712=minimiser
+
+;help file name
+13=help.chm
+14=WhatsNew.txt
+
+;commandes groupes
+601=Système
+600=Panneau de configuration
+602=Affichage
+605=Fenêtre
+603=Déplacer Fenêtre
+604=Priorité d'exécution
+606=Multimédia
+608=Macro
+607=Souris
+
+;catégories
+980=Par Défaut
+979=Tous
+978=Clavier
+977=Souris
+976=Joystick
+975=Télécommande
+974=Commandes internes
+973=Programmes
+972=Documents
+971=Internet
+970=Exécution automatique
+969=Afficher dans la zone de notification
+
+;commands
+1000=Ejecter CD
+1001=Fermer CD
+1002=Arrêter
+1003=Redémarrer
+1004=Mettre en veille
+1005=Fermer session
+1006=Ecran de veille
+1007=Maximiser Fenêtre
+1008=Minimiser Fenêtre
+1009=Fermer Fenêtre
+1010=Toujours devant
+1011=Terminer le processus
+1012=Panneau de configuration
+1013=Volume +
+1014=Volume -
+1015=Volume Wave +
+1016=Volume Wave -
+1017=Muet
+1018=Résolution du Bureau
+1019=Mise en veille de l'écran
+1020=Priorité des Processus
+1021=Envoyer une commande vers une fenêtre
+1022=Vider la corbeille
+1023=Fond d'écran aléatoire
+1024=Espace disque libre
+1025=Masquer Fenêtre
+1026=Envoyer un raccourci vers une fenêtre
+1027=Macro
+1028=Au centre du bureau
+1029=vers le coin inférieur gauche
+1030=En bas
+1031=vers le coin inférieur droit
+1032=à gauche
+1033=à droite
+1034=vers le coin supérieur gauche
+1035=En haut
+1036=vers le coin supérieur droit
+1037=Centrer le curseur
+1038=Afficher la boite dialogue d'arrêt du système
+1039=CD - Jouer
+1040=CD - Plage suivante
+1041=CD - Stop
+1042=CD - Plage précédente
+1043=Clic bouton gauche
+1044=Clic bouton du milieu
+1045=Clic bouton droit
+1046=Priorité Basse
+1047=Priorité normale
+1048=Priorité Haute
+1049=Priorité Temps réel
+1050=Ajout/Suppr. de programmes
+1051=Propriétés d'affichage
+1052=Options d'internet
+1053=Propriétés Souris
+1054=Propriétés Sons
+1055=Options d'énergie
+1056=Système
+1057=Propriétés Date et Heure
+1058=Mode Wave
+1059=Priorité inférieure à la normale
+1060=Priorité supérieure à la normale
+1061=Multi-commandes
+1062=Ejecter/Fermer CD
+1063=Verrouiller la session
+1064=Mettre en veille et Vérrouiller
+1065=Minimiser les autres fenêtres
+1066=Information système
+1067=Coller texte
+1068=Fond d'écran suivant
+1069=Fond d'écran précédent
+1070=Liste de commandes
+1071=Déplacer Fenêtre
+1072=Redimensionner la Fenêtre
+1073=Envoyer une commande à la fenêtre active
+1074=Raccourci dans la fenêtre active
+1075=Molette de la Souris
+1076=Double clic
+1077=Transparence
+1078=Volume
+1079=Clic quatrième bouton
+1080=Clic cinquième bouton
+1081=Afficher le Bureau
+1083=Tâche précédente
+1084=Tâche suivante
+1085=Afficher texte
+1086=Désactiver raccourcis
+1087=Désactiver tous les périphériques
+1088=Désactiver contrôle de la souris
+1089=Capture d'écran du Bureau
+1090=Capture d'écran de la fenêtre
+1091=Masquer les icônes de la zone de notification
+1092=Arrêter un service
+1093=Démarrer un service
+1094=Macro dans la fenêtre active
+1095=Désactiver contrôle Joystick
+1096=Désactiver contrôle de la télécommande
+1097=Désactiver contrôle du clavier
+1099=Afficher les icônes de la zone de notification
+1100=CD - Vitesse de lecture
+1101=Masquer l'application
+1102=Minimiser dans la zone de notification
+1103=Loupe
+1104=Supprimer la liste des documents récents
+1105=Supprimer les fichiers temporaires
+1106=Sauver la position des icônes du Bureau
+1107=Restaurer la position des icônes du Bureau

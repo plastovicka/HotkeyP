@@ -1,0 +1,270 @@
+HotKeyP
+-------
+4.6.2 (2012-11-20)
+fixed bugs:
+- Win+mouse wheel does not show the Start menu
+
+4.6.1 (2012-03-28)
+- shortcuts to https web sites
+- options window use true type font
+
+fixed bugs:
+- if command "Close Window" is executed on the desktop, then shutdown dialog box is shown
+
+4.6 (2011-07-30)
+- command "Desktop resolution" has optional parameter monitor number
+- command "Control panel" without parameters opens the control panels folder
+- command "Macro" can have parameters \media_select, \launch_app1, \launch_app2
+- option to use hook only for special system shortcuts (e.g. Win+E, Win+D, Ctrl+Esc, Alt+Tab, ...)
+
+fixed bugs:
+- multimedia keys on some keyboards did not work (e.g. Genius USB keyboards)
+- shift sometimes remained pressed after the macro
+- if launched application required admin. rights, its exe file name was passed as the first parameter
+
+4.5 (2008-06-11)
+- new commands: "Horizontal wheel","Remove drive"
+- recording volume, the second soundcard volume, audio line display name can be changed
+- parameters are allowed for documents (e.g. CPL files)
+- keys \rshift,\rctrl,\ralt, \wheelright,\wheelleft in  macros
+- help is opened in a new process
+
+fixed bugs:
+- it is possible to use shortcut Ctrl+Break
+- UAC dialog box is displayed if the started application requires admin rights (Windows Vista)
+- password to unlock computer can contain shift keys
+
+4.4 (2007-09-14)
+- volume commands work on Windows Vista
+
+fixed bugs:
+- "Paste text" did not work in the "Total Commander" command line
+- commands which have exe file name parameter ignored file paths
+- PrintScreen could not be set as a hotkey
+
+4.3.1 (2007-06-11)
+- new commands: "CD speed", "Hide application", "Minimize to tray", "Magnifier", "Clear recent documents", "Delete temporary files", "Save desktop icons", "Restore desktop icons"
+- categories
+- "Paste text" can contain multiple strings separated by %|
+- "Paste text" does not change the clipboard
+- "Show text" - parameter %l means the clipboard content
+- command parameters are visible in the description column (at internal commands, not exe files)
+- changed the tray icon when mouse shortcuts are disabled (from 'X' to '/')
+- the program Spy has buttons to copy values to the clipboard or directly to the HotkeyP window
+- the Spy window is resizeable
+- "Lock computer" disables CD autorun
+- option not to show Password:*** when the computer is locked
+
+4.2 (2006-10-22)
+- new commands: "Macro to active window", "Desktop snapshot", "Window snapshot", "Hide tray icon", "Restore tray icon", "Start service", "Stop service", "Disable joystick shortcuts", "Disable remote control", "Disable keyboard shortcuts"
+- joystick/gamepad
+- checkbox "Ask before executing this hotkey"
+- command "Macro": added escape sequences for letters and digits (\A, \Aup, \Adown, \B, \0, \1, ...)
+- boolean operators &,|,! in the second parameter of commands "Macro/Keys/Command to active window"
+
+fixed bugs:
+- a current item was not visible after sorting
+- items could not be moved if the sort order was descending
+- a connection to WinLIRC sometimes failed
+- the Start menu appeared after hotkeys Win+something
+- although remote control shortcuts cannot be combined with shifts, it was possible to check the shift checkboxes
+- Ctrl+ScrollLock could not be set as a hotkey 
+- multiple commands can point to "Macro/Keys/Command to active window"
+
+the following two bugs were fixed only for the case when the option "Use keyboard hook for all hotkeys" is checked: 
+- keys "Enter" and "Num Enter" were not distinguished
+- the message keyup was sent after a keyboard shortcut and therefore some function in an active window could be executed in addition to the hotkey
+
+4.1 (2006-07-10)
+- hook is in its own thread, long commands don't block the mouse and keyboard
+- Help button in the HotKey dialog box
+
+fixed bugs:
+- some commands could not be run from the command line
+- icons had a white background instead of a transparent background
+
+4.0 (2006-06-29)
+- remote control via WinLIRC
+- option to use the keyboard hook for all hotkeys
+- macro can contain mouse buttons clicks and combinations
+- macro is repeated when a hotkey is pressed longer
+- all windows are closed before "Shutdown" or "Restart" commands with parameter 2 
+- small icons in the listbox
+- new command "Disable mouse shortcuts"
+- option to disable mouse buttons delay for some applications
+- sort by "Key" column will sort mouse shortcuts, too
+- option to periodically refresh hooks
+- systray icon popup menu can have submenus (when hotkey note is submenu->item) 
+
+fixed bugs:
+- macro didn't work with right shift, right ctrl, right alt
+- "Command to active window" changed Insert to Num0, End to Num1, Down to Num2, ...
+- "Monitor power off" didn't work with some multimedia keys  
+- deleting hotkey moved the focus to a wrong item
+- command "Double click" didn't work in some applications
+- if the computer was restarted during a new hotkey creation, (null) item remained in the list 
+
+3.6 (2006-06-03)
+- new command "Disable all hotkeys"
+- option to set high priority to HotkeyP process
+- command can be an email address, but it must have prefix mailto:
+- PrintScreen, Win+D, Win+M, Win+F, Win+R, Win+E, Win+F1, Win+Tab, Win+Pause can be used for a keyboard shortcut (Win2000/XP)
+- option to disable right mouse button delay   
+
+fixed bugs:
+- mouse buttons were delayed due to commands to active window even if the window was not active
+- popup windows moved when the monitor resolution was changed
+- "Monitor power off" could not be used as multi-command with "Lock computer"
+- if the computer was locked immediately after the Windows started, other hotkeys were not executed
+- if the locked computer was restarted, task manager remained disabled and the volume was muted 
+  
+3.5 (2006-05-21)
+- commands can be added to systray icon menu
+- commands can be run at Windows startup
+- options for "Lock computer" command
+- CapsLock can be used for a keyboard shortcut
+- message "Window not found" is not shown anymore
+- keyboard and mouse hooks moved from hook.dll to hotkeyp.exe (Win2000/XP)
+
+fixed bugs:
+- other applications which use keyboard shortcuts were blocked
+- command could not be .LNK file (shortcut on the desktop or in the Start menu)
+- opacity wasn't set when some minimized application was restored
+- "Command to active window" in other windows caused releasing of shift keys 
+- some keys remained pressed after the computer has been unlocked
+
+3.4 (2006-05-13)
+- new command: "Lock computer"
+- mouse buttons order is relevant (L+R and R+L are different shortcuts)  
+- mouse shortcuts work on Windows 95/98/ME, too
+- option to delay mouse buttons
+- opacity for the "Volume", "Disk free space" and "Show text" windows 
+- option to insert a new hotkey after the current item
+- option to select buttons that are visible in the main window
+- multiple items can be selected, moved or deleted in the hotkeys list
+- opacity is also set when a window is activated, not only when a new program is started
+- systray icon is not hilited during commands to active window 
+
+3.3 (2006-05-07)
+- new commands: "Show text", "Disable key", "Previous task", "Next task", "Fourth/Fifth button click", "Show desktop" 
+- command line can contain several commands separated by semicolons
+- "Command to active window" can have three parameters and works with mouse shortcuts and the same shortcut can be used for many applications
+- "Macro" can contain multimedia keys
+- "Eject/Close CD" does not block the keyboard
+- "Monitor power off" waits until a key is released, but no longer than 5 seconds
+- command Copy in the menu Hotkey
+- opacity can be set for any application which is started by a hotkey
+- option to Rename keys 
+
+3.2 (2006-04-20)
+- new command "Volume" that sets the volume to some value
+- parameter of any volume function can be Bass or Treble
+- command "Next wallpaper" remembers last wallpaper for each folder
+
+3.1 (2006-04-05)
+- all multimedia keys can be used (even on older Windows versions)
+- mouse shortcuts (any combination of all mouse buttons, mouse wheel, shift keys)  
+- new commands: "Command to active window", "Keys to active window", "Mouse/Wheel", "Mouse/Double click", "Window/Opacity"
+- command \rep in Macro
+- utility spy.exe which can find out all WM_COMMAND numbers
+
+3.0 (2006-04-01)
+- new commands: "Next wallpaper", "Previous wallpaper", "Move window", "Resize window", "Commands list"
+- volume commands have parameter audio line (wave, midi, line in, ...)
+- color of volume window border and disk free space window border can be changed
+- command "Paste text" can contain date, time, computer name, user name, CR/LF
+- click on systray icon causes main window to appear/disappear
+- options Minimize or Close button hides the window
+- commands Open/Save settings in the menu File
+- multi-command can point to another multi-command
+
+2.14 (2006-03-17)
+- when a hotkey is pressed, an application is started, activated, or minimized
+- parameter of "Change wallpaper" can be a folder or a file
+- you can change text color for volume and disk free space popup windows
+- option "Start automatically at Windows startup"
+- command \sleep in macro
+- command Rename in the menu Edit
+- buttons up,down
+- added some multimedia key names
+
+2.13 (2005-10-25)
+- command can be a folder
+
+2.12 (2005-04-10)
+- internal commands can be executed from the command line
+
+2.11 (2005-03-14)
+- commands "Minimize others", "Information", "Paste text"
+- macros are executed when a key is pressed and not after it's released
+- window command parameter can be a title substring
+- command \show in "Send keys to window"
+
+2.10 (2005-02-07)
+- computer shutdown did not work in Win98
+
+2.9 (2004-12-09) 
+- commands "Lock computer" and "Hibernate"
+- new hotkeys can be added to the end of list or inserted before the current item
+- command "Desktop resolution" can have parameters two resolutions 
+
+2.8 (2004-11-28)
+- resolving file shortcuts (drag&drop from the Start menu or from the Desktop)
+
+2.7 (2004-11-09)
+- hotkeys needn't have path, exe files are searched in PATH directories
+- command "Eject/Close CD"
+- multi commands
+
+2.6 (2004-10-29)
+- process priorities below normal and above normal (Win2000/XP)
+- computer shutdown and monitor power off should now work in Win2000
+
+2.5 (2004-10-07)
+- option to start only one instance works for DOS programs
+- listbox items can be reordered by mouse
+- free disk space colors and volume colors can be changed
+- button Apply in the font dialog
+
+2.4 (2004-06-28)
+- internal commands which work with windows can have parameter exe file
+- systray icon changed
+
+2.3 (2004-06-18)
+- sorted column has triangle sign in the column header
+
+2.2 (2004-04-26)
+- volume window and disk free space window can be moved
+- options dialog box
+- items in the listbox can be searched by keyboard
+- systray icon
+
+2.1 (2004-03-23)
+- folder language
+- disk free space is updated every second
+- mute shows volume popup window
+
+2.0 (2004-01-15)
+- the list can be sorted
+- drag&drop from Explorer
+ 
+1.6 (2004-01-10)
+- menu commmand Run
+ 
+1.5 (2004-01-08)
+- enabled keys Enter, Esc, Tab
+
+1.4 (2003-12-07)
+- a document file extension is not removed from the note
+
+1.3 (2003-12-05)
+- hotkeys to documents and www pages
+- Macros
+
+1.2 (2003-11-30)
+- command "Send keys to window"
+
+1.1 (2003-11-18)
+- parameter is in quotas if it has been choosed in file dialog box
+
+1.0 (2003-07-01)

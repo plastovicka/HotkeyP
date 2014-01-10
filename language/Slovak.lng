@@ -1,0 +1,360 @@
+; Translated by Tibor Kozma (tibor.kozma@gmail.com)
+; Last update - 13.06.2008 
+
+;súbor s nápovedou
+13=language\\cz.chm
+14=WhatsNew_CZ.txt
+
+;okno about
+300=(C) 2003-2012  Petr Laštovièka
+301=Verzia
+
+1=OK
+2=Storno
+7=Nápoveda
+
+;tlaèidlá v hlavnom okne
+500=Upravi
+501=Odstráni
+502=Vloi
+503=Prida
+504=Kópia
+505=Spusti
+510=Monosti
+
+506=Klávesové skratky (*.htk)\0*.htk\0Všetky súbory\0*.*\0
+507=Všetky súbory\0*.*\0Spustite¾né súbory\0*.exe;*.com;*.bat;*.scr\0
+508=Všetky súbory\0*.*\0
+509=Konfiguraèné súbory (*.reg)\0*.reg\0Všetky súbory\0*.*\0
+511=Obrázok (*.bmp)\0
+
+;dialog klávesová zkratka
+307=P&riorita procesu:
+308=O&kno:
+309=Povoli &viacnásobné spustenie
+303=Príka&z:
+304=Parametr&e:
+305=Pracovnı a&dresár:
+306=Popi&s:
+310=Prie&h¾adnos:
+311=Prida do &menu ikony v systémovej lište
+312=&Automaticky spusti po štarte Windows
+313=&Pred spustením príkazu sa spıta
+314=Kate&gória:
+
+;monosti
+320=Zobrazi ikonu v &systémovej lište
+321=Zvırazni ikonu pri stlaèení &klávesy:
+322=Ovládanie hlasitosti
+323=Šírka o&kna:
+324=V&idite¾né po dobu:
+325=Vo¾né miesto na disku
+326=Poèet &desatinnıch miest:
+327=Monosti
+328=Farby:
+329=Farby:
+330=Šírka ok&na:
+331=Spúša automaticky pri štarte &Windows
+332=Zobrazi tieto zv&ukové zariadenia:
+333=Pozadie, text, okraj:
+334=Tlaèidlo "&Minimalizova" skryje okno
+335=Tlaèidlo "&Zatvori" skryje okno
+338=Pozadie, text, okraj:
+339=Zobrazi text
+340=&Premenova klávesy:
+341=(príklad: Left=V¾avo;(183)=Kalkulaèka;[35]=Vloi)
+342=Novú skratku &vklada za aktuálnu poloku
+343=Prieh¾adnos:
+344=Prieh¾adnos:
+345=Prieh¾adnos:
+346=Tlaèidlá v hlavnom okne
+347=&Oneskorenie tlaèidiel myši:
+348=Neoneskorova tieto tlaèidlá:
+349= Neoneskorova &celoobrazovkové aplikácie\r\n okrem nasledujúcich:
+350=Premenlivá farba
+351=Konštantná farba:
+353=Zamknutie poèítaèa
+354=&Rıchlos:
+355=&Stlmi zvuk
+356=&BMP súbor:
+357=&Da procesu HotkeyP vyššiu prioritu
+358=Myš
+359=Dia¾kové ovládanie
+360=Po&voli
+362=&Adresa:
+363=Por&t:
+364=Ma&x.opakovanie:
+365=Stav:
+366=spustené
+367=nespustené
+368=Hook pouíva
+396=&nikdy
+397=len pre s&ystémove klávesy
+398=&len pre multimediálne klávesy
+399=p&re všetky klávesové skratky
+385=Neoneskorova nasledu&júce aplikácie:
+386=Obnovova &hook kadıch
+387=&Prah citlivosti:
+388=&Rıchlos:
+389=&Zakáza globálne joystick skratky v tıchto aplikáciach:
+390=Zakáza globálne joystick skratky v &celoobrazovkovıch aplikáciach okrem tıchto:
+391=Ovláda pohyb &myši pomocou joysticku
+392=&Horizontálna os:
+393=&Vertikálna os:
+394=Èíslo &joysticku:
+395=N&ezobrazova heslo
+
+;Zamknutie poèítaèa
+370=Staré heslo:
+371=Nové heslo:
+372=Potvrdenie nového hesla:
+373=Heslo
+
+;Premenovanie kategórie
+374=Názov:
+
+;priority procesov
+700=nízka
+701=normálna
+702=vysoká
+703=reálny èas
+704=podpriemerná
+705=nadpriemerná
+
+;zobrazenie okien spustenıch procesov
+710=normálne
+711=maximalizované
+712=minimalizované
+
+719=Myš
+
+;názvy ståpcov
+720=
+721=Klávesová skratka
+722=Popis
+
+;titulky okien
+11=O programe
+12=Klávesová skratka
+20=Premenova kategóriu
+21=Presunú oznaèené skratky do kategórie
+
+15=Hlavné
+16=Príkazy
+17=Myš,WinLIRC
+18=Joystick
+
+;hlavné menu
+401=Ok&no
+400=&Jazyk
+402=&Súbor
+403=Ú&pravy
+404=&Nápoveda
+405=&Kategória
+206=&Písmo...\tCtrl+F
+203=U&konèi program\tAlt+X
+204=&Skry okno\tEsc
+201=&Otvori...\tCtrl+O
+202=&Uloi...\tCtrl+S
+207=&Novı\tCtrl+N
+205=&Vymaza nastavenia
+104=&Nová\tInsert
+108=No&vá na konci\tCtrl+W
+102=&Upravi\tEnter
+103=&Odstráni     \tDelete
+107=&Spusti\tCtrl+R
+105=&Hore\tCtrl+hore
+106=&Dole\tCtrl+dole
+113=&Premenova\tF2
+208=&Nápoveda\tF1
+209=&O programe...
+212=&Monosti...\tCtrl+M
+200=Èo &je nové
+213=O&tvori nastavenia...\tCtrl+I
+214=U&loi nastavenia...\tCtrl+E
+215=&Spusti spy.exe\tCtrl+Y
+216=&Kópia\tCtrl+P
+217=&Hore
+218=&Dole
+219=P&remenova
+220=&Priradi oznaèenım polokám
+221=&Odstráni
+
+;popup menu ikony
+210=&Zobrazi
+211=&Koniec
+
+;popup menu internıch príkazov
+600=Ovládací panel
+601=Systém
+602=Obrazovka
+603=Presunú okno
+604=Priorita procesu
+605=Okná
+606=Multimédia
+607=Myš
+608=Makro
+
+;kategórie
+980=predvolené
+979=všetky
+978=klávesové
+977=myš
+976=joystick
+975=dia¾kové ovládanie
+974=príkazy
+973=programy
+972=dokumenty
+971=www odkazy
+970=autoštart
+969=tray menu
+
+;názvy internıch príkazov
+1000=Vysunú CD
+1001=Zasunú CD
+1002=Vypnú poèítaè
+1003=Reštartova
+1004=Úspornı reim
+1005=Odhlási uivate¾a
+1006=Šetriè obrazovky
+1007=Maximalizova okno
+1008=Minimalizova okno
+1009=Zavrie okno
+1010=Okno vdy navrchu
+1011=Zabi proces
+1012=Ovládací panel
+1013=Hlasitos +
+1014=Hlasitos -
+1015=Hlasitos Wave +
+1016=Hlasitos Wave -
+1017=Stlmi zvuk
+1018=Rozlíšenie monitoru
+1019=Vypnú monitor
+1020=Priorita procesu
+1021=Príkaz inému oknu
+1022=Vysypa kôš
+1023=Náhodná tapeta
+1024=Vo¾né miesto na disku
+1025=Skry okno
+1026=Klávesy inému oknu
+1027=Makro
+1028=Na stred obrazovky
+1029=¼avı dolnı roh
+1030=K dolnému okraju
+1031=Pravı dolnı roh
+1032=K ¾avému okraju
+1033=K pravému okraju
+1034=¼avı hornı roh
+1035=K hornému okraju
+1036=Pravı hornı roh
+1037=Pohyb ukazovate¾a myši
+1038=Dialog vypnutia systému
+1039=Prehra CD
+1040=Ïalšia skladba CD
+1041=Zastavi CD
+1042=Predchádzajúca skladba CD
+1043=Stlaèenie ¾avého tlaèidla
+1044=Stlaèenie prostredného tlaèidla
+1045=Stlaèenie pravého tlaèidla
+1046=Nízka priorita
+1047=Normálna priorita
+1048=Vysoká priorita
+1049=Najvyššia priorita
+1050=Prida alebo odobra programy
+1051=Obrazovka
+1052=Monosti siete Internet
+1053=Myš
+1054=Multimédia
+1055=Monosti napájania
+1056=Systém
+1057=Dátum a èas
+1058=Stlmi Wave
+1059=Podpiemerná priorita
+1060=Nadpriemerná priorita
+1061=Viacnásobnı príkaz
+1062=Vysunú/Zasunú CD
+1063=Zamknú poèítaè
+1064=Reim spánku
+1065=Minimalizova ostatné
+1066=Informácie
+1067=Vloi text
+1068=Ïalšia tapeta
+1069=Predchádzajúca tapeta
+1070=Postupnos príkazov
+1071=Presunú okno
+1072=Zmeni ve¾kos okna
+1073=Príkaz aktívnemu oknu
+1074=Klávesy aktívnemu oknu
+1075=Koliesko
+1076=Dvojklik
+1077=Prieh¾adnos
+1078=Hlasitos
+1079=Stlaèenie štvrtého tlaèidla
+1080=Stlaèenie piateho tlaèidla
+1081=Ukáza plochu
+1083=Predchádzajúca aplikácia
+1084=Ïalšia aplikácia
+1085=Zobrazi text
+1086=Zablokova klávesu
+1087=Vypnú všetky skratky
+1088=Vypnú myšie skratky
+1089=Snímka obrazovky
+1090=Snímka okna
+1091=Skry ikonu
+1092=Zastavi slubu
+1093=Spusti slubu
+1094=Makro aktívnemu oknu
+1095=Vypnú joystick skratky
+1096=Vypnú dia¾kové ovládanie 
+1097=Vypnú klávesové skratky
+1099=Obnovi tray ikonu
+1100=Rıchlos CD
+1101=Skry aplikáciu
+1102=Minimalizova do tray
+1103=Lupa
+1104=Odstráni nedávne dokumenty
+1105=Odstráni doèasné súbory
+1106=Uloi pozície ikon na ploche
+1107=Obnovi pozície ikon na ploche
+1108=Horizontálne koliesko
+1109=Bezpeène odobra zariadenie
+
+;texty pouité v programe, chybové hlásenia
+730=Nie je moné otvori súbor %s
+731=Chybnı formát súboru %s
+732=Chybná verzia súboru %s
+733=Nie je moné vytvori súbor %s
+734=Chyba pri zápise do %s
+735=Nie je moné uloi nastavenia do registra
+736=Vyberte pracovnı adresár
+737=Nebol zadanı iadny príkaz
+738=Pre zadanı typ súboru nie je asociovaná iadna aplikácia
+739=Nebol nájdenı súbor %s
+740=Chybnı pracovnı adresár
+741=Priorita procesu sa dá zvoli len pre príkazy typu EXE
+743=Nie je moné spusti %s
+744=Neznámy názov klávesy: %s
+745=Okno "%s" nebolo nájdené
+746=iadne okno nie je aktívne
+747=%s neoznaèuje CD mechaniku
+748=CD mechanika je u pouívaná inım programom
+749=Nebol nájdenı adresár alebo súbor %s
+750=Nepodarilo sa zmeni prioritu
+751=Nepodarilo sa ukonèi proces
+752=Stlmené
+753=Súbor %s je príliš dlhı
+754=Chyba pri èítaní súboru %s
+755=Chyba v %s\nRiadok %d nezaèína èíslom
+756=Chyba v %s\nÈíslo %d je príliš ve¾ké
+757=Chyba v %s\nViacnásobnı vıskyt %d
+758=Chybné èíslo viacnásobného príkazu
+759=Titulok: %s\r\nTrieda: %s\r\nProces: %s\r\nModul: %s\r\nPriorita: %s\r\nPamä: %d KB
+760=Skutoène chcete odstráni konfiguraèné údaje z registra ?
+761=Prieh¾adnos sa dá zvoli len u príkazov typu EXE
+762=Presúva je moné len vtedy, keï je zoznam triedenı pod¾a prvého ståpca. 
+763=Nie je moné sa pripoji k WinLIRC
+764=Chcete spusti nasledujúci príkaz ?
+765=Chcete odstráni kategóriu '%s' ?
+766=Pozície ikon na ploche boli uloené
+767=Nie je moné odobra disk %c:
+

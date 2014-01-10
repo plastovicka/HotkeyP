@@ -1,0 +1,280 @@
+HotKeyP
+-------
+4.6.2 (20.11.2012)
+opravené chyby:
+- Win+koleèko myši zobrazovalo nabídku Start
+
+4.6.1 (28.3.2012)
+- zkratky na https stránky
+- okno s monostmi pouívá vyhlazené písmo
+
+opravené chyby:
+- Kdy se pøíkaz "Zavøít okno" spustí na ploše, ukáe se dotaz na vypnutí Windows.
+
+4.6 (30.7.2011)
+- pøíkaz "Rozlišení monitoru" má nepovinnı parametr èíslo monitoru
+- pøíkaz "Ovládací panely" bez parametru otevøe sloku Ovládací panely
+- pøíkaz "Makro" mùe mít parametry \media_select, \launch_app1, \launch_app2
+- monost pouívat hook jen pro speciální systémové klávesy
+- nápovìda je v kódování UTF-8
+
+opravené chyby:
+- multimediální klávesy nefungovaly na nìkterıch klávesnicích (napø. Genius)
+- po pøíkaze Makro nìkdy zùstal stisknutı shift
+- kdy spouštìná aplikace vyadovala administrátorská práva, pøedal se navíc parametr název exe souboru
+
+4.5 (11.6.2008)
+- nové pøíkazy: "Horizontální koleèko","Bezpeènì odebrat zaøízení"
+- hlasitost nahrávání, hlasitost více zvukovıch karet, lze nastavit zobrazovanı název zvukového zaøízení
+- parametry mohou bıt také u dokumentù (napø. cpl soubory)
+- nápovìda se spouští v samostatném procesu
+- pøíkaz Makro mùe obsahovat \rshift,\rctrl,\ralt, \wheelright,\wheelleft
+
+opravené chyby:
+- je moné zadat zkratku Ctrl+Break
+- kdy spouštìná aplikace vyaduje administrátorská práva, zobrazí se UAC okno (Windows Vista)
+- heslo pro odemknutí poèítaèe mùe obsahovat shifty
+
+4.4 (14.9.2007)
+- pøíkazy na zmìnu hlasitosti fungují ve Windows Vista
+
+opravené chyby:
+- "Vloit text" nefungovalo v pøíkazovém øádku Total Commanderu
+- pøíkazy, které mají parametr název exe souboru, ignorovaly cestu souboru
+- nešlo zadat PrintScreen jako klávesovou zkratku
+
+4.3.1 (11.6.2007)
+- nové pøíkazy: "Rychlost CD", "Skrıt aplikaci", "Minimalizovat do tray", "Lupa", "Smazat nedávné dokumenty", "Smazat doèasné soubory", "Uloit ikony na ploše", "Obnovit ikony na ploše"
+- kategorie
+- "Vloit text" mùe obsahovat více textù oddìlenıch %|
+- "Vloit text" nemìní obsah schránky
+- "Zobrazit text" - parametr %l znamená obsah schránky
+- ve sloupci popis se zobrazují parametry u pøíkazù (ne u exe souborù)
+- tray ikona pøi zakázanıch myších zkratkách zmìnìna na jedno pøeškrtnutí
+- v programu Spy jsou tlaèítka na kopírování hodnot do schránky nebo do okna HotkeyP
+- lze mìnit velikost okna Spy
+- "Uzamknout poèítaè" zakáe samospouštìcí CD
+- monost nezobrazovat Heslo:*** bìhem zamknutí poèítaèe
+
+4.2 (22.10.2006)
+- nové pøíkazy: "Makro aktivnímu oknu", "Snímek obrazovky", "Snímek okna", "Skrıt tray ikonu", "Obnovit tray ikonu", "Spustit slubu", "Zastavit slubu", "Vypnout joystick zkratky", "Vypnout dálkové ovládání", "Vypnout klávesové zkratky"
+- joystick/gamepad
+- pøepínaè "Pøed spuštìním pøíkazu se zeptat"
+- do pøíkazu "Makro" byly pøidány speciální sekvence pro písmena a èíslice (\A, \Aup, \Adown, \B, \0, \1, ...)
+- druhı parametr pøíkazù "Makro/Klávesy/Pøíkaz aktivnímu oknu" mùe obsahovat logické operátory &,|,!
+
+opravené chyby:
+- po setøídìní nebyla vidìt vybraná poloka
+- pøi sestupném setøídìní nešlo pøesouvat poloky v seznamu
+- nìkdy se pøi startu nepodaøilo pøipojit k WinLIRC
+- po zkratkách Win+nìco se objevovalo Start menu
+- u zkratek pro dálkové ovládání šlo zaškrtnout shifty, pøestoe se pak ignorují
+- kombinace Ctrl+ScrollLock nemohla bıt zadána jako klávesová zkratka
+- vícenásobnı pøíkaz mùe odkazovat na "Makro/Klávesy/Pøíkaz aktivnímu oknu"
+
+následující dvì chyby byly opraveny jen pro pøípad, e je zaškrtnuta monost "Hook pouívat pro všechny klávesové zkratky": 
+- nerozlišovalo se mezi klávesami "Enter" a "Num Enter"
+- po stisku klávesové zkratky se aktivnímu oknu posílala zpráva keyup, co nìkdy zpùsobovalo, e se kromì klávesové zkratky vykonala zároveò také nìjaká funkce v aktivním oknì
+
+4.1 (10.7.2006)
+- hook je v samostatném threadu, a proto pøi delších pøíkazech není blokována myš a klávesnice
+- tlaèítko Nápovìda v oknì pro úpravu klávesové zkratky
+
+opravené chyby:
+- nìkteré pøíkazy nešly spustit z pøíkazové øádky
+- ikony mìly bílé pozadí místo prùhledného
+
+4.0 (29.6.2006)
+- dálkové ovládání pøes WinLIRC
+- monost pouívat hook pro všechny klávesové zkratky
+- makra mohou obsahovat také tlaèítka myši a kombinace více kláves
+- makra se pøi delším drení klávesy opakují
+- funkce "Vypnout poèítaè" a "Restartovat" s parametrem 2 zavøou všechna okna 
+- malé ikony v seznamu zkratek
+- novı pøíkaz: "Vypnout myší zkratky"
+- monost pro nìkteré aplikace zakázat zpoïování tlaèítek myši 
+- tøídìní podle sloupce "Klávesa" setøídí i myší zkratky
+- monost pravidelnì obnovovat hook
+- menu u ikony v systémové lištì mùe mít podmenu (popis zkratky je ve tvaru podmenu->poloka) 
+
+opravené chyby:
+- makra nefungovala, kdy byly stisknuty pravé shifty
+- "Pøíkaz aktivnímu oknu" mìnil Insert na Num0, End na Num1, Down na Num2, ...
+- "Vypnout monitor" nefungovalo s nìkterımi multimediálními klávesami
+- odstranìní zkratky ze seznamu špatnì posunulo zvıraznìnı øádek
+- pøíkaz "Dvojklik" v nìkterıch aplikacích nefungoval
+- kdy pøi vytváøení nové zkratky byl vypnut poèítaè, zùstala v seznamu poloka (null) 
+
+3.6 (3.6.2006)
+- novı pøíkaz: "Vypnout všechny zkratky"
+- monost dát procesu HotkeyP vysokou prioritu
+- pøíkazem mùe bıt emailová adresa, která zaèíná na mailto:
+- pro klávesovou zkratku lze pouít klávesy PrintScreen, Win+D, Win+M, Win+F, Win+R, Win+E, Win+F1, Win+Tab, Win+Pause (Win2000/XP)
+- monost zakázat zpoïování pravého tlaèítka myši  
+
+opravené chyby:
+- tlaèítka myši se zpoïovala kvùli pøíkazùm aktivnímu oknu, i kdy zrovna nebylo aktivní
+- pøi zmìnì rozlišení se trochu pøesunula okna hlasitost, volné místo, zobrazit text
+- nefungovalo vypnutí monitoru souèasnì s uzamknutím poèítaèe
+- pøi uzamknutí poèítaèe hned po startu Windows se nespustily ostatní automaticky spouštìné zkratky
+- kdy se bìhem uzamknutí restartoval poèítaè, zùstal zakázán správce úloh a ztlumená hlasitost  
+ 
+3.5 (21.5.2006)
+- pøíkazy lze pøidat do menu u ikony v systémové lištì
+- pøíkazy mohou bıt spuštìny automaticky po startu Windows
+- monosti pro funkci "Uzamknout poèítaè"
+- CapsLock lze pouít pro klávesovou zkratku
+- zrušena chybová hláška "Okno nenalezeno"
+- klávesové a myší zavìšení pøesunuto z hook.dll do hotkeyp.exe (Win2000/XP)
+
+opravené chyby:
+- byly blokovány ostatní aplikace pouívající klávesové zkratky
+- pøíkazem nemohl bıt .LNK soubor (zástupce na ploše nebo v menu Start)
+- prùhlednost se nenastavila pøi aktivaci nìkterıch minimalizovanıch aplikací
+- pøíkaz jen aktivnímu oknu v ostatních oknech zpùsobil uvolnìní shiftù
+- po odemknutí poèítaèe nìkteré klávesy zùstaly stisknuté
+
+3.4 (13.5.2006)
+- nová funkce: "Uzamknout poèítaè"
+- myší zkratky závisejí na poøadí stisku tlaèítek (L+R je jiné ne R+L)
+- myší zkratky u fungují i na starších verzích Windows
+- monost zpodìní tlaèítek myši
+- prùhlednost pro okna Hlasitost, Volné místo na disku, Zobrazit text
+- monost novou zkratku vkládat za aktuální poloku
+- monost zvolit, která tlaèítka jsou vidìt v hlavním oknì
+- lze oznaèit a pøesouvat nebo odstraòovat najednou více poloek
+- prùhlednost se nastavuje také pøi aktivaci oken, ne jen pøi spouštìní programù
+- ikona v systémové lištì se nezvırazòuje bìhem pøíkazù aktivnímu oknu
+- funkce "Zablokovat klávesu" blokuje jen klávesy, a ne makra    
+
+3.3 (7.5.2006)
+- nové funkce: "Zobrazit text", "Zablokovat klávesu", "Pøedchozí aplikace", "Další aplikace", "Stisk ètvrtého/pátého tlaèítka", "Ukázat plochu" 
+- na pøíkazové øádce lze zadat více pøíkazù oddìlenıch støedníkem
+- "Pøíkaz aktivnímu oknu" mùe mít tøi parametry, funguje také pro myší zkratky a lze pouít stejnou zkratku pro nìkolik aplikací
+- "Makro" mùe obsahovat multimediální klávesy
+- "Vysunout/Zasunout CD" u by nemìlo blokovat klávesnici
+- "Vypnout monitor" èeká na uvolnìní klávesy maximálnì 5 sekund
+- v menu Úpravy pøidán pøíkaz Kopie
+- spouštìnım aplikacím lze nastavit prùhlednost
+- monost pøejmenovat klávesy
+
+3.2 (20.4.2006)
+- nová funkce "Hlasitost", která nastaví hlasitost na konkrétní hodnotu
+- funkce pro zmìnu hlasitosti mohou mít parametr Bass nebo Treble pro zmìnu basù a vıšek
+- "Další tapeta" si pamatuje poslední tapetu pro kadou sloku zvláš
+
+3.1 (5.4.2006)
+- lze pouít všechny multimediální klávesy i na starších verzích Windows
+- myší zkratky (rùzné kombinace všech pìti tlaèítek myši, koleèka, shiftovıch kláves)
+- nové funkce: "Klávesy aktivnímu oknu", "Pøíkaz aktivnímu oknu", "Myš/Koleèko", "Myš/Dvojklik", "Okno/Prùhlednost"
+- pøíkaz \rep v makrech
+- program spy.exe ke zjištìní èísel pøíkazù WM_COMMAND
+
+3.0 (1.4.2006)
+- nové funkce: "Další tapeta", "Pøedchozí tapeta", "Pøesunout okno", "Zmìnit velikost okna", "Posloupnost pøíkazù"
+- hlasitost má parametr zaøízení (wave, midi, line in, ...)
+- lze zmìnit barvu okraje okna hlasitosti a volného místa na disku
+- funkce "Vloit text" mùe obsahovat datum/èas, název poèítaèe/uivatele, konec øádku
+- kliknutí na ikonu v systémové lištì zobrazí/skryje aplikaci
+- monosti tlaèítko Minimalizovat nebo Zavøít skryje okno
+- v menu Soubor jsou pøíkazy Otevøít/Uloit nastavení
+- vícenásobnı pøíkaz mùe odkazovat na jinı vícenásobnı pøíkaz
+
+2.14 (17.3.2006)
+- pøi stisku klávesové zkratky se aplikace spustí, aktivuje, nebo minimalizuje
+- funkce "Zmìnit tapetu" mùe mít parametr sloku, nebo soubor
+- lze zmìnit barvu textu okna hlasitosti a volného místa na disku
+- monost "Spouštìt automaticky po startu Windows"
+- v makrech pøidán pøíkaz \sleep
+- v menu Úpravy je pøíkaz Pøejmenovat
+- tlaèítka nahoru,dolù
+
+opraveno:
+- nezobrazovaly se správné názvy ádnıch multimediálních kláves
+- v makrech nefungovalo \f10 \f11 \f12
+- okno hlasitosti a volného místa se posouvalo o 1 bod vlevo
+- funkce "Vypnout monitor" neèekala na uvolnìní klávesy
+- šíøky sloupcù se neuloily pøi restartování poèítaèe 
+- funkce "Minimalizovat okno" v nìkterıch pøípadech nefungovala
+- jinım ne èeskım uivatelùm se zobrazila zpráva "Nenalezen soubor .lng"
+
+2.13 (25.10.2005)
+- pøíkaz mùe bıt sloka
+
+2.12 (10.4.2005)
+- interní pøíkazy lze spouštìt z pøíkazové øádky
+
+2.11 (14.3.2005)
+- pøíkazy "Minimalizovat ostatní", "Informace", "Vloit text"
+- makra se vykonávají pøi stisku klávesy a ne a po uvolnìní
+- parametr u okenních pøíkazù mùe bıt podøetìzec názvu okna
+- pøi pouití "Pøíkazy jinému oknu" lze aktivovat okno povelem \show
+
+2.10 (7.2.2005)
+- pøíkaz Vypnout poèítaè nefungoval ve Win98
+
+2.9 (9.12.2004) 
+- pøíkazy "Uzamknout poèítaè" a "Reim spánku"
+- nové zkratky lze pøidávat na konec nebo vkládat dovnitø seznamu
+- parametry u "Rozlišení monitoru" mohou bıt dvì rozlišení oddìlená èárkou
+
+2.8 (28.11.2004)
+- zjišování informací ze zástupcù (drag&drop z menu Start nebo plochy)
+
+2.7 (9.11.2004)
+- zrušeno automatické doplòování pracovního adresáøe
+- Vysunout/Zasunout CD stejnou klávesovou zkratkou
+- vícenásobné pøíkazy
+
+2.6 (29.10.2004)
+- funkce zmìny priority procesu na podprùmìrnou/nadprùmìrnou (Win2000/XP)
+- vypnutí poèítaèe nebo vypnutí monitoru u by mìlo fungovat ve Win2000
+
+2.5 (7.10.2004)
+- monost spouštìní jen jedné instance funguje i pro DOS programy
+- poøadí poloek lze mìnit taením pomocí myši
+- lze zvolit barvy zobrazení volného místa a hlasitosti 
+- do vıbìru písma pøidáno tlaèítko Pouít
+
+2.4 (28.6.2004)
+- pøíkazy pracující s okny mohou mít parametr exe soubor
+- zmìnìna ikona
+
+2.3 (18.6.2004)
+- setøídìnı sloupec má v záhlaví trojúhelníèek
+
+2.2 (26.4.2004)
+- okna hlasitosti a volného místa lze pøesouvat
+- monosti
+- v seznamu lze najít klávesovou zkratku zadáním zaèátku slova
+- ikona v systémové lištì
+
+2.1 (23.3.2004)
+- adresáø language
+- údaj o volném místì na disku se pøekresluje kadou sekundu
+- ztlumení hlasitosti zobrazí okno hlasitosti
+
+2.0 (15.1.2004)
+- seznam lze setøídit
+- drag&drop z prùzkumníka
+ 
+1.6 (10.1.2004)
+- v menu úpravy pøidáno spustit
+ 
+1.5 (8.1.2004)
+- jsou povoleny klávesové zkratky Enter, Esc, Tab
+
+1.4 (7.12.2003)
+- v poznámce se uøízne pøípona jen u spustitelnıch souborù
+
+1.3 (5.12.2003)
+- lze otevírat dokumenty a www stránky
+- pøidána makra
+
+1.2 (30.11.2003)
+- pøidán pøíkaz "Klávesa jinému oknu"
+
+1.1 (18.11.2003)
+- parametr se dá do uvozovek, pokud byl vybrán jako soubor
+
+1.0 (1.7.2003)
