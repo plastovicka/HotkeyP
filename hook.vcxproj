@@ -18,7 +18,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -89,7 +89,6 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>C:\Program Files (x86)\Microsoft Visual Studio\VC98\Lib\MSVCRT.LIB;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>hook.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>msvcr90;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
