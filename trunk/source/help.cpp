@@ -1,7 +1,8 @@
 /*
  (C) 2008  Petr Lastovicka
  
- contents of this file are subject to the Reciprocal Public License ("RPL")
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License.
 */  
 #include "hdr.h"
 #pragma hdrstop

@@ -1,3 +1,9 @@
+/*
+ (C) Petr Lastovicka
+ 
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License.
+*/  
 #define _WIN32_WINNT 0x600
 #define _WIN32_IE 0x0500
 #define _CRT_SECURE_NO_DEPRECATE 1
