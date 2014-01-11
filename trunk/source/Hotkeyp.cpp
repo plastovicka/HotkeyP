@@ -1,7 +1,8 @@
 /*
  (C) 2003-2012  Petr Lastovicka
  
- contents of this file are subject to the Reciprocal Public License ("RPL")
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License.
 */  
 
 //required libraries: htmlhelp.lib version.lib winmm.lib comctl32.lib ws2_32.lib
@@ -176,7 +177,7 @@ HBRUSH brVolBk,brDskBk;
 CRITICAL_SECTION listCritSect,cdCritSect;
 HGDIOBJ lockImg;
 HIMAGELIST himl;
-DWORD idHookThread;
+DWORD idHookThreadK,idHookThreadM;
 HANDLE joyThread;
 
 const char *subkey="Software\\Petr Lastovicka\\hotkey";
@@ -3126,17 +3127,17 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
        KillTimer(hWin,10);
      }
     break;
-    case 12: //paste text
+    case 12: //paste text - try again
      KillTimer(hWin,12);
-     if(pasteTextData.busy) parseMacro("\\^v"); //try again
+     if(pasteTextData.busy) parseMacro("\\^\\V");
     break;
-    case 13: //restore clipboard
+    case 13: //paste text - restore clipboard
      KillTimer(hWin,13);
      pasteTextData.restore();
     break;
-    case 14: //paste text
+    case 14: //paste text - Ctrl+V
      KillTimer(hWin,14);
-     parseMacro("\\^v");
+     parseMacro("\\^\\V");
      SetTimer(hWin,12,1000,0);
      lockPaste--;
     break;
@@ -3779,11 +3780,15 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE , LPSTR cmdLine, int cmdShow)
  haccel=LoadAccelerators(hInstance, MAKEINTRESOURCE(3));
  createPopups();
  zoom.wnd = CreateWindowEx(WS_EX_TOOLWINDOW,"HotkeyZoom","Magnifier",WS_POPUP|WS_BORDER,0,0,100,100,0,0,inst,0);
+
  InitializeCriticalSection(&listCritSect);
- HANDLE hThread= CreateThread(0,0,hookProc,0,0,&idHookThread);
- SetThreadPriority(hThread,THREAD_PRIORITY_HIGHEST);
+ HANDLE hThreadK= CreateThread(0,0,hookProc,0,0,&idHookThreadK);
+ SetThreadPriority(hThreadK,THREAD_PRIORITY_HIGHEST);
+ HANDLE hThreadM= CreateThread(0,0,hookProc,0,0,&idHookThreadM);
+ SetThreadPriority(hThreadM,THREAD_PRIORITY_HIGHEST);
  DWORD idJoyThread;
  joyThread= CreateThread(0,0,joyProc,0,CREATE_SUSPENDED,&idJoyThread);
+
  rd(iniFile); //read HTK file
  delRun(HKEY_LOCAL_MACHINE);
  langChanged(); //set button captions according to selected language
@@ -3808,12 +3813,16 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE , LPSTR cmdLine, int cmdShow)
      DispatchMessage(&mesg);
    }
   }
+
  lircEnd();
  UnhookWindowsHookEx(hookM);
  UnhookWindowsHookEx(hookK);
- messageToHook(WM_QUIT,0);
- WaitForSingleObject(hThread,5000);
- CloseHandle(hThread);
+ messageToHook(WM_QUIT,0,false);
+ messageToHook(WM_QUIT,0,true);
+ WaitForSingleObject(hThreadK,5000);
+ CloseHandle(hThreadK);
+ WaitForSingleObject(hThreadM,5000);
+ CloseHandle(hThreadM);
  DeleteCriticalSection(&cdCritSect);
  DeleteCriticalSection(&listCritSect);
  return 0;

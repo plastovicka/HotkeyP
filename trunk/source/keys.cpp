@@ -1,7 +1,8 @@
 /*
 (C) 2003-2012  Petr Lastovicka
 
-contents of this file are subject to the Reciprocal Public License ("RPL")
+This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License.
 */  
 
 #include "hdr.h"
@@ -880,6 +881,9 @@ LRESULT keyFromHook(WPARAM mesg, LPARAM vk, LPARAM scan)
 		if(vk<255 && specialWinKeys[vk] && checkShifts(MOD_WIN)){
 			vk=255;
 		}
+		
+		if(scan==6619136 && vk==76) vk=255; ///Copy key pressed after Win key
+
 		if(useHook==3 || useHook>=1 && specialKeys[vk] 
 		|| useHook==2 && vk>=0xA6 && vk<=0xB9){
 			return msgFromHook(vk,scan, (mesg==WM_KEYUP || mesg==WM_SYSKEYUP) ? K_UP : K_DOWN);
@@ -934,6 +938,7 @@ void installHookT(WPARAM mouse)
 		installHook(hookM, isWin9X ? WH_MOUSE:WH_MOUSE_LL, 
 			"_MouseProc95@12", LowLevelMouseProc);
 	}else{
+		memset(keyReal,0,sizeof(keyReal));
 		installHook(hookK, isWin9X ? WH_KEYBOARD:WH_KEYBOARD_LL, 
 			"_KeyboardProc95@12", LowLevelKeyboardProc);
 	}
@@ -943,20 +948,20 @@ void uninstallHookT(WPARAM mouse)
 {
 	HHOOK &hook= mouse ? hookM : hookK;
 	if(hook){
+		if(!mouse) memset(keyReal,0,sizeof(keyReal));
 		UnhookWindowsHookEx(hook);
 		hook=0;
-		if(!mouse) memset(keyReal,0,sizeof(keyReal));
 	}
 }
 
 void installHook(bool mouse)
 {
-	messageToHook(WM_USER+201,mouse);
+	messageToHook(WM_USER+201,mouse,mouse);
 }
 
 void uninstallHook(bool mouse)
 {
-	messageToHook(WM_USER+202,mouse);
+	messageToHook(WM_USER+202,mouse,mouse);
 }
 
 void setHook(bool mouse)
@@ -1014,10 +1019,10 @@ void setHook()
 	}
 }
 
-void messageToHook(UINT mesg, WPARAM wP)
+void messageToHook(UINT mesg, WPARAM wP, bool mouse)
 {
 	int cnt=0;
-	while(!PostThreadMessage(idHookThread,mesg,wP,0)){
+	while(!PostThreadMessage(mouse ? idHookThreadM:idHookThreadK, mesg,wP,0)){
 		Sleep(10);
 		if(++cnt > 1000) break;
 	}

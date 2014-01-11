@@ -1,7 +1,8 @@
 /*
  (C) 2003-2012  Petr Lastovicka
  
- contents of this file are subject to the Reciprocal Public License ("RPL")
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License.
 */  
 #include "hdr.h"
 #pragma hdrstop
@@ -292,7 +293,13 @@ void forceNoShift()
      shifts0[i]= GetAsyncKeyState(shift2Tab[i])<0;
    }
    for(i=0; i<Nshift2; i++){
-     keyEventUp(shift2Tab[i]);
+     if(shifts0[i]){
+       //NOTE: if right Alt is released in PuTTY, then CTRL+key shortcuts in PuTTY terminal stop working
+       keyEventUp(shift2Tab[i]);
+     }else{
+       //keyReal is unreliable if UAC is enabled in Windows Vista and later
+       keyReal[shift2Tab[i]] = false;
+     }
    }
  }
 }
