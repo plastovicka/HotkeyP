@@ -1,12 +1,15 @@
 /*
  (C) 2004-2006  Petr Lastovicka
  
- contents of this file are subject to the Reciprocal Public License ("RPL")
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License.
 */  
 
+#define _CRT_SECURE_NO_DEPRECATE 1
 #include <windows.h>
 #include <commctrl.h>
 #include <stdio.h>
+
 #pragma hdrstop
 
 HWND hWin1,hWin2;

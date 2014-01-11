@@ -1,5 +1,5 @@
 /*
- Uwe Sieber - www.uwe-sieber.de
+ (C) Uwe Sieber - www.uwe-sieber.de
 */
 #include "hdr.h"
 #pragma hdrstop
