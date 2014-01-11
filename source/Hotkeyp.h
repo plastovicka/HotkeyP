@@ -1,3 +1,9 @@
+/*
+ (C) Petr Lastovicka
+ 
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License.
+*/  
 #ifndef hotkeyPH
 #define hotkeyPH
 #include "lang.h"
@@ -158,7 +164,7 @@ extern double pcLockDx,pcLockDy;
 extern HotKey *hotKeyA;
 extern HWND hWin,hWndLock,hWndLircState,hHotKeyDlg,hWndBeforeLock;
 extern LPARAM keyLastScan;
-extern DWORD idHookThread;
+extern DWORD idHookThreadK,idHookThreadM;
 extern POINT mousePos;
 extern bool modif,altDown,blockedKeys[256],pcLocked,isWin9X,isVista,disableAll,disableMouse,disableJoystick,disableLirc,disableKeys,isHilited,editing,isZoom;
 extern char volumeStr[256],*pcLockParam,notDelayApp[512],delayApp[512];
@@ -268,7 +274,7 @@ LPARAM clickFromHook(WPARAM mesg, LPARAM lP);
 void installHook(bool mouse);
 void uninstallHook(bool mouse);
 DWORD WINAPI hookProc(LPVOID);
-void messageToHook(UINT mesg, WPARAM wP);
+void messageToHook(UINT mesg, WPARAM wP, bool mouse);
 bool unDelayButtons();
 
 extern "C" int encrypt(BYTE *out, int outLen, char *in, int inLen, int alg);
