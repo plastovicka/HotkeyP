@@ -24,7 +24,8 @@
 507=Všechny soubory\0*.*\0Spustitelné soubory\0*.exe;*.com;*.bat;*.scr\0
 508=Všechny soubory\0*.*\0
 509=Konfiguraèní soubory (*.reg)\0*.reg\0Všechny soubory\0*.*\0
-511=Obrázek (*.bmp)\0
+511=Obrázek (*.bmp)\0*.bmp\0
+512=Zvuk (*.wav)\0*.wav\0
 
 ;dialog klávesová zkratka
 307=P&riorita procesu:
@@ -39,6 +40,7 @@
 312=&Automaticky spustit po startu Windows
 313=&Pøed spuštìním pøíkazu se zeptat 
 314=Kate&gorie:
+315=Zv&uk
 
 ;možnosti
 320=Zobrazit ikonu v &systémové lištì

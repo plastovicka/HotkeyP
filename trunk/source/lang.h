@@ -19,7 +19,8 @@ void changeDialog(HWND &wnd, int x,int y,LPCTSTR dlgTempl, DLGPROC dlgProc);
 void setDlgTexts(HWND hDlg);
 void setDlgTexts(HWND hDlg, int id);
 void getExeDir(char *fn, char *e);
-char *cutPath(char *s);
+char const *cutPath(char const *s); // zef: made const correct
+inline char *cutPath( char * s ) { return const_cast<char * >(cutPath( const_cast<char const * >(s) )); }
 
 extern void langChanged();
 extern void msg(char *text, ...);

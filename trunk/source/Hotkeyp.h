@@ -15,6 +15,7 @@ struct HotKey {
  char *exe;       //exe file or document with full path
  char *args;      //parameters
  char *dir;       //working directory
+ char *sound;     //sound to play (zef)
  UINT modifiers;  //ctrl,shift,alt,win
  UINT vkey;       //virtual key code
  LPARAM scanCode; //scan key code (lParam from WM_KEYDOWN)
@@ -24,7 +25,7 @@ struct HotKey {
  int cmd;         //internal command (only if exe is NULL)
  DWORD processId; //running process pid, otherwise 0
  HANDLE process;  //running process handle, otherwise  0
- int lock;        //for multi command
+ mutable int lock;//for multi command (zef: made mutable)
  bool ignore;
  bool disable;    //unregistered hotkey (for mouse buttons or when useHook==3)
  bool multInst;   //enable multiple instances
@@ -37,16 +38,18 @@ struct HotKey {
  int category;
  int item;
 
- char *getNote(); //listview item description
+ char const *getNote() const; //listview item description
  void resolveLNK();
- bool isActive();  //global hotkey or the window is active
- bool isLocal();   //cmd is only to active window
- bool isLocal1();  //cmd is only to active window, not multi-command
- bool parseMultiCmd(bool (HotKey::*f)());
+ bool isActive() const;  //global hotkey or the window is active
+ bool isLocal() const;   //cmd is only to active window
+ bool isLocal1() const;  //cmd is only to active window, not multi-command
+ bool parseMultiCmd(bool (HotKey::*f)() const) const;
  bool checkModifiers();
  void destroy();  //destructor
  bool inCategory(int category);
  int getIcon();
+ std::string getFullExe() const;    // gets fully expanded exe name (zef)
+ std::string getFullCmd() const;    // gets command name or fully expanded exe name (zef)
 };
 
 struct Tpopup {
@@ -159,7 +162,7 @@ const int diskSepH=2, showTextBorder=7;
  
 typedef char TfileName[MAX_PATH];
 
-extern int numKeys,fontH,sentToActiveWnd,buttons,ignoreButtons,ignoreButtons2,passwdLen,pcLockX,pcLockY,diskfreePrec,curVolume[Mvolume][2],iconDelay,oldMute,lockSpeed,lockMute,disableTaskMgr,lircEnabled,useHook,cmdLineCmd,lastButtons,notDelayButtons[15],notDelayFullscreen,mouseDelay,keepHook,keepHookInterval,oldCDautorun,passwdAlg,hidePasswd,cmdFromKeyPress,lockPaste;
+extern int numKeys, fontH, sentToActiveWnd, buttons, ignoreButtons, ignoreButtons2, passwdLen, pcLockX, pcLockY, diskfreePrec, curVolume[Mvolume][2], iconDelay, oldMute, lockSpeed, lockMute, disableTaskMgr, lircEnabled, useHook, cmdLineCmd, lastButtons, notDelayButtons[15], notDelayFullscreen, mouseDelay, keepHook, keepHookInterval, oldCDautorun, passwdAlg, hidePasswd, cmdFromKeyPress, lockPaste, delayExecute;
 extern double pcLockDx,pcLockDy;
 extern HotKey *hotKeyA;
 extern HWND hWin,hWndLock,hWndLircState,hHotKeyDlg,hWndBeforeLock;
@@ -220,11 +223,11 @@ bool save1(OPENFILENAME &ofn, DWORD flags);
 int volumeH();
 bool getVolumeName(int i, char *&name, int &len, int &mxId, int &rec, bool display);
 int textY(int i);
-void cpStr(char *&dest, char *src);
+void cpStr(char *&dest, char const *src);
 bool isShiftKey(int c);
 void checkWait();
 void buttonToArray(int &param);
-DWORD findProcess(char *exe);
+DWORD findProcess(char const *exe);
 bool checkProcess(DWORD pid, char *exe);
 void privilege(char *name);
 void initList();
@@ -233,7 +236,7 @@ void ignoreHotkey(HotKey *hk);
 LRESULT CALLBACK VolumeWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP);
 LRESULT CALLBACK DiskFreeWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP);
 LRESULT CALLBACK showTextWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP);
-HWND findWindow(char *exe, DWORD pid);
+HWND findWindow(char const *exe, DWORD pid); // zef: made const correct
 int msg1(int btn, char *text, ...);
 void keyEventUp(int c);
 void keyEventDown(int c);
@@ -251,7 +254,7 @@ void modifyTrayIcon();
 void createPopups();
 bool checkProcessList(char *list);
 bool checkFullscreen(char *list);
-bool isExe(char *f);
+bool isExe(char const *f);
 bool testDir(char *dir);
 char *getCmdName(int id);
 void unhideApp(HideInfo *info);
@@ -264,7 +267,7 @@ void removeDrive(char DriveLetter);
 void removeUSBdrives();
 
 void executeHotKey(int i);
-void askAndExecuteHotKey(int i);
+void delayAndExecuteHotKey(HINSTANCE inst, HWND parent, int hotKeyIndex);
 void printKey(char *s, HotKey* hk);
 void correctMultiCmd(int item, int action, int item2=0);
 void keyMapChanged();
@@ -290,6 +293,8 @@ DWORD WINAPI joyProc(void *);
 char axisInd2Name(int i);
 int axisName2Ind(char c);
 bool joyGlobalEnabled();
+
+std::string ExpandVars(std::string s);
 
 typedef BOOL (__stdcall *TSetSuspendState)(BOOL,BOOL,BOOL);
 typedef BOOL (__stdcall *TLockWorkStation)();

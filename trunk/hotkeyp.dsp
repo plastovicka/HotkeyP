@@ -136,6 +136,10 @@ PreLink_Cmds=c:\_Petr\cw\hotkeyp\hotkeyp.exe -send window command 203 PlasHotKey
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\source\abortable.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\source\commands.cpp
 
 !IF  "$(CFG)" == "hotkeyp - Win32 Release"
@@ -228,6 +232,10 @@ SOURCE=.\source\rmdrive.cpp
 
 SOURCE=.\source\trayicon.cpp
 # ADD CPP /Yc"hdr.h"
+# End Source File
+# Begin Source File
+
+SOURCE=.\source\utl.cpp
 # End Source File
 # Begin Source File
 

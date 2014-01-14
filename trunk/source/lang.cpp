@@ -36,9 +36,9 @@ char *lng(int i, char *s)
 }
 
 //return pointer to name after a path
-char *cutPath(char *s)
+char const *cutPath(char const *s) // zef: made const correct
 {
- char *t;
+ char const *t;
  t=strchr(s,0);
  while(t>=s && *t!='\\') t--;
  t++;
@@ -249,7 +249,7 @@ void loadLang()
 {
  memset(lngstr,0,sizeof(lngstr));
  char buf[256];
- GetModuleFileName(0,buf,sizeof(buf)-(int)strlen(lang)-14);
+ GetModuleFileName(0,buf,sizeof(buf)-static_cast<int>(strlen(lang))-14);
  strcpy(cutPath(buf), "language\\");
  char *fn=strchr(buf,0);
  strcpy(fn,lang);

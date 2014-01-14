@@ -9,6 +9,11 @@ This program is free software; you can redistribute it and/or
 #pragma hdrstop
 #include "hotkeyp.h"
 
+// zef: add multimedia library to build
+#if defined(_MSC_VER)
+#pragma comment(lib, "winmm.lib")
+#endif
+
 int
 	delayButtons=-1,
 	delayButtons2=-1,
@@ -162,7 +167,7 @@ void printKey(char *s, HotKey* hk)
 }
 
 //-------------------------------------------------------------------------
-bool CmpProcessPath(PROCESSENTRY32 *pe, char *exe, char *n1)
+bool CmpProcessPath(PROCESSENTRY32 *pe, char const *exe, char const *n1)  // zef: made const correct
 {
 	if(!_strnicmp(cutPath(pe->szExeFile),n1,15)){
 		MODULEENTRY32 me;
@@ -171,7 +176,7 @@ bool CmpProcessPath(PROCESSENTRY32 *pe, char *exe, char *n1)
 		if (h==(HANDLE)-1) return true;
 		Module32First(h,&me);
 		do{
-			char *n2 = me.szExePath;
+			char const *n2 = me.szExePath;
 			if(n1==exe) n2 = cutPath(n2);
 			if(!_stricmp(exe,n2)){
 				CloseHandle(h);
@@ -184,13 +189,13 @@ bool CmpProcessPath(PROCESSENTRY32 *pe, char *exe, char *n1)
 }
 
 //find PID of process which belongs to exe file
-DWORD findProcess(char *exe)
+DWORD findProcess(char const *exe) // zef: made const correct
 {
 	PROCESSENTRY32 pe;
 	pe.dwSize = sizeof(PROCESSENTRY32);
 	HANDLE h = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS,0);
 	if(h!=(HANDLE)-1){
-		char *n=cutPath(exe);
+		char const *n=cutPath(exe);
 		Process32First(h,&pe);
 		do{
 			if(CmpProcessPath(&pe,exe,n)){
@@ -225,7 +230,7 @@ BOOL CALLBACK enumWin(HWND hWnd,LPARAM pid)
 	return TRUE;
 }
 
-HWND findWindow(char *exe, DWORD pid)
+HWND findWindow(char const *exe, DWORD pid) // zef: made const correct
 {
 	found=0;
 	DWORD pid1= findProcess(exe);
@@ -301,12 +306,13 @@ void executeHotKey(int i)
 		//internal command
 		command(hk->cmd,hk->args,hk);
 	}else{
-		workDir=0;
+        workDir=0;
 		if(*hk->dir) workDir=hk->dir;
-		if(!isExe(hk->exe)){
+        std::string fullExe = hk->getFullExe(); // zef: added support for environment vars in paths
+        if (!isExe(fullExe.c_str())){
 			//document
 			if(!workDir){
-				strcpy(exeBuf,hk->exe);
+				strcpy(exeBuf,fullExe.c_str());
 				filePart=cutPath(exeBuf);
 				if(filePart>exeBuf){
 					*(filePart-1)=0;
@@ -328,7 +334,7 @@ void executeHotKey(int i)
 				}
 			} 
 			//find out whether program is already running
-			if(!hk->multInst && (w=findWindow(hk->exe,hk->processId))!=0){
+			if(!hk->multInst && (w=findWindow(fullExe.c_str(),hk->processId))!=0){
 				if(w==GetForegroundWindow() && !IsIconic(w)){
 					//minimize
 					PostMessage(w,WM_SYSCOMMAND,SC_MINIMIZE,0);
@@ -351,16 +357,16 @@ void executeHotKey(int i)
 				}
 			}else{
 				//append parameters to exe file name
-				s= new char[strlen(hk->exe)+strlen(hk->args)+4];
+				s= new char[fullExe.length()+strlen(hk->args)+4];
 				s[0]='\"';
-				strcpy(s+1,hk->exe);
+				strcpy(s+1,fullExe.c_str());
 				strcat(s,"\"");
 				if(*hk->args){
 					strcat(s," ");
 					strcat(s,hk->args);
 				}
 				//set working directory
-				if(!workDir && SearchPath(0,hk->exe,0,sizeof(exeBuf),exeBuf,&filePart)){
+				if(!workDir && SearchPath(0,fullExe.c_str(),0,sizeof(exeBuf),exeBuf,&filePart)){
 					workDir=exeBuf;
 					*filePart=0;
 				}
@@ -385,7 +391,7 @@ void executeHotKey(int i)
 					si.fMask=SEE_MASK_NOCLOSEPROCESS;
 					si.hwnd=hWin;
 					si.lpDirectory=workDir;
-					si.lpFile=hk->exe;
+					si.lpFile=fullExe.c_str();
 					cpStr(s, hk->args);
 					si.lpParameters=s;
 					si.nShow=showCnst[hk->cmdShow];
@@ -425,23 +431,10 @@ void executeHotKey(int i)
 			}
 		}
 	}
-}
 
-void askAndExecuteHotKey(int i)
-{
-	HotKey *hk = &hotKeyA[i];
-	if(hk->ask && hk->isActive()){
-		int j= msg1(MB_ICONQUESTION|MB_YESNO,"%s\r\n\n%s\r\n%s %s",
-			lng(764,"Do you want to execute this command ?"),
-			hk->note, 
-			(hk->cmd>=0)? getCmdName(hk->cmd):hk->exe, 
-			hk->args);
-		for(int cnt=0; cnt<40 && !GetForegroundWindow(); cnt++){
-			Sleep(20);
-		}
-		if(j!=IDYES || hk!=&hotKeyA[i]) return;
-	}
-	executeHotKey(i);
+	// zef: play sound
+	if ( hk->sound[0] != '\0' )
+		PlaySound(hk->sound, NULL, SND_FILENAME | SND_ASYNC ) ;
 }
 
 //-------------------------------------------------------------------------
@@ -480,7 +473,7 @@ void correctMultiCmd(int item, int action, int item2)
 }
 
 //return true if the function f returns true for at least one subcommand
-bool HotKey::parseMultiCmd(bool (HotKey::*f)())
+bool HotKey::parseMultiCmd(bool (HotKey::*f)() const) const
 {
 	char *s;
 	int i;
@@ -502,18 +495,18 @@ bool HotKey::parseMultiCmd(bool (HotKey::*f)())
 	return false;
 }
 
-bool HotKey::isLocal1()
+bool HotKey::isLocal1() const
 {
 	return cmd==73 || cmd==74 || cmd==94; 
 }
 
-bool HotKey::isLocal()
+bool HotKey::isLocal() const
 {
 	return isLocal1() || //command/keys/macro to active window
 		(cmd==61 || cmd==70) && parseMultiCmd(&HotKey::isLocal); //multi command or command list
 }
 
-bool HotKey::isActive()
+bool HotKey::isActive() const
 {
 	return !( (cmd==61 || cmd==70) && !parseMultiCmd(&HotKey::isActive) ||
 		isLocal1() && !cmdToWindow(30,args));

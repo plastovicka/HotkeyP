@@ -10,6 +10,7 @@
 #include "hdr.h"
 #pragma hdrstop
 #include "hotkeyp.h"
+#include "resource.h"   // for resource generated identifiers
 
 const DWORD priorCnst[]={IDLE_PRIORITY_CLASS,NORMAL_PRIORITY_CLASS,
   HIGH_PRIORITY_CLASS,REALTIME_PRIORITY_CLASS,16384,32768};
@@ -71,14 +72,14 @@ TmainButton mainButton[]={
  {212,510,"&Options"},
 };
 
-const int version=4;
+const int version=5;  // config file version number
 const char *magic="hotKeys"; //config file header
 COLORREF colors[]= {
   0x90f0a0,0xffc0c0,0xf5f5f5,0xe8d2c7,0xf5fafa,0,0,0,0,
   0x9e9cfc,0x57ebf7,0x4b9ced,0xf5f5f5,0,0,0xf0f050};
 const int senz=15;
 
-TfileName exeBuf,lockBMP,regFile,iniFile,snapFile;
+TfileName exeBuf,lockBMP,regFile,iniFile,snapFile,wavFile;
 char keyMap[1024],*keyMapIndex[256];
 char *title="HotkeyP"; //window title
 HotKey *hotKeyA;       //hotkeys table
@@ -144,7 +145,8 @@ int
  numCategories=1,
  passwdAlg,
  hidePasswd=0, //don't show Password:*** when computer is locked
- cmdFromKeyPress=0;
+ cmdFromKeyPress=0,
+ delayExecute=0;
 
 const int splitterW=4;
 
@@ -242,6 +244,7 @@ struct Treg { char *s; int *i; } regVal[]={
  {"treeW",&treeW},
  {"vers",&passwdAlg},
  {"hidePasswd",&hidePasswd},
+ {"delayExecute",&delayExecute},
 };
 struct Tregs { char *s; char *i; DWORD n; } regValS[]={
  {"file",iniFile,sizeof(iniFile)},
@@ -292,6 +295,11 @@ OPENFILENAME snapOfn={
  OPENFILENAME_SIZE_VERSION_400,0, 0,0,0,0,1,
  snapFile, sizeof(snapFile),
  0,0,0, 0, 0,0,0, "BMP", 0,0,0
+};
+OPENFILENAME wavOfn = {
+  OPENFILENAME_SIZE_VERSION_400, 0, 0, 0, 0, 0, 1,
+  wavFile, sizeof(wavFile),
+  0, 0, 0, 0, 0, 0, 0, "WAV", 0, 0, 0
 };
 //-------------------------------------------------------------------------
 int vmsg(char *caption, char *text, int btn, va_list v)
@@ -373,7 +381,7 @@ int getText(HWND dlg, int id, char *&s)
  return GetDlgItemText(dlg,id,s,l);
 }
 
-void cpStr(char *&dest, char *src)
+void cpStr(char *&dest, char const *src)
 {
  char *old=dest; 
  dest = new char[strlen(src)+1];
@@ -404,16 +412,16 @@ void cutQuot(char *&s)
  }
 }
 
-bool isWWW(char *s)
+bool isWWW(char const *s) // zef: made const correct
 {
  return !_strnicmp(s,"www.",4) || !_strnicmp(s,"http://",7) 
    || !_strnicmp(s,"https://",8) || !_strnicmp(s,"mailto:",7);
 }
 
-bool isExe(char *f)
+bool isExe(char const *f) // zef: made const correct
 {
  if(isWWW(f)) return false;
- char *s=strchr(f,0)-3;
+ char const *s=strchr(f,0)-3;
  if(s<=f || s[-1]!='.') return false;
  return !_stricmp(s,"exe") || !_stricmp(s,"com") ||
   !_stricmp(s,"bat") || !_stricmp(s,"scr") || !_stricmp(s,"cmd");
@@ -530,6 +538,10 @@ int emptyImlSlot()
 
 int HotKey::getIcon()
 {
+  // zef: added support for environment variables in path names
+  const std::string fullExe = getFullExe();
+  const char *exe = fullExe.c_str();
+
  if(!icon){
    if(cmd>=0){
      icon= cmdIcons[cmd];
@@ -547,7 +559,7 @@ int HotKey::getIcon()
      }else{
        {
          //get file extension of the document
-         char *t=strrchr(exe,'.');
+         const char *t=strrchr(exe,'.');
          if(t){
            //find DefaultIcon in the registry
            HKEY key;
@@ -562,7 +574,7 @@ int HotKey::getIcon()
                  if(RegQueryValueEx(key2,0,0,0,(BYTE*)buf2,&d)==ERROR_SUCCESS){
                    if(ExpandEnvironmentStrings(buf2,buf,sizeof(buf)-1)){
                      //parse icon index
-                     t=strrchr(buf,',');
+                     char * t=strrchr(buf,',');
                      if(t){
                        char *e;
                        iconIndex= strtol(t+1,&e,10);
@@ -599,6 +611,22 @@ l1:
  }
  return (icon>=0) ? icon : 9;
 }
+
+// Gets the fully expanded executable to invoke
+std::string HotKey::getFullExe() const
+{
+    return ExpandVars( exe );
+}
+
+// Gets the fully expanded executable or command name that will be invoked
+std::string HotKey::getFullCmd() const
+{
+    if ( cmd >= 0 )
+        return getCmdName( cmd );
+
+    return getFullExe();
+}
+
 //-------------------------------------------------------------------------
 void drawLockText()
 {
@@ -737,7 +765,7 @@ void sortChanged()
  }
 }
 
-HMENU insertSubmenu(HMENU menu, char *name)
+HMENU insertSubmenu(HMENU menu, char const *name)
 {
   HMENU p;
   for(int i=GetMenuItemCount(menu)-1; i>=0; i--){
@@ -753,16 +781,15 @@ HMENU insertSubmenu(HMENU menu, char *name)
   return p;
 }
 
-void addItemToSubmenu(HMENU menu, bool checked, int id, char *name)
+void addItemToSubmenu(HMENU menu, bool checked, int id, char const *name)
 {
-  for(char *s=name; *s; s++){
+  for(char const *s=name; *s; s++){
     if(*s=='-' && s[1]=='>'){
       if(s==name){
         name+=2;
       }else{
-        *s=0;
-        addItemToSubmenu(insertSubmenu(menu,name), checked, id, s+2);
-        *s='-';
+        std::string menuName(name,s-1);
+        addItemToSubmenu(insertSubmenu(menu,menuName.c_str()), checked, id, s+2);
         return;
       }
     }
@@ -811,7 +838,8 @@ void langChanged()
  exeOfn.lpstrFilter=lng(507,"All files\0*.*\0Executable files\0*.exe;*.com;*.bat;*.scr\0");
  argOfn.lpstrFilter=lng(508,"All files\0*.*\0");
  regOfn.lpstrFilter=lng(509,"Config files (*.reg)\0*.reg\0All files\0*.*\0");
- snapOfn.lpstrFilter=lng(511,"BMP file (*.bmp)\0");
+ snapOfn.lpstrFilter=lng(511,"Bitmap images (*.bmp)\0*.bmp\0");
+ wavOfn.lpstrFilter = lng(512, "Waveform audio (*.wav)\0*.wav\0");
  //ListView
  LV_COLUMN lvc;
  static char *colNames[]={"","Key","Description"};
@@ -1226,7 +1254,7 @@ void rd(char *fn)
      *iniFile=0;
    }else{
      fscanf(f,"%d ",&v);
-     if(v<1 || v>4){
+     if(v<1 || v>version){
        msglng(732,"Invalid version of %s",fn);
        *iniFile=0;
      }else{
@@ -1248,6 +1276,8 @@ void rd(char *fn)
          hk->exe= fReadStr(f);
          hk->args= fReadStr(f);
          hk->dir= fReadStr(f);
+         // zef: added support to play sound file per command
+         if (v>=5) hk->sound = fReadStr(f); else cpStr( hk->sound, "" );
          fscanf(f,"%d %d %d %d %d %d %d",
            &hk->scanCode,&hk->vkey,&hk->modifiers,
            &hk->cmdShow,&hk->priority,&flags,&hk->cmd);
@@ -1298,8 +1328,9 @@ start:
    fprintf(f,"%s%d %d %d\n", magic, version, numKeys, numCategories);
    for(i=0; i<numKeys; i++){
      hk= &hotKeyA[i];
-     fprintf(f,"%s\n%s\n%s\n%s\n%d %d %d %d %d %d %d %d %d",
-       hk->note,hk->exe,hk->args,hk->dir,
+     // zef: added support to play sound file per command
+     fprintf(f,"%s\n%s\n%s\n%s\n%s\n%d %d %d %d %d %d %d %d %d",
+       hk->note,hk->exe,hk->args,hk->dir,hk->sound ? hk->sound : "",
        hk->scanCode,hk->vkey,hk->modifiers,
        hk->cmdShow,hk->priority,
        (int)hk->multInst|(hk->autoStart<<1)|(hk->trayMenu<<2)|(hk->ask<<3),
@@ -1514,7 +1545,7 @@ BOOL CALLBACK AboutProc(HWND hWnd, UINT msg, WPARAM wP, LPARAM)
      EndDialog(hWnd, wP);
     return TRUE;
     case 123:
-     GetDlgItemText(hWnd,wP,buf,(int)sizeA(buf)-13);
+     GetDlgItemText(hWnd,wP,buf,static_cast<int>(sizeA(buf)-13));
      if (!strcmp(lang,"English")) strcat(buf,"/indexEN.html");
      ShellExecute(0,0,buf,0,0,SW_SHOWNORMAL);
      break;
@@ -1713,7 +1744,8 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
  int i;
  DWORD a;
  HWND combo,edit;
- char *filePart,*docPart;
+ char *filePart;
+ char const * docPart;
 
  switch(mesg){
   case WM_INITDIALOG:
@@ -1724,6 +1756,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
    SetDlgItemText(hWnd,101, (hk->cmd>=0)? getCmdName(hk->cmd):hk->exe);
    SetDlgItemText(hWnd,102, hk->args);
    SetDlgItemText(hWnd,110, hk->dir);
+   SetDlgItemText(hWnd,IDC_EDIT_SOUND, hk->sound); // zef: added sound
    SetDlgItemText(hWnd,112, hk->note);
    checkDlgButton(hWnd,309, hk->multInst);
    checkDlgButton(hWnd,311, hk->trayMenu);
@@ -1777,7 +1810,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
    switch(wP){
     default:
      if(wP>=1000 && wP<1000+sizeA(cmdNames)){
-       SetDlgItemText(hWnd,101,getCmdName(int(wP-1000)));
+       SetDlgItemText(hWnd,101,getCmdName(static_cast<int>(wP-1000)));
        SetFocus(GetDlgItem(hWnd,102));
      }
     break;
@@ -1789,6 +1822,17 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
        cpStr(hk->exe,exeBuf);
        SetDlgItemText(hWnd,101,hk->exe);
        SetFocus(GetDlgItem(hWnd,102));
+     }
+    break;
+    // zef: added sound support
+    case IDC_BUTTON_SOUND:
+     wavOfn.hwndOwner= hWnd;
+     wavOfn.Flags = OFN_PATHMUSTEXIST | OFN_HIDEREADONLY;
+     *wavFile = 0;
+     if (GetOpenFileName(&wavOfn)){
+       cpStr(hk->sound, wavFile);
+       SetDlgItemText(hWnd,IDC_EDIT_SOUND,hk->sound);
+       SetFocus(GetDlgItem(hWnd,IDC_EDIT_SOUND));
      }
     break;
     case 115: //button at "Parameters:" edit box
@@ -1850,6 +1894,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
      getText(hWnd,110,hk->dir);
      getText(hWnd,101,hk->exe);
      getText(hWnd,102,hk->args);
+     getText(hWnd,IDC_EDIT_SOUND,hk->sound);  // zef: added sound support
      hk->icon=0; //icon will be found in LVN_GETDISPINFO
      hk->priority= (int) SendMessage(GetDlgItem(hWnd,105),CB_GETCURSEL,0,0);
      hk->cmdShow= (int) SendMessage(GetDlgItem(hWnd,104),CB_GETCURSEL,0,0);
@@ -1900,18 +1945,19 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
            }
          }
          //find associated application
-         a=GetFileAttributes(hk->exe);
-         HINSTANCE result=FindExecutable(hk->exe,hk->dir,exeBuf);
+         // zef: added support for environment vars in commands
+         std::string fullExe = hk->getFullExe();
+         a=GetFileAttributes(fullExe.c_str());
+         HINSTANCE result=FindExecutable(fullExe.c_str(),hk->dir,exeBuf);
          if(result>(HINSTANCE)32 || 
            (a&FILE_ATTRIBUTE_DIRECTORY) && a!=0xFFFFFFFF){
            docPart=cutPath(hk->exe);
            if(!*hk->note){
              if(isExe(docPart)){
                //cut off extension
-               char *e= docPart + strlen(docPart)-4;
-               *e=0;
-               cpStr(hk->note, docPart);
-               *e='.';
+               // zef: re-wrote to be const correct
+               std::string docPartCpy( docPart,  strlen(docPart)-4 );
+               cpStr(hk->note, docPartCpy.c_str() );
              }else{
                cpStr(hk->note, docPart);
              }
@@ -2102,6 +2148,7 @@ void addKey(char *exe, bool copy, int item)
    cpStr(hk->exe,copy->exe);
    cpStr(hk->args,copy->args);
    cpStr(hk->dir,copy->dir);
+   cpStr(hk->sound,copy->sound); // zef: added sound support
    hk->cmdShow=copy->cmdShow;
    hk->priority=copy->priority;
    hk->multInst=copy->multInst;
@@ -2534,7 +2581,7 @@ void options()
 }
 
 //-------------------------------------------------------------------------
-char *HotKey::getNote()
+char const *HotKey::getNote() const
 {
  if(!note) return "";
  if(!*note && cmd>=0) return getCmdName(cmd);
@@ -2689,8 +2736,8 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
         case 1:
          printKey(buf, hk);
         break;
-        case 2:
-         s= hk->getNote();
+        case 2: {
+         char const * s= hk->getNote();
          lstrcpyn(buf,s,n-2);
          if(hk->cmd>=0 && s!=hk->note && *hk->args){
            i=lstrlen(s);
@@ -2698,7 +2745,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
            i+=2;
            lstrcpyn(buf+i, hk->args, n-i);
          }
-        break;
+        } break;
        }
      }
      if(pnmv->item.mask & LVIF_IMAGE){
@@ -2820,7 +2867,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
     default:
      if(cmd>=1000 && cmd<1000+numKeys){
        //systray menu command
-       askAndExecuteHotKey(cmd-1000);
+       delayAndExecuteHotKey(inst,hWnd,cmd-1000);
      }else{
        setLang(cmd);
      }
@@ -3072,7 +3119,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
           command(cmd,hk1->args);
         }else if(lP!=K_UP){
           cmdFromKeyPress++;
-          askAndExecuteHotKey(i);
+          delayAndExecuteHotKey(inst,hWnd,i);
           cmdFromKeyPress--;
         }
       }
@@ -3237,7 +3284,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
      }
    }else if(wP>=100 && wP<100+sizeA(trayIconA)){
      if(LOWORD(lP)==WM_LBUTTONDOWN){
-       deleteTrayIcon((UINT)wP);
+       deleteTrayIcon(static_cast< UINT >(wP));
        unhideApp(&trayIconA[wP-100]);
      }
    }
@@ -3289,7 +3336,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 
   case WM_USER+83: //joystick
     if(editing && GetFocus()==GetDlgItem(hHotKeyDlg,103)){
-      if(wP!=K_UP) acceptKey(vkJoy,(DWORD)lP);
+      if(wP!=K_UP) acceptKey(vkJoy,static_cast< DWORD >(lP));
     }else{
       for(i=0; i<numKeys; i++){
         HotKey *hk= &hotKeyA[i];
@@ -3374,7 +3421,7 @@ LRESULT popupWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
          if(mxId>0){ *u++= (char)(mxId+'1'); *u++=':'; *u++=' '; }
          if(rec){ *u++='R'; *u++=':'; }
          lstrcpynA(u,t,len+1);
-         len= (int)strlen(name);
+         len= static_cast<int>(strlen(name));
        }
        TextOut(dc,x,rc.top,name,len);
        if(t) delete[] name;
@@ -3640,7 +3687,7 @@ int commandS(char *cmdLine)
    param=0;
    cmd=0;
    for(i=0; i<sizeA(cmdNames); i++){
-     l=(int)strlen(cmdNames[i]);
+     l=static_cast<int>(strlen(cmdNames[i]));
      if(!_strnicmp(cmdLine,cmdNames[i],l) && 
          (cmdLine[l]==0 || cmdLine[l]==' ') && l>cmdLen){
        cmdLen=l;
