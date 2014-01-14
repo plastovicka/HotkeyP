@@ -24,6 +24,7 @@
 #include <malloc.h>
 #include <winioctl.h>
 #include <psapi.h>
+#include <string>
 
 #ifndef WM_MOUSEHWHEEL
 

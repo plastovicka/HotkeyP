@@ -573,7 +573,7 @@ bool checkProcess(DWORD pid, char *exe)
  static HANDLE lastProcess;
  static DWORD lastPid;
  PROCESSENTRY32 pe;
- char *result;
+ char const *result;
 
  if(pid==lastPid){
    result=lastExe;
@@ -935,7 +935,7 @@ void Tpopup::show(bool toggle)
 {
  createPopups();
  if(!delay || !hWnd) return;
- int ind= int(this-popup);
+ int ind= static_cast<int>(this-popup);
  if(!IsWindowVisible(hWnd)){
    aminmax(x,1,10000);
    aminmax(y,1,10000);
@@ -1289,7 +1289,7 @@ struct TsearchInfo
   int recurse,action,pass;
   bool done;
   unsigned maxWallpaper;
-  char *last;
+  char const *last;
   char prev[MAX_PATH];
   char lastPath[MAX_PATH];
 };
@@ -1403,7 +1403,7 @@ void changeWallpaper(char *dir, int action)
        for(s=wallpaperStr; (DWORD)(s-wallpaperStr)<d; s=strchr(s,0)+1){
          b=strcmp(s,dir);
          s=strchr(s,0)+1;
-         d2=int(s-wallpaperStr);
+         d2=static_cast<int>(s-wallpaperStr);
          if(d<=d2) d=d2+1;
          if(!b){
            lstrcpyn(info.lastPath,s,sizeof(info.lastPath));
@@ -1926,7 +1926,7 @@ char *formatText(char *param)
   const int M=1024; //max. length
 
   setlocale(LC_ALL,"");
-  i=(int)strlen(param)+2*M;
+  i=static_cast<int>(strlen(param))+2*M;
   buf=new char[i];
   for(d=buf,s=param;  ;s++){
     if(int(d-buf)>=i-M){ *d=0; break; } //buffer overflow
@@ -1996,7 +1996,7 @@ INT_PTR CALLBACK pasteTextProc(HWND hWnd, UINT msg, WPARAM wP, LPARAM )
     SendMessage(list, LB_SETCURSEL, 0,0);
     //resize listbox and dialog box
     w *= 9;
-    i *= (int)SendMessage(list,LB_GETITEMHEIGHT,0,0);
+    i *= static_cast<int>(SendMessage(list,LB_GETITEMHEIGHT,0,0));
     SetWindowPos(hWnd,HWND_TOPMOST,
       max(0,(GetSystemMetrics(SM_CXSCREEN)-w)>>1),
       (GetSystemMetrics(SM_CYSCREEN)-i)>>1,

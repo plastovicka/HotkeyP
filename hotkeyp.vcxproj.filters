@@ -48,6 +48,12 @@
     <ClCompile Include="source\winlirc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\abortable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\utl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="source\hotkeyp.rc">

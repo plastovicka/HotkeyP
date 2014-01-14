@@ -11,6 +11,7 @@
 312=Run &automatically after Windows starts
 313=As&k before executing this hotkey
 314=Cate&gory:
+315=&Sound
 306=&Note:
 1=OK
 2=Cancel
@@ -156,7 +157,8 @@
 507=All files\0*.*\0Executable files\0*.exe;*.com;*.bat;*.scr\0
 508=All files\0*.*\0
 509=Config files (*.reg)\0*.reg\0All files\0*.*\0
-511=BMP file (*.bmp)\0
+511=Bitmap images (*.bmp)\0*.bmp\0
+512=Waveform audio (*.wav)\0*.wav\0
 
 719=Mouse
 743=Cannot run %s
