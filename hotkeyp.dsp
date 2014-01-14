@@ -44,7 +44,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W4 /GX /O1 /D "NDEBUG" /D "_MBCS" /D "WIN32" /D "_WINDOWS" /YX /FD /c
+# ADD CPP /nologo /MT /W4 /GX /O1 /D "NDEBUG" /D "_MBCS" /D "WIN32" /D "_WINDOWS" /Yu"hdr.h" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x405 /d "NDEBUG"
@@ -141,46 +141,18 @@ SOURCE=.\source\abortable.cpp
 # Begin Source File
 
 SOURCE=.\source\commands.cpp
-
-!IF  "$(CFG)" == "hotkeyp - Win32 Release"
-
-# ADD CPP /MD /Yu"hdr.h"
-
-!ELSEIF  "$(CFG)" == "hotkeyp - Win32 Debug"
-
-# ADD CPP /Yu"hdr.h"
-
-!ELSEIF  "$(CFG)" == "hotkeyp - Win32 Debug no hook"
-
-# ADD CPP /Yu"hdr.h"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\source\encrypt.cpp
-# ADD CPP /Yu"hdr.h"
 # End Source File
 # Begin Source File
 
 SOURCE=.\source\help.cpp
-
-!IF  "$(CFG)" == "hotkeyp - Win32 Release"
-
-# ADD CPP /Yu"hdr.h"
-
-!ELSEIF  "$(CFG)" == "hotkeyp - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "hotkeyp - Win32 Debug no hook"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\source\HOTKEYP.cpp
-# ADD CPP /Yu"hdr.h"
 # End Source File
 # Begin Source File
 
@@ -189,44 +161,18 @@ SOURCE=.\source\hotkeyp.rc
 # Begin Source File
 
 SOURCE=.\source\joystick.cpp
-# ADD CPP /Yu"hdr.h"
 # End Source File
 # Begin Source File
 
 SOURCE=.\source\keys.cpp
-
-!IF  "$(CFG)" == "hotkeyp - Win32 Release"
-
-# ADD CPP /Yu"hdr.h"
-
-!ELSEIF  "$(CFG)" == "hotkeyp - Win32 Debug"
-
-# ADD CPP /Yu"hdr.h"
-
-!ELSEIF  "$(CFG)" == "hotkeyp - Win32 Debug no hook"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\source\lang.cpp
-# ADD CPP /Yu"hdr.h"
 # End Source File
 # Begin Source File
 
 SOURCE=.\source\rmdrive.cpp
-
-!IF  "$(CFG)" == "hotkeyp - Win32 Release"
-
-# ADD CPP /Yu"hdr.h"
-
-!ELSEIF  "$(CFG)" == "hotkeyp - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "hotkeyp - Win32 Debug no hook"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -240,22 +186,10 @@ SOURCE=.\source\utl.cpp
 # Begin Source File
 
 SOURCE=.\source\volume.cpp
-
-!IF  "$(CFG)" == "hotkeyp - Win32 Release"
-
-# ADD CPP /Yu"hdr.h"
-
-!ELSEIF  "$(CFG)" == "hotkeyp - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "hotkeyp - Win32 Debug no hook"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\source\winlirc.cpp
-# ADD CPP /Yu"hdr.h"
 # End Source File
 # End Group
 # Begin Group "Header Files"
