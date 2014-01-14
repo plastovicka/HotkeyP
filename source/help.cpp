@@ -51,7 +51,7 @@ LRESULT helpProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
     }
     sprintf(buf2,"%.99s#%d",lng(30,"main.htm"), wP);
     hHH = HtmlHelp(0,buf,0, (!wP) ? 0 : (DWORD_PTR)buf2);
-    if(hHH) SetTimer(hWnd,11,1000,0);
+    SetTimer(hWnd,11,1000,0);
     return (LPARAM) hHH;
   }
   if(mesg==WM_TIMER && wP==11){
