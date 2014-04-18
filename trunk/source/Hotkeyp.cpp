@@ -788,7 +788,7 @@ void addItemToSubmenu(HMENU menu, bool checked, int id, char const *name)
       if(s==name){
         name+=2;
       }else{
-        std::string menuName(name,s-1);
+        std::string menuName(name,s);
         addItemToSubmenu(insertSubmenu(menu,menuName.c_str()), checked, id, s+2);
         return;
       }
