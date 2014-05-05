@@ -639,7 +639,7 @@ void TvolumeParam::volume(char *which1, int value, int action)
 	this->action=action;
 	record=0;
 	whichMxId=mxId=0;
-	if(!which1 || !*which1) which1="Mixer";
+	if(!which1) which1="";
 l1:
 	while(*which1==' ') which1++;
 	if((*which1=='r' || *which1=='R') && which1[1]==':'){
@@ -652,6 +652,7 @@ l1:
 		which1+=2;
 		goto l1;
 	}
+	if(!*which1) which1="Mixer";
 	which=which1;
 
 	memset(curVolume, -1, sizeof(curVolume));
