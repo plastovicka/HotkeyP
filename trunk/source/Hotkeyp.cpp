@@ -1,5 +1,5 @@
 /*
- (C) 2003-2012  Petr Lastovicka
+ (C) 2003-2014  Petr Lastovicka
  
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License.
@@ -3751,7 +3751,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE , LPSTR cmdLine, int cmdShow)
  //default options
  strcpy(lircExe,"C:\\Program Files\\WinLIRC\\winlirc.exe");
  strcpy(lircAddress,"127.0.0.1");
- strcpy(volumeStr, isVista ? "Mixer" : "Mixer,Wave");
+ if(!isVista) strcpy(volumeStr, "Mixer,Wave");
  popupVolume.x=5000; popupVolume.y=9000; popupVolume.width=130;
  popupVolume.refresh=1000; popupVolume.delay=2400;
  popupDiskFree.x=5000; popupDiskFree.y=6666; popupDiskFree.width=180;
