@@ -833,6 +833,26 @@ char IgnoreLeftRight(LPARAM vk)
 	return (char)vk;
 }
 
+
+bool KeyNeedsHook(UINT vk, UINT modif)
+{
+#ifndef NOHOOK
+	if(useHook>0 && !disableAll)
+	{
+		if(useHook==3 || useHook==2 && vk>=0xA6 && vk<=0xB9 || specialKeys[vk]) return true;
+
+		if((modif&MOD_WIN)!=0 && specialWinKeys[vk])
+		{
+			return modif==MOD_WIN
+				|| vk>='0' && vk<='9' && (modif==(MOD_WIN|MOD_CONTROL) || modif==(MOD_WIN|MOD_SHIFT) || modif==(MOD_WIN|MOD_ALT))
+				|| modif==(MOD_WIN|MOD_CONTROL) && (vk=='P' || vk=='F')
+				|| modif==(MOD_WIN|MOD_SHIFT) && (vk=='M' || vk==VK_UP || vk==VK_LEFT || vk==VK_RIGHT || vk==VK_DOWN);
+		}
+	}
+#endif
+	return false;
+}
+
 LRESULT keyFromHook(WPARAM mesg, LPARAM vk, LPARAM scan)
 {
 	if(unsigned(vk)<sizeA(keyReal)){
@@ -870,18 +890,18 @@ LRESULT keyFromHook(WPARAM mesg, LPARAM vk, LPARAM scan)
 		keyEventUp(VK_CONTROL);
 	}
 
-	if(!disableAll){
-		if(vk<255 && specialWinKeys[vk] && checkShifts(MOD_WIN)){
-			vk=255;
-		}
-		
-		if(scan==6619136 && vk==76) vk=255; ///Copy key pressed after Win key
-
-		if(useHook==3 || useHook>=1 && specialKeys[vk] 
-		|| useHook==2 && vk>=0xA6 && vk<=0xB9){
-			return msgFromHook(vk,scan, (mesg==WM_KEYUP || mesg==WM_SYSKEYUP) ? K_UP : K_DOWN);
-		}
+	UINT modif=0;
+	if(vk<255 && specialWinKeys[vk] && (GetAsyncKeyState(VK_LWIN)<0 || GetAsyncKeyState(VK_RWIN)<0)){
+		modif=MOD_WIN;
+		if(GetAsyncKeyState(VK_SHIFT)<0) modif|=MOD_SHIFT;
+		if(GetAsyncKeyState(VK_CONTROL)<0) modif|=MOD_CONTROL;
+		if(GetAsyncKeyState(VK_MENU)<0) modif|=MOD_ALT;
 	}
+
+	if(scan==6619136 && vk==76) vk=255; ///Copy key pressed after Win key
+
+	if(KeyNeedsHook(vk,modif))
+		return msgFromHook(vk,scan, (mesg==WM_KEYUP || mesg==WM_SYSKEYUP) ? K_UP : K_DOWN);
 	return 0;
 }
 
@@ -1048,14 +1068,8 @@ void registerHK(int i, bool disable)
 		disableKeys && hk->vkey<512 && (hk->cmd!=97 || hk->args[0]=='1'))) return;
 	UINT vkey= hk->vkey;
 	if(vkey){
-		if(vkey>=255  
-#ifndef NOHOOK
-			|| !disableAll && (useHook==3 
-			|| useHook>=1 && specialKeys[vkey] 
-		|| useHook==2 && vkey>=0xA6 && vkey<=0xB9)
-#endif
-			){
-				hk->disable= disable;
+		if(vkey>=255 || KeyNeedsHook(vkey, hk->modifiers)){
+			hk->disable= disable;
 		}else{
 			if(disable) UnregisterHotKey(hWin,i);
 			else RegisterHotKey(hWin, i, hk->modifiers, vkey);
