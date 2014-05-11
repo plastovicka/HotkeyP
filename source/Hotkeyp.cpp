@@ -2023,10 +2023,8 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 						if(IsDlgButtonChecked(hWnd, 108)==BST_CHECKED) hk->modifiers|=MOD_ALT;
 						if(IsDlgButtonChecked(hWnd, 109)==BST_CHECKED) hk->modifiers|=MOD_WIN;
 					}
-					if(hk->modifiers==MOD_WIN && hk->vkey<255 && specialWinKeys[hk->vkey]){
-						hk->vkey=255;
-					}
 					LeaveCriticalSection(&listCritSect);
+
 					if(hk->cmd>=0 || !isExe(hk->exe)){
 						if(hk->priority!=1){
 							hk->priority=1;
@@ -3784,7 +3782,11 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int cmdShow)
 	if(isVista){
 		useHook=1;
 		c=0; //Win 7
-		if(v.dwMinorVersion == 0) c='P'; //Win Vista
+		if(v.dwMinorVersion == 0 && v.dwMajorVersion==6) c='P'; //Win Vista
+		if(v.dwMinorVersion > 1 || v.dwMajorVersion>6){ //Win 8
+			//there are too many system hotkeys in Windows 8
+			memset(specialWinKeys, 1, 256);
+		}
 	}
 	else if(isWin9X){
 		c='U';
@@ -3801,7 +3803,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int cmdShow)
 	strcpy(lircExe, "C:\\Program Files\\WinLIRC\\winlirc.exe");
 	strcpy(lircAddress, "127.0.0.1");
 	if(!isVista) strcpy(volumeStr, "Mixer,Wave");
-	popupVolume.x=5000; popupVolume.y=9000; popupVolume.width=130;
+	popupVolume.x=5000; popupVolume.y=9000; popupVolume.width=180;
 	popupVolume.refresh=1000; popupVolume.delay=2400;
 	popupDiskFree.x=5000; popupDiskFree.y=6666; popupDiskFree.width=180;
 	popupDiskFree.refresh=1000;
