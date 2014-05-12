@@ -411,7 +411,10 @@ void executeHotKey(int i)
 					si.nShow=showCnst[hk->cmdShow];
 					BOOL vis = IsWindowVisible(hWin);
 					BOOL iconic = IsIconic(hWin);
-					if(!vis) ShowWindow(hWin, SW_SHOW);
+					if(!vis){
+						setOpacity(hWin, 1);
+						ShowWindow(hWin, SW_SHOW);
+					}
 					if(iconic) ShowWindow(hWin, SW_RESTORE);
 					SetForegroundWindow(hWin);
 					if(ShellExecuteEx(&si)){
@@ -422,7 +425,10 @@ void executeHotKey(int i)
 						success=true;
 					}
 					if(iconic) ShowWindow(hWin, SW_MINIMIZE);
-					if(!vis) ShowWindow(hWin, SW_HIDE);
+					if(!vis){
+						ShowWindow(hWin, SW_HIDE);
+						setOpacity(hWin, 255);
+					}
 				}
 				else{
 					if(testDir(hk->dir)){
