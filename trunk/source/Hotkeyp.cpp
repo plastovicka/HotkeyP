@@ -95,6 +95,7 @@ modif,     //the file has been modified
  editing,
  isWin9X,
  isVista,
+ isWin64,
  disableAll,
  disableMouse,
  disableJoystick,
@@ -824,6 +825,10 @@ void showPopup(int x, int y, char *name, int *subId, HWND wnd)
 					1000+i, hk->getNote());
 			}
 		}
+	}
+	if(isWin64 && !strcmp(name, "CMDPOPUP")){
+		DeleteMenu(subMenu, 1106, MF_BYCOMMAND); //save desktop icons
+		DeleteMenu(subMenu, 1107, MF_BYCOMMAND); //restore desktop icons
 	}
 	TrackPopupMenuEx(subMenu,
 		TPM_CENTERALIGN|TPM_RIGHTBUTTON, x, y, wnd, NULL);
@@ -1859,7 +1864,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 						SetFocus(GetDlgItem(hWnd, 102));
 					}
 					break;
-				case 116:{ //button at "Command:" edit box
+				case 116:{ //button at "Working directory:" edit box
 					BROWSEINFO bi;
 					bi.hwndOwner= hWnd;
 					bi.pidlRoot=0;
@@ -3778,6 +3783,11 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int cmdShow)
 	GetVersionEx(&v);
 	isWin9X = v.dwPlatformId==VER_PLATFORM_WIN32_WINDOWS;
 	isVista = v.dwMajorVersion > 5;
+	TIsWow64Process isWow64Process = (TIsWow64Process)GetProcAddress(GetModuleHandle("kernel32.dll"), "IsWow64Process");
+	if(isWow64Process){
+		BOOL b;
+		if(isWow64Process(GetCurrentProcess(), &b) && b) isWin64=true;
+	}
 	//init specialWinKeys
 	if(isVista){
 		useHook=1;
