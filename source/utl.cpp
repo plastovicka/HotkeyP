@@ -8,20 +8,20 @@ modify it under the terms of the GNU General Public License.
 
 /*
 getEnv is intended to be a simple wrapper around the std::getenv function
-    that uses std::string instead of plain char *.
-    It was written mainly so std::getenv could be replaced with other
-    functions, because on Microsoft Windows, Microsoft's version of this
-    function is not secure for some reason.  Microsoft recommends using
-    their _dupenv_s function but that function is only available when
-    linking with the Microsoft C run-time libraries.
+that uses std::string instead of plain char *.
+It was written mainly so std::getenv could be replaced with other
+functions, because on Microsoft Windows, Microsoft's version of this
+function is not secure for some reason.  Microsoft recommends using
+their _dupenv_s function but that function is only available when
+linking with the Microsoft C run-time libraries.
 */
 // original version using the portable std::getenv function
-static const std::string getEnv( const std::string pVar )
+static const std::string getEnv(const std::string pVar)
 {
-    std::string results;
-    const char * val = getenv( pVar.c_str() );
-    if ( val ) results = val;
-    return results;
+	std::string results;
+	const char * val = getenv(pVar.c_str());
+	if(val) results = val;
+	return results;
 }
 
 // Microsoft specific version that uses Microsoft's _dupenv_s function
@@ -42,41 +42,40 @@ static const std::string getEnv( const std::string pVar )
 Expand variables enclosed in percent-signs with values from environment.
 
 For example:
-  If "SystemRoot" is an variable defined in the environment with a value of
-  "C:\Windows" and the input string is "%SystemRoot%\write.exe" the output
-  of this function would be "C:\Windows\write.exe".
+If "SystemRoot" is an variable defined in the environment with a value of
+"C:\Windows" and the input string is "%SystemRoot%\write.exe" the output
+of this function would be "C:\Windows\write.exe".
 
-  If the variable name between the percent signs is not defined in the
-  environment, it is replaced with an empty string.
-  Two consecutive percent signs (i.e. "%%") are replaced with a single
-  percent sign.
+If the variable name between the percent signs is not defined in the
+environment, it is replaced with an empty string.
+Two consecutive percent signs (i.e. "%%") are replaced with a single
+percent sign.
 */
-std::string ExpandVars( std::string s )
+std::string ExpandVars(std::string s)
 {
-    std::string ret;
-    std::string::size_type idxBeg = 0;
-    std::string::size_type idxEnd;// = s.find('%');
-    for (;;)
-    {
-        // find first %
-        idxEnd = s.find('%', idxBeg );
-        if ( idxEnd == std::string::npos ) break;
-        ret += s.substr( idxBeg, idxEnd - idxBeg );
-        idxBeg = idxEnd + 1;
-        // find second %
-        idxEnd = s.find( '%', idxBeg );
-        if ( idxEnd == std::string::npos ) break;
-        // extract var
-        std::string var = s.substr( idxBeg, idxEnd - idxBeg );
-        idxBeg = idxEnd + 1;
-        if ( var.empty() )
-            ret += '%';
-        else
-        {
-            ret += getEnv( var );
-        }
-    };
-    ret += s.substr( idxBeg );
-    return ret;
+	std::string ret;
+	std::string::size_type idxBeg = 0;
+	std::string::size_type idxEnd;// = s.find('%');
+	for(;;)
+	{
+		// find first %
+		idxEnd = s.find('%', idxBeg);
+		if(idxEnd == std::string::npos) break;
+		ret += s.substr(idxBeg, idxEnd - idxBeg);
+		idxBeg = idxEnd + 1;
+		// find second %
+		idxEnd = s.find('%', idxBeg);
+		if(idxEnd == std::string::npos) break;
+		// extract var
+		std::string var = s.substr(idxBeg, idxEnd - idxBeg);
+		idxBeg = idxEnd + 1;
+		if(var.empty())
+				ret += '%';
+		else
+		{
+			ret += getEnv(var);
+		}
+	};
+	ret += s.substr(idxBeg);
+	return ret;
 }
-

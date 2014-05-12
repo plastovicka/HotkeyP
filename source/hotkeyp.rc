@@ -505,7 +505,6 @@ BEGIN
             MENUITEM SEPARATOR
             MENUITEM " ",                           1106
             MENUITEM " ",                           1107
-            MENUITEM SEPARATOR
             MENUITEM " ",                           1103
             MENUITEM " ",                           1085
         END

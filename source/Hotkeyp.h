@@ -1,9 +1,9 @@
 /*
  (C) Petr Lastovicka
- 
+
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License.
-*/  
+ */
 #ifndef hotkeyPH
 #define hotkeyPH
 #include "lang.h"
@@ -11,137 +11,139 @@
 
 
 struct HotKey {
- char *note;      //comment
- char *exe;       //exe file or document with full path
- char *args;      //parameters
- char *dir;       //working directory
- char *sound;     //sound to play (zef)
- UINT modifiers;  //ctrl,shift,alt,win
- UINT vkey;       //virtual key code
- LPARAM scanCode; //scan key code (lParam from WM_KEYDOWN)
- int cmdShow;     //0=normal,1=maximized,2=minimized
- int opacity;     //0 to 255 (transparent to opaque)
- int priority;    //0=idle,1=normal,2=high,3=realtime
- int cmd;         //internal command (only if exe is NULL)
- DWORD processId; //running process pid, otherwise 0
- HANDLE process;  //running process handle, otherwise  0
- mutable int lock;//for multi command (zef: made mutable)
- bool ignore;
- bool disable;    //unregistered hotkey (for mouse buttons or when useHook==3)
- bool multInst;   //enable multiple instances
- bool trayMenu;   //show item in the system tray popup menu
- bool autoStart;  //execute this hotkey when HotkeyP starts
- bool ask;        //ask before executing this hotkey
- bool isDown;
- char *lirc;      //WinLIRC remote control button name
- int icon;        //index into the small image list
- int category;
- int item;
+	char *note;      //comment
+	char *exe;       //exe file or document with full path
+	char *args;      //parameters
+	char *dir;       //working directory
+	char *sound;     //sound to play (zef)
+	UINT modifiers;  //ctrl,shift,alt,win
+	UINT vkey;       //virtual key code
+	LPARAM scanCode; //scan key code (lParam from WM_KEYDOWN)
+	int cmdShow;     //0=normal,1=maximized,2=minimized
+	int opacity;     //0 to 255 (transparent to opaque)
+	int priority;    //0=idle,1=normal,2=high,3=realtime
+	int cmd;         //internal command (only if exe is NULL)
+	DWORD processId; //running process pid, otherwise 0
+	HANDLE process;  //running process handle, otherwise  0
+	mutable int lock;//for multi command (zef: made mutable)
+	bool ignore;
+	bool disable;    //unregistered hotkey (for mouse buttons or when useHook==3)
+	bool multInst;   //enable multiple instances
+	bool trayMenu;   //show item in the system tray popup menu
+	bool autoStart;  //execute this hotkey when HotkeyP starts
+	bool ask;        //ask before executing this hotkey
+	bool isDown;
+	char *lirc;      //WinLIRC remote control button name
+	int icon;        //index into the small image list
+	int category;
+	int item;
 
- char const *getNote() const; //listview item description
- void resolveLNK();
- bool isActive() const;  //global hotkey or the window is active
- bool isLocal() const;   //cmd is only to active window
- bool isLocal1() const;  //cmd is only to active window, not multi-command
- bool parseMultiCmd(bool (HotKey::*f)() const) const;
- bool checkModifiers();
- void destroy();  //destructor
- bool inCategory(int category);
- int getIcon();
- std::string getFullExe() const;    // gets fully expanded exe name (zef)
- std::string getFullCmd() const;    // gets command name or fully expanded exe name (zef)
+	char const *getNote() const; //listview item description
+	void resolveLNK();
+	bool isActive() const;  //global hotkey or the window is active
+	bool isLocal() const;   //cmd is only to active window
+	bool isLocal1() const;  //cmd is only to active window, not multi-command
+	bool parseMultiCmd(bool (HotKey::*f)() const) const;
+	bool checkModifiers();
+	void destroy();  //destructor
+	bool inCategory(int category);
+	int getIcon();
+	std::string getFullExe() const;    // gets fully expanded exe name (zef)
+	std::string getFullCmd() const;    // gets command name or fully expanded exe name (zef)
 };
 
 struct Tpopup {
- HWND hWnd;
- int x,y,width,height,opacity;
- int delay,refresh;
- void show(bool toggle=true);
+	HWND hWnd;
+	int x, y, width, height, opacity;
+	int delay, refresh;
+	void show(bool toggle=true);
 };
 
 struct DiskInfo {
- DWORDLONG free;
- int bar;
- char text[14];
+	DWORDLONG free;
+	int bar;
+	char text[14];
 };
 /*
 struct PROCESS_MEMORY_COUNTERS {
-  DWORD cb,PageFaultCount,PeakWorkingSetSize,WorkingSetSize,
-    QuotaPeakPagedPoolUsage,QuotaPagedPoolUsage,
-    QuotaPeakNonPagedPoolUsage,QuotaNonPagedPoolUsage,
-    PagefileUsage,PeakPagefileUsage;
+DWORD cb,PageFaultCount,PeakWorkingSetSize,WorkingSetSize,
+QuotaPeakPagedPoolUsage,QuotaPagedPoolUsage,
+QuotaPeakNonPagedPoolUsage,QuotaNonPagedPoolUsage,
+PagefileUsage,PeakPagefileUsage;
 };
 */
 struct TmainButton {
-  int cmd;
-  WORD langId;
-  char *caption;
+	int cmd;
+	WORD langId;
+	char *caption;
 };
 
 struct WndItem
 {
-  WndItem *nxt;
-  HWND w;
-  WndItem(){ nxt=0; }
+	WndItem *nxt;
+	HWND w;
+	WndItem(){ nxt=0; }
 };
 
-struct HideInfo 
+struct HideInfo
 {
-  WndItem *list;
-  HWND activeWnd;
-  DWORD pid;
-  HICON icon;
+	WndItem *list;
+	HWND activeWnd;
+	DWORD pid;
+	HICON icon;
 };
 
-struct TendpointName 
+struct TendpointName
 {
-  TendpointName *nxt;
-  WCHAR *id;
-  char *name,*nameLong;
-  ~TendpointName(){ delete[] name; delete[] nameLong; delete[] id; }
+	TendpointName *nxt;
+	WCHAR *id;
+	char *name, *nameLong;
+	~TendpointName(){ delete[] name; delete[] nameLong; delete[] id; }
 };
 
 struct Zoom
 {
-  int magnification;
-  int width,height;
-  HWND wnd;
-  HBITMAP bmp;
-  HGDIOBJ oldBmp;
-  HDC dc;
-  void start();
-  void move();
-  void end();
+	int magnification;
+	int width, height;
+	HWND wnd;
+	HBITMAP bmp;
+	HGDIOBJ oldBmp;
+	HDC dc;
+	void start();
+	void move();
+	void end();
 };
 
 struct ClipboardData
 {
-  UINT format; //data format
-  void *data;  //clipboard content
-  size_t size; //data size
-  ClipboardData *nxt; //next format
+	UINT format; //data format
+	void *data;  //clipboard content
+	size_t size; //data size
+	ClipboardData *nxt; //next format
 };
 
 struct PasteTextData
 {
-  ClipboardData *prev; //previous clipboard content
-  char *text;  //text which will be pasted to the active window
-  enum{ M=50 };
-  char *L[M];  //list box
-  int n;       //length of L
-  bool busy;
-  void save();
-  void restore();
+	ClipboardData *prev; //previous clipboard content
+	char *text;  //text which will be pasted to the active window
+	enum{ M=50 };
+	char *L[M];  //list box
+	int n;       //length of L
+	bool busy;
+	void save();
+	void restore();
 };
 
-enum{ clVol0, clVol1, clVolBkgnd, clDiskFree, clDskBkgnd, clVolText, 
-  clDskText, clVolBorder, clDskBorder, clVol2, clVol3, clVol4, 
-  clTxtBkgnd, clTxtText, clTxtBorder, clLockText, Ncl };
-enum{ shShift,shCtrl,shAlt,shLWin,shRWin,Nshift };
-enum{ shRAlt,shLShift,shRShift,shRCtrl,shLAlt,sh2LWin,sh2RWin,shLCtrl,Nshift2 };
-enum{ M_Left, M_Right, M_Middle=4, M_X1, M_WheelLeft=11, M_WheelRight, M_WheelDown, M_WheelUp, M_None=15};
+enum{
+	clVol0, clVol1, clVolBkgnd, clDiskFree, clDskBkgnd, clVolText,
+	clDskText, clVolBorder, clDskBorder, clVol2, clVol3, clVol4,
+clTxtBkgnd, clTxtText, clTxtBorder, clLockText, Ncl
+};
+enum{ shShift, shCtrl, shAlt, shLWin, shRWin, Nshift };
+enum{ shRAlt, shLShift, shRShift, shRCtrl, shLAlt, sh2LWin, sh2RWin, shLCtrl, Nshift2 };
+enum{ M_Left, M_Right, M_Middle=4, M_X1, M_WheelLeft=11, M_WheelRight, M_WheelDown, M_WheelUp, M_None=15 };
 enum{ P_Volume, P_DiskFree, P_ShowText, Npopup };
-enum{ J_BUTTON,J_AXIS,J_POV };
+enum{ J_BUTTON, J_AXIS, J_POV };
 #define JOY_SIGN 16
 
 enum{ K_NONE, K_ONLYDOWN, K_DOWN, K_UP };
@@ -159,23 +161,23 @@ enum{ K_NONE, K_ONLYDOWN, K_DOWN, K_UP };
 #define scanWheelLeft 0x8000000
 #define extraInfoIGNORE 0x96143581
 const int diskSepH=2, showTextBorder=7;
- 
+
 typedef char TfileName[MAX_PATH];
 
 extern int numKeys, fontH, sentToActiveWnd, buttons, ignoreButtons, ignoreButtons2, passwdLen, pcLockX, pcLockY, diskfreePrec, curVolume[Mvolume][2], iconDelay, oldMute, lockSpeed, lockMute, disableTaskMgr, lircEnabled, useHook, cmdLineCmd, lastButtons, notDelayButtons[15], notDelayFullscreen, mouseDelay, keepHook, keepHookInterval, oldCDautorun, passwdAlg, hidePasswd, cmdFromKeyPress, lockPaste, delayExecute;
-extern double pcLockDx,pcLockDy;
+extern double pcLockDx, pcLockDy;
 extern HotKey *hotKeyA;
-extern HWND hWin,hWndLock,hWndLircState,hHotKeyDlg,hWndBeforeLock;
+extern HWND hWin, hWndLock, hWndLircState, hHotKeyDlg, hWndBeforeLock;
 extern LPARAM keyLastScan;
-extern DWORD idHookThreadK,idHookThreadM;
+extern DWORD idHookThreadK, idHookThreadM;
 extern POINT mousePos;
-extern bool modif,altDown,blockedKeys[256],pcLocked,isWin9X,isVista,disableAll,disableMouse,disableJoystick,disableLirc,disableKeys,isHilited,editing,isZoom;
-extern char volumeStr[256],*pcLockParam,notDelayApp[512],delayApp[512];
-extern TfileName iniFile,lockBMP,exeBuf;
+extern bool modif, altDown, blockedKeys[256], pcLocked, isWin9X, isWin64, isVista, disableAll, disableMouse, disableJoystick, disableLirc, disableKeys, isHilited, editing, isZoom;
+extern char volumeStr[256], *pcLockParam, notDelayApp[512], delayApp[512];
+extern TfileName iniFile, lockBMP, exeBuf;
 extern const char *subkey;
 extern BYTE specialWinKeys[256];
-extern CRITICAL_SECTION cdCritSect,listCritSect;
-extern HHOOK hookK,hookM;
+extern CRITICAL_SECTION cdCritSect, listCritSect;
+extern HHOOK hookK, hookM;
 extern HMODULE klib;
 extern HGDIOBJ lockImg;
 extern const DWORD priorCnst[Npriority];
@@ -190,7 +192,7 @@ extern DiskInfo disks[26];
 extern char *showTextStr;
 extern OPENFILENAME snapOfn;
 extern BYTE password[Dpasswd];
-extern char keyMap[1024],*keyMapIndex[256];
+extern char keyMap[1024], *keyMapIndex[256];
 extern HideInfo trayIconA[30];
 extern Zoom zoom;
 extern PasteTextData pasteTextData;
@@ -204,7 +206,7 @@ extern char *lircButton;
 extern HANDLE lircThread;
 
 extern HANDLE joyThread;
-extern int joyMouseEnabled,joyMouseJoy,joyMouseX,joyMouseY,joyNotFullscreen,joyThreshold,joyMultiplier;
+extern int joyMouseEnabled, joyMouseJoy, joyMouseX, joyMouseY, joyNotFullscreen, joyThreshold, joyMultiplier;
 extern char joyApp[512];
 extern char joyFullscreenApp[512];
 
@@ -246,7 +248,7 @@ bool checkShifts(int m);
 void mouse_eventDown(int i);
 void mouse_eventUp(int i);
 void mouse_event2(DWORD f, int d);
-void setOpacity(HWND w,int o);
+void setOpacity(HWND w, int o);
 char *formatText(char *param);
 bool cmdToWindow(int cmd, char *param);
 void closeAll2();
@@ -296,17 +298,18 @@ bool joyGlobalEnabled();
 
 std::string ExpandVars(std::string s);
 
-typedef BOOL (__stdcall *TSetSuspendState)(BOOL,BOOL,BOOL);
-typedef BOOL (__stdcall *TLockWorkStation)();
-typedef BOOL (__stdcall *TdiskFreeFunc)(LPCTSTR,ULARGE_INTEGER*,ULARGE_INTEGER*,ULARGE_INTEGER*);
-typedef BOOL (__stdcall *TmemInfo)(HANDLE,PROCESS_MEMORY_COUNTERS*,DWORD);
-typedef BOOL (__stdcall *TsetOpacityFunc)(HWND,COLORREF,BYTE,DWORD);
-typedef DWORD (__stdcall *TregisterServiceProcess)(DWORD,DWORD);
-typedef BOOL (__stdcall *TGetGUIThreadInfo)(DWORD,LPGUITHREADINFO);
-typedef LRESULT (__stdcall *TSendMessageTimeout)(HWND,UINT,WPARAM,LPARAM,UINT,UINT,PDWORD_PTR);
-typedef DWORD (__stdcall *TGetProcessId)(HANDLE);
-typedef LONG (__stdcall *TChangeDisplaySettingsEx)(LPCTSTR,LPDEVMODE,HWND,DWORD,LPVOID);
-typedef BOOL (__stdcall *TChangeWindowMessageFilter)(UINT message,DWORD dwFlag);
+typedef BOOL(__stdcall *TSetSuspendState)(BOOL, BOOL, BOOL);
+typedef BOOL(__stdcall *TLockWorkStation)();
+typedef BOOL(__stdcall *TdiskFreeFunc)(LPCTSTR, ULARGE_INTEGER*, ULARGE_INTEGER*, ULARGE_INTEGER*);
+typedef BOOL(__stdcall *TmemInfo)(HANDLE, PROCESS_MEMORY_COUNTERS*, DWORD);
+typedef BOOL(__stdcall *TsetOpacityFunc)(HWND, COLORREF, BYTE, DWORD);
+typedef DWORD(__stdcall *TregisterServiceProcess)(DWORD, DWORD);
+typedef BOOL(__stdcall *TGetGUIThreadInfo)(DWORD, LPGUITHREADINFO);
+typedef LRESULT(__stdcall *TSendMessageTimeout)(HWND, UINT, WPARAM, LPARAM, UINT, UINT, PDWORD_PTR);
+typedef DWORD(__stdcall *TGetProcessId)(HANDLE);
+typedef LONG(__stdcall *TChangeDisplaySettingsEx)(LPCTSTR, LPDEVMODE, HWND, DWORD, LPVOID);
+typedef BOOL(__stdcall *TChangeWindowMessageFilter)(UINT message, DWORD dwFlag);
+typedef BOOL(__stdcall *TIsWow64Process)(HANDLE, PBOOL);
 
 
 #define popupVolume popup[P_Volume]
@@ -316,24 +319,24 @@ typedef BOOL (__stdcall *TChangeWindowMessageFilter)(UINT message,DWORD dwFlag);
 #define sizeA(a) (sizeof(a)/sizeof(*a))
 #define endA(a) (a+(sizeof(a)/sizeof(*a)))
 
-template <class T> inline void aminmax(T &x,int l,int h){
- if(x<l) x=l;
- if(x>h) x=h;
+template <class T> inline void aminmax(T &x, int l, int h){
+	if(x<l) x=l;
+	if(x>h) x=h;
 }
 
-template <class T> inline void amax(T &x,int h){
- if(x>h) x=h;
+template <class T> inline void amax(T &x, int h){
+	if(x>h) x=h;
 }
-template <class T> inline void amin(T &x,int l){
- if(x<l) x=l;
+template <class T> inline void amin(T &x, int l){
+	if(x<l) x=l;
 }
 
-inline int random(int num){ return(int)(((long)rand()*num)/(RAND_MAX+1));}
+inline int random(int num){ return(int)(((long)rand()*num)/(RAND_MAX+1)); }
 
 
 extern "C"{
-HWND WINAPI HtmlHelpA(HWND hwndCaller,LPCSTR pszFile,UINT uCommand,DWORD_PTR dwData);
-HWND WINAPI HtmlHelpW(HWND hwndCaller,LPCWSTR pszFile,UINT uCommand,DWORD_PTR dwData);
+	HWND WINAPI HtmlHelpA(HWND hwndCaller, LPCSTR pszFile, UINT uCommand, DWORD_PTR dwData);
+	HWND WINAPI HtmlHelpW(HWND hwndCaller, LPCWSTR pszFile, UINT uCommand, DWORD_PTR dwData);
 #ifdef UNICODE
 #define HtmlHelp  HtmlHelpW
 #else
