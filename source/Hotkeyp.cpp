@@ -2258,10 +2258,12 @@ void mainButtonChanged()
 			ShowWindow(w, SW_HIDE);
 		}
 	}
+	//up, down buttons
 	y+=5;
-	SetWindowPos(GetDlgItem(hWin, 105), 0, rc.left+10, y, 0, 0, SWP_NOSIZE|SWP_NOZORDER|SWP_NOACTIVATE);
+	const int padding=6;
+	SetWindowPos(GetDlgItem(hWin, 105), 0, rc.left+padding, y, 0, 0, SWP_NOSIZE|SWP_NOZORDER|SWP_NOACTIVATE);
 	GetClientRect(w=GetDlgItem(hWin, 106), &rc2);
-	SetWindowPos(w, 0, rc.right-rc2.right+rc2.left-10, y, 0, 0, SWP_NOSIZE|SWP_NOZORDER|SWP_NOACTIVATE);
+	SetWindowPos(w, 0, rc.right-rc2.right+rc2.left-padding, y, 0, 0, SWP_NOSIZE|SWP_NOZORDER|SWP_NOACTIVATE);
 }
 
 static int oldTrayIcon=-1, oldDiskPrec=-1, oldPriority=-1, oldPort=-1, oldLirc=-1, oldHook, oldKeepHook=-1, oldHookInterval=-1, oldJoyMouse=-1;
