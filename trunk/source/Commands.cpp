@@ -1838,12 +1838,16 @@ void priority(int p)
 void setOpacity(HWND w, int o)
 {
 	if(w && o){
+		static TsetOpacityFunc p;
+		if(!p){
+			p= (TsetOpacityFunc)GetProcAddress(GetModuleHandle("user32.dll"), "SetLayeredWindowAttributes");
+			if(!p) return;
+		}
 		LONG s=GetWindowLong(w, GWL_EXSTYLE);
 		if(((s&0x80000)==0) != (o==255)){
 			SetWindowLong(w, GWL_EXSTYLE, s^0x80000);
 		}
-		TsetOpacityFunc p= (TsetOpacityFunc)GetProcAddress(GetModuleHandle("user32.dll"), "SetLayeredWindowAttributes");
-		if(p) p(w, 0, (BYTE)min(o, 255), 2);
+		p(w, 0, (BYTE)min(o, 255), 2);
 	}
 }
 
