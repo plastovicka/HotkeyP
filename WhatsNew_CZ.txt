@@ -1,5 +1,18 @@
 HotKeyP
 -------
+- v pøíkazech lze používat promìnné prostøedí (napø. %SystemRoot%)
+- ke každé zkratce lze nastavit zvuk (WAV soubor), který se pøehraje pøi stisku klávesové zkratky
+- u zkratky je možnost "Pøed spuštìním pøíkazu chvíli poèkat"
+- pouze právì stisknuté shifty jsou uvolnìny pøed makrem
+- stav kláves je vynulován pøi obnovì hook
+- pøíkaz "Odstranit doèasné soubory" maže také soubory, které jsou jen pro ètení
+- okno HotkeyP je prùhledné pøi zobrazení dotazu na spuštìní aplikace jako správce
+- velká ikona HotkeyP vypadá stejnì jako malá ikona
+
+opravené chyby:
+- pøíkaz vložit text nefungoval pro nìkteré jazyky
+- nìkteré systémové zkratky nešly zmìnit (Ctrl+Win+P, Ctrl+Win+F, Win+Shift+M, Win+Shift+up, Alt+Win+1, ...)
+
 4.6.2 (20.11.2012)
 opravené chyby:
 - Win+koleèko myši zobrazovalo nabídku Start
@@ -7,8 +20,6 @@ opravené chyby:
 4.6.1 (28.3.2012)
 - zkratky na https stránky
 - okno s možnostmi používá vyhlazené písmo
-
-opravené chyby:
 - Když se pøíkaz "Zavøít okno" spustí na ploše, ukáže se dotaz na vypnutí Windows.
 
 4.6 (30.7.2011)

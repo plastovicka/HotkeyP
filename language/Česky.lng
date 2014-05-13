@@ -34,13 +34,14 @@
 303=Pøíka&z:
 304=Parametr&y:
 305=Pracovní a&dresáø:
-306=Popi&s:
+315=Zv&uk:
 310=Prù&hlednost:
 311=Pøidat do &menu u ikony v systémové lištì
 312=&Automaticky spustit po startu Windows
-313=&Pøed spuštìním pøíkazu se zeptat 
+313=Pøed spuštìním pøíkazu se zep&tat 
+316=Pøed spuštìním pøíkazu chvíli &poèkat
 314=Kate&gorie:
-315=Zv&uk
+306=Popi&s:
 
 ;možnosti
 320=Zobrazit ikonu v &systémové lištì
@@ -113,6 +114,8 @@
 ;Pøejmenování kategorie
 374=Název:
 
+550=Bude vykonán následující pøíkaz.\n\nPokud jste klávesovou zkratku stiskli omylem, kliknìte na Storno nebo stisknìte Esc a akce bude pøerušena.
+
 ;priority procesù
 700=nízká
 701=normální
@@ -138,6 +141,7 @@
 12=Klávesová zkratka
 20=Pøejmenovat kategorii
 21=Pøesunout oznaèené zkratky do kategorie
+22=Pøerušit akci
 
 15=Obecné
 16=Pøíkazy

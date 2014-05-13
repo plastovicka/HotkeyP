@@ -32,6 +32,7 @@ struct HotKey {
 	bool trayMenu;   //show item in the system tray popup menu
 	bool autoStart;  //execute this hotkey when HotkeyP starts
 	bool ask;        //ask before executing this hotkey
+	bool delay;      //wait before executing this hotkey
 	bool isDown;
 	char *lirc;      //WinLIRC remote control button name
 	int icon;        //index into the small image list
@@ -164,7 +165,7 @@ const int diskSepH=2, showTextBorder=7;
 
 typedef char TfileName[MAX_PATH];
 
-extern int numKeys, fontH, sentToActiveWnd, buttons, ignoreButtons, ignoreButtons2, passwdLen, pcLockX, pcLockY, diskfreePrec, curVolume[Mvolume][2], iconDelay, oldMute, lockSpeed, lockMute, disableTaskMgr, lircEnabled, useHook, cmdLineCmd, lastButtons, notDelayButtons[15], notDelayFullscreen, mouseDelay, keepHook, keepHookInterval, oldCDautorun, passwdAlg, hidePasswd, cmdFromKeyPress, lockPaste, delayExecute;
+extern int numKeys, fontH, sentToActiveWnd, buttons, ignoreButtons, ignoreButtons2, passwdLen, pcLockX, pcLockY, diskfreePrec, curVolume[Mvolume][2], iconDelay, oldMute, lockSpeed, lockMute, disableTaskMgr, lircEnabled, useHook, cmdLineCmd, lastButtons, notDelayButtons[15], notDelayFullscreen, mouseDelay, keepHook, keepHookInterval, oldCDautorun, passwdAlg, hidePasswd, cmdFromKeyPress, lockPaste;
 extern double pcLockDx, pcLockDy;
 extern HotKey *hotKeyA;
 extern HWND hWin, hWndLock, hWndLircState, hHotKeyDlg, hWndBeforeLock;
