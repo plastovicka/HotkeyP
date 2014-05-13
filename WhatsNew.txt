@@ -12,6 +12,7 @@ HotKeyP
 
 fixed bugs:
 - paste text command did not work on some keyboard layouts
+- multi-command did not work with paste text
 - some system hotkeys could not be redefined (Ctrl+Win+P, Ctrl+Win+F, Win+Shift+M, Win+Shift+up, Alt+Win+1, ...)
 
 4.6.2 (2012-11-20)

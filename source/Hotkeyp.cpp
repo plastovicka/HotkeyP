@@ -3215,9 +3215,10 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 				 KillTimer(hWin, 12);
 				 if(pasteTextData.busy) parseMacro("\\^\\V");
 				 break;
-			 case 13: //paste text - restore clipboard
+			 case 13: //paste text - restore clipboard or paste next text
 				 KillTimer(hWin, 13);
-				 pasteTextData.restore();
+				 if(!pasteTextData.processQueue())
+					 pasteTextData.restore();
 				 break;
 			 case 14: //paste text - Ctrl+V
 				 KillTimer(hWin, 14);
@@ -3280,7 +3281,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			if(pasteTextData.busy){
 				pasteTextData.busy=false;
 				//restore previous clipboard content
-				SetTimer(hWnd, 13, 300, 0);
+				SetTimer(hWnd, 13, pasteTextData.queueFirst ? 50 : 300, 0);
 			}
 			break;
 
@@ -3457,7 +3458,7 @@ LRESULT popupWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 						//audio line name
 						SetTextAlign(dc, TA_LEFT);
 						if(len==5 && !strcmp(name, "Mixer")){
-							name=lng(1078,"Volume");
+							name=lng(1078, "Volume");
 							len= static_cast<int>(strlen(name));
 						}
 						//prefixes R:, 1:
