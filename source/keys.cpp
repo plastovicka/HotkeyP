@@ -370,13 +370,16 @@ void executeHotKey(int i)
 			}
 			else{
 				//append parameters to exe file name
-				s= new char[fullExe.length()+strlen(hk->args)+4];
+				char *args=hk->args;
+				size_t len=fullExe.length();
+				if(!*args && len>4 && !_stricmp(fullExe.c_str()+len-4, ".scr")) args="/S"; //screen saver needs parameter /S
+				s= new char[len+strlen(args)+4];
 				s[0]='\"';
 				strcpy(s+1, fullExe.c_str());
 				strcat(s, "\"");
-				if(*hk->args){
+				if(*args){
 					strcat(s, " ");
-					strcat(s, hk->args);
+					strcat(s, args);
 				}
 				//set working directory
 				if(!workDir && SearchPath(0, fullExe.c_str(), 0, sizeof(exeBuf), exeBuf, &filePart)){
@@ -406,7 +409,7 @@ void executeHotKey(int i)
 					si.hwnd=hWin;
 					si.lpDirectory=workDir;
 					si.lpFile=fullExe.c_str();
-					cpStr(s, hk->args);
+					cpStr(s, args);
 					si.lpParameters=s;
 					si.nShow=showCnst[hk->cmdShow];
 					BOOL vis = IsWindowVisible(hWin);
@@ -871,7 +874,7 @@ bool KeyNeedsHook(UINT vk, UINT modif)
 			return modif==MOD_WIN
 				|| vk>='0' && vk<='9' && (modif==(MOD_WIN|MOD_CONTROL) || modif==(MOD_WIN|MOD_SHIFT) || modif==(MOD_WIN|MOD_ALT))
 				|| modif==(MOD_WIN|MOD_CONTROL) && (vk=='P' || vk=='F')
-				|| modif==(MOD_WIN|MOD_SHIFT) && (vk=='M' || vk==VK_UP || vk==VK_LEFT || vk==VK_RIGHT || vk==VK_DOWN);
+				|| modif==(MOD_WIN|MOD_SHIFT) && (vk=='M' || vk=='T' || vk==VK_UP || vk==VK_LEFT || vk==VK_RIGHT || vk==VK_DOWN);
 		}
 	}
 #else

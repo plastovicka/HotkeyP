@@ -2190,7 +2190,8 @@ void pasteText(char *param)
 				SetClipboardData(isWin9X ? CF_TEXT : CF_UNICODETEXT, NULL);
 				//Ctrl+V
 				lockPaste++;
-				SetTimer(hWin, 14, 10, 0);
+				SetTimer(hWin, 14, checkShifts(MOD_ALT) ? 150 : 10, 0);
+				KillTimer(hWin, 13);
 			}
 			CloseClipboard();
 		}
