@@ -1,5 +1,18 @@
 HotKeyP
 -------
+- environment variables can be used in commands (e.g. %SystemRoot%)
+- option to play sound when a hotkey is pressed
+- option "Wait before executing this hotkey", command will be executed after 5 second unless the user cancels it
+- only pressed shift keys are released before macro
+- key state is reset when reloading hook
+- command "Delete temporary files" can delete read-only files
+- HotkeyP window is transparent when showing User Account Control dialog
+- large HotkeyP icon looks same as small icon
+
+fixed bugs:
+- paste text command did not work on some keyboard layouts
+- some system hotkeys could not be redefined (Ctrl+Win+P, Ctrl+Win+F, Win+Shift+M, Win+Shift+up, Alt+Win+1, ...)
+
 4.6.2 (2012-11-20)
 fixed bugs:
 - Win+mouse wheel does not show the Start menu
@@ -7,8 +20,6 @@ fixed bugs:
 4.6.1 (2012-03-28)
 - shortcuts to https web sites
 - options window use true type font
-
-fixed bugs:
 - if command "Close Window" is executed on the desktop, then shutdown dialog box is shown
 
 4.6 (2011-07-30)
@@ -24,7 +35,7 @@ fixed bugs:
 
 4.5 (2008-06-11)
 - new commands: "Horizontal wheel","Remove drive"
-- recording volume, the second soundcard volume, audio line display name can be changed
+- recording volume, the second sound card volume, audio line display name can be changed
 - parameters are allowed for documents (e.g. CPL files)
 - keys \rshift,\rctrl,\ralt, \wheelright,\wheelleft in  macros
 - help is opened in a new process
@@ -222,7 +233,7 @@ fixed bugs:
 
 2.5 (2004-10-07)
 - option to start only one instance works for DOS programs
-- listbox items can be reordered by mouse
+- list box items can be reordered by mouse
 - free disk space colors and volume colors can be changed
 - button Apply in the font dialog
 
@@ -236,7 +247,7 @@ fixed bugs:
 2.2 (2004-04-26)
 - volume window and disk free space window can be moved
 - options dialog box
-- items in the listbox can be searched by keyboard
+- items in the list box can be searched by keyboard
 - systray icon
 
 2.1 (2004-03-23)
@@ -249,7 +260,7 @@ fixed bugs:
 - drag&drop from Explorer
  
 1.6 (2004-01-10)
-- menu commmand Run
+- menu command Run
  
 1.5 (2004-01-08)
 - enabled keys Enter, Esc, Tab
@@ -265,6 +276,6 @@ fixed bugs:
 - command "Send keys to window"
 
 1.1 (2003-11-18)
-- parameter is in quotas if it has been choosed in file dialog box
+- parameter is in quotas if it has been chosen in file dialog box
 
 1.0 (2003-07-01)

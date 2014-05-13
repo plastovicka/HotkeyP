@@ -3,6 +3,7 @@
 303=&Command:
 304=&Parameters:
 305=Working &directory:
+315=&Sound:
 307=P&rocess priority:
 308=&Window:
 310=&Opacity:
@@ -10,8 +11,8 @@
 311=Add to the systray icon &menu
 312=Run &automatically after Windows starts
 313=As&k before executing this hotkey
+316=Wai&t before executing this hotkey
 314=Cate&gory:
-315=&Sound
 306=&Note:
 1=OK
 2=Cancel
@@ -107,6 +108,9 @@
 20=Rename category
 374=Name:
 21=Move selected hotkeys to category
+
+22=Cancel Operation
+550=The following command is about to be executed.\n\n If you now regret your decision to invoke this command click "Cancel" to abort the operation.  (Otherwise be prepared for the consequences!)
 
 ;menu
 401=&Window

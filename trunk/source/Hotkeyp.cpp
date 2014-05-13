@@ -72,7 +72,7 @@ TmainButton mainButton[]={
 	{212, 510, "&Options"},
 };
 
-const int version=5;  // config file version number
+const int version=6;  // config file version number
 const char *magic="hotKeys"; //config file header
 COLORREF colors[]={
 	0x90f0a0, 0xffc0c0, 0xf5f5f5, 0xe8d2c7, 0xf5fafa, 0, 0, 0, 0,
@@ -146,8 +146,7 @@ dlgW=620, dlgH=375, //main window size
  numCategories=1,
  passwdAlg,
  hidePasswd=0, //don't show Password:*** when computer is locked
- cmdFromKeyPress=0,
- delayExecute=0;
+ cmdFromKeyPress=0;
 
 const int splitterW=4;
 
@@ -245,7 +244,6 @@ struct Treg { char *s; int *i; } regVal[]={
 	{"treeW", &treeW},
 	{"vers", &passwdAlg},
 	{"hidePasswd", &hidePasswd},
-	{"delayExecute", &delayExecute},
 };
 struct Tregs { char *s; char *i; DWORD n; } regValS[]={
 	{"file", iniFile, sizeof(iniFile)},
@@ -1301,6 +1299,7 @@ void rd(char *fn)
 					hk->autoStart= (flags>>1)&1;
 					hk->trayMenu= (flags>>2)&1;
 					hk->ask= (flags>>3)&1;
+					hk->delay= (flags>>4)&1;
 					if(v>1){
 						fscanf(f, " %d", &hk->opacity);
 						if(v>3) fscanf(f, " %d", &hk->category);
@@ -1350,7 +1349,7 @@ start:
 				hk->note, hk->exe, hk->args, hk->dir, hk->sound ? hk->sound : "",
 				hk->scanCode, hk->vkey, hk->modifiers,
 				hk->cmdShow, hk->priority,
-				(int)hk->multInst|(hk->autoStart<<1)|(hk->trayMenu<<2)|(hk->ask<<3),
+				(int)hk->multInst|(hk->autoStart<<1)|(hk->trayMenu<<2)|(hk->ask<<3)|(hk->delay<<4),
 				hk->cmd, hk->opacity, hk->category);
 			if(hk->vkey==vkLirc){
 				fprintf(f, " %s", hk->lirc);
@@ -1781,6 +1780,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			checkDlgButton(hWnd, 311, hk->trayMenu);
 			checkDlgButton(hWnd, 312, hk->autoStart);
 			checkDlgButton(hWnd, 313, hk->ask);
+			checkDlgButton(hWnd, 316, hk->delay && !hk->ask);
 			if(hk->opacity) SetDlgItemInt(hWnd, 114, hk->opacity, FALSE);
 			dlgKey.scanCode=hk->scanCode;
 			dlgKey.vkey=hk->vkey;
@@ -1921,6 +1921,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					hk->trayMenu= IsDlgButtonChecked(hWnd, 311)==BST_CHECKED;
 					hk->autoStart= IsDlgButtonChecked(hWnd, 312)==BST_CHECKED;
 					hk->ask= IsDlgButtonChecked(hWnd, 313)==BST_CHECKED;
+					hk->delay= IsDlgButtonChecked(hWnd, 316)==BST_CHECKED;
 					hk->opacity= GetDlgItemInt(hWnd, 114, 0, FALSE);
 					hk->cmd=findCmd(hk->exe);
 					GetDlgItemText(hWnd, 118, exeBuf, sizeof(exeBuf));
