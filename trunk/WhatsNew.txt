@@ -8,6 +8,7 @@ HotKeyP
 - command "Delete temporary files" can delete read-only files
 - HotkeyP window is transparent when showing User Account Control dialog
 - large HotkeyP icon looks same as small icon
+- commands "Opacity +", "Opacity -"
 
 fixed bugs:
 - paste text command did not work on some keyboard layouts

@@ -192,20 +192,22 @@ void mouse_eventDown(int i)
 	if(i<sizeA(D)){
 		mouse_event1(D[i]);
 	}
-	else if(i==M_WheelDown){
-		mouse_event2(MOUSEEVENTF_WHEEL, -WHEEL_DELTA);
-	}
-	else if(i==M_WheelUp){
-		mouse_event2(MOUSEEVENTF_WHEEL, WHEEL_DELTA);
-	}
-	else if(i==M_WheelLeft){
-		mouse_event2(MOUSEEVENTF_HWHEEL, -WHEEL_DELTA);
-	}
-	else if(i==M_WheelRight){
-		mouse_event2(MOUSEEVENTF_HWHEEL, WHEEL_DELTA);
-	}
 	else if(i<15){
-		mouse_event2(MOUSEEVENTF_XDOWN, 1<<(i-5));
+		if(i==M_WheelDown){
+			mouse_event2(MOUSEEVENTF_WHEEL, -WHEEL_DELTA);
+		}
+		else if(i==M_WheelUp){
+			mouse_event2(MOUSEEVENTF_WHEEL, WHEEL_DELTA);
+		}
+		else if(i==M_WheelLeft){
+			mouse_event2(MOUSEEVENTF_HWHEEL, -WHEEL_DELTA);
+		}
+		else if(i==M_WheelRight){
+			mouse_event2(MOUSEEVENTF_HWHEEL, WHEEL_DELTA);
+		}
+		else{
+			mouse_event2(MOUSEEVENTF_XDOWN, 1<<(i-5));
+		}
 	}
 }
 
@@ -1835,6 +1837,24 @@ void priority(int p)
 	}
 }
 
+int getOpacity(HWND w)
+{
+	if(w){
+		static TGetLayeredWindowAttributes getLayeredWindowAttributes;
+		if(!getLayeredWindowAttributes)
+			getLayeredWindowAttributes= (TGetLayeredWindowAttributes)GetProcAddress(GetModuleHandle("user32.dll"), "GetLayeredWindowAttributes");
+		if(getLayeredWindowAttributes){
+			COLORREF color;
+			BYTE alpha;
+			DWORD flags;
+			if(getLayeredWindowAttributes(w, &color, &alpha, &flags) && (flags & LWA_ALPHA))
+				return alpha;
+			return 255;
+		}
+	}
+	return -1;
+}
+
 void setOpacity(HWND w, int o)
 {
 	if(w && o){
@@ -2328,8 +2348,8 @@ void command(int cmd, char *param, HotKey *hk)
 		case 10: //always on top
 			w= getWindow(param);
 			SetWindowPos(w,
-				GetWindowLong(w, GWL_EXSTYLE)&WS_EX_TOPMOST ?
-			HWND_NOTOPMOST : HWND_TOPMOST, 0, 0, 0, 0, SWP_NOSIZE|SWP_NOMOVE|SWP_ASYNCWINDOWPOS);
+				GetWindowLong(w, GWL_EXSTYLE)&WS_EX_TOPMOST ? HWND_NOTOPMOST : HWND_TOPMOST,
+				0, 0, 0, 0, SWP_NOSIZE|SWP_NOMOVE|SWP_ASYNCWINDOWPOS);
 			break;
 		case 11: //kill process
 			w=getWindow(param);
@@ -2834,6 +2854,17 @@ void command(int cmd, char *param, HotKey *hk)
 		case 109: //remove drive
 			if(*param) removeDrive(param[0]);
 			else removeUSBdrives();
+			break;
+		case 110: //window opacity +
+		case 111: //window opacity -
+			w=getWindow(param2);
+			i=getOpacity(w);
+			if(i>=0){
+				if(iparam==0) iparam=10;
+				if(cmd==110) i+=iparam; else i-=iparam;
+				aminmax(i, 0, 255);
+				setOpacity(w,i);
+			}
 			break;
 	}
 }

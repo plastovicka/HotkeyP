@@ -520,6 +520,8 @@ BEGIN
             MENUITEM " ",                           1025
             MENUITEM " ",                           1101
             MENUITEM " ",                           1077
+            MENUITEM " ",                           1110
+            MENUITEM " ",                           1111
             MENUITEM " ",                           1072
             POPUP "Move window"
             BEGIN

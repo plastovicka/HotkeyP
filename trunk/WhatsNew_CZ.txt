@@ -6,8 +6,9 @@ HotKeyP
 - pouze právì stisknuté shifty jsou uvolnìny pøed makrem
 - stav kláves je vynulován pøi obnovì hook
 - pøíkaz "Odstranit doèasné soubory" maže také soubory, které jsou jen pro ètení
-- okno HotkeyP je prùhledné pøi zobrazení dotazu na spuštìní aplikace jako správce
+- okno HotkeyP je transparentní (skryté) pøi zobrazení dotazu na spuštìní aplikace jako správce
 - velká ikona HotkeyP vypadá stejnì jako malá ikona
+- pøíkazy "Prùhlednost +", "Prùhlednost -"
 
 opravené chyby:
 - pøíkaz vložit text nefungoval pro nìkteré jazyky
