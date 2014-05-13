@@ -3280,6 +3280,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			copyToClipboard1(pasteTextData.text);
 			if(pasteTextData.busy){
 				pasteTextData.busy=false;
+				KillTimer(hWin, 12);
 				//restore previous clipboard content
 				SetTimer(hWnd, 13, pasteTextData.queueFirst ? 50 : 300, 0);
 			}
