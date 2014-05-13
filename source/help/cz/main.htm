@@ -16,11 +16,13 @@ Nejrychleji vytvoříte klávesové zkratky tak, že přetáhnete položky z nab
 <A NAME=-1>
 Jako klávesovou zkratku lze použít libovolnou klávesu kombinovanou s Ctrl, Shift, Alt, Win. Pokud máte starou klávesnici ještě z období DOSu, pak na ni možná nebude klávesa Win. Jinak by měla být umístěna mezi Ctrl a Alt. Maximální počet klávesových zkratek je přibližně 1300. Nedoporučuje se jako klávesovou zkratku dávat CapsLock, F1, Shift+A, Ctrl+C, Alt+F4,... Všechny multimediální klávesy používat lze, ale máte-li nainstalován nějaký jiný program, který je blokuje, pak ho musíte ukončit. V možnostech programu lze klávesy přejmenovat, což se hodí zvláště pro ty klávesy, které se zobrazují jako číslo v závorkách.
 <p>
-Klávesovou zkratku lze přiřadit buď ke spustitelnému souboru, dokumentu, WWW stránce, nebo k některému z příkazů zabudovaných přímo v programu. V případě spustitelného souboru nebo dokumentu můžete jeho název rovnou napsat do editačního pole nebo můžete pomocí myši stisknout v pravé části okna tlačítko "...", čímž se zobrazí dialogové okno na otevření souboru. Pokud soubor zadáváte ručně a nenapíšete ho i s cestou, pak se prohledává složka Windows a složky ze systémové proměnné PATH.
+Klávesovou zkratku lze přiřadit buď ke spustitelnému souboru, dokumentu, WWW stránce, nebo k některému z příkazů zabudovaných přímo v programu. V případě spustitelného souboru nebo dokumentu můžete jeho název rovnou napsat do editačního pole nebo můžete pomocí myši stisknout v pravé části okna tlačítko "...", čímž se zobrazí dialogové okno na otevření souboru. Pokud soubor zadáváte ručně a nenapíšete ho i s cestou, pak se prohledává složka Windows a složky ze systémové proměnné PATH. Pokud soubor zadáváte včetně cesty, můžete použít proměnné prostředí, například %SystemRoot%.
 <p>
 Zabudované příkazy se jednoduše vloží kliknutím na tlačítko "&lt;". 
 <p>
 Na místo příkazu můžete napsat také adresu WWW stránky nebo email. Musí začínat na www. nebo http:// nebo https:// nebo mailto:.
+<p>
+Do položky <u>Zvuk</u> můžete zadat WAV soubor, který se přehraje při stisku klávesové zkratky.
 <p>
 Pokud zaškrtnete <u>Povolit vícenásobné spuštění</u>, pak každý stisk klávesové zkratky způsobí spuštění nové aplikace. V opačném případě se prohledává seznam všech běžících procesů, a pokud je nalezen proces se jménem shodným jako u klávesové zkratky, pak se nespouští nový proces, ale pouze se aktivuje už existující okno. Pokud už toto okno je aktivní, pak se minimalizuje. Možnost "vícenásobné spuštění" má smysl jen pro spustitelné soubory. U dokumentů záleží na aplikaci, jestli umí pracovat s více dokumenty v jednom okně, nebo jestli musí být pro každý dokument vytvořeno nové okno.
 <p>
@@ -28,16 +30,16 @@ Pokud zaškrtnete <u>Přidat do menu u ikony v systémové liště</u>, přidá 
 <p>
 Možnost <u>Automaticky spustit po startu Windows</u> funguje jen tehdy, když je také HotkeyP spouštěn po startu Windows a nebo když se HotkeyP spustí s parametrem 0.     
 <p>
-Do pole <u>Popis</u> napište text, který bude vidět v seznamu v hlavním okně. Pokud nic nezadáte, pak se bude zobrazovat název souboru bez cesty.
+Do položky <u>Popis</u> napište text, který bude vidět v seznamu v hlavním okně. Pokud nic nezadáte, pak se bude zobrazovat název souboru bez cesty.
 <p>
 <u>Průhlednost</u> je číslo od 0 do 255, což znamená od zcela průhledného až po zcela neprůhledné. Při hodnotě 0 se průhlednost nastavovat nebude a aplikace se spustí rychleji. Průhlednost nefunguje ve Windows 95/98/ME/NT.
 
 <h2>Myší zkratky</h2>
 V dialogovém okně pro vytvoření nové klávesové zkratky přesuňte ukazatel myši nad bílý editační obdélník v horní části okna. Pak stiskněte libovolnou kombinaci tlačítek myši, kolečka myši a kláves Ctrl, Shift, Alt, Win. Objeví se slovo Myš a za ním součet znaků L, R, M, 4, 5, Up, Down, Left, Right, které znamenají levé, pravé, prostřední, čtvrté, páté tlačítko, otočení kolečkem nahoru, dolů, vlevo, vpravo.
 <p>
-Ve Windows 95/98/ME nefunguje čtvrté a páté tlačítko. Pokud vám nefunguje ani ve Windows&nbsp;2000/XP/2008/Vista/7, pak máte buď špatný ovladač, nebo jsou tato tlačítka blokována jinými programy (například Genius Netscroll+). Takové programy budete muset ukončit a odstranit ze skupiny spouštěné při startu počítače. Pokud jste je instalovali spolu s ovladačem, pak je nesmíte odinstalovat, jinak by se odinstaloval i ovladač. 
+Ve Windows 95/98/ME nefunguje čtvrté a páté tlačítko. Pokud vám nefunguje ani v novějších verzích Windows, pak máte buď špatný ovladač, nebo jsou tato tlačítka blokována jinými programy (například Genius Netscroll+). Takové programy budete muset ukončit a odstranit ze skupiny spouštěné při startu počítače. Pokud jste je instalovali spolu s ovladačem myši, pak je nesmíte odinstalovat, jinak by se odinstaloval i ovladač. 
 <p>
-Horizontální naklápění kolečka funguje jen ve Windows 2008/Vista/7.
+Horizontální naklápění kolečka nefunguje ve Windows XP nebo starší.
 <p>
 Pro kombinace více tlačítek si v možnostech nastavte "Zpoždění tlačítek myši", což znamená maximální dobu mezi stiskem jednotlivých tlačítek. Jestliže je interval mezi stiskem tlačítek delší, pak se myší zkratka vykoná také, ale zároveň se oknu pod kurzorem pošle informace o stisknutém tlačítku. Například když máte zkratku R+L, stisknete pravé tlačítko, počkáte dostatečně dlouhou dobu a pak přidáte levé tlačítko, vykoná se příkaz pro tuto zkratku a jakmile pustíte pravé tlačítko, zobrazí se kontextové menu. Když chcete pravým tlačítkem přesunout (drag&drop) soubory v průzkumníku, musíte po stisku pravého tlačítka chvíli počkat, dokud se soubor neoznačí, a teprve pak pohnout myší. Pro levé tlačítko myši je toto zpožďování vypnuto, protože drag&drop levým tlačítkem je často používaná operace. Zpožďována nejsou taková tlačítka, pro která není vytvořena žádná myší zkratka. Například po vytvoření zkratky R+L se začne zpožďovat pravé tlačítko, po vytvoření zkratky M+R se začne zpožďovat prostřední tlačítko. Protože ve hrách je zpoždění nepřijatelné, je možné ho pro některé aplikace zakázat - do editačního pole v možnostech napište názvy exe souborů (bez cesty) oddělené středníky.         
 
@@ -56,7 +58,7 @@ Pro přehlednost je vhodné si zkratky roztřídit, zvláště pokud jich máte 
 Funkce, která se vykonává při stisku jakékoli klávesy, se nazývá hook. Obvykle jej používají škodící spyware programy, které zjišťují vaše hesla a pak je odesílají přes internet. V programu HotkeyP můžete v možnostech hook zakázat. Potom ale nebudou fungovat některé multimediální klávesy (které se zobrazují jako číslo v hranatých závorkách) a také nebude možné přiřadit zkratku klávese CapsLock a kombinacím Win+M, Win+E, Win+R atd. Dále nebudou správně fungovat funkce "Makro" a "Vložit text". 
 Když zaškrtnete možnost "Hook používat pro všechny klávesové zkratky", budou klávesové zkratky fungovat i ve hrách a jiných DirectX aplikacích.
 <p>
-Ve Windows 2008/Vista/7 nefunguje hook v aplikacích, které běží s administrátorskými právy (pokud je povoleno řízení uživatelských účtů).
+Hook nefunguje v aplikacích, které běží s administrátorskými právy (pokud je povoleno řízení uživatelských účtů).
 
 <h2>Popis příkazů zabudovaných v programu</h2>
 
@@ -116,7 +118,7 @@ Ze složky TEMP odstraní soubory starší než 7 dní (nebo starší než poče
 
 <A NAME=12><A NAME=50><A NAME=51><A NAME=52><A NAME=53><A NAME=54><A NAME=55><A NAME=56><A NAME=57>
 <h3>Ovládací panely</h3>
-Názvy všech ovládacích panelů zjistíte tak, že v adresáři C:\windows\system nebo C:\winNT\system32 vyhledáte soubory s příponou CPL. Název souboru bez přípony pak můžete zadat jako parametr.
+Názvy všech ovládacích panelů zjistíte tak, že ve složce C:\Windows\System32 vyhledáte soubory s příponou CPL. Název souboru bez přípony pak můžete zadat jako parametr. Ve starších verzích Windows hledejte ve složkách C:\winNT\system32 nebo C:\Windows\System.
 
 <A NAME=86>
 <h3>Zablokovat klávesu</h3>
@@ -171,7 +173,7 @@ Funguje podobně jako PrintScreen, ale místo do schránky se obrázek uloží d
 <A NAME=23><A NAME=68><A NAME=69><A NAME=82>
 <h3>Náhodná tapeta, Další tapeta, Předchozí tapeta</h3>
 Parametrem je adresář nebo přímo BMP, JPG nebo GIF soubor. Pokud je parametrem adresář, pak se prohledávají také všechny jeho podadresáře a vybere se z nich jeden obrázek, který se umístí na pracovní plochu. Pokud chcete používat obrázky jiného formátu než BMP, pak musíte mít zapnutý aktivní desktop (Klikněte pravým tlačítkem na pracovní plochu, pak klikněte na Vlastnosti a na kartě "Síť WWW" zaškrtněte "Zobrazit obsah sítě WWW na ploše").<br> 
-Příkazy Další/Předchozí tapeta zvolí následucící nebo předchozí soubor v adresáři v závislosti na tom, jak jsou umístěny na disku.
+Příkazy Další/Předchozí tapeta zvolí následující nebo předchozí soubor v adresáři v závislosti na tom, jak jsou umístěny na disku.
 
 
 <A NAME=106>
@@ -221,7 +223,7 @@ Tato funkce funguje podobně jako <A href=#25>skrýt okno</A>, ale na rozdíl od
 
 <A NAME=72><A NAME=71>
 <h3>Změnit velikost okna, Přesunout okno</h3>
-Pomocí kláves nahoru, dolů, vlevo, vpravo změníte velikost aktivního okna nebo přesunete okno a nakonec stiknete Enter.
+Pomocí kláves nahoru, dolů, vlevo, vpravo změníte velikost aktivního okna nebo přesunete okno a nakonec stisknete Enter.
 
 <A NAME=90>
 <h3>Snímek okna</h3>
@@ -231,6 +233,11 @@ Funguje podobně jako Alt+PrintScreen, ale místo do schránky se obrázek ulož
 <h3>Průhlednost</h3>
 Prvním parametrem je číslo od 0 do 255, což znamená od zcela průhledného až po zcela neprůhledné. Druhým nepovinným parametrem je název okna.
 <br/>Tato funkce nefunguje ve Windows 95/98/ME/NT.
+
+<A NAME=110><A NAME=111>
+<h3>Průhlednost -, Průhlednost +</h3>
+Sníží/zvýší průhlednost okna. Prvním nepovinným parametrem je číslo udávající, o kolik se má průhlednost změnit (výchozí hodnota je 10). Druhým nepovinným parametrem je název okna.
+<br/>Tato funkce nefunguje ve Windows 95/98/ME/NT/2000.
 
 <A NAME=66>
 <h3>Informace</h3>
@@ -251,7 +258,7 @@ Simuluje stisk Alt+Tab nebo Alt+Shift+Tab. Správně to funguje jen s myšími z
 <A NAME=13><A NAME=14><A NAME=15><A NAME=16><A NAME=78>
 <h3>Hlasitost, Hlasitost +, Hlasitost -</h3>
 Změna hlasitosti. První parametr je celé číslo od 0 do 100, které udává, na jako hodnotu se má hlasitost nastavit nebo o kolik procent se má zesílit nebo zeslabit. Druhý parametr je název zvukového zařízení (Mixer, Wave, MIDI, CD Audio, Line In, Microphone, Bass, Treble, ...). Názvy zařízení závisejí na konkrétní zvukové kartě a dají se zjistit z programu Ovládání hlasitosti, který je v příslušenství Windows. Bass a Treble jsou hloubky a výšky. Slovo Mixer znamená výchozí zařízení pro přehrávání zvuku. Pokud chcete měnit hlasitost nahrávání, pak před název zařízení napište R: (např. R:Microphone).
-<p>Když máte více zvukových karet, pak ve Windows&nbsp;NT/95/98/ME/2000/2003/XP před název zadejte číslo a dvojtečku (např. 2:Mixer). Ve Windows 2008/Vista/7 za název přidejte název zvukové karty v závorkách, např. Speakers (Creative SB X-Fi).
+<p>Když máte více zvukových karet, pak ve Windows&nbsp;NT/95/98/ME/2000/2003/XP před název zadejte číslo a dvojtečku (např. 2:Mixer). Ve Windows 2008/Vista/7/8 za název přidejte název zvukové karty v závorkách, např. Speakers (Creative SB X-Fi).
 <p>
 Při použití klávesové zkratky se zobrazí malé okno s aktuálními hodnotami hlasitosti. Okno lze přesouvat myší. Zobrazují se jen ty hlasitosti, které jsou v možnostech uvedeny v položce "Zobrazit tato zvuková zařízení:", kde jsou jejich názvy oddělené čárkami. Před název zařízení můžete navíc napsat zobrazovaný název a rovnítko, např. Hlasitost=Mixer,Mikrofon=R:Microphone. <br>
 
@@ -366,7 +373,7 @@ Zakáží se joystick zkratky a také se zastaví podproces, který každých 10
 Zakáží se zkratky dálkového ovládání. Když chcete také ukončit spojení s WinLIRC, musíte v možnostech zrušit zaškrtnutí přepínače "Povolit". Parametr 1 znamená vypnout, 0 znamená zapnout, bez parametru tato funkce funguje jako přepínač. 
 
 <h2> Licence</h2>
-Na tento program se vztahuje licence "GNU General Public License". Zde jsou uvedeny jen nejdůležitější body. Celé její znění (33KB, v anličtině) lze stáhnout z autorovy webové stránky nebo <a href="http://opensource.org/licenses">http://opensource.org/licenses</a>. 
+Na tento program se vztahuje licence "GNU General Public License". Zde jsou uvedeny jen nejdůležitější body. Celé její znění (33KB, v angličtině) lze stáhnout z autorovy webové stránky nebo <a href="http://opensource.org/licenses">http://opensource.org/licenses</a>. 
 <ol>
 <li> Program je zdarma. Je povoleno ho kopírovat nebo distribuovat na CD, třeba spolu s jinými programy. 
 <li> Program si můžete pro vlastní potřebu upravit. Také můžete části zdrojového kódu použít do svých vlastních programů. V obou případech musíte splnit následující požadavky:

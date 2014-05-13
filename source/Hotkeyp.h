@@ -304,6 +304,7 @@ typedef BOOL(__stdcall *TLockWorkStation)();
 typedef BOOL(__stdcall *TdiskFreeFunc)(LPCTSTR, ULARGE_INTEGER*, ULARGE_INTEGER*, ULARGE_INTEGER*);
 typedef BOOL(__stdcall *TmemInfo)(HANDLE, PROCESS_MEMORY_COUNTERS*, DWORD);
 typedef BOOL(__stdcall *TsetOpacityFunc)(HWND, COLORREF, BYTE, DWORD);
+typedef BOOL(__stdcall *TGetLayeredWindowAttributes)(HWND, COLORREF*, BYTE*, DWORD*);
 typedef DWORD(__stdcall *TregisterServiceProcess)(DWORD, DWORD);
 typedef BOOL(__stdcall *TGetGUIThreadInfo)(DWORD, LPGUITHREADINFO);
 typedef LRESULT(__stdcall *TSendMessageTimeout)(HWND, UINT, WPARAM, LPARAM, UINT, UINT, PDWORD_PTR);
