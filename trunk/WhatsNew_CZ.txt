@@ -12,6 +12,7 @@ HotKeyP
 
 opravené chyby:
 - pøíkaz vložit text nefungoval pro nìkteré jazyky
+- ve vícenásobných pøíkazech nefungoval pøíkaz vložit text
 - nìkteré systémové zkratky nešly zmìnit (Ctrl+Win+P, Ctrl+Win+F, Win+Shift+M, Win+Shift+up, Alt+Win+1, ...)
 
 4.6.2 (20.11.2012)

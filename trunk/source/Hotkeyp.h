@@ -123,6 +123,12 @@ struct ClipboardData
 	ClipboardData *nxt; //next format
 };
 
+struct CharList
+{
+	CharList* next;
+	char* text;
+};
+
 struct PasteTextData
 {
 	ClipboardData *prev; //previous clipboard content
@@ -130,9 +136,12 @@ struct PasteTextData
 	enum{ M=50 };
 	char *L[M];  //list box
 	int n;       //length of L
+	CharList *queueFirst,*queueLast;
 	bool busy;
 	void save();
 	void restore();
+	void addToQueue(char *s);
+	bool processQueue();
 };
 
 enum{

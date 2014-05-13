@@ -1891,6 +1891,7 @@ BOOL CALLBACK enumMinimize(HWND hWnd, LPARAM)
 	return TRUE;
 }
 
+//-------------------------------------------------------------------------
 void PasteTextData::save()
 {
 	HGLOBAL hmem;
@@ -1990,7 +1991,7 @@ void copyToClipboard1(char *s)
 	char *ptr;
 	DWORD len=strlen(s)+1;
 
-	if((hmem=GlobalAlloc(GMEM_DDESHARE, isWin9X ? len : 2*len))!=0){
+	if(s && (hmem=GlobalAlloc(GMEM_DDESHARE, isWin9X ? len : 2*len))!=0){
 		if((ptr=(char*)GlobalLock(hmem))!=0){
 			if(isWin9X){
 				strcpy(ptr, s);
@@ -2129,7 +2130,10 @@ void pasteText(char *param)
 	DWORD_PTR p;
 	TSendMessageTimeout f=0;
 
-	if(lockPaste) return;
+	if(lockPaste){
+		pasteTextData.addToQueue(param);
+		return;
+	}
 	lockPaste++;
 	//split param to items
 	n=0;
@@ -2193,6 +2197,36 @@ void pasteText(char *param)
 	}
 	lockPaste--;
 }
+
+void PasteTextData::addToQueue(char *s)
+{
+	CharList *item = new CharList;
+	item->next=0;
+	item->text=0;
+	cpStr(item->text, s);
+	if(!queueLast){
+		queueFirst=queueLast= item;
+	}
+	else{
+		queueLast->next=item;
+		queueLast=item;
+	}
+}
+
+bool PasteTextData::processQueue()
+{
+	if(!queueFirst || lockPaste) return false;
+	//remove first item from queue
+	CharList* item=queueFirst;
+	queueFirst=item->next;
+	if(!queueFirst) queueLast=0;
+	//paste
+	pasteText(item->text);
+	delete item->text;
+	delete item;
+	return true;
+}
+//-------------------------------------------------------------------------
 
 void wndInfo(HWND w)
 {
