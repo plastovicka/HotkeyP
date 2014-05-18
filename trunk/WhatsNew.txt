@@ -1,19 +1,20 @@
 HotKeyP
 -------
+4.7
+- commands "Opacity +", "Opacity -"
 - environment variables can be used in commands (e.g. %SystemRoot%)
 - option to play sound when a hotkey is pressed
 - option "Wait before executing this hotkey", command will be executed after 5 second unless the user cancels it
 - only pressed shift keys are released before macro
-- key state is reset when reloading hook
 - command "Delete temporary files" can delete read-only files
 - HotkeyP window is transparent when showing User Account Control dialog
 - large HotkeyP icon looks same as small icon
-- commands "Opacity +", "Opacity -"
 
 fixed bugs:
 - paste text command did not work on some keyboard layouts
 - multi-command did not work with paste text
 - some system hotkeys could not be redefined (Ctrl+Win+P, Ctrl+Win+F, Win+Shift+M, Win+Shift+up, Alt+Win+1, ...)
+- key state is reset when reloading hook
 
 4.6.2 (2012-11-20)
 fixed bugs:

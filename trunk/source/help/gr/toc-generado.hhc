@@ -1,0 +1,350 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<!-- Sitemap 1.0 -->
+</HEAD><BODY>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Help content">
+     <param name="Local" value="">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Συντομεύσεις ποντικιού">
+     <param name="Local" value="1.htm#NODO0">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Remote control">
+     <param name="Local" value="1.htm#NODO1">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Κατηγορίες">
+     <param name="Local" value="1.htm#NODO2">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="’γκιστρο">
+     <param name="Local" value="1.htm#NODO3">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Εσωτερικές εντολές">
+     <param name="Local" value="1.htm#NODO4">
+     </OBJECT>
+
+<UL>
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Τερματισμός λειτουργίας, Επανεκκίνηση, Αποσύνδεση">
+     <param name="Local" value="1.htm#NODO5">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Αναστολή, Αδρανοποίηση">
+     <param name="Local" value="1.htm#NODO6">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Εμφάνιση διαλόγου κλεισίματος">
+     <param name="Local" value="1.htm#NODO7">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Κλείδωμα Η/Υ">
+     <param name="Local" value="1.htm#NODO8">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Ελεύθερος χώρος δίσκου">
+     <param name="Local" value="1.htm#NODO9">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Εξαγωγή δίσκου">
+     <param name="Local" value="1.htm#NODO10">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="’δειασμα κάδου ανακύκλωσης">
+     <param name="Local" value="1.htm#NODO11">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Εκκαθάριση πρόσφατων εγγράφων">
+     <param name="Local" value="1.htm#NODO12">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Διαγραφή προσωρινών αρχείων">
+     <param name="Local" value="1.htm#NODO13">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Πίνακες ελέγχων">
+     <param name="Local" value="1.htm#NODO14">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Απενεργοποίηση πλήκτρου">
+     <param name="Local" value="1.htm#NODO15">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Απόκρυψη εικονιδίου περιοχής εργασιών">
+     <param name="Local" value="1.htm#NODO16">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Επαναφορά εικονιδίου περιοχής εργασιών">
+     <param name="Local" value="1.htm#NODO17">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Εκκίνηση  υπηρεσίας">
+     <param name="Local" value="1.htm#NODO18">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Διακοπή υπηρεσίας">
+     <param name="Local" value="1.htm#NODO19">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Προφύλαξη οθόνης">
+     <param name="Local" value="1.htm#NODO20">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Απενεργοποίηση οθόνης">
+     <param name="Local" value="1.htm#NODO21">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Ανάλυση επιφάνειας εργασίας">
+     <param name="Local" value="1.htm#NODO22">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Εμφάνιση επιφάνειας εργασίας">
+     <param name="Local" value="1.htm#NODO23">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Φωτογράφιση επιφάνειας εργασίας">
+     <param name="Local" value="1.htm#NODO24">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Τυχαίο, Επόμενο, Προηγούμενο φόντο">
+     <param name="Local" value="1.htm#NODO25">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Αποθήκευση εικονιδίων επιφάνειας εργασίας">
+     <param name="Local" value="1.htm#NODO26">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Επαναφορά εικονιδίων επιφάνειας εργασίας">
+     <param name="Local" value="1.htm#NODO27">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Μεγεθυντικός φακός">
+     <param name="Local" value="1.htm#NODO28">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Εμφάνιση κειμένου">
+     <param name="Local" value="1.htm#NODO29">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Ελαχιστοποίηση, Μεγιστοποίηση, Κλείσιμο παραθύρου, Πάντα στο προσκήνιο">
+     <param name="Local" value="1.htm#NODO30">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Ελαχιστοποίηση άλλων">
+     <param name="Local" value="1.htm#NODO31">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Ελαχιστοποίηση, στη γραμμή εργασιών">
+     <param name="Local" value="1.htm#NODO32">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Απόκρυψη παραθύρου">
+     <param name="Local" value="1.htm#NODO33">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Απόκρυψη εφαρμογής">
+     <param name="Local" value="1.htm#NODO34">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Αλλαγή μεγέθους, μετακίνηση παραθύρου">
+     <param name="Local" value="1.htm#NODO35">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Φωτογραφία παραθύρου">
+     <param name="Local" value="1.htm#NODO36">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Διαφάνεια">
+     <param name="Local" value="1.htm#NODO37">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Πληροφορία">
+     <param name="Local" value="1.htm#NODO38">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Τερματισμός διαδικασίας">
+     <param name="Local" value="1.htm#NODO39">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Προτεραιότητα διαδικασίας">
+     <param name="Local" value="1.htm#NODO40">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Επόμενη, προηγούμενη εργασία">
+     <param name="Local" value="1.htm#NODO41">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Ένταση, Ένταση +, Ένταση -">
+     <param name="Local" value="1.htm#NODO42">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Σίγαση">
+     <param name="Local" value="1.htm#NODO43">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Αποβολή/Κλείσιμο CD">
+     <param name="Local" value="1.htm#NODO44">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Αναπαραγωγή CD, Διακοπή, Επόμενο κομμάτι,  Προηγούμενο κομμάτι">
+     <param name="Local" value="1.htm#NODO45">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Ταχύτητα CD">
+     <param name="Local" value="1.htm#NODO46">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Επικόλληση κειμένου">
+     <param name="Local" value="1.htm#NODO47">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Μακροεντολή">
+     <param name="Local" value="1.htm#NODO48">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Μακροεντολή στο ενεργό παράθυρο">
+     <param name="Local" value="1.htm#NODO49">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Αποστολή πλήκτρων σε παράθυρο">
+     <param name="Local" value="1.htm#NODO50">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Αποστολή πλήκτρων στο ενεργό παράθυρο">
+     <param name="Local" value="1.htm#NODO51">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Αποστολή εντολής παραθύρου">
+     <param name="Local" value="1.htm#NODO52">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Εντολή στο ενεργό παράθυρο">
+     <param name="Local" value="1.htm#NODO53">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Πολυεντολή">
+     <param name="Local" value="1.htm#NODO54">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Λίστα εντολών">
+     <param name="Local" value="1.htm#NODO55">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Μετακίνηση κέρσορα ποντικιού">
+     <param name="Local" value="1.htm#NODO56">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Τροχός">
+     <param name="Local" value="1.htm#NODO57">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Οριζόντιος τροχός">
+     <param name="Local" value="1.htm#NODO58">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Αριστερό, Μεσαίο, Δεξί κλικ, κλικάρισμα Τέταρτου και Πέμπτου πλήκτρου">
+     <param name="Local" value="1.htm#NODO59">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Διπλό κλικ">
+     <param name="Local" value="1.htm#NODO60">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Απενεργοποίηση όλων των hotkeys">
+     <param name="Local" value="1.htm#NODO61">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Απενεργοποίηση συντομεύσεων πληκτρολογίου">
+     <param name="Local" value="1.htm#NODO62">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Απενεργοποίηση συντομεύσεων ποντικιού">
+     <param name="Local" value="1.htm#NODO63">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Απενεργοποίηση συντομεύσεων μοχλού παιχνιδιών">
+     <param name="Local" value="1.htm#NODO64">
+     </OBJECT>
+
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="Απενεργοποίηση απομακρυσμένου ελέγχου">
+     <param name="Local" value="1.htm#NODO65">
+     </OBJECT>
+
+</UL>
+<LI> <OBJECT type="text/sitemap">
+     <param name="Name" value="’δεια">
+     <param name="Local" value="1.htm#NODO66">
+     </OBJECT>
+
+</UL>
+</BODY></HTML>
