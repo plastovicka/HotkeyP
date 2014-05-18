@@ -1,0 +1,359 @@
+;Tradotto da - Victor
+12=Nuovo collegamento...
+303=&File :
+304=&Parametri :
+305=&Avvia in :
+307=P&riorità :
+308=&Finestra :
+310=&Trasparenza :
+309=Consenti instanze multiple
+311=Aggiungi al menu icone nell'area di notifica
+312=Avvia automaticamente con Windows
+313=Conferma esecuzione collegamento
+314=Categoria :
+306=Nota :
+1=OK
+2=Annulla
+7=Aiuto
+
+327=Opzioni...
+15=Generale
+331=Avvia con Windows
+320=Mostra nell'area di notifica
+321=Durata animazione nell'area di notifica
+334=Il pulsante 'Minimizza' riduce HotkeyP ad icona
+335=Il pulsante 'Chiudi' riduce HotkeyP ad icona
+342=Inserisci nuovo hotkey dopo la voce attuale
+357=Imposta priorità alta al processo HotkeyP
+340=Rinomina scorciatoie :
+341=(Esempio: Enter=Invio; (183)=Calcolatrice; [35]=Incolla)
+346=Pulsanti della finestra principale
+500=Modifica
+502=Inserisci
+503=Aggiungi
+501=Elimina
+504=Duplica
+505=Esegui
+510=Opzioni
+368=Usa Hook per le scorciatoie da tastiera
+396=Mai
+397=Solo per chiavi di sistema specifiche
+398=Solo per chiavi multimediali
+399=Per tutti
+386=Ricarica collegamenti ogni :
+
+16=Comandi
+322=Volume audio
+323=Larghezza finestra :
+345=Trasparenza :
+324=Durata visibile :
+332=Mostra queste righe audio :
+328=Colori :
+333=Sfondo, testo, bordo :
+339=Mostra testo
+344=Trasparenza :
+338=Sfondo, testo, bordo :
+325=Rapporto spazio libero su disco
+330=Larghezza finestra :
+343=Trasparenza :
+326=Numero di decimali :
+329=Colori :
+353=Mantieni queste impostazioni
+354=Velocità testo :
+355=Muto
+356=Immagine BMP:
+350=Colore casuale
+351=Colore fisso :
+373=Password...
+395=Non mostrare la password
+
+17=Mouse/Remoto
+358=Mouse
+347=Ritardo pulsanti :
+348=Non ritardare questi pulsanti:
+378=S
+379=C
+380=D
+381=4
+382=5
+385=Non ritardare queste applicazioni :
+349=Non ritardare le applicazioni a schermo intero, tranne queste :
+359=Controllo remoto
+365=Stato :
+360=Attiva
+361=WinLIRC exe:
+362=Indirizzo :
+363=Porta :
+364=Ripetizioni max:
+
+18=Joystick
+387=Soglia :
+389=Disattiva le scorciatoie da joystick per queste applicazioni:
+390=Disattiva le scorciatoie da joystick a schermo intero tranne queste applicazioni :
+391=Sposta il mouse tramite joystick
+388=Velocità :
+392=Asse orizzontale :
+393=Asse verticale :
+394=ID Joystick :
+
+11=Info...
+301=Versione
+
+370=Vecchia password :
+371=Nuova password :
+372=Conferma nuova password :
+
+20=Rinomina categoria
+374=Nome :
+21=Assegna a...
+
+;menu
+401=&Menu
+400=&Lingua
+206=&Font...\tCtrl+F
+212=&Opzioni...\tCtrl+M
+203=&Esci\tAlt+X
+204=&Nascondi\tEsc
+
+402=&File
+201=&Apri scorciatoia...\tCtrl+O
+202=&Salva scorciatoia...\tCtrl+S
+207=&Elimina scorciatoia\tCtrl+N
+213=&Apri impostazioni...\tCtrl+I
+214=&Salva impostazioni...\tCtrl+E
+205=&Cancella impostazioni
+215=Esegui sp&y.exe\tCtrl+Y
+
+403=&Scorciatoia
+104=&Inserisci nuovo\tIns
+108=&Aggiungi nuovo\tCtrl+W
+216=Du&plica\tCtrl+D
+102=&Modifica\tEnter
+103=&Elimina     \tCanc
+113=&Rinomina\tF2
+107=Esegui\tCtrl+R
+105=&Su\tCtrl+su
+106=&Giù\tCtrl+giù
+
+405=&Categoria
+220=&Assegna alla scorciatoia selezionata...
+219=&Rinomina
+221=&Elimina
+217=&Su
+218=&Giù
+
+404=&Aiuto
+208=&Guida\tF1
+200=&Cosa c'è di nuovo...
+209=&Info...
+
+;systray icon menu
+210=&Apri
+211=&Chiudi
+
+;extensions Fichiers
+506=File scorciatoie (*.htk)\0*.htk\0Tutti i file\0*.*\0
+507=Tutti i file\0*.*\0Eseguibili\0*.exe;*.com;*.bat;*.scr\0
+508=Tutti i file\0*.*\0
+509=File di registro (*.reg)\0*.reg\0Tutti i file\0*.*\0
+511=Immagini BMP (*.bmp)\0
+
+719=Mouse
+743=Impossibile eseguire %s
+730=Impossibile aprire %s
+731=Formato %s non valido.
+732=%s, non valido !
+733=Impossibile creare l'archivio %s
+734=Errore registrazione nell'archivio %s
+735=Impossibile accedere al Registro di sistema.
+736=Seleziona cartella di origine.
+737=comando non valido.
+738=Tipo di archivio senza associazione.
+739=Impossibile trovare %s
+740=File non valido.
+741=Solo i file eseguibili possono avere la priorità specificata.
+761=Solo i file eseguibili possono avere la trasparenza specificata.
+762=Lo spostamento degli elementi è possibile solo spostando la prima colonna.
+764=Vuoi veramente eseguire questo comando ?
+760=Vuoi veramente eliminare il file di configurazione ?
+366=attivo
+367=disattivo
+752=Muto
+763=Impossible de se connecter avec WinLIRC.
+755=Errore %s\nRiga %d.
+756=Errore %s\nLa dimensione di %d è troppo grande.
+757=Errore %s\n%d già esistente.
+753=L'archive %s è troppo grande,
+754=Errore lettura di %s
+744=Tasto scorciatoia sconosciuto : %s
+746=Nessuna finestra in primo piano.
+745=la finestra "%s" non è stata trovata.
+748=Il disco è utilizzato da un altro programma.
+747=%s è un lettore CD.
+749=La cartella o l'archivio %s non è stata trovato.
+750=Impossibile modificare la priorità !
+759=Titolo: %s\r\nClasse della finestra: %s\r\Processi: %s\r\nModalità: %s\r\nPriorità: %s\r\nMemoria: %d KB.
+751=Impossibile chiudere il programma !
+758=Il numero indicato nel 'Multi-comando' non è valido !
+765=Vuoi davvero eliminare la categoria '%s'?
+766=La posizione delle icone del Desktop è stata memorizzata.
+
+;colonnes
+720=
+721=Scorciatoia
+722=Descrizione
+
+;priorité processus
+700=Bassa
+701=Normale
+702=Alta
+703=Tempo reale
+704=Sotto il normale
+705=Sopra il normale
+
+;window state
+710=normale
+711=massimizza
+712=minimizza
+
+;help file name
+13=language\\Aiuto-it.chm
+
+;commandes groupes
+601=Sistema
+600=Pannello di configurazione
+602=Visualizza
+605=Finestra
+603=Sposta finestra
+604=Esecuzione priorità
+606=Multimedia
+608=Macro
+607=Mouse
+
+;catégories
+980=Predefinito
+979=Tutto
+978=Tastiera
+977=Mouse
+976=Joystick
+975=Remoto
+974=Controlli interni
+973=Programmi
+972=Documenti
+971=Internet
+970=Esecuzione automatica
+969=Mostra nell'area di notifica
+
+;commands
+1000=Espelli CD
+1001=Chiudi CD
+1002=Stop
+1003=Riavvia
+1004=Pausa
+1005=Chiudi sessione
+1006=Screensaver
+1007=Ingrandisci finestra
+1008=Riduci finestra
+1009=Chiudi finestra
+1010=Sempre su
+1011=Termina processo
+1012=Pannello di configurazione
+1013=Volume +
+1014=Volume -
+1015=Volume Onda +
+1016=Volume Onda -
+1017=Muto
+1018=Risoluzione Schermo
+1019=Metti in standby
+1020=Priorità Processo
+1021=Invia un comando alla finestra
+1022=Vuota il Cestino
+1023=Sfondo schermo casuale
+1024=Spazio libero su disco
+1025=Nascondi finestra
+1026=Invia scorciatoia alla finestra
+1027=Macro
+1028=Al centro dello schermo
+1029=nell'angolo in basso a sinistra
+1030=Giù
+1031=nell'angolo in basso a destra
+1032=a sinistra
+1033=a destra
+1034=nell'angolo in alto a sinistra
+1035=Su
+1036=nell'angolo in alto a destra
+1037=Sposta puntatore del mouse
+1038=Mostra finestra di dialogo di Arresto
+1039=Riproduci CD
+1040=Brano successivo del CD
+1041=Ferma CD
+1042=Brano precedente del CD
+1043=Clicca tasto sinistro
+1044=Clicca pulsante centrale del mouse
+1045=Clicca tasto destro
+1046=Priorità bassa
+1047=Priorità normale
+1048=Priorità alta
+1049=Priorità Tempo reale
+1050=Aggiungi/Rimuovi programmi
+1051=Proprietà dello schermo
+1052=Opzioni internet
+1053=Proprietà del mouse
+1054=Proprietà audio
+1055=Opzioni energia
+1056=Sistema
+1057=Proprietà Data ed Ora
+1058=Modalità Onda
+1059=Priorità sotto il normale
+1060=Priorità sopra il normale
+1061=Multi-comandi
+1062=Espelli/Chiudi CD
+1063=Blocca la session
+1064=Metti in modalità Ibernazione
+1065=Minimizza le altre finestre
+1066=Informazioni sistema
+1067=Incolla testo
+1068=Sfondo successivo
+1069=Sfondo precedente
+1070=Lista dei comandi
+1071=Sposta finestra
+1072=Ridimensiona finestra
+1073=Invia comando alla finestra attiva
+1074=Scorciatoia della finestra attiva
+1075=Rotellina del mouse
+1076=Doppio clic
+1077=Trasparenza
+1078=Volume
+1079=Clicca sul quarto pulsante
+1080=Clicca sul quinto pulsante
+1081=Mostra Desktop
+1083=Task precedente
+1084=Task Successivo
+1085=Mostra testo
+1086=Disattiva scorciatoie
+1087=Disattiva tutti i dispositivi
+1088=Disattiva controllo del mouse
+1089=Cattura schermata del Desktop
+1090=Cattura schermata della finestra
+1091=Nascondi icone nell'area di notifica
+1092=Arresta servizio
+1093=Avvia servizio
+1094=Applica macro nella finestra attiva
+1095=Disattiva controllo del Joystick
+1096=Disattiva il controllo remoto
+1097=Disattiva il controllo tastiera
+1099=Mostra icone nell'area di notifica
+1100=Velocità di lettura CD
+1101=Nascondi applicazione
+1102=Minimizza nell'area di notifica
+1103=Mostra/Nascondi lente d'ingrandimento
+1104=Cancella elenco documenti recenti
+1105=Elimina i file temporanei
+1106=Salva posizione delle icone del Desktop
+1107=Ripristina posizione delle icone sul Desktop
+
+767=Impossibile rimuovere il disco %c: !
+1108=Ruota orizzontalmente
+1109=Rimuovi pen drive in modo sicuro
+1110=Trasparenza -
+1111=Trasparenza +

@@ -287,7 +287,7 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>$(OutDir)$(TargetName)$(TargetExt) -close window PlasHotkey</Command>
+      <Command>$(OutDir)hotkeyp$(TargetExt) -close window PlasHotkey</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
