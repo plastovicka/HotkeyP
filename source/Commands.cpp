@@ -302,6 +302,10 @@ void forceNoShift()
 		for(i=0; i<Nshift2; i++){
 			shifts0[i]= GetAsyncKeyState(shift2Tab[i])<0;
 		}
+		if(preventWinMenu){
+			keyEventDown(VK_CONTROL);
+			keyEventUp(VK_CONTROL);
+		}
 		for(i=0; i<Nshift2; i++){
 			if(shifts0[i]){
 				//NOTE: if right Alt is released in PuTTY, then CTRL+key shortcuts in PuTTY terminal stop working

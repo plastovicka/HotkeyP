@@ -181,7 +181,7 @@ extern HWND hWin, hWndLock, hWndLircState, hHotKeyDlg, hWndBeforeLock;
 extern LPARAM keyLastScan;
 extern DWORD idHookThreadK, idHookThreadM;
 extern POINT mousePos;
-extern bool modif, altDown, blockedKeys[256], pcLocked, isWin9X, isWin64, isVista, disableAll, disableMouse, disableJoystick, disableLirc, disableKeys, isHilited, editing, isZoom;
+extern bool modif, altDown, blockedKeys[256], pcLocked, isWin9X, isWin64, isVista, disableAll, disableMouse, disableJoystick, disableLirc, disableKeys, isHilited, editing, isZoom, preventWinMenu;
 extern char volumeStr[256], *pcLockParam, notDelayApp[512], delayApp[512];
 extern TfileName iniFile, lockBMP, exeBuf;
 extern const char *subkey;
