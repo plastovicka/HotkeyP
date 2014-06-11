@@ -307,7 +307,7 @@ void initLang()
 	if(!lang[0]){
 		//language detection
 		const char* s;
-		switch((BYTE)GetUserDefaultLangID())
+		switch(PRIMARYLANGID(GetUserDefaultLangID()))
 		{
 			case LANG_CZECH: s="Èesky"; break;
 			case LANG_PORTUGUESE: s="Português brasileiro"; break;
