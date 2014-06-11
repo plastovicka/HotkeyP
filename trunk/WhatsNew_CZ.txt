@@ -1,6 +1,6 @@
 HotKeyP
 -------
-4.7
+4.7 (18.5.2014)
 - pøíkazy "Prùhlednost +", "Prùhlednost -"
 - v pøíkazech lze používat promìnné prostøedí (napø. %SystemRoot%)
 - ke každé zkratce lze nastavit zvuk (WAV soubor), který se pøehraje pøi stisku klávesové zkratky
