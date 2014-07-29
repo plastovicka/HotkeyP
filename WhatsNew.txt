@@ -1,5 +1,9 @@
 HotKeyP
 -------
+4.7.1 (2014-07-03)
+fixed bugs:
+- hotkey Win+mouse showed the Start menu if used with macro
+
 4.7 (2014-05-18)
 - commands "Opacity +", "Opacity -"
 - environment variables can be used in commands (e.g. %SystemRoot%)
