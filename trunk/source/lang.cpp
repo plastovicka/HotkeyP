@@ -319,6 +319,7 @@ void initLang()
 			case LANG_GREEK: s="Greek"; break;
 			case LANG_ITALIAN: s= "Italiano"; break;
 			case LANG_DUTCH: s= "Nederlands"; break;
+			case LANG_CATALAN: s="Catalan"; break;
 			default: s="English"; break;
 		}
 		strcpy(lang, s);

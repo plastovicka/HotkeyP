@@ -1,0 +1,366 @@
+
+12=Hot Key
+303=&Comando:
+304=&Parametres:
+305=&Directori de treball:
+315=&So:
+307=Prioritat del P&roces:
+308=&Finestra:
+310=&Opacitat:
+309=&Permetre multiples instancies
+311=Afagir una icona al&menu de la safata
+312=Executar &automaticament al arrancar Windows
+313=Preguntar abans d'executar aquesta hot&key
+316=Esperar abans d'execu&tar aquesta
+314=Cate&goria:
+306=&Nota:
+1=OK
+2=Cancel·lar
+7=Ajuda
+
+327=Opcions
+15=General
+331=Executar &automaticament al arrancar Windows
+320=Afagir una icona al &menu de la safata
+321=il·luminar la icona quan una &hotkey és premuda
+334=El botó de &minimitzar amaga la finestra
+335=El botó de tan$car amaga la finestra
+342=Inserir una nova hotkey des&prés de l'element actual
+357=E&stablir prioritat alta al procés HotkeyP
+340=&Reanomenar tecles:
+341=(exemple:  Enter=Return; (183)=Calculator;[35]=Paste)
+346=Butons a la finestra principal
+500=Editar
+502=Inserir
+503=Afagir
+501=Esborrar
+504=Duplicar
+505=Executar
+510=Opcions
+368=Usar keyboard hook
+396=&mai
+397=només per a tecles especials de s&istema
+398=n&omés per a tecles multimedia
+399=per &a totes les hotkeys
+386=Re&carregar els hooks cada
+
+16=Comandos
+322=Volum
+323=Amplada de la fi&nestra:
+345=Opacitat:
+324=d&uració de la visibilitat:
+332=Mostrar aquestes linies d'&audio:
+328=Colors:
+333=Background, text, border:
+339=mostrar texte
+344=Opacitat:
+338=Background, text, border:
+325=Espai lliure de disc
+330=Amplada de la &finestra:
+343=Opacitat:
+326=&Digits després del punt decimal:
+329=Colors:
+353=Bloquejar l'ordinador
+354=velo&citat del texte:
+355=&Mutejar el so
+356=fitxer &BMP:
+350=color alea&tori
+351=&Constant de color:
+373=&Password...
+395=No mostra&r la password
+
+17=Ratolí/Remot
+358=Ratoli
+347=&Retardar les butons del ratolí:
+348=No retardar aquests botons:
+378=&L
+379=&M
+380=&R
+381=&4
+382=&5
+385=&no retardar aquestes aplicacions:
+349= no retardar les aplicacions\r\n a pantalla completa excepte aquestes:
+359=control remot
+365=Estat:
+360=&Activar
+361=&WinLIRC exe:
+362=&Adreça:
+363=&Port:
+364=Ma&x. repeticions:
+
+18=Joystick
+387=&llindar:
+389=&Inhabilitar les dreceres globals del joystick en aquestes aplicacions:
+390=In&habilitar les dreceres globals del joystick en les aplicacions pantalla completa excepte aquestes:
+391=&Moure el ratolí amb el joystick
+388=M&ultiplicador:
+392=Eix &Horizontal:
+393=Eix &Vertical:
+394=&Joystick ID:
+
+11=Sobre
+301=Versió
+
+370=password antiga:
+371=password nova:
+372=Confirmar la nova password:
+
+20=Renombrar categoria
+374=Nom:
+21=Moure les hotkeys seleccionades a la categoria
+
+22=Cancel·lar Operació
+550=Els següents comandaments estan a punt de ser executats.\n\n Si no ho vols fer invoca aquest comand click "Cancel" per a abortar la operació.  (Si no preparat per a les conseqüències!)
+
+;menu
+401=&Finestra
+400=&Llenguatge
+206=&Font...\tCtrl+F
+212=&Opcions...\tCtrl+M
+203=&Sortir\tAlt+X
+204=&Amagar\tEsc
+
+402=&Fitxer
+201=&Obrir hotkeys...\tCtrl+O
+202=&Guardar hotkeys...\tCtrl+S
+207=&Esborrar hotkeys\tCtrl+N
+213=O&brir configuració...\tCtrl+I
+214=G&uardar configuració...\tCtrl+E
+205=Esbo&rrar configuració
+215=&Executar spy.exe\tCtrl+Y
+
+403=&Hotkey
+104=Inserir &new\tInsert
+108=&Afagir new\tCtrl+W
+216=Du&plicar\tCtrl+D
+102=&Editar\tEnter
+103=Es&borrar     \tDelete
+113=Reano&menar\tF2
+107=&Executar\tCtrl+R
+105=&Amunt\tCtrl+up
+106=&Avall\tCtrl+down
+
+405=&Categoria
+220=&Assignar a les hotkeys seleccionades
+219=&Reanomenar
+221=Es&borrar
+217=&Amunt
+218=&Avall
+
+404=A&juda
+208=&Ajuda\tF1
+200=&Què hi ha de nou
+209=&Sobre...
+
+;icona de la safata del sistema
+210=&Obrir
+211=&Sortir
+
+;filtres de les extensions dels fitxers
+506=Hotkeys (*.htk)\0*.htk\0Tots els fitxers\0*.*\0
+507=Tots els fitxers\0*.*\0Fitxers executables\0*.exe;*.com;*.bat;*.scr\0
+508=Tots els fitxers\0*.*\0
+509=Fitxers config (*.reg)\0*.reg\0Tots els fitxers\0*.*\0
+511=Imatges Bitmap (*.bmp)\0*.bmp\0
+512=Audio de forma d'ona (*.wav)\0*.wav\0
+
+719=Ratoli
+743=No es pot executar %s
+730=No es pot obrir el fitxer %s
+731=Format invàlid de %s
+732=Versió invàlida de %s
+733=No es pot crear el fitxer %s
+734=Error d'escriptura, fitxer %s
+735=No es pot escriure el registre de Windows
+736=Seleccionar el directori de treball
+737=L'element del Command item és buit
+738=No hi ha associació per aquest tipus de fitxer
+739=%s no trobat
+740=Directori de treball invàlid
+741=La prioritat del process només pot ser especificada per executables
+761=L'opacitat només pot ser especificada per executables
+762=Moure només és possible si la llista esta ordenada per la primera columna.
+764=Vols executar aquest comando ?
+760=Realment vols esborrar la configuració del registre ?
+366=activar
+367=no s'està executant
+752=Mutejat
+763=No es pot connectar amb WinLIRC
+755=Error a la %s\nLinia %d
+756=Error a %s\nel número del missatge %d és massa llarg
+757=Error a %s\nnúmero duplicat %d
+753=El fitxer %s és massa llarg
+754=Error llegint aquest fitxer %s
+744=Nom de tecla desconegut: %s
+746=No hi ha cap finestra en primar pla
+745=La finestra "%s" no es troba
+748=La unitat l'està fent servir un altre procés
+747=%s no és una unitat de CD
+749=No puc trobar la carpeta o el fitxer %s
+750=No puc canviar la prioritat
+759=Titol: %s\r\nClasse de la finstra: %s\r\nProcés: %s\r\nMòdul: %s\r\nPrioritat: %s\r\nMemoria: %d KB
+751=No puc acabar el procés
+758=Número de multi-comandament invàlid
+765=Vols esborrar la categoria '%s' ?
+766=Les posicions de les icones de l'escriptori s'han guardat
+767=No puc esborrar la unitat %c:
+
+;columnes
+720=
+721=Tecla
+722=Descripció
+
+;prioritat del procés
+700=ociós
+701=normal
+702=alt
+703=temps real
+704=per sota del normal
+705=per sobre del normal
+
+;estat de la finestra
+710=normal
+711=maximitzat
+712=minimitzat
+
+;nom del fitxer d'ajuda
+13=help.chm
+30=main.htm
+14=WhatsNew.txt
+
+;grups de comandaments
+601=Sistema
+600=Panells de control
+602=Mostrar
+605=Finestra
+603=Moure finestra
+604=Prioritat del procés
+606=Multimedia
+608=Macro
+607=Ratolí
+
+;categories
+980=default
+979=tot
+978=teclat
+977=ratolí
+976=joystick
+975=control remot
+974=comandaments
+973=programes
+972=documents
+971=vincles web
+970=autorun
+969=safata menu
+
+;comandaments
+1000=obrir CD
+1001=tancar CD
+1002=Apagar
+1003=Reiniciar
+1004=Suspendre
+1005=Deslogar-se
+1006=Salvapantalles
+1007=Maximitzar finestra
+1008=Minimitzar finestra
+1009=Tancar finestra
+1010=Sempre en primer pla
+1011=Acabar el procés
+1012=Panell de Control
+1013=Volum +
+1014=Volum -
+1015=Wave volum +
+1016=Wave volum -
+1017=Mutejar
+1018=Resolució de pantalla
+1019=Apagar el Monitor
+1020=Prioritat del procés
+1021=Enviar comandament de finestra
+1022=Buidar la paperera de reciclatge
+1023=Fons d'escriptori aleatori
+1024=Espai de disc lliure
+1025=Amagar finestra
+1026=Enviar texles a la finestra
+1027=Macro
+1028=Centre de l'escriptori
+1029=Cantonada inferior esquerra
+1030=inferior
+1031=Cantonada inferior dreta
+1032=Esquerra
+1033=Dreta
+1034=Cantonada superior esquerra
+1035=Dalt
+1036=Cantonada superior dreta
+1037=Moure el cursor del ratolí
+1038=Mostrar diàleg d'apagada
+1039=Executar el CD
+1040=propera pista del CD
+1041=parar el CD
+1042=Pista anterior CD
+1043=click esquerra
+1044=click central
+1045=click dreta
+1046=Prioritat baixa
+1047=priority normal
+1048=prioritat alta
+1049=prioritat en temps real
+1050= Afagir/esborrar programes
+1051=Mostrar propietats
+1052=Opcions d'Internet
+1053=Ratolí
+1054=Multimedia
+1055=Opcions d'engegada
+1056=Sistema
+1057=Data i hora
+1058=Mutejar Wave
+1059=prioritat per sota del normal
+1060=prioritat per sobre del normal
+1061=Multi comandament
+1062=Obrir/Tancar CD
+1063=Bloquejar l'ordinador
+1064=Hivernar
+1065=Minimitzar altres
+1066=Informació
+1067=Enganxar el texte
+1068=proper fons d'escriptori
+1069=anterior fons d'escriptori
+1070=llista de comandaments
+1071=Moure la finestra
+1072=Redimensionar finstra
+1073=Comandament per a activar la finestra
+1074=Tecles per a activar la finestra
+1075=Roda
+1076=Doble click
+1077=Opacitat
+1078=Volum
+1079=click del quart botó
+1080=click del cinquè botó
+1081=Mostrar escriptori
+1083=tasca anterior
+1084=propera tasca
+1085=Mostrar texte
+1086=Inhabilitat tecla
+1087=Inhabilitar totes les hotkeys
+1088=Inhabilitar les dreceres del ratolí
+1089=Captura de pantalla de l'escriptori
+1090=Captura de pantalla de la finestra
+1091=Amagar la icona de la safata
+1092=Parar el servei
+1093=Iniciar el servei
+1094=Macro per a activar la finestra
+1095=Inhabilitar les dreceres del joystick
+1096=Inhabilitar el control remot
+1097=Inhabilitar les dreceres de teclat
+1099=Restaurar la icona de la safata
+1100=Velocitat del CD
+1101=Amagar aplicació
+1102=Minimitzar a la safata
+1103=Lupa
+1104=Esborrar els documents recents
+1105=Esbo&rrar els fitxers temporals
+1106=Guardar les icones de l'escriptori
+1107=Restaurar les icones de l'escriptori
+1108=Roda horitzontal
+1109=Unitat remota
+1110=Opacitat +
+1111=Opacitat -
