@@ -15,18 +15,18 @@
 314=Cate&goria:
 306=&Nota:
 1=OK
-2=CancelÂ·lar
+2=Cancel·lar
 7=Ajuda
 
 327=Opcions
 15=General
 331=Executar &automaticament al arrancar Windows
 320=Afagir una icona al &menu de la safata
-321=ilÂ·luminar la icona quan una &hotkey Ã©s premuda
-334=El botÃ³ de &minimitzar amaga la finestra
-335=El botÃ³ de tan$car amaga la finestra
-342=Inserir una nova hotkey des&prÃ©s de l'element actual
-357=E&stablir prioritat alta al procÃ©s HotkeyP
+321=il·luminar la icona quan una &hotkey és premuda
+334=El botó de &minimitzar amaga la finestra
+335=El botó de tan$car amaga la finestra
+342=Inserir una nova hotkey des&prés de l'element actual
+357=E&stablir prioritat alta al procés HotkeyP
 340=&Reanomenar tecles:
 341=(exemple:  Enter=Return; (183)=Calculator;[35]=Paste)
 346=Butons a la finestra principal
@@ -39,8 +39,8 @@
 510=Opcions
 368=Usar keyboard hook
 396=&mai
-397=nomÃ©s per a tecles especials de s&istema
-398=n&omÃ©s per a tecles multimedia
+397=només per a tecles especials de s&istema
+398=n&omés per a tecles multimedia
 399=per &a totes les hotkeys
 386=Re&carregar els hooks cada
 
@@ -48,7 +48,7 @@
 322=Volum
 323=Amplada de la fi&nestra:
 345=Opacitat:
-324=d&uraciÃ³ de la visibilitat:
+324=d&uració de la visibilitat:
 332=Mostrar aquestes linies d'&audio:
 328=Colors:
 333=Background, text, border:
@@ -58,7 +58,7 @@
 325=Espai lliure de disc
 330=Amplada de la &finestra:
 343=Opacitat:
-326=&Digits desprÃ©s del punt decimal:
+326=&Digits després del punt decimal:
 329=Colors:
 353=Bloquejar l'ordinador
 354=velo&citat del texte:
@@ -69,9 +69,9 @@
 373=&Password...
 395=No mostra&r la password
 
-17=RatolÃ­/Remot
+17=Ratolí/Remot
 358=Ratoli
-347=&Retardar les butons del ratolÃ­:
+347=&Retardar les butons del ratolí:
 348=No retardar aquests botons:
 378=&L
 379=&M
@@ -84,7 +84,7 @@
 365=Estat:
 360=&Activar
 361=&WinLIRC exe:
-362=&AdreÃ§a:
+362=&Adreça:
 363=&Port:
 364=Ma&x. repeticions:
 
@@ -92,14 +92,14 @@
 387=&llindar:
 389=&Inhabilitar les dreceres globals del joystick en aquestes aplicacions:
 390=In&habilitar les dreceres globals del joystick en les aplicacions pantalla completa excepte aquestes:
-391=&Moure el ratolÃ­ amb el joystick
+391=&Moure el ratolí amb el joystick
 388=M&ultiplicador:
 392=Eix &Horizontal:
 393=Eix &Vertical:
 394=&Joystick ID:
 
 11=Sobre
-301=VersiÃ³
+301=Versió
 
 370=password antiga:
 371=password nova:
@@ -109,8 +109,8 @@
 374=Nom:
 21=Moure les hotkeys seleccionades a la categoria
 
-22=CancelÂ·lar OperaciÃ³
-550=Els segÃ¼ents comandaments estan a punt de ser executats.\n\n Si no ho vols fer invoca aquest comand click "Cancel" per a abortar la operaciÃ³.  (Si no preparat per a les conseqÃ¼Ã¨ncies!)
+22=Cancel·lar Operació
+550=Els següents comandaments estan a punt de ser executats.\n\n Si no ho vols fer invoca aquest comand click "Cancel" per a abortar la operació.  (Si no preparat per a les conseqüències!)
 
 ;menu
 401=&Finestra
@@ -124,9 +124,9 @@
 201=&Obrir hotkeys...\tCtrl+O
 202=&Guardar hotkeys...\tCtrl+S
 207=&Esborrar hotkeys\tCtrl+N
-213=O&brir configuraciÃ³...\tCtrl+I
-214=G&uardar configuraciÃ³...\tCtrl+E
-205=Esbo&rrar configuraciÃ³
+213=O&brir configuració...\tCtrl+I
+214=G&uardar configuració...\tCtrl+E
+205=Esbo&rrar configuració
 215=&Executar spy.exe\tCtrl+Y
 
 403=&Hotkey
@@ -149,7 +149,7 @@
 
 404=A&juda
 208=&Ajuda\tF1
-200=&QuÃ¨ hi ha de nou
+200=&Què hi ha de nou
 209=&Sobre...
 
 ;icona de la safata del sistema
@@ -167,40 +167,40 @@
 719=Ratoli
 743=No es pot executar %s
 730=No es pot obrir el fitxer %s
-731=Format invÃ lid de %s
-732=VersiÃ³ invÃ lida de %s
+731=Format invàlid de %s
+732=Versió invàlida de %s
 733=No es pot crear el fitxer %s
 734=Error d'escriptura, fitxer %s
 735=No es pot escriure el registre de Windows
 736=Seleccionar el directori de treball
-737=L'element del Command item Ã©s buit
-738=No hi ha associaciÃ³ per aquest tipus de fitxer
+737=L'element del Command item és buit
+738=No hi ha associació per aquest tipus de fitxer
 739=%s no trobat
-740=Directori de treball invÃ lid
-741=La prioritat del process nomÃ©s pot ser especificada per executables
-761=L'opacitat nomÃ©s pot ser especificada per executables
-762=Moure nomÃ©s Ã©s possible si la llista esta ordenada per la primera columna.
+740=Directori de treball invàlid
+741=La prioritat del process només pot ser especificada per executables
+761=L'opacitat només pot ser especificada per executables
+762=Moure només és possible si la llista esta ordenada per la primera columna.
 764=Vols executar aquest comando ?
-760=Realment vols esborrar la configuraciÃ³ del registre ?
+760=Realment vols esborrar la configuració del registre ?
 366=activar
-367=no s'estÃ  executant
+367=no s'està executant
 752=Mutejat
 763=No es pot connectar amb WinLIRC
 755=Error a la %s\nLinia %d
-756=Error a %s\nel nÃºmero del missatge %d Ã©s massa llarg
-757=Error a %s\nnÃºmero duplicat %d
-753=El fitxer %s Ã©s massa llarg
+756=Error a %s\nel número del missatge %d és massa llarg
+757=Error a %s\nnúmero duplicat %d
+753=El fitxer %s és massa llarg
 754=Error llegint aquest fitxer %s
 744=Nom de tecla desconegut: %s
 746=No hi ha cap finestra en primar pla
 745=La finestra "%s" no es troba
-748=La unitat l'estÃ  fent servir un altre procÃ©s
-747=%s no Ã©s una unitat de CD
+748=La unitat l'està fent servir un altre procés
+747=%s no és una unitat de CD
 749=No puc trobar la carpeta o el fitxer %s
 750=No puc canviar la prioritat
-759=Titol: %s\r\nClasse de la finstra: %s\r\nProcÃ©s: %s\r\nMÃ²dul: %s\r\nPrioritat: %s\r\nMemoria: %d KB
-751=No puc acabar el procÃ©s
-758=NÃºmero de multi-comandament invÃ lid
+759=Titol: %s\r\nClasse de la finstra: %s\r\nProcés: %s\r\nMòdul: %s\r\nPrioritat: %s\r\nMemoria: %d KB
+751=No puc acabar el procés
+758=Número de multi-comandament invàlid
 765=Vols esborrar la categoria '%s' ?
 766=Les posicions de les icones de l'escriptori s'han guardat
 767=No puc esborrar la unitat %c:
@@ -208,10 +208,10 @@
 ;columnes
 720=
 721=Tecla
-722=DescripciÃ³
+722=Descripció
 
-;prioritat del procÃ©s
-700=ociÃ³s
+;prioritat del procés
+700=ociós
 701=normal
 702=alt
 703=temps real
@@ -234,16 +234,16 @@
 602=Mostrar
 605=Finestra
 603=Moure finestra
-604=Prioritat del procÃ©s
+604=Prioritat del procés
 606=Multimedia
 608=Macro
-607=RatolÃ­
+607=Ratolí
 
 ;categories
 980=default
 979=tot
 978=teclat
-977=ratolÃ­
+977=ratolí
 976=joystick
 975=control remot
 974=comandaments
@@ -265,16 +265,16 @@
 1008=Minimitzar finestra
 1009=Tancar finestra
 1010=Sempre en primer pla
-1011=Acabar el procÃ©s
+1011=Acabar el procés
 1012=Panell de Control
 1013=Volum +
 1014=Volum -
 1015=Wave volum +
 1016=Wave volum -
 1017=Mutejar
-1018=ResoluciÃ³ de pantalla
+1018=Resolució de pantalla
 1019=Apagar el Monitor
-1020=Prioritat del procÃ©s
+1020=Prioritat del procés
 1021=Enviar comandament de finestra
 1022=Buidar la paperera de reciclatge
 1023=Fons d'escriptori aleatori
@@ -291,8 +291,8 @@
 1034=Cantonada superior esquerra
 1035=Dalt
 1036=Cantonada superior dreta
-1037=Moure el cursor del ratolÃ­
-1038=Mostrar diÃ leg d'apagada
+1037=Moure el cursor del ratolí
+1038=Mostrar diàleg d'apagada
 1039=Executar el CD
 1040=propera pista del CD
 1041=parar el CD
@@ -307,7 +307,7 @@
 1050= Afagir/esborrar programes
 1051=Mostrar propietats
 1052=Opcions d'Internet
-1053=RatolÃ­
+1053=Ratolí
 1054=Multimedia
 1055=Opcions d'engegada
 1056=Sistema
@@ -320,7 +320,7 @@
 1063=Bloquejar l'ordinador
 1064=Hivernar
 1065=Minimitzar altres
-1066=InformaciÃ³
+1066=Informació
 1067=Enganxar el texte
 1068=proper fons d'escriptori
 1069=anterior fons d'escriptori
@@ -333,15 +333,15 @@
 1076=Doble click
 1077=Opacitat
 1078=Volum
-1079=click del quart botÃ³
-1080=click del cinquÃ¨ botÃ³
+1079=click del quart botó
+1080=click del cinquè botó
 1081=Mostrar escriptori
 1083=tasca anterior
 1084=propera tasca
 1085=Mostrar texte
 1086=Inhabilitat tecla
 1087=Inhabilitar totes les hotkeys
-1088=Inhabilitar les dreceres del ratolÃ­
+1088=Inhabilitar les dreceres del ratolí
 1089=Captura de pantalla de l'escriptori
 1090=Captura de pantalla de la finestra
 1091=Amagar la icona de la safata
@@ -353,7 +353,7 @@
 1097=Inhabilitar les dreceres de teclat
 1099=Restaurar la icona de la safata
 1100=Velocitat del CD
-1101=Amagar aplicaciÃ³
+1101=Amagar aplicació
 1102=Minimitzar a la safata
 1103=Lupa
 1104=Esborrar els documents recents
