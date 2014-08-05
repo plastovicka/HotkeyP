@@ -34,41 +34,41 @@ struct Tvk {
 	char *s;
 	int vk;
 } vks[]={
-	{"ESCAPE", VK_ESCAPE}, {"ESC", VK_ESCAPE}, {"F10", VK_F10},
-	{"F11", VK_F11}, {"F12", VK_F12}, {"F1", VK_F1}, {"F2", VK_F2},
-	{"F3", VK_F3}, {"F4", VK_F4}, {"F5", VK_F5}, {"F6", VK_F6}, {"F7", VK_F7},
-	{"F8", VK_F8}, {"F9", VK_F9}, {"PRINTSCREEN", VK_SNAPSHOT},
-	{"PRINTSCRN", VK_SNAPSHOT}, {"SCROLLLOCK", VK_SCROLL},
-	{"PAUSE", VK_PAUSE}, {"BREAK", VK_CANCEL}, {"CLEAR", VK_CLEAR},
-	{"INSERT", VK_INSERT}, {"INS", VK_INSERT}, {"DELETE", VK_DELETE},
-	{"DEL", VK_DELETE}, {"HOME", VK_HOME}, {"END", VK_END},
-	{"PAGEUP", VK_PRIOR}, {"PAGEDOWN", VK_NEXT}, {"LEFT", VK_LEFT},
-	{"RIGHT", VK_RIGHT}, {"UP", VK_UP}, {"DOWN", VK_DOWN}, {"TAB", VK_TAB},
-	{"CAPSLOCK", VK_CAPITAL}, {"CAPS", VK_CAPITAL}, {"BACKSPACE", VK_BACK},
-	{"BS", VK_BACK}, {"ENTER", VK_RETURN}, {"SPACE", VK_SPACE},
-	{"SHIFT", VK_SHIFT}, {"CONTROL", VK_CONTROL}, {"CTRL", VK_CONTROL},
-	{"RSHIFT", VK_RSHIFT}, {"RCONTROL", VK_RCONTROL}, {"RCTRL", VK_RCONTROL},
-	{"^", VK_CONTROL}, {"ALT", VK_MENU}, {"RALT", VK_RMENU}, {"MENU", VK_MENU}, {"RMENU", VK_RMENU},
-	{"WIN", VK_LWIN}, {"LWIN", VK_LWIN}, {"RWIN", VK_RWIN}, {"APPS", VK_APPS},
-	{"NUMLOCK", VK_NUMLOCK}, {"DIVIDE", VK_DIVIDE}, {"MULTIPLY", VK_MULTIPLY},
-	{"SUBTRACT", VK_SUBTRACT}, {"ADD", VK_ADD}, {"DECIMAL", VK_DECIMAL},
-	{"NUM0", VK_NUMPAD0}, {"NUM1", VK_NUMPAD1}, {"NUM2", VK_NUMPAD2},
-	{"NUM3", VK_NUMPAD3}, {"NUM4", VK_NUMPAD4}, {"NUM5", VK_NUMPAD5},
-	{"NUM6", VK_NUMPAD6}, {"NUM7", VK_NUMPAD7}, {"NUM8", VK_NUMPAD8},
-	{"NUM9", VK_NUMPAD9}, {"BACK", VK_BROWSER_BACK},
-	{"FORWARD", VK_BROWSER_FORWARD}, {"REFRESH", VK_BROWSER_REFRESH},
-	{"SEARCH", VK_BROWSER_SEARCH}, {"FAVORITES", VK_BROWSER_FAVORITES},
-	{"BROWSER", VK_BROWSER_HOME}, {"MUTE", VK_VOLUME_MUTE},
-	{"VOLUME_DOWN", VK_VOLUME_DOWN}, {"VOLUME_UP", VK_VOLUME_UP},
-	{"NEXT_TRACK", VK_MEDIA_NEXT_TRACK}, {"PREV_TRACK", VK_MEDIA_PREV_TRACK},
-	{"STOP", VK_MEDIA_STOP}, {"PLAY_PAUSE", VK_MEDIA_PLAY_PAUSE}, {"MEDIA_SELECT", VK_LAUNCH_MEDIA_SELECT},
-	{"MAIL", VK_LAUNCH_MAIL}, {"POWER", VK_SLEEP}, {"LAUNCH_APP1", VK_LAUNCH_APP1}, {"LAUNCH_APP2", VK_LAUNCH_APP2},
-	{"LBUTTON", 100100+M_Left}, {"RBUTTON", 100100+M_Right}, {"MBUTTON", 100100+M_Middle},
-	{"XBUTTON1", 100100+M_X1}, {"XBUTTON2", 100100+M_X1+1},
-	{"WHEELUP", 100100+M_WheelUp}, {"WHEELDOWN", 100100+M_WheelDown},
-	{"WHEELRIGHT", 100100+M_WheelRight}, {"WHEELLEFT", 100100+M_WheelLeft},
-	{"WAIT", 100000}, {"SHOW", 100001}, {"SLEEP", 100002}, {"REP", 100003},
-	{"DOUBLECLICK", 100004},
+		{"ESCAPE", VK_ESCAPE}, {"ESC", VK_ESCAPE}, {"F10", VK_F10},
+		{"F11", VK_F11}, {"F12", VK_F12}, {"F1", VK_F1}, {"F2", VK_F2},
+		{"F3", VK_F3}, {"F4", VK_F4}, {"F5", VK_F5}, {"F6", VK_F6}, {"F7", VK_F7},
+		{"F8", VK_F8}, {"F9", VK_F9}, {"PRINTSCREEN", VK_SNAPSHOT},
+		{"PRINTSCRN", VK_SNAPSHOT}, {"SCROLLLOCK", VK_SCROLL},
+		{"PAUSE", VK_PAUSE}, {"BREAK", VK_CANCEL}, {"CLEAR", VK_CLEAR},
+		{"INSERT", VK_INSERT}, {"INS", VK_INSERT}, {"DELETE", VK_DELETE},
+		{"DEL", VK_DELETE}, {"HOME", VK_HOME}, {"END", VK_END},
+		{"PAGEUP", VK_PRIOR}, {"PAGEDOWN", VK_NEXT}, {"LEFT", VK_LEFT},
+		{"RIGHT", VK_RIGHT}, {"UP", VK_UP}, {"DOWN", VK_DOWN}, {"TAB", VK_TAB},
+		{"CAPSLOCK", VK_CAPITAL}, {"CAPS", VK_CAPITAL}, {"BACKSPACE", VK_BACK},
+		{"BS", VK_BACK}, {"ENTER", VK_RETURN}, {"SPACE", VK_SPACE},
+		{"SHIFT", VK_SHIFT}, {"CONTROL", VK_CONTROL}, {"CTRL", VK_CONTROL},
+		{"RSHIFT", VK_RSHIFT}, {"RCONTROL", VK_RCONTROL}, {"RCTRL", VK_RCONTROL},
+		{"^", VK_CONTROL}, {"ALT", VK_MENU}, {"RALT", VK_RMENU}, {"MENU", VK_MENU}, {"RMENU", VK_RMENU},
+		{"WIN", VK_LWIN}, {"LWIN", VK_LWIN}, {"RWIN", VK_RWIN}, {"APPS", VK_APPS},
+		{"NUMLOCK", VK_NUMLOCK}, {"DIVIDE", VK_DIVIDE}, {"MULTIPLY", VK_MULTIPLY},
+		{"SUBTRACT", VK_SUBTRACT}, {"ADD", VK_ADD}, {"DECIMAL", VK_DECIMAL},
+		{"NUM0", VK_NUMPAD0}, {"NUM1", VK_NUMPAD1}, {"NUM2", VK_NUMPAD2},
+		{"NUM3", VK_NUMPAD3}, {"NUM4", VK_NUMPAD4}, {"NUM5", VK_NUMPAD5},
+		{"NUM6", VK_NUMPAD6}, {"NUM7", VK_NUMPAD7}, {"NUM8", VK_NUMPAD8},
+		{"NUM9", VK_NUMPAD9}, {"BACK", VK_BROWSER_BACK},
+		{"FORWARD", VK_BROWSER_FORWARD}, {"REFRESH", VK_BROWSER_REFRESH},
+		{"SEARCH", VK_BROWSER_SEARCH}, {"FAVORITES", VK_BROWSER_FAVORITES},
+		{"BROWSER", VK_BROWSER_HOME}, {"MUTE", VK_VOLUME_MUTE},
+		{"VOLUME_DOWN", VK_VOLUME_DOWN}, {"VOLUME_UP", VK_VOLUME_UP},
+		{"NEXT_TRACK", VK_MEDIA_NEXT_TRACK}, {"PREV_TRACK", VK_MEDIA_PREV_TRACK},
+		{"STOP", VK_MEDIA_STOP}, {"PLAY_PAUSE", VK_MEDIA_PLAY_PAUSE}, {"MEDIA_SELECT", VK_LAUNCH_MEDIA_SELECT},
+		{"MAIL", VK_LAUNCH_MAIL}, {"POWER", VK_SLEEP}, {"LAUNCH_APP1", VK_LAUNCH_APP1}, {"LAUNCH_APP2", VK_LAUNCH_APP2},
+		{"LBUTTON", 100100+M_Left}, {"RBUTTON", 100100+M_Right}, {"MBUTTON", 100100+M_Middle},
+		{"XBUTTON1", 100100+M_X1}, {"XBUTTON2", 100100+M_X1+1},
+		{"WHEELUP", 100100+M_WheelUp}, {"WHEELDOWN", 100100+M_WheelDown},
+		{"WHEELRIGHT", 100100+M_WheelRight}, {"WHEELLEFT", 100100+M_WheelLeft},
+		{"WAIT", 100000}, {"SHOW", 100001}, {"SLEEP", 100002}, {"REP", 100003},
+		{"DOUBLECLICK", 100004},
 };
 
 char *controlPanels[]={
@@ -898,7 +898,7 @@ BOOL CALLBACK hideProc(HWND w, LPARAM param)
 			if(icon && (!info->icon || w==info->activeWnd)){
 				info->icon= icon;
 			}
-			ShowWindow(w, SW_HIDE);
+			ShowWindowAsync(w, SW_HIDE);
 			WndItem *i = new WndItem();
 			i->w= w;
 			i->nxt= info->list;
@@ -942,7 +942,7 @@ void unhideApp(HideInfo *info)
 	if(!info->pid) return;
 	for(WndItem *i= info->list; i;)
 	{
-		ShowWindow(i->w, SW_SHOW);
+		ShowWindowAsync(i->w, SW_SHOW);
 		WndItem *i0 = i;
 		i=i->nxt;
 		delete i0;
@@ -959,7 +959,7 @@ void unhideAll()
 		unhideApp(&trayIconA[i]);
 	}
 	unhideApp(&hiddenApp);
-	if(hiddenWin) ShowWindow(hiddenWin, SW_SHOW);
+	if(hiddenWin) ShowWindowAsync(hiddenWin, SW_SHOW);
 }
 void Tpopup::show(bool toggle)
 {
@@ -1584,9 +1584,9 @@ void privilege(char *name)
 	if(OpenProcessToken(GetCurrentProcess(),
 		 TOKEN_ADJUST_PRIVILEGES|TOKEN_QUERY, &token))
 	 if(LookupPrivilegeValue(0, name, &tkp.Privileges[0].Luid)){
-		 tkp.PrivilegeCount=1;
-		 tkp.Privileges[0].Attributes=SE_PRIVILEGE_ENABLED;
-		 AdjustTokenPrivileges(token, FALSE, &tkp, 0, 0, 0);
+		tkp.PrivilegeCount=1;
+		tkp.Privileges[0].Attributes=SE_PRIVILEGE_ENABLED;
+		AdjustTokenPrivileges(token, FALSE, &tkp, 0, 0, 0);
 	 }
 }
 
@@ -1890,6 +1890,31 @@ BOOL CALLBACK enumMinimize(HWND hWnd, LPARAM)
 		}
 		else{
 			ShowWindow(hWnd, SW_MINIMIZE);
+		}
+	}
+	return TRUE;
+}
+
+BOOL CALLBACK enumMaximize(HWND hWnd, LPARAM)
+{
+	LONG s=GetWindowLong(hWnd, GWL_STYLE);
+	if((s&WS_MAXIMIZEBOX) && IsWindowVisible(hWnd))
+	{
+		HWND owner=GetWindow(hWnd, GW_OWNER);
+		if(owner)
+		{
+			LONG s1=GetWindowLong(owner, GWL_STYLE);
+			if(s1&WS_SYSMENU){
+				RECT rc;
+				GetWindowRect(owner, &rc);
+				if(IsRectEmpty(&rc)){
+					//Borland Delphi application
+					PostMessage(hWnd, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
+				}
+			}
+		}
+		else{
+			ShowWindowAsync(hWnd, SW_MAXIMIZE);
 		}
 	}
 	return TRUE;
@@ -2473,14 +2498,14 @@ void command(int cmd, char *param, HotKey *hk)
 			break;
 		case 25: //hide window
 			if(hiddenWin){
-				ShowWindow(hiddenWin, SW_SHOW);
+				ShowWindowAsync(hiddenWin, SW_SHOW);
 				SetForegroundWindow(hiddenWin);
 				hiddenWin=0;
 			}
 			else{
 				w=getWindow(param);
 				if(!*param) hiddenWin=w;
-				ShowWindow(w, IsWindowVisible(w) ? SW_HIDE : SW_SHOW);
+				ShowWindowAsync(w, IsWindowVisible(w) ? SW_HIDE : SW_SHOW);
 			}
 			break;
 		case 94: //macro to active window
@@ -2902,8 +2927,11 @@ void command(int cmd, char *param, HotKey *hk)
 				if(iparam==0) iparam=10;
 				if(cmd==110) i+=iparam; else i-=iparam;
 				aminmax(i, 0, 255);
-				setOpacity(w,i);
+				setOpacity(w, i);
 			}
+			break;
+		case 112: //maximize all
+			EnumWindows(enumMaximize, 0);
 			break;
 	}
 }
