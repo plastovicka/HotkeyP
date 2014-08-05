@@ -1,5 +1,8 @@
 HotKeyP
 -------
+
+- command "Maximize all"
+
 4.7.1 (2014-07-03)
 fixed bugs:
 - hotkey Win+mouse showed the Start menu if used with macro
