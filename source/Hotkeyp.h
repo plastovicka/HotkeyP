@@ -207,6 +207,8 @@ extern HideInfo trayIconA[30];
 extern Zoom zoom;
 extern PasteTextData pasteTextData;
 extern TendpointName *endpointNameList;
+extern HideInfo hiddenApp;
+extern HWND hiddenWin;
 
 extern int lircPort;
 extern char lircAddress[64];

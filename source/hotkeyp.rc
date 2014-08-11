@@ -36,6 +36,7 @@ LANGUAGE LANG_CZECH, SUBLANG_DEFAULT
 6                       ICON    DISCARDABLE     "ico6.ico"
 7                       ICON    DISCARDABLE     "ico7.ico"
 8                       ICON    DISCARDABLE     "ico8.ico"
+9                       ICON    DISCARDABLE     "ico9.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //

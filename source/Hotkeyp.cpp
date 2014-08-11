@@ -53,7 +53,7 @@ BYTE cmdIcons[]={
 /*60*/9, 22, 4, 16, 18, 9, 12, 3, 5, 5, 22, 20, 20, 17, 17,
 /*75*/13, 13, 9, 11, 13, 13, 5, 5, 23, 24, 7, 2, 2, 2, 14,
 /*90*/9, 9, 10, 10, 17, 2, 2, 2, 9, 9, 4, 9, 9, 20, 6,
-/*105*/6, 5, 5, 13
+/*105*/6, 5, 5, 13, 8, 9, 9, 9
 };
 
 const BYTE specialWinKeysList[]={'E', 'R', 'D', 'F', 'M', VK_F1, VK_PAUSE, VK_TAB, //Win 98
@@ -64,13 +64,13 @@ const BYTE specialWinKeysList[]={'E', 'R', 'D', 'F', 'M', VK_F1, VK_PAUSE, VK_TA
  0};
 
 TmainButton mainButton[]={
-	{108, 503, "&Add"},
-	{104, 502, "&Insert"},
-	{102, 500, "&Edit"},
-	{216, 504, "D&uplicate"},
-	{103, 501, "&Delete"},
-	{107, 505, "&Run"},
-	{212, 510, "&Options"},
+		{108, 503, "&Add"},
+		{104, 502, "&Insert"},
+		{102, 500, "&Edit"},
+		{216, 504, "D&uplicate"},
+		{103, 501, "&Delete"},
+		{107, 505, "&Run"},
+		{212, 510, "&Options"},
 };
 
 const int version=6;  // config file version number
@@ -187,88 +187,88 @@ const char *subkey="Software\\Petr Lastovicka\\hotkey";
 const char *runkey="Software\\Microsoft\\Windows\\CurrentVersion\\Run";
 const char *runName="HotkeyP";
 struct Treg { char *s; int *i; } regVal[]={
-	{"height", &dlgH},
-	{"width", &dlgW},
-	{"X", &dlgX},
-	{"Y", &dlgY},
-	{"volumeX", &popupVolume.x},
-	{"volumeY", &popupVolume.y},
-	{"volumeW", &popupVolume.width},
-	{"volumeDelay", &popupVolume.delay},
-	{"volumeOpacity", &popupVolume.opacity},
-	{"diskFreePrecision", &diskfreePrec},
-	{"diskFreeX", &popupDiskFree.x},
-	{"diskFreeY", &popupDiskFree.y},
-	{"diskFreeWidth", &popupDiskFree.width},
-	{"diskFreeOpacity", &popupDiskFree.opacity},
-	{"showTextX", &popupShowText.x},
-	{"showTextY", &popupShowText.y},
-	{"showTextOpacity", &popupShowText.opacity},
-	{"colId", &colWidth[0]},
-	{"colKey", &colWidth[1]},
-	{"colNote", &colWidth[2]},
-	{"sort", &sortedCol},
-	{"descending", &descending},
-	{"trayicon", &trayicon},
-	{"hiliteicon", &iconDelay},
-	{"autoRun", &autoRun},
-	{"minimizeToTray", &minToTray},
-	{"closeToTray", &closeToTray},
-	{"insertAfterCurrent", &insertAfterCurrent},
-	{"notDelayLeftButton", &notDelayButtons[M_Left]},
-	{"notDelayM", &notDelayButtons[M_Middle]},
-	{"notDelayRightButton", &notDelayButtons[M_Right]},
-	{"notDelayX1", &notDelayButtons[M_X1]},
-	{"notDelayX2", &notDelayButtons[M_X1+1]},
-	{"mouseDelay", &mouseDelay},
-	{"optionsPage", &optionsPage},
-	{"lockColorMode", &isLockColor},
-	{"lockSpeed", &lockSpeed},
-	{"lockMute", &lockMute},
-	{"highPriority", &highPriority},
-	{"oldTaskMgr", &disableTaskMgr},
-	{"oldMute", &oldMute},
-	{"lircPort", &lircPort},
-	{"lircRepeat", &lircRepeat},
-	{"lircOn", &lircEnabled},
-	{"hook", &useHook},
-	{"notDelayFullscreen", &notDelayFullscreen},
-	{"hookInterval", &keepHookInterval},
-	{"hookRefresh", &keepHook},
-	{"joyThreshold", &joyThreshold},
-	{"joyMultiplier", &joyMultiplier},
-	{"joyNotFullscreen", &joyNotFullscreen},
-	{"joyMouseEnabled", &joyMouseEnabled},
-	{"joyMouseJoy", &joyMouseJoy},
-	{"joyMouseX", &joyMouseX},
-	{"joyMouseY", &joyMouseY},
-	{"treeW", &treeW},
-	{"vers", &passwdAlg},
-	{"hidePasswd", &hidePasswd},
+		{"height", &dlgH},
+		{"width", &dlgW},
+		{"X", &dlgX},
+		{"Y", &dlgY},
+		{"volumeX", &popupVolume.x},
+		{"volumeY", &popupVolume.y},
+		{"volumeW", &popupVolume.width},
+		{"volumeDelay", &popupVolume.delay},
+		{"volumeOpacity", &popupVolume.opacity},
+		{"diskFreePrecision", &diskfreePrec},
+		{"diskFreeX", &popupDiskFree.x},
+		{"diskFreeY", &popupDiskFree.y},
+		{"diskFreeWidth", &popupDiskFree.width},
+		{"diskFreeOpacity", &popupDiskFree.opacity},
+		{"showTextX", &popupShowText.x},
+		{"showTextY", &popupShowText.y},
+		{"showTextOpacity", &popupShowText.opacity},
+		{"colId", &colWidth[0]},
+		{"colKey", &colWidth[1]},
+		{"colNote", &colWidth[2]},
+		{"sort", &sortedCol},
+		{"descending", &descending},
+		{"trayicon", &trayicon},
+		{"hiliteicon", &iconDelay},
+		{"autoRun", &autoRun},
+		{"minimizeToTray", &minToTray},
+		{"closeToTray", &closeToTray},
+		{"insertAfterCurrent", &insertAfterCurrent},
+		{"notDelayLeftButton", &notDelayButtons[M_Left]},
+		{"notDelayM", &notDelayButtons[M_Middle]},
+		{"notDelayRightButton", &notDelayButtons[M_Right]},
+		{"notDelayX1", &notDelayButtons[M_X1]},
+		{"notDelayX2", &notDelayButtons[M_X1+1]},
+		{"mouseDelay", &mouseDelay},
+		{"optionsPage", &optionsPage},
+		{"lockColorMode", &isLockColor},
+		{"lockSpeed", &lockSpeed},
+		{"lockMute", &lockMute},
+		{"highPriority", &highPriority},
+		{"oldTaskMgr", &disableTaskMgr},
+		{"oldMute", &oldMute},
+		{"lircPort", &lircPort},
+		{"lircRepeat", &lircRepeat},
+		{"lircOn", &lircEnabled},
+		{"hook", &useHook},
+		{"notDelayFullscreen", &notDelayFullscreen},
+		{"hookInterval", &keepHookInterval},
+		{"hookRefresh", &keepHook},
+		{"joyThreshold", &joyThreshold},
+		{"joyMultiplier", &joyMultiplier},
+		{"joyNotFullscreen", &joyNotFullscreen},
+		{"joyMouseEnabled", &joyMouseEnabled},
+		{"joyMouseJoy", &joyMouseJoy},
+		{"joyMouseX", &joyMouseX},
+		{"joyMouseY", &joyMouseY},
+		{"treeW", &treeW},
+		{"vers", &passwdAlg},
+		{"hidePasswd", &hidePasswd},
 };
 struct Tregs { char *s; char *i; DWORD n; } regValS[]={
-	{"file", iniFile, sizeof(iniFile)},
-	{"language", lang, sizeof(lang)},
-	{"volumeStr", volumeStr, sizeof(volumeStr)},
-	{"regFile", regFile, sizeof(regFile)},
-	{"keyMap", keyMap, sizeof(keyMap)},
-	{"lockBMP", lockBMP, sizeof(lockBMP)},
-	{"lircAddress", lircAddress, sizeof(lircAddress)},
-	{"lircExe", lircExe, sizeof(lircExe)},
-	{"delayApp", delayApp, sizeof(delayApp)},
-	{"notDelayApp", notDelayApp, sizeof(notDelayApp)},
-	{"snapshotFile", snapFile, sizeof(snapFile)},
-	{"joyApp", joyApp, sizeof(joyApp)},
-	{"joyFullscreenApp", joyFullscreenApp, sizeof(joyFullscreenApp)},
+		{"file", iniFile, sizeof(iniFile)},
+		{"language", lang, sizeof(lang)},
+		{"volumeStr", volumeStr, sizeof(volumeStr)},
+		{"regFile", regFile, sizeof(regFile)},
+		{"keyMap", keyMap, sizeof(keyMap)},
+		{"lockBMP", lockBMP, sizeof(lockBMP)},
+		{"lircAddress", lircAddress, sizeof(lircAddress)},
+		{"lircExe", lircExe, sizeof(lircExe)},
+		{"delayApp", delayApp, sizeof(delayApp)},
+		{"notDelayApp", notDelayApp, sizeof(notDelayApp)},
+		{"snapshotFile", snapFile, sizeof(snapFile)},
+		{"joyApp", joyApp, sizeof(joyApp)},
+		{"joyFullscreenApp", joyFullscreenApp, sizeof(joyFullscreenApp)},
 };
 struct Tregs2 { char *s; char **i; } regValS2[]={
-	{"param", &pcLockParam},
+		{"param", &pcLockParam},
 };
 struct Tregb { TCHAR *s; void *i; DWORD n; } regValB[]={
-	{"font", &font, sizeof(LOGFONT)},
-	{"colors", colors, sizeof(colors)},
-	{"data", password, sizeof(password)},
-	{"buttons", mainBtnEnabled, sizeof(mainBtnEnabled)},
+		{"font", &font, sizeof(LOGFONT)},
+		{"colors", colors, sizeof(colors)},
+		{"data", password, sizeof(password)},
+		{"buttons", mainBtnEnabled, sizeof(mainBtnEnabled)},
 };
 
 OPENFILENAME ofn={
@@ -561,45 +561,45 @@ int HotKey::getIcon()
 				SearchPath(0, exe, 0, sizeof(buf), buf, &s);
 			}
 			else{
-				{
-					//get file extension of the document
-					const char *t=strrchr(exe, '.');
-					if(t){
-						//find DefaultIcon in the registry
-						HKEY key;
-						DWORD d;
-						if(RegOpenKeyEx(HKEY_CLASSES_ROOT, t, 0, KEY_QUERY_VALUE, &key)==ERROR_SUCCESS){
-							d=sizeof(buf)-13;
-							if(RegQueryValueEx(key, 0, 0, 0, (BYTE*)buf, &d)==ERROR_SUCCESS){
-								strcat(buf, "\\DefaultIcon");
-								HKEY key2;
-								if(RegOpenKeyEx(HKEY_CLASSES_ROOT, buf, 0, KEY_QUERY_VALUE, &key2)==ERROR_SUCCESS){
-									d=sizeof(buf2);
-									if(RegQueryValueEx(key2, 0, 0, 0, (BYTE*)buf2, &d)==ERROR_SUCCESS){
-										if(ExpandEnvironmentStrings(buf2, buf, sizeof(buf)-1)){
-											//parse icon index
-											char * t=strrchr(buf, ',');
-											if(t){
-												char *e;
-												iconIndex= strtol(t+1, &e, 10);
-												if(!*e) *t=0;
+					{
+						//get file extension of the document
+						const char *t=strrchr(exe, '.');
+						if(t){
+							//find DefaultIcon in the registry
+							HKEY key;
+							DWORD d;
+							if(RegOpenKeyEx(HKEY_CLASSES_ROOT, t, 0, KEY_QUERY_VALUE, &key)==ERROR_SUCCESS){
+								d=sizeof(buf)-13;
+								if(RegQueryValueEx(key, 0, 0, 0, (BYTE*)buf, &d)==ERROR_SUCCESS){
+									strcat(buf, "\\DefaultIcon");
+									HKEY key2;
+									if(RegOpenKeyEx(HKEY_CLASSES_ROOT, buf, 0, KEY_QUERY_VALUE, &key2)==ERROR_SUCCESS){
+										d=sizeof(buf2);
+										if(RegQueryValueEx(key2, 0, 0, 0, (BYTE*)buf2, &d)==ERROR_SUCCESS){
+											if(ExpandEnvironmentStrings(buf2, buf, sizeof(buf)-1)){
+												//parse icon index
+												char * t=strrchr(buf, ',');
+												if(t){
+													char *e;
+													iconIndex= strtol(t+1, &e, 10);
+													if(!*e) *t=0;
+												}
+												//remove quotes
+												if(*buf=='"'){
+													strchr(buf, 0)[-1]=0;
+													strcpy(buf, buf+1);
+												}
+												//ignore empty string or "%1"
+												if(*buf && *buf!='%') docIcon=true;
 											}
-											//remove quotes
-											if(*buf=='"'){
-												strchr(buf, 0)[-1]=0;
-												strcpy(buf, buf+1);
-											}
-											//ignore empty string or "%1"
-											if(*buf && *buf!='%') docIcon=true;
 										}
+										RegCloseKey(key2);
 									}
-									RegCloseKey(key2);
 								}
+								RegCloseKey(key);
 							}
-							RegCloseKey(key);
 						}
 					}
-				}
 			l1:
 				//which exe is used to open the document
 				if(!docIcon) FindExecutable(exe, dir, buf);
@@ -2358,68 +2358,68 @@ struct TgroupValue{ int *value; WORD first; WORD last; short dlgId; };
 struct TcomboValue{ int *value; WORD id; WORD lngId; char **strA; WORD len; short dlgId; };
 
 static TintValue intOpts[]={
-	{&iconDelay, 101, 0},
-	{&mouseDelay, 120, 2},
-	{&popupVolume.width, 102, 1},
-	{&popupVolume.delay, 103, 1},
-	{&diskfreePrec, 104, 1},
-	{&popupDiskFree.width, 105, 1},
-	{&popupVolume.opacity, 180, 1},
-	{&popupDiskFree.opacity, 181, 1},
-	{&popupShowText.opacity, 182, 1},
-	{&lockSpeed, 146, 1},
-	{&lircPort, 133, 2},
-	{&lircRepeat, 134, 2},
-	{&keepHookInterval, 145, 0},
-	{&joyThreshold, 167, 3},
-	{&joyMultiplier, 168, 3},
-	{&joyMouseJoy, 187, 3},
+		{&iconDelay, 101, 0},
+		{&mouseDelay, 120, 2},
+		{&popupVolume.width, 102, 1},
+		{&popupVolume.delay, 103, 1},
+		{&diskfreePrec, 104, 1},
+		{&popupDiskFree.width, 105, 1},
+		{&popupVolume.opacity, 180, 1},
+		{&popupDiskFree.opacity, 181, 1},
+		{&popupShowText.opacity, 182, 1},
+		{&lockSpeed, 146, 1},
+		{&lircPort, 133, 2},
+		{&lircRepeat, 134, 2},
+		{&keepHookInterval, 145, 0},
+		{&joyThreshold, 167, 3},
+		{&joyMultiplier, 168, 3},
+		{&joyMouseJoy, 187, 3},
 };
 static TboolValue boolOpts[]={
-	{&insertAfterCurrent, 342, 0},
-	{&trayicon, 320, 0},
-	{&autoRun, 331, 0},
-	{&minToTray, 334, 0},
-	{&closeToTray, 335, 0},
-	{&lockMute, 355, 1},
-	{&highPriority, 357, 0},
-	{&mainBtnEnabled[0], mainButton[0].langId, 0},
-	{&mainBtnEnabled[1], mainButton[1].langId, 0},
-	{&mainBtnEnabled[2], mainButton[2].langId, 0},
-	{&mainBtnEnabled[3], mainButton[3].langId, 0},
-	{&mainBtnEnabled[4], mainButton[4].langId, 0},
-	{&mainBtnEnabled[5], mainButton[5].langId, 0},
-	{&mainBtnEnabled[6], mainButton[6].langId, 0},
-	{&lircEnabled, 360, 2},
-	{&notDelayButtons[M_Left], 378, 2},
-	{&notDelayButtons[M_Middle], 379, 2},
-	{&notDelayButtons[M_Right], 380, 2},
-	{&notDelayButtons[M_X1], 381, 2},
-	{&notDelayButtons[M_X1+1], 382, 2},
-	{&notDelayFullscreen, 349, 2},
-	{&keepHook, 386, 0},
-	{&joyNotFullscreen, 390, 3},
-	{&joyMouseEnabled, 391, 3},
-	{&hidePasswd, 395, 1},
+		{&insertAfterCurrent, 342, 0},
+		{&trayicon, 320, 0},
+		{&autoRun, 331, 0},
+		{&minToTray, 334, 0},
+		{&closeToTray, 335, 0},
+		{&lockMute, 355, 1},
+		{&highPriority, 357, 0},
+		{&mainBtnEnabled[0], mainButton[0].langId, 0},
+		{&mainBtnEnabled[1], mainButton[1].langId, 0},
+		{&mainBtnEnabled[2], mainButton[2].langId, 0},
+		{&mainBtnEnabled[3], mainButton[3].langId, 0},
+		{&mainBtnEnabled[4], mainButton[4].langId, 0},
+		{&mainBtnEnabled[5], mainButton[5].langId, 0},
+		{&mainBtnEnabled[6], mainButton[6].langId, 0},
+		{&lircEnabled, 360, 2},
+		{&notDelayButtons[M_Left], 378, 2},
+		{&notDelayButtons[M_Middle], 379, 2},
+		{&notDelayButtons[M_Right], 380, 2},
+		{&notDelayButtons[M_X1], 381, 2},
+		{&notDelayButtons[M_X1+1], 382, 2},
+		{&notDelayFullscreen, 349, 2},
+		{&keepHook, 386, 0},
+		{&joyNotFullscreen, 390, 3},
+		{&joyMouseEnabled, 391, 3},
+		{&hidePasswd, 395, 1},
 };
 static TstrValue strOpts[]={
-	{volumeStr, sizeA(volumeStr), 151, 1},
-	{keyMap, sizeA(keyMap), 152, 0},
-	{lockBMP, sizeA(lockBMP), 156, 1},
-	{lircExe, sizeA(lircExe), 131, 2},
-	{lircAddress, sizeA(lircAddress), 132, 2},
-	{notDelayApp, sizeA(notDelayApp), 174, 2},
-	{delayApp, sizeA(delayApp), 175, 2},
-	{joyApp, sizeA(joyApp), 194, 3},
-	{joyFullscreenApp, sizeA(joyFullscreenApp), 195, 3},
+		{volumeStr, sizeA(volumeStr), 151, 1},
+		{keyMap, sizeA(keyMap), 152, 0},
+		{lockBMP, sizeA(lockBMP), 156, 1},
+		{lircExe, sizeA(lircExe), 131, 2},
+		{lircAddress, sizeA(lircAddress), 132, 2},
+		{notDelayApp, sizeA(notDelayApp), 174, 2},
+		{delayApp, sizeA(delayApp), 175, 2},
+		{joyApp, sizeA(joyApp), 194, 3},
+		{joyFullscreenApp, sizeA(joyFullscreenApp), 195, 3},
 };
 
 static TgroupValue groupOpts[]={
-	{&isLockColor, 350, 351, 1},
-	{&useHook, 396, 399, 0},
+		{&isLockColor, 350, 351, 1},
+		{&useHook, 396, 399, 0},
 };
 static TcomboValue comboOpts[]={
-	{0, 0, 0, 0, 0, -1},
+		{0, 0, 0, 0, 0, -1},
 };
 
 //procedure for options dialog
@@ -2644,8 +2644,9 @@ void modifyTrayIcon()
 {
 	static const int I[2][2]={{1, 6}, {7, 8}};
 	if(trayicon){
-		modifyTrayIcon(hWin,
-			disableAll ? 5 : (isHilited ? 2 : I[disableMouse][disableKeys]));
+		int i = disableAll ? 5 : (isHilited ? 2 : I[disableMouse][disableKeys]);
+		if(i==1 && (hiddenApp.list || hiddenWin)) i=9;
+		modifyTrayIcon(hWin, i);
 	}
 }
 
@@ -3923,10 +3924,10 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int cmdShow)
 	while(GetMessage(&mesg, NULL, 0, 0)>0)
 	 if(mesg.hwnd==popupVolume.hWnd || mesg.hwnd==popupDiskFree.hWnd || mesg.hwnd==popupShowText.hWnd ||
 			!TranslateAccelerator(hWin, haccel, &mesg)){
-		 if(!IsDialogMessage(hWin, &mesg)){
-			 TranslateMessage(&mesg);
-			 DispatchMessage(&mesg);
-		 }
+		if(!IsDialogMessage(hWin, &mesg)){
+			TranslateMessage(&mesg);
+			DispatchMessage(&mesg);
+		}
 	 }
 
 	lircEnd();
