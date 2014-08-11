@@ -253,6 +253,10 @@ SOURCE=.\source\ico8.ico
 # End Source File
 # Begin Source File
 
+SOURCE=.\source\ico9.ico
+# End Source File
+# Begin Source File
+
 SOURCE=.\source\keys.ico
 # End Source File
 # Begin Source File
