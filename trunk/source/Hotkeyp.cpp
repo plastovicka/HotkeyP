@@ -429,7 +429,7 @@ bool isExe(char const *f) // zef: made const correct
 
 char *getCmdName(int id)
 {
-	return lng(1000+id, cmdNames[id]);
+	return (unsigned(id)<sizeA(cmdNames)) ? lng(1000+id, cmdNames[id]) : "Unknown command";
 }
 
 
@@ -539,78 +539,78 @@ int emptyImlSlot()
 
 int HotKey::getIcon()
 {
-	// zef: added support for environment variables in path names
-	const std::string fullExe = getFullExe();
-	const char *exe = fullExe.c_str();
-
 	if(!icon){
 		if(cmd>=0){
-			icon= cmdIcons[cmd];
-		}
-		else if(isWWW(exe)){
-			icon= !_strnicmp(exe, "mailto:", 7) ? 15 : 19;
+			icon= (cmd < sizeA(cmdIcons)) ? cmdIcons[cmd] : -1;
 		}
 		else{
-			icon= -1;
-			char *s;
-			char buf[MAX_PATH], buf2[MAX_PATH];
-			int iconIndex=0;
-			bool docIcon = false;
-			if(isExe(exe)){
-				//get full path of the exe file
-				SearchPath(0, exe, 0, sizeof(buf), buf, &s);
+			const std::string fullExe = getFullExe();
+			const char *exe = fullExe.c_str();
+			if(isWWW(exe)){
+				icon= !_strnicmp(exe, "mailto:", 7) ? 15 : 19;
 			}
 			else{
-					{
-						//get file extension of the document
-						const char *t=strrchr(exe, '.');
-						if(t){
-							//find DefaultIcon in the registry
-							HKEY key;
-							DWORD d;
-							if(RegOpenKeyEx(HKEY_CLASSES_ROOT, t, 0, KEY_QUERY_VALUE, &key)==ERROR_SUCCESS){
-								d=sizeof(buf)-13;
-								if(RegQueryValueEx(key, 0, 0, 0, (BYTE*)buf, &d)==ERROR_SUCCESS){
-									strcat(buf, "\\DefaultIcon");
-									HKEY key2;
-									if(RegOpenKeyEx(HKEY_CLASSES_ROOT, buf, 0, KEY_QUERY_VALUE, &key2)==ERROR_SUCCESS){
-										d=sizeof(buf2);
-										if(RegQueryValueEx(key2, 0, 0, 0, (BYTE*)buf2, &d)==ERROR_SUCCESS){
-											if(ExpandEnvironmentStrings(buf2, buf, sizeof(buf)-1)){
-												//parse icon index
-												char * t=strrchr(buf, ',');
-												if(t){
-													char *e;
-													iconIndex= strtol(t+1, &e, 10);
-													if(!*e) *t=0;
+				icon= -1;
+				char *s;
+				char buf[MAX_PATH], buf2[MAX_PATH];
+				int iconIndex=0;
+				bool docIcon = false;
+				if(isExe(exe)){
+					//get full path of the exe file
+					SearchPath(0, exe, 0, sizeof(buf), buf, &s);
+				}
+				else{
+						{
+							//get file extension of the document
+							const char *t=strrchr(exe, '.');
+							if(t){
+								//find DefaultIcon in the registry
+								HKEY key;
+								DWORD d;
+								if(RegOpenKeyEx(HKEY_CLASSES_ROOT, t, 0, KEY_QUERY_VALUE, &key)==ERROR_SUCCESS){
+									d=sizeof(buf)-13;
+									if(RegQueryValueEx(key, 0, 0, 0, (BYTE*)buf, &d)==ERROR_SUCCESS){
+										strcat(buf, "\\DefaultIcon");
+										HKEY key2;
+										if(RegOpenKeyEx(HKEY_CLASSES_ROOT, buf, 0, KEY_QUERY_VALUE, &key2)==ERROR_SUCCESS){
+											d=sizeof(buf2);
+											if(RegQueryValueEx(key2, 0, 0, 0, (BYTE*)buf2, &d)==ERROR_SUCCESS){
+												if(ExpandEnvironmentStrings(buf2, buf, sizeof(buf)-1)){
+													//parse icon index
+													char * t=strrchr(buf, ',');
+													if(t){
+														char *e;
+														iconIndex= strtol(t+1, &e, 10);
+														if(!*e) *t=0;
+													}
+													//remove quotes
+													if(*buf=='"'){
+														strchr(buf, 0)[-1]=0;
+														strcpy(buf, buf+1);
+													}
+													//ignore empty string or "%1"
+													if(*buf && *buf!='%') docIcon=true;
 												}
-												//remove quotes
-												if(*buf=='"'){
-													strchr(buf, 0)[-1]=0;
-													strcpy(buf, buf+1);
-												}
-												//ignore empty string or "%1"
-												if(*buf && *buf!='%') docIcon=true;
 											}
+											RegCloseKey(key2);
 										}
-										RegCloseKey(key2);
 									}
+									RegCloseKey(key);
 								}
-								RegCloseKey(key);
 							}
 						}
-					}
-			l1:
-				//which exe is used to open the document
-				if(!docIcon) FindExecutable(exe, dir, buf);
+				l1:
+					//which exe is used to open the document
+					if(!docIcon) FindExecutable(exe, dir, buf);
+				}
+				HICON hi;
+				if((int)ExtractIconEx(buf, iconIndex, 0, &hi, 1) > 0){
+					//add icon to the image list
+					icon= ImageList_ReplaceIcon(himl, emptyImlSlot(), hi);
+					DestroyIcon(hi);
+				}
+				else if(docIcon){ docIcon=false; iconIndex=0; goto l1; }
 			}
-			HICON hi;
-			if((int)ExtractIconEx(buf, iconIndex, 0, &hi, 1) > 0){
-				//add icon to the image list
-				icon= ImageList_ReplaceIcon(himl, emptyImlSlot(), hi);
-				DestroyIcon(hi);
-			}
-			else if(docIcon){ docIcon=false; iconIndex=0; goto l1; }
 		}
 	}
 	return (icon>=0) ? icon : 9;
@@ -631,6 +631,12 @@ std::string HotKey::getFullCmd() const
 	return getFullExe();
 }
 
+#if _MSC_VER>=1400
+//do not crash if strftime has invalid parameter
+void myInvalidParameterHandler(const wchar_t*, const wchar_t*, const wchar_t*, unsigned int, uintptr_t)
+{
+}
+#endif
 //-------------------------------------------------------------------------
 void drawLockText()
 {
@@ -1313,7 +1319,6 @@ void rd(char *fn)
 					fgetc(f);
 					aminmax(hk->cmdShow, 0, (int)sizeA(showCnst)-1);
 					aminmax(hk->priority, 0, Npriority-1);
-					aminmax(hk->cmd, -1, sizeA(cmdNames)-1);
 					aminmax(hk->category, 0, numCategories-1);
 				}
 				delete[] categoryName;
@@ -3782,6 +3787,10 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int cmdShow)
 	BYTE c;
 
 	inst=hInstance;
+#if _MSC_VER>=1400
+	_set_invalid_parameter_handler(myInvalidParameterHandler);
+#endif
+
 	if(!strcmp(cmdLine, "--htmlhelp")) return helpProcess();
 	cmdLineCmd=-1;
 	InitializeCriticalSection(&cdCritSect);
