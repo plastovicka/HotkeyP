@@ -5,6 +5,7 @@ modify it under the terms of the GNU General Public License.
 #include "hdr.h"
 #pragma hdrstop
 #include <cstdlib>  // for getenv (or _dupenv_s)
+#include "hotkeyp.h"
 
 /*
 getEnv is intended to be a simple wrapper around the std::getenv function
@@ -18,10 +19,13 @@ linking with the Microsoft C run-time libraries.
 // original version using the portable std::getenv function
 static const std::string getEnv(const std::string pVar)
 {
-	std::string results;
+	if(pVar=="HotkeyP"){
+		char fn[256];
+		getExeDir(fn, "");
+		return fn;
+	}
 	const char * val = getenv(pVar.c_str());
-	if(val) results = val;
-	return results;
+	return val ? val : "";
 }
 
 // Microsoft specific version that uses Microsoft's _dupenv_s function
@@ -53,14 +57,13 @@ percent sign.
 */
 std::string ExpandVars(std::string s)
 {
-	std::string ret;
+	std::string::size_type idxEnd = s.find('%');
+	if(idxEnd == std::string::npos) return s;
+
 	std::string::size_type idxBeg = 0;
-	std::string::size_type idxEnd;// = s.find('%');
-	for(;;)
+	std::string ret;
+	do
 	{
-		// find first %
-		idxEnd = s.find('%', idxBeg);
-		if(idxEnd == std::string::npos) break;
 		ret += s.substr(idxBeg, idxEnd - idxBeg);
 		idxBeg = idxEnd + 1;
 		// find second %
@@ -70,12 +73,14 @@ std::string ExpandVars(std::string s)
 		std::string var = s.substr(idxBeg, idxEnd - idxBeg);
 		idxBeg = idxEnd + 1;
 		if(var.empty())
-				ret += '%';
+			ret += '%';
 		else
 		{
 			ret += getEnv(var);
 		}
-	};
-	ret += s.substr(idxBeg);
-	return ret;
+		// find first %
+		idxEnd = s.find('%', idxBeg);
+	} while(idxEnd != std::string::npos);
+
+	return ret + s.substr(idxBeg);
 }
