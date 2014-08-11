@@ -2,6 +2,7 @@ HotKeyP
 -------
 
 - command "Maximize all"
+- command "Hide window" changes tray icon to yellow
 
 4.7.1 (2014-07-03)
 fixed bugs:

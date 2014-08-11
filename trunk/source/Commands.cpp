@@ -26,8 +26,8 @@ const int shiftTab[Nshift]={VK_SHIFT, VK_CONTROL, VK_MENU, VK_LWIN, VK_RWIN};
 const int shift2Tab[Nshift2]={VK_RMENU, VK_LSHIFT, VK_RSHIFT, VK_RCONTROL, VK_LMENU, VK_LWIN, VK_RWIN, VK_LCONTROL};
 
 static unsigned seed; //random number seed
-static HWND hiddenWin, keyWin;
-static HideInfo hiddenApp;
+HWND hiddenWin, keyWin;
+HideInfo hiddenApp;
 HideInfo trayIconA[30];
 
 struct Tvk {
