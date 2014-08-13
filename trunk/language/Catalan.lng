@@ -1,14 +1,14 @@
 
 12=Hot Key
-303=&Comandament:
-304=&Paràmetres:
+303=&Comando:
+304=&Parametres:
 305=&Directori de treball:
 315=&So:
-307=Prioritat del P&rocés:
+307=Prioritat del P&roces:
 308=&Finestra:
 310=&Opacitat:
-309=&Permetre multiples instàncies
-311=Afagir una icona al &menu de la safata
+309=&Permetre multiples instancies
+311=Afagir una icona al&menu de la safata
 312=Executar &automaticament al arrancar Windows
 313=Preguntar abans d'executar aquesta hot&key
 316=Esperar abans d'execu&tar aquesta
@@ -24,7 +24,7 @@
 320=Afagir una icona al &menu de la safata
 321=il·luminar la icona quan una &hotkey és premuda
 334=El botó de &minimitzar amaga la finestra
-335=El botó de tan&car amaga la finestra
+335=El botó de tan$car amaga la finestra
 342=Inserir una nova hotkey des&prés de l'element actual
 357=E&stablir prioritat alta al procés HotkeyP
 340=&Reanomenar tecles:
@@ -36,7 +36,7 @@
 501=Esborrar
 504=Duplicar
 505=Executar
-510=Opcions 
+510=Opcions
 368=Usar keyboard hook
 396=&mai
 397=només per a tecles especials de s&istema
@@ -44,11 +44,11 @@
 399=per &a totes les hotkeys
 386=Re&carregar els hooks cada
 
-16=Comandaments
+16=Comandos
 322=Volum
 323=Amplada de la fi&nestra:
 345=Opacitat:
-324=d&urada de la visibilitat:
+324=d&uració de la visibilitat:
 332=Mostrar aquestes linies d'&audio:
 328=Colors:
 333=Background, text, border:
@@ -70,8 +70,8 @@
 395=No mostra&r la password
 
 17=Ratolí/Remot
-358=Ratolí
-347=&Retardar les botons del Ratolí:
+358=Ratoli
+347=&Retardar les butons del ratolí:
 348=No retardar aquests botons:
 378=&L
 379=&M
@@ -86,7 +86,7 @@
 361=&WinLIRC exe:
 362=&Adreça:
 363=&Port:
-364=repeticions ma&ximes:
+364=Ma&x. repeticions:
 
 18=Joystick
 387=&llindar:
@@ -109,8 +109,8 @@
 374=Nom:
 21=Moure les hotkeys seleccionades a la categoria
 
-22=Cancel.lar operació
-550=Els següents comandaments estan a punt de ser executats.\n\n Si no ho vols fer invoca aquest comandament click "Cancel" per a abortar la operació.  (Si no preparat per a les conseqüències!)
+22=Cancel·lar Operació
+550=Els següents comandaments estan a punt de ser executats.\n\n Si no ho vols fer invoca aquest comand click "Cancel" per a abortar la operació.  (Si no preparat per a les conseqüències!)
 
 ;menu
 401=&Finestra
@@ -130,8 +130,8 @@
 215=&Executar spy.exe\tCtrl+Y
 
 403=&Hotkey
-104=Inserir &nou\tInsert
-108=&Afagir nou\tCtrl+W
+104=Inserir &new\tInsert
+108=&Afagir new\tCtrl+W
 216=Du&plicar\tCtrl+D
 102=&Editar\tEnter
 103=Es&borrar     \tDelete
@@ -149,7 +149,7 @@
 
 404=A&juda
 208=&Ajuda\tF1
-200=&Que hi ha de nou
+200=&Què hi ha de nou
 209=&Sobre...
 
 ;icona de la safata del sistema
@@ -164,7 +164,7 @@
 511=Imatges Bitmap (*.bmp)\0*.bmp\0
 512=Audio de forma d'ona (*.wav)\0*.wav\0
 
-719=Ratolí
+719=Ratoli
 743=No es pot executar %s
 730=No es pot obrir el fitxer %s
 731=Format invàlid de %s
@@ -173,22 +173,22 @@
 734=Error d'escriptura, fitxer %s
 735=No es pot escriure el registre de Windows
 736=Seleccionar el directori de treball
-737=L'element del item comandament és buit
+737=L'element del Command item és buit
 738=No hi ha associació per aquest tipus de fitxer
 739=%s no trobat
 740=Directori de treball invàlid
-741=La prioritat del procéss només pot ser especificada per executables
+741=La prioritat del process només pot ser especificada per executables
 761=L'opacitat només pot ser especificada per executables
 762=Moure només és possible si la llista esta ordenada per la primera columna.
-764=Vols executar aquest comandament ?
+764=Vols executar aquest comando ?
 760=Realment vols esborrar la configuració del registre ?
 366=activar
-367=no s'esta executant
+367=no s'està executant
 752=Mutejat
 763=No es pot connectar amb WinLIRC
 755=Error a la %s\nLinia %d
 756=Error a %s\nel número del missatge %d és massa llarg
-757=Error a %s\número duplicat %d
+757=Error a %s\nnúmero duplicat %d
 753=El fitxer %s és massa llarg
 754=Error llegint aquest fitxer %s
 744=Nom de tecla desconegut: %s
@@ -198,7 +198,7 @@
 747=%s no és una unitat de CD
 749=No puc trobar la carpeta o el fitxer %s
 750=No puc canviar la prioritat
-759=Titol: %s\r\nClasse de la finstra: %s\r\nprocés: %s\r\nMÃ²dul: %s\r\nPrioritat: %s\r\nMemòria: %d KB
+759=Titol: %s\r\nClasse de la finstra: %s\r\nProcés: %s\r\nMòdul: %s\r\nPrioritat: %s\r\nMemoria: %d KB
 751=No puc acabar el procés
 758=Número de multi-comandament invàlid
 765=Vols esborrar la categoria '%s' ?
@@ -211,7 +211,7 @@
 722=Descripció
 
 ;prioritat del procés
-700=ocios
+700=ociós
 701=normal
 702=alt
 703=temps real
@@ -243,7 +243,7 @@
 980=default
 979=tot
 978=teclat
-977=Ratolí
+977=ratolí
 976=joystick
 975=control remot
 974=comandaments
@@ -291,8 +291,8 @@
 1034=Cantonada superior esquerra
 1035=Dalt
 1036=Cantonada superior dreta
-1037=Moure el cursor del Ratolí
-1038=Mostrar dialeg d'apagada
+1037=Moure el cursor del ratolí
+1038=Mostrar diàleg d'apagada
 1039=Executar el CD
 1040=propera pista del CD
 1041=parar el CD
@@ -301,10 +301,10 @@
 1044=click central
 1045=click dreta
 1046=Prioritat baixa
-1047=prioritat normal
+1047=priority normal
 1048=prioritat alta
 1049=prioritat en temps real
-1050=Afagir/esborrar programes
+1050= Afagir/esborrar programes
 1051=Mostrar propietats
 1052=Opcions d'Internet
 1053=Ratolí
@@ -334,14 +334,14 @@
 1077=Opacitat
 1078=Volum
 1079=click del quart botó
-1080=click del cinque botó
+1080=click del cinquè botó
 1081=Mostrar escriptori
 1083=tasca anterior
 1084=propera tasca
 1085=Mostrar texte
 1086=Inhabilitat tecla
 1087=Inhabilitar totes les hotkeys
-1088=Inhabilitar les dreceres del Ratolí
+1088=Inhabilitar les dreceres del ratolí
 1089=Captura de pantalla de l'escriptori
 1090=Captura de pantalla de la finestra
 1091=Amagar la icona de la safata
@@ -353,7 +353,7 @@
 1097=Inhabilitar les dreceres de teclat
 1099=Restaurar la icona de la safata
 1100=Velocitat del CD
-1101=Amagar aplicacio
+1101=Amagar aplicació
 1102=Minimitzar a la safata
 1103=Lupa
 1104=Esborrar els documents recents

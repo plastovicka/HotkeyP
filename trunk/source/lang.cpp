@@ -309,17 +309,17 @@ void initLang()
 		const char* s;
 		switch(PRIMARYLANGID(GetUserDefaultLangID()))
 		{
-			case LANG_CZECH: s="Èesky"; break;
-			case LANG_PORTUGUESE: s="Português brasileiro"; break;
-			case LANG_FRENCH: s="French"; break;
-			case LANG_SLOVAK: s="Slovak"; break;
-			case LANG_RUSSIAN: s="Russian"; break;
-			case LANG_CHINESE: s="Chinese (Simplified)"; break;
-			case LANG_POLISH: s="Polish"; break;
-			case LANG_GREEK: s="Greek"; break;
-			case LANG_ITALIAN: s= "Italiano"; break;
-			case LANG_DUTCH: s= "Nederlands"; break;
 			case LANG_CATALAN: s="Catalan"; break;
+			case LANG_CZECH: s="Èesky"; break;
+			case LANG_FRENCH: s="French"; break;
+			case LANG_GREEK: s="Greek"; break;
+			case LANG_CHINESE: s="Chinese (Simplified)"; break;
+			case LANG_ITALIAN: s="Italiano"; break;
+			case LANG_DUTCH: s="Nederlands"; break;
+			case LANG_POLISH: s="Polish"; break;
+			case LANG_PORTUGUESE: s="Português brasileiro"; break;
+			case LANG_RUSSIAN: s="Russian"; break;
+			case LANG_SLOVAK: s="Slovak"; break;
 			default: s="English"; break;
 		}
 		strcpy(lang, s);
