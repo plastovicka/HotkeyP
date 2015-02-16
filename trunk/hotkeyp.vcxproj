@@ -210,7 +210,6 @@
       <Command>c:\_Petr\cw\hotkeyp\hotkeyp.exe -send window command 203 PlasHotKey</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>htmlhelp.lib;version.lib;winmm.lib;comctl32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <UACUIAccess>false</UACUIAccess>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -223,6 +222,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalManifestDependencies>"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'"</AdditionalManifestDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent />
   </ItemDefinitionGroup>
@@ -310,7 +310,6 @@
       <Command>c:\_Petr\cw\hotkeyp\hotkeypnhk.exe -send window command 203 PlasHotKey</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>htmlhelp.lib;version.lib;winmm.lib;comctl32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ProgramDatabaseFile>
@@ -322,6 +321,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <UACUIAccess>true</UACUIAccess>
       <AdditionalManifestDependencies>"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'"</AdditionalManifestDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -367,7 +367,6 @@
       <Command>c:\_Petr\cw\hotkeyp\hotkeypnhk.exe -send window command 203 PlasHotKey</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>htmlhelp.lib;version.lib;winmm.lib;comctl32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ProgramDatabaseFile>
@@ -379,6 +378,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <UACUIAccess>false</UACUIAccess>
       <AdditionalManifestDependencies>"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'"</AdditionalManifestDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -528,7 +528,6 @@
       <Command>c:\_Petr\cw\hotkeyp\hotkeyp.exe -send window command 203 C:\_Petr\CW\hotkeyp\hotkeypDBG.exe</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>htmlhelp.lib;version.lib;winmm.lib;comctl32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>./hotkeypNHK.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -541,6 +540,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalManifestDependencies>"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'"</AdditionalManifestDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent />
   </ItemDefinitionGroup>

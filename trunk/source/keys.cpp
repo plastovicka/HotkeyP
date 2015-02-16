@@ -9,11 +9,6 @@ modify it under the terms of the GNU General Public License.
 #pragma hdrstop
 #include "hotkeyp.h"
 
-// zef: add multimedia library to build
-#if defined(_MSC_VER)
-#pragma comment(lib, "winmm.lib")
-#endif
-
 int
 delayButtons=-1,
 	delayButtons2=-1,

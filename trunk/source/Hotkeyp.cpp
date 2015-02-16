@@ -5,12 +5,16 @@
  modify it under the terms of the GNU General Public License.
  */
 
-//required libraries: htmlhelp.lib version.lib winmm.lib comctl32.lib ws2_32.lib
-
 #include "hdr.h"
 #pragma hdrstop
 #include "hotkeyp.h"
 #include "resource.h"   // for resource generated identifiers
+
+#pragma comment(lib, "htmlhelp.lib")
+#pragma comment(lib, "version.lib")
+#pragma comment(lib, "winmm.lib")
+#pragma comment(lib, "comctl32.lib")
+#pragma comment(lib, "ws2_32.lib")
 
 const DWORD priorCnst[]={IDLE_PRIORITY_CLASS, NORMAL_PRIORITY_CLASS,
 HIGH_PRIORITY_CLASS, REALTIME_PRIORITY_CLASS, 16384, 32768};
@@ -3790,6 +3794,11 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int cmdShow)
 #if _MSC_VER>=1400
 	_set_invalid_parameter_handler(myInvalidParameterHandler);
 #endif
+
+	//DPIAware
+	typedef BOOL(WINAPI *TGetProcAddress)();
+	TGetProcAddress getProcAddress = (TGetProcAddress)GetProcAddress(GetModuleHandle("user32"), "SetProcessDPIAware");
+	if(getProcAddress) getProcAddress();
 
 	if(!strcmp(cmdLine, "--htmlhelp")) return helpProcess();
 	cmdLineCmd=-1;
