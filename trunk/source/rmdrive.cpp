@@ -86,7 +86,7 @@ DEVINST GetDrivesDevInstByDeviceNumber(long DeviceNumber, UINT DriveType, char* 
 			ZeroMemory(&spdd, sizeof(spdd));
 			spdd.cbSize = sizeof(spdd);
 
-			long res = fSetupDiGetDeviceInterfaceDetailA(hDevInfo, &spdid, pspdidd, dwSize, &dwSize, &spdd);
+			res = fSetupDiGetDeviceInterfaceDetailA(hDevInfo, &spdid, pspdidd, dwSize, &dwSize, &spdd);
 			if ( res ) {
 
 				// in case you are interested in the USB serial number:

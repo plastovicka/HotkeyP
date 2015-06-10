@@ -93,7 +93,7 @@ static LONG delayDialogActive = false;
 delayAndExecuteHotKey - checks if HotKey should prompt user before
 executing, prompts user if necessary and then executes the HotKey.
 */
-void delayAndExecuteHotKey(HINSTANCE inst, HWND parent, int hotKeyIndex)
+void delayAndExecuteHotKey(HINSTANCE instance, HWND parent, int hotKeyIndex)
 {
 	HotKey const * hk = &hotKeyA[hotKeyIndex];
 	if((hk->ask || hk->delay) && hk->isActive())
@@ -136,7 +136,7 @@ void delayAndExecuteHotKey(HINSTANCE inst, HWND parent, int hotKeyIndex)
 			// box and invoke the dialog box.  Note: this is modal and will not
 			// return until the dialog box closes.
 			pCancelCmdHotKey = hk;
-			INT_PTR results = DialogBox(inst, "CNTDOWN", parent, cntDownCallback);
+			INT_PTR results = DialogBox(instance, "CNTDOWN", parent, cntDownCallback);
 			// No protection needed here since only one thread can get in.
 			delayDialogActive = false;
 			if(results != IDOK) return;

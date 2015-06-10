@@ -47,7 +47,7 @@ struct HotKey {
 	bool parseMultiCmd(bool (HotKey::*f)() const) const;
 	bool checkModifiers();
 	void destroy();  //destructor
-	bool inCategory(int category);
+	bool inCategory(int _category);
 	int getIcon();
 	std::string getFullExe() const;    // gets fully expanded exe name (zef)
 	std::string getFullCmd() const;    // gets command name or fully expanded exe name (zef)
@@ -281,7 +281,7 @@ void removeDrive(char DriveLetter);
 void removeUSBdrives();
 
 void executeHotKey(int i);
-void delayAndExecuteHotKey(HINSTANCE inst, HWND parent, int hotKeyIndex);
+void delayAndExecuteHotKey(HINSTANCE instance, HWND parent, int hotKeyIndex);
 void printKey(char *s, HotKey* hk);
 void correctMultiCmd(int item, int action, int item2=0);
 void keyMapChanged();

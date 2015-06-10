@@ -275,7 +275,7 @@ struct Tregb { TCHAR *s; void *i; DWORD n; } regValB[]={
 		{"buttons", mainBtnEnabled, sizeof(mainBtnEnabled)},
 };
 
-OPENFILENAME ofn={
+OPENFILENAME htkOfn={
 	OPENFILENAME_SIZE_VERSION_400, 0, 0, 0, 0, 0, 1,
 	iniFile, sizeof(iniFile),
 	0, 0, 0, 0, 0, 0, 0, "HTK", 0, 0, 0
@@ -549,9 +549,9 @@ int HotKey::getIcon()
 		}
 		else{
 			const std::string fullExe = getFullExe();
-			const char *exe = fullExe.c_str();
-			if(isWWW(exe)){
-				icon= !_strnicmp(exe, "mailto:", 7) ? 15 : 19;
+			const char *_exe = fullExe.c_str();
+			if(isWWW(_exe)){
+				icon= !_strnicmp(_exe, "mailto:", 7) ? 15 : 19;
 			}
 			else{
 				icon= -1;
@@ -559,14 +559,14 @@ int HotKey::getIcon()
 				char buf[MAX_PATH], buf2[MAX_PATH];
 				int iconIndex=0;
 				bool docIcon = false;
-				if(isExe(exe)){
+				if(isExe(_exe)){
 					//get full path of the exe file
-					SearchPath(0, exe, 0, sizeof(buf), buf, &s);
+					SearchPath(0, _exe, 0, sizeof(buf), buf, &s);
 				}
 				else{
 						{
 							//get file extension of the document
-							const char *t=strrchr(exe, '.');
+							const char *t=strrchr(_exe, '.');
 							if(t){
 								//find DefaultIcon in the registry
 								HKEY key;
@@ -581,11 +581,11 @@ int HotKey::getIcon()
 											if(RegQueryValueEx(key2, 0, 0, 0, (BYTE*)buf2, &d)==ERROR_SUCCESS){
 												if(ExpandEnvironmentStrings(buf2, buf, sizeof(buf)-1)){
 													//parse icon index
-													char * t=strrchr(buf, ',');
-													if(t){
+													char * u=strrchr(buf, ',');
+													if(u){
 														char *e;
-														iconIndex= strtol(t+1, &e, 10);
-														if(!*e) *t=0;
+														iconIndex= strtol(u+1, &e, 10);
+														if(!*e) *u=0;
 													}
 													//remove quotes
 													if(*buf=='"'){
@@ -605,7 +605,7 @@ int HotKey::getIcon()
 						}
 				l1:
 					//which exe is used to open the document
-					if(!docIcon) FindExecutable(exe, dir, buf);
+					if(!docIcon) FindExecutable(_exe, dir, buf);
 				}
 				HICON hi;
 				if((int)ExtractIconEx(buf, iconIndex, 0, &hi, 1) > 0){
@@ -649,7 +649,7 @@ void drawLockText()
 	int i;
 	double K;
 	HGDIOBJ oldF;
-	LOGFONT font;
+	LOGFONT logfont;
 	char buf[24+Dpasswd];
 	RECT rc;
 	static RECT rcOld;
@@ -668,13 +668,13 @@ void drawLockText()
 		if(s[0]==' ' && s[1]==0) s[0]=0;
 	}
 	//create font
-	memset(&font, 0, sizeof(font));
-	font.lfHeight=28;
-	font.lfWeight=FW_NORMAL;
-	font.lfCharSet=DEFAULT_CHARSET;
-	strcpy(font.lfFaceName, "Arial");
+	memset(&logfont, 0, sizeof(logfont));
+	logfont.lfHeight=28;
+	logfont.lfWeight=FW_NORMAL;
+	logfont.lfCharSet=DEFAULT_CHARSET;
+	strcpy(logfont.lfFaceName, "Arial");
 	dc=GetDC(hWndLock);
-	oldF=SelectObject(dc, CreateFontIndirect(&font));
+	oldF=SelectObject(dc, CreateFontIndirect(&logfont));
 	//move
 	pcLockX=int(pcLockX+pcLockDx);
 	pcLockY=int(pcLockY+pcLockDy);
@@ -856,7 +856,7 @@ void langChanged()
 		SetWindowText(GetDlgItem(hWin, b->cmd), lng(b->langId, b->caption));
 	}
 	//file filters
-	ofn.lpstrFilter=lng(506, "Hotkeys (*.htk)\0*.htk\0All files\0*.*\0");
+	htkOfn.lpstrFilter=lng(506, "Hotkeys (*.htk)\0*.htk\0All files\0*.*\0");
 	exeOfn.lpstrFilter=lng(507, "All files\0*.*\0Executable files\0*.exe;*.com;*.bat;*.scr\0");
 	argOfn.lpstrFilter=lng(508, "All files\0*.*\0");
 	regOfn.lpstrFilter=lng(509, "Config files (*.reg)\0*.reg\0All files\0*.*\0");
@@ -1146,12 +1146,12 @@ int CALLBACK sortNote(LPARAM a, LPARAM b, LPARAM p)
 	return int(p) * _stricmp(hotKeyA[b].getNote(), hotKeyA[a].getNote());
 }
 
-bool HotKey::inCategory(int category)
+bool HotKey::inCategory(int _category)
 {
-	if(category>=0){
-		return this->category==category;
+	if(_category>=0){
+		return this->category==_category;
 	}
-	switch(category){
+	switch(_category){
 		case -1:
 			return true;
 		case -2:
@@ -1528,7 +1528,7 @@ void readini()
 bool saveAtExit()
 {
 	if(modif && numKeys){
-		if(!*iniFile) save(ofn);
+		if(!*iniFile) save(htkOfn);
 		if(*iniFile && !wr(iniFile)) return false;
 	}
 	if(!delreg) writeini();
@@ -1679,8 +1679,8 @@ int findCmd(const char *s)
 	return -1;
 }
 //-------------------------------------------------------------------------
-static char s[3][Dpasswd];
-static int len[3];
+static char inputText[3][Dpasswd];
+static int inputLen[3];
 
 BOOL CALLBACK passwdClassProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 {
@@ -1688,14 +1688,14 @@ BOOL CALLBACK passwdClassProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 	int i, j;
 
 	i=GetDlgCtrlID(hWnd)-170;
-	int &len=::len[i];
+	int &len=inputLen[i];
 	switch(mesg){
 		case WM_KEYDOWN:
 			if(wP==VK_BACK){
 				if(len>0) len--;
 			}
 			else if(wP!=VK_MENU && len<Dpasswd){
-				s[i][len++]=(char)wP;
+				inputText[i][len++]=(char)wP;
 			}
 			for(j=0; j<Dpasswd; j++) buf[j]='*';
 			buf[len]=0;
@@ -1726,7 +1726,7 @@ BOOL CALLBACK passwdProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM)
 		case WM_INITDIALOG:
 			setDlgTexts(hWnd, 1063);
 			for(i=0; i<3; i++){
-				len[i]=0;
+				inputLen[i]=0;
 				editWndProc=(WNDPROC)SetWindowLongPtr(w[i],
 					GWLP_WNDPROC, (LONG_PTR)passwdClassProc);
 			}
@@ -1736,17 +1736,17 @@ BOOL CALLBACK passwdProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM)
 			wP=LOWORD(wP);
 			switch(wP){
 				case IDOK:
-					if(len[0] || len[1]){
-						encrypt(p, Dpasswd, s[0], len[0], passwdAlg);
+					if(inputLen[0] || inputLen[1]){
+						encrypt(p, Dpasswd, inputText[0], inputLen[0], passwdAlg);
 						if(memcmp(p, password, Dpasswd) && !isEmptyPassword()){
 							SetFocus(w[0]);
 							break;
 						}
-						if(len[1]!=len[2] || memcmp(s[1], s[2], len[2])){
+						if(inputLen[1]!=inputLen[2] || memcmp(inputText[1], inputText[2], inputLen[2])){
 							SetFocus(w[1]);
 							break;
 						}
-						passwdAlg= encrypt(password, Dpasswd, s[1], len[1], -1);
+						passwdAlg= encrypt(password, Dpasswd, inputText[1], inputLen[1], -1);
 					}
 				case IDCANCEL:
 					EndDialog(hWnd, wP);
@@ -2168,7 +2168,7 @@ void delKey(int item)
 }
 
 //create new hotkey
-void addKey(char *exe, bool copy, int item)
+void addKey(char *exe, bool makeCopy, int item)
 {
 	if(item<0) item=0;
 	//default attributes
@@ -2177,7 +2177,7 @@ void addKey(char *exe, bool copy, int item)
 	hk->priority= 1;
 	hk->cmd=-1;
 	//copy hotkey
-	if(copy){
+	if(makeCopy){
 		HotKey *copy= &hotKeyA[item-1];
 		cpStr(hk->note, copy->note);
 		cpStr(hk->exe, copy->exe);
@@ -2777,10 +2777,10 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 								printKey(buf, hk);
 								break;
 							case 2: {
-								char const * s= hk->getNote();
-								lstrcpyn(buf, s, n-2);
-								if(hk->cmd>=0 && s!=hk->note && *hk->args){
-									i=lstrlen(s);
+								char const * note= hk->getNote();
+								lstrcpyn(buf, note, n-2);
+								if(hk->cmd>=0 && note!=hk->note && *hk->args){
+									i=lstrlen(note);
 									strcpy(buf+i, ": ");
 									i+=2;
 									lstrcpyn(buf+i, hk->args, n-i);
@@ -2869,13 +2869,11 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 		case WM_MOUSEMOVE:
 			if(dragStart>=0){
 				int d=0;
-				RECT rc;
 				itemDrag(lP);
 				int t=ListView_GetTopIndex(listBox);
 				if(t==dragStart && dragStart>0) d=-1;
 				if(t+ListView_GetCountPerPage(listBox)-1==dragStart && dragStart<numKeys-1) d=1;
 				if(d){
-					POINT pt;
 					GetCursorPos(&pt);
 					ListView_EnsureVisible(listBox, dragStart+d, TRUE);
 					ListView_GetItemRect(listBox, dragStart, &rc, LVIR_BOUNDS);
@@ -2989,10 +2987,10 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					}
 					break;
 				case 201: //Open
-					if(open(ofn)) rd(iniFile);
+					if(open(htkOfn)) rd(iniFile);
 					break;
 				case 202: //Save
-					if(save(ofn)) wr(iniFile);
+					if(save(htkOfn)) wr(iniFile);
 					break;
 				case 203: //Exit
 				case 211:
@@ -3155,7 +3153,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					if(hk->scanCode==hk1->scanCode && hk->vkey==hk1->vkey &&
 						hk->modifiers==hk1->modifiers &&
 						(hk->vkey!=vkLirc || !strcmp(hk->lirc, hk1->lirc))){
-						int cmd= hk->cmd;
+						cmd= hk->cmd;
 						if(cmd==94){
 							if(lP==K_DOWN) cmd=904;
 							if(lP==K_UP) cmd=906;
@@ -3172,7 +3170,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					if(sentToActiveWnd==1) ignoreHotkey(hk);
 					else hiliteIcon();
 				}
-				else if(hk->cmd!=76 && GetForegroundWindow()==hWin && lP!=K_UP){
+				else if(lP!=K_UP && hk->cmd!=76 && GetForegroundWindow()==hWin){
 					setCur((int)wP);
 				}
 			}
@@ -3349,7 +3347,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			}
 			else{
 				for(i=0; i<numKeys; i++){
-					HotKey *hk= &hotKeyA[i];
+					hk= &hotKeyA[i];
 					if(hk->vkey==vkLirc && !hk->disable &&
 						hk->lirc && !strcmp(hk->lirc, lircButton)){
 						postHotkey(i, K_ONLYDOWN);
@@ -3393,7 +3391,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			}
 			else{
 				for(i=0; i<numKeys; i++){
-					HotKey *hk= &hotKeyA[i];
+					hk= &hotKeyA[i];
 					if(hk->vkey==vkJoy && !hk->disable && hk->scanCode==lP){
 						if(hk->isLocal() || joyGlobalEnabled()){
 							postHotkey(i, wP);

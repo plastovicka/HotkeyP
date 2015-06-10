@@ -40,7 +40,7 @@ class TvolumeParam
 	HRESULT endpoint();
 	void propValue(char *&s, IPropertyStore *pProps, const PROPERTYKEY &key);
 public:
-	void volume(char *which1, int value, int action);
+	void volume(char *which1, int _value, int _action);
 };
 
 TendpointName *endpointNameList;
@@ -529,13 +529,13 @@ void TvolumeParam::volumeVista()
 									pProps->Release();
 
 									//add name to cache
-									TendpointName *i = new TendpointName();
-									i->name= endpointName;
-									i->nameLong= endpointNameLong;
-									i->id= new WCHAR[wcslen(endpointId)+1];
-									wcscpy(i->id, endpointId);
-									i->nxt= endpointNameList;
-									endpointNameList= i;
+									TendpointName *e = new TendpointName();
+									e->name= endpointName;
+									e->nameLong= endpointNameLong;
+									e->id= new WCHAR[wcslen(endpointId)+1];
+									wcscpy(e->id, endpointId);
+									e->nxt= endpointNameList;
+									endpointNameList= e;
 								}
 							}
 							volumeVista1();
@@ -633,10 +633,10 @@ void TvolumeParam::volume1()
 }
 
 //volume action for all devices and all audio lines
-void TvolumeParam::volume(char *which1, int value, int action)
+void TvolumeParam::volume(char *which1, int _value, int _action)
 {
-	this->value=value;
-	this->action=action;
+	this->value=_value;
+	this->action=_action;
 	record=0;
 	whichMxId=mxId=0;
 	if(!which1) which1="";

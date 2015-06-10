@@ -397,16 +397,16 @@ void executeHotKey(int i)
 					success=true;
 				}
 				else if(GetLastError()==ERROR_ELEVATION_REQUIRED){
-					SHELLEXECUTEINFO si;
-					ZeroMemory(&si, sizeof(si));
-					si.cbSize=sizeof(SHELLEXECUTEINFO);
-					si.fMask=SEE_MASK_NOCLOSEPROCESS;
-					si.hwnd=hWin;
-					si.lpDirectory=workDir;
-					si.lpFile=fullExe.c_str();
+					SHELLEXECUTEINFO sei;
+					ZeroMemory(&sei, sizeof(sei));
+					sei.cbSize=sizeof(SHELLEXECUTEINFO);
+					sei.fMask=SEE_MASK_NOCLOSEPROCESS;
+					sei.hwnd=hWin;
+					sei.lpDirectory=workDir;
+					sei.lpFile=fullExe.c_str();
 					cpStr(s, args);
-					si.lpParameters=s;
-					si.nShow=showCnst[hk->cmdShow];
+					sei.lpParameters=s;
+					sei.nShow=showCnst[hk->cmdShow];
 					BOOL vis = IsWindowVisible(hWin);
 					BOOL iconic = IsIconic(hWin);
 					if(!vis){
@@ -415,11 +415,11 @@ void executeHotKey(int i)
 					}
 					if(iconic) ShowWindow(hWin, SW_RESTORE);
 					SetForegroundWindow(hWin);
-					if(ShellExecuteEx(&si)){
-						SetPriorityClass(si.hProcess, priorCnst[hk->priority]);
+					if(ShellExecuteEx(&sei)){
+						SetPriorityClass(sei.hProcess, priorCnst[hk->priority]);
 						if(hk->process) CloseHandle(hk->process);
-						hk->process= si.hProcess;
-						hk->processId= ((TGetProcessId)GetProcAddress(GetModuleHandle("kernel32.dll"), "GetProcessId"))(si.hProcess);
+						hk->process= sei.hProcess;
+						hk->processId= ((TGetProcessId)GetProcAddress(GetModuleHandle("kernel32.dll"), "GetProcessId"))(sei.hProcess);
 						success=true;
 					}
 					if(iconic) ShowWindow(hWin, SW_MINIMIZE);
@@ -466,8 +466,8 @@ void correctMultiCmd(int item, int action, int item2)
 	char *s, *d;
 	char buf[1024];
 
-	for(int i=0; i<numKeys; i++){
-		HotKey *hk= &hotKeyA[i];
+	for(int k=0; k<numKeys; k++){
+		HotKey *hk= &hotKeyA[k];
 		if(hk->cmd!=61 && hk->cmd!=70) continue; //multi command
 		d=buf;
 		for(s=hk->args;; s++){
@@ -857,23 +857,23 @@ char IgnoreLeftRight(LPARAM vk)
 }
 
 
-bool KeyNeedsHook(UINT vk, UINT modif)
+bool KeyNeedsHook(UINT vk, UINT modifiers)
 {
 #ifndef NOHOOK
 	if(useHook>0 && !disableAll)
 	{
 		if(useHook==3 || useHook==2 && vk>=0xA6 && vk<=0xB9 || specialKeys[vk]) return true;
 
-		if((modif&MOD_WIN)!=0 && specialWinKeys[vk])
+		if((modifiers&MOD_WIN)!=0 && specialWinKeys[vk])
 		{
-			return modif==MOD_WIN
-				|| vk>='0' && vk<='9' && (modif==(MOD_WIN|MOD_CONTROL) || modif==(MOD_WIN|MOD_SHIFT) || modif==(MOD_WIN|MOD_ALT))
-				|| modif==(MOD_WIN|MOD_CONTROL) && (vk=='P' || vk=='F')
-				|| modif==(MOD_WIN|MOD_SHIFT) && (vk=='M' || vk=='T' || vk==VK_UP || vk==VK_LEFT || vk==VK_RIGHT || vk==VK_DOWN);
+			return modifiers==MOD_WIN
+				|| vk>='0' && vk<='9' && (modifiers==(MOD_WIN|MOD_CONTROL) || modifiers==(MOD_WIN|MOD_SHIFT) || modifiers==(MOD_WIN|MOD_ALT))
+				|| modifiers==(MOD_WIN|MOD_CONTROL) && (vk=='P' || vk=='F')
+				|| modifiers==(MOD_WIN|MOD_SHIFT) && (vk=='M' || vk=='T' || vk==VK_UP || vk==VK_LEFT || vk==VK_RIGHT || vk==VK_DOWN);
 		}
 	}
 #else
-	(void)vk; (void)modif;
+	(void)vk; (void)modifiers;
 #endif
 	return false;
 }
@@ -918,17 +918,17 @@ LRESULT keyFromHook(WPARAM mesg, LPARAM vk, LPARAM scan)
 		keyEventUp(VK_CONTROL);
 	}
 
-	UINT modif=0;
+	UINT modifiers=0;
 	if(vk<255 && specialWinKeys[vk] && (GetAsyncKeyState(VK_LWIN)<0 || GetAsyncKeyState(VK_RWIN)<0)){
-		modif=MOD_WIN;
-		if(GetAsyncKeyState(VK_SHIFT)<0) modif|=MOD_SHIFT;
-		if(GetAsyncKeyState(VK_CONTROL)<0) modif|=MOD_CONTROL;
-		if(GetAsyncKeyState(VK_MENU)<0) modif|=MOD_ALT;
+		modifiers=MOD_WIN;
+		if(GetAsyncKeyState(VK_SHIFT)<0) modifiers|=MOD_SHIFT;
+		if(GetAsyncKeyState(VK_CONTROL)<0) modifiers|=MOD_CONTROL;
+		if(GetAsyncKeyState(VK_MENU)<0) modifiers|=MOD_ALT;
 	}
 
 	if(scan==6619136 && vk==76) vk=255; ///Copy key pressed after Win key
 
-	if(KeyNeedsHook(vk, modif))
+	if(KeyNeedsHook(vk, modifiers))
 		return msgFromHook(vk, scan, (mesg==WM_KEYUP || mesg==WM_SYSKEYUP) ? K_UP : K_DOWN);
 	return 0;
 }
