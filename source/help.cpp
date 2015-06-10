@@ -9,7 +9,6 @@
 #include "hotkeyp.h"
 
 bool chmUnlocked=false;
-HWND hHidden,hHH;
 const char *helpClass = "HotKeyP_Help";
 //-------------------------------------------------------------------------
 bool showHelp(int anchorId)
@@ -41,6 +40,8 @@ bool showHelp(int anchorId)
 //-------------------------------------------------------------------------
 LRESULT helpProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 {
+	static HWND hHH;
+
   char buf[MAX_PATH],buf2[MAX_PATH+24];
   if(mesg==WM_USER+4370){
     getExeDir(buf,lng(13,"help.chm"));
@@ -76,7 +77,7 @@ int helpProcess()
   wc.lpszClassName=helpClass;
   if(!RegisterClass(&wc)) return 2;
 
-  hHidden = CreateWindowEx(0,helpClass,"Help",WS_POPUP,0,0,100,100,0,0,inst,0);
+	HWND hHidden = CreateWindowEx(0,helpClass,"Help",WS_POPUP,0,0,100,100,0,0,inst,0);
   if(!hHidden) return 3;
 
   while(GetMessage(&mesg, NULL, 0, 0)>0){

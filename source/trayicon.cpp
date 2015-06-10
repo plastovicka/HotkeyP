@@ -35,11 +35,11 @@ void addTrayIcon()
 }
 
 //---------------------------------------------------------------------------
-void modifyTrayIcon(HWND hWin, int rsrcId)
+void modifyTrayIcon(HWND hWnd, int rsrcId)
 {
 	NOTIFYICONDATA myNID;
 	myNID.cbSize = sizeof(NOTIFYICONDATA);
-	myNID.hWnd = hWin;
+	myNID.hWnd = hWnd;
 	myNID.uID = 1;
 	myNID.hIcon = (HICON)LoadImage(inst, MAKEINTRESOURCE(rsrcId), IMAGE_ICON,
 		GetSystemMetrics(SM_CXSMICON), GetSystemMetrics(SM_CYSMICON), 0);

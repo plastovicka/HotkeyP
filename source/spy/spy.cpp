@@ -284,7 +284,6 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
       FillRect(lpdis->hDC, &lpdis->rcItem, br);
       DeleteObject(br);
       //prepare rectangle
-      RECT rc;
       rc.top= lpdis->rcItem.top;
       rc.bottom= lpdis->rcItem.bottom;
       rc.right=3;

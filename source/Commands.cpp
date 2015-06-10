@@ -1525,8 +1525,8 @@ void changeWallpaper(char *dir, int action)
 				pActiveDesktop->Release();
 			}
 			CoUninitialize();
-			DWORD_PTR d;
-			SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, SPI_SETDESKWALLPAPER, 0, SMTO_ABORTIFHUNG, 100, &d);
+			DWORD_PTR dummy;
+			SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, SPI_SETDESKWALLPAPER, 0, SMTO_ABORTIFHUNG, 100, &dummy);
 #endif
 		}
 		writeini();
@@ -2823,8 +2823,8 @@ void command(int cmd, char *param, HotKey *hk)
 						}
 					}
 					else{
-						SERVICE_STATUS s;
-						if(!ControlService(schService, SERVICE_CONTROL_STOP, &s)){
+						SERVICE_STATUS status;
+						if(!ControlService(schService, SERVICE_CONTROL_STOP, &status)){
 							d=GetLastError();
 							if(d!=1062) msg("Cannot stop service (error %u)", d);
 						}
@@ -2833,8 +2833,8 @@ void command(int cmd, char *param, HotKey *hk)
 				}
 				CloseServiceHandle(schSCManager);
 			}
-		}
 			break;
+		}
 		case 95: //disable/enable joystick hotkeys
 			pb= &disableJoystick;
 			goto ldisable;
@@ -2867,14 +2867,14 @@ void command(int cmd, char *param, HotKey *hk)
 				hideMainWindow();
 			}
 			else if(w && IsWindowVisible(w)){
-				char buf[64];
-				GetWindowText(w, buf, 64);
+				char title[64];
+				GetWindowText(w, title, 64);
 				for(i=0; i<sizeA(trayIconA); i++){
-					HideInfo *h = &trayIconA[i];
-					if(!h->pid){
-						hideApp(w, h);
-						getExeIcon(h);
-						addTrayIcon(buf, h->icon, 100+i);
+					HideInfo *info = &trayIconA[i];
+					if(!info->pid){
+						hideApp(w, info);
+						getExeIcon(info);
+						addTrayIcon(title, info->icon, 100+i);
 						break;
 					}
 				}
@@ -2886,8 +2886,8 @@ void command(int cmd, char *param, HotKey *hk)
 				zoom.end();
 			}
 			else{
-				int i= strToIntStr(param2, &param);
-				int j= strToIntStr(param, &param2);
+				i= strToIntStr(param2, &param);
+				j= strToIntStr(param, &param2);
 				zoom.magnification= iparam ? iparam : 2;
 				zoom.width= i ? i+2 : 142;
 				zoom.height= j ? j+2 : zoom.width;
@@ -2901,9 +2901,9 @@ void command(int cmd, char *param, HotKey *hk)
 			if(GetTempPath(sizeA(exeBuf), exeBuf)){
 				if(strlen(exeBuf)>4){
 					FILETIME f;
-					SYSTEMTIME s;
-					GetSystemTime(&s);
-					SystemTimeToFileTime(&s, &f);
+					SYSTEMTIME time;
+					GetSystemTime(&time);
+					SystemTimeToFileTime(&time, &f);
 					*(LONGLONG*)&f -= (iparam ? iparam : 7) *(24*3600*(LONGLONG)10000000);
 					deleteTemp(exeBuf, &f);
 				}
