@@ -1,5 +1,5 @@
 /*
-	(C) 2002-2014 Petr Lastovicka
+	(C) 2002-2016 Petr Lastovicka
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License.
@@ -314,7 +314,7 @@ void loadLang()
 				}
 #ifdef UNICODE
 				langFile= new TCHAR[len+3];
-				MultiByteToWideChar(cp, 0, langFileA, len, langFile, len);
+				len= MultiByteToWideChar(cp, 0, langFileA, len, langFile, len);
 				delete[] langFileA;
 #else
 				langFile= langFileA;
