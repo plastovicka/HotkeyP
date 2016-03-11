@@ -16,7 +16,7 @@ delayButtons=-1,
 bool preventWinMenu;
 
 HMODULE klib;
-char passwd[Dpasswd];
+TCHAR passwd[Dpasswd];
 int passwdLen;
 BYTE password[Dpasswd];
 
@@ -50,7 +50,7 @@ BYTE specialWinKeys[256];
 //-------------------------------------------------------------------------
 void keyMapChanged()
 {
-	char *s, **p;
+	TCHAR *s, **p;
 	p=keyMapIndex;
 	for(s=keyMap;; s++){
 		while(*s==' ') s++;
@@ -65,42 +65,42 @@ lend:
 	*p=0;
 }
 
-void printKey(char *s, HotKey* hk)
+void printKey(TCHAR *s, HotKey* hk)
 {
-	char *e, *t, **p, *s0;
+	TCHAR *e, *t, **p, *s0;
 	int i, scan, j, scan1, scan0, scanSh;
 
 	*s=0;
-	if(hk->modifiers & MOD_CONTROL) strcat(s, "Ctrl+");
-	if(hk->modifiers & MOD_SHIFT) strcat(s, "Shift+");
-	if(hk->modifiers & MOD_ALT) strcat(s, "Alt+");
-	if(hk->modifiers & MOD_WIN) strcat(s, "Win+");
-	s=s0=strchr(s, 0);
+	if(hk->modifiers & MOD_CONTROL) _tcscat(s, _T("Ctrl+"));
+	if(hk->modifiers & MOD_SHIFT) _tcscat(s, _T("Shift+"));
+	if(hk->modifiers & MOD_ALT) _tcscat(s, _T("Alt+"));
+	if(hk->modifiers & MOD_WIN) _tcscat(s, _T("Win+"));
+	s=s0=_tcschr(s, 0);
 	scan=hk->scanCode;
 	scanSh=(scan>>16)&0x1ff;
 	scan1=MapVirtualKey('1', MAPVK_VK_TO_VSC);
 	scan0=MapVirtualKey('0', MAPVK_VK_TO_VSC);
 	if(hk->vkey>='0' && hk->vkey<='9'){
-		*s++=(char)hk->vkey;
+		*s++=(TCHAR)hk->vkey;
 		*s=0;
 	}
 	else if(hk->vkey==255 && scanSh<=scan0 && scanSh>=scan1 && scan0-scan1==9){
-		*s++=(char)(scanSh==scan0 ? '0' : scanSh-scan1+'1');
+		*s++=(TCHAR)(scanSh==scan0 ? '0' : scanSh-scan1+'1');
 		*s=0;
 	}
 	else if(hk->vkey==vkMouse){
 		buttonToArray(scan);
 		//mouse
 		if(scan!=-1){
-			s+=sprintf(s, "%s ", lng(719, "Mouse"));
+			s+=_stprintf(s, _T("%s "), lng(719, "Mouse"));
 			for(i=24; i>=0; i-=4){
 				j=(scan>>i)&15;
 				if(j==15) continue;
 				*s="LRSCM456789DUDU."[j];
-				if(j==M_WheelUp){ strcpy(s, "Up"); s++; }
-				if(j==M_WheelDown){ strcpy(s, "Down"); s+=3; }
-				if(j==M_WheelRight){ strcpy(s, "Right"); s+=4; }
-				if(j==M_WheelLeft){ strcpy(s, "Left"); s+=3; }
+				if(j==M_WheelUp){ tcscpyA(s, "Up"); s++; }
+				if(j==M_WheelDown){ tcscpyA(s, "Down"); s+=3; }
+				if(j==M_WheelRight){ tcscpyA(s, "Right"); s+=4; }
+				if(j==M_WheelLeft){ tcscpyA(s, "Left"); s+=3; }
 				s++;
 				*s++= (hk->scanCode>=0) ? '&' : '+';
 			}
@@ -109,18 +109,18 @@ void printKey(char *s, HotKey* hk)
 	}
 	else if(hk->vkey==vkLirc){
 		//remote control
-		sprintf(s, "{%.30s}", hk->lirc);
+		_stprintf(s, _T("{%.30hs}"), hk->lirc);
 	}
 	else if(hk->vkey==vkJoy){
 		//joystick
-		s+=sprintf(s, "Joy");
+		s+=_stprintf(s, _T("Joy"));
 		i= unsigned(scan)>>28; //joystick ID
-		if(i) s+=sprintf(s, "%d", i+1);
-		s+=sprintf(s, ": ");
+		if(i) s+=_stprintf(s, _T("%d"), i+1);
+		s+=_stprintf(s, _T(": "));
 		i= scan & 0x3ffffff;
 		switch((scan>>26)&3){
 			case J_BUTTON:
-				sprintf(s, "%d", i+1);
+				_stprintf(s, _T("%d"), i+1);
 				break;
 			case J_AXIS:
 				*s++= axisInd2Name(i);
@@ -128,7 +128,7 @@ void printKey(char *s, HotKey* hk)
 				*s=0;
 				break;
 			case J_POV:
-				sprintf(s, "Pov%d", i/100);
+				_stprintf(s, _T("Pov%d"), i/100);
 				break;
 		}
 	}
@@ -137,27 +137,27 @@ void printKey(char *s, HotKey* hk)
 		if(*s==0 && hk->vkey || s[1]==0 && *s>='A' && *s<='Z' && (scan&0x1000000)){
 			//multimedia keys
 			if(hk->vkey>=166 && hk->vkey<166+sizeA(keyNames)){
-				strcpy(s, keyNames[hk->vkey-166]);
+				tcscpyA(s, keyNames[hk->vkey-166]);
 			}
 			else if(hk->vkey==95){
-				strcpy(s, "Sleep");
+				_tcscpy(s, _T("Sleep"));
 			}
 			else if(hk->vkey!=255){
-				sprintf(s, "(%d)", hk->vkey);
+				_stprintf(s, _T("(%d)"), hk->vkey);
 			}
 			else{
-				sprintf(s, "[%d]", scanSh&255);
+				_stprintf(s, _T("[%d]"), scanSh&255);
 			}
 		}
 	}
 	//keyMap
-	i= (int)strlen(s0);
+	i= (int)_tcslen(s0);
 	for(p= keyMapIndex;; p++){
 		t=*p;
 		if(!t) break;
-		if(!strncmp(s0, t, i) && t[i]=='='){
+		if(!_tcsncmp(s0, t, i) && t[i]=='='){
 			t+=i+1;
-			e=strchr(t, ';');
+			e=_tcschr(t, ';');
 			if(e){
 				memcpy(s0, t, i=min(int(e-t), 31));
 				s0[i]=0;
@@ -171,18 +171,18 @@ void printKey(char *s, HotKey* hk)
 }
 
 //-------------------------------------------------------------------------
-bool CmpProcessPath(PROCESSENTRY32 *pe, char const *exe, char const *n1)  // zef: made const correct
+bool CmpProcessPath(PROCESSENTRY32 *pe, TCHAR const *exe, TCHAR const *n1)  // zef: made const correct
 {
-	if(!_strnicmp(cutPath(pe->szExeFile), n1, 15)){
+	if(!_tcsnicmp(cutPath(pe->szExeFile), n1, 15)){
 		MODULEENTRY32 me;
 		me.dwSize = sizeof(MODULEENTRY32);
 		HANDLE h = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, pe->th32ProcessID);
 		if(h==(HANDLE)-1) return true;
 		Module32First(h, &me);
 		do{
-			char const *n2 = me.szExePath;
+			TCHAR const *n2 = me.szExePath;
 			if(n1==exe) n2 = cutPath(n2);
-			if(!_stricmp(exe, n2)){
+			if(!_tcsicmp(exe, n2)){
 				CloseHandle(h);
 				return true;
 			}
@@ -193,13 +193,13 @@ bool CmpProcessPath(PROCESSENTRY32 *pe, char const *exe, char const *n1)  // zef
 }
 
 //find PID of process which belongs to exe file
-DWORD findProcess(char const *exe) // zef: made const correct
+DWORD findProcess(TCHAR const *exe) // zef: made const correct
 {
 	PROCESSENTRY32 pe;
 	pe.dwSize = sizeof(PROCESSENTRY32);
 	HANDLE h = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 	if(h!=(HANDLE)-1){
-		char const *n=cutPath(exe);
+		TCHAR const *n = cutPath(exe);
 		Process32First(h, &pe);
 		do{
 			if(CmpProcessPath(&pe, exe, n)){
@@ -234,7 +234,7 @@ BOOL CALLBACK enumWin(HWND hWnd, LPARAM pid)
 	return TRUE;
 }
 
-HWND findWindow(char const *exe, DWORD pid) // zef: made const correct
+HWND findWindow(TCHAR const *exe, DWORD pid) // zef: made const correct
 {
 	found=0;
 	DWORD pid1= findProcess(exe);
@@ -298,7 +298,7 @@ DWORD WINAPI opacityProc(LPVOID param)
 
 void executeHotKey(int i)
 {
-	char *workDir, *filePart, *s;
+	TCHAR *workDir, *filePart, *s;
 	HWND w;
 	DWORD d;
 	DWORD_PTR dp;
@@ -313,11 +313,11 @@ void executeHotKey(int i)
 	else{
 		workDir=0;
 		if(*hk->dir) workDir=hk->dir;
-		std::string fullExe = hk->getFullExe(); // zef: added support for environment vars in paths
+		tstring fullExe = hk->getFullExe(); // zef: added support for environment vars in paths
 		if(!isExe(fullExe.c_str())){
 			//document
 			if(!workDir){
-				strcpy(exeBuf, fullExe.c_str());
+				_tcscpy(exeBuf, fullExe.c_str());
 				filePart=cutPath(exeBuf);
 				if(filePart>exeBuf){
 					*(filePart-1)=0;
@@ -365,19 +365,19 @@ void executeHotKey(int i)
 			}
 			else{
 				//append parameters to exe file name
-				char *args=hk->args;
+				TCHAR *args=hk->args;
 				size_t len=fullExe.length();
-				if(!*args && len>4 && !_stricmp(fullExe.c_str()+len-4, ".scr")) args="/S"; //screen saver needs parameter /S
-				s= new char[len+strlen(args)+4];
+				if(!*args && len>4 && !_tcsicmp(fullExe.c_str()+len-4, _T(".scr"))) args=_T("/S"); //screen saver needs parameter /S
+				s= new TCHAR[len+_tcslen(args)+4];
 				s[0]='\"';
-				strcpy(s+1, fullExe.c_str());
-				strcat(s, "\"");
+				_tcscpy(s+1, fullExe.c_str());
+				_tcscat(s, _T("\""));
 				if(*args){
-					strcat(s, " ");
-					strcat(s, args);
+					_tcscat(s, _T(" "));
+					_tcscat(s, args);
 				}
 				//set working directory
-				if(!workDir && SearchPath(0, fullExe.c_str(), 0, sizeof(exeBuf), exeBuf, &filePart)){
+				if(!workDir && SearchPath(0, fullExe.c_str(), 0, sizeA(exeBuf), exeBuf, &filePart)){
 					workDir=exeBuf;
 					*filePart=0;
 				}
@@ -419,7 +419,7 @@ void executeHotKey(int i)
 						SetPriorityClass(sei.hProcess, priorCnst[hk->priority]);
 						if(hk->process) CloseHandle(hk->process);
 						hk->process= sei.hProcess;
-						hk->processId= ((TGetProcessId)GetProcAddress(GetModuleHandle("kernel32.dll"), "GetProcessId"))(sei.hProcess);
+						hk->processId= ((TGetProcessId)GetProcAddress(GetModuleHandleA("kernel32.dll"), "GetProcessId"))(sei.hProcess);
 						success=true;
 					}
 					if(iconic) ShowWindow(hWin, SW_MINIMIZE);
@@ -463,15 +463,15 @@ void executeHotKey(int i)
 //revise parameters of multiple commands
 void correctMultiCmd(int item, int action, int item2)
 {
-	char *s, *d;
-	char buf[1024];
+	TCHAR *s, *d;
+	TCHAR buf[1024];
 
 	for(int k=0; k<numKeys; k++){
 		HotKey *hk= &hotKeyA[k];
 		if(hk->cmd!=61 && hk->cmd!=70) continue; //multi command
 		d=buf;
 		for(s=hk->args;; s++){
-			int i=strtol(s, &s, 10);
+			int i=_tcstol(s, &s, 10);
 			if(!i) break;
 			if(action==1){ //delete
 				if(i-1==item) i=0;
@@ -484,8 +484,8 @@ void correctMultiCmd(int item, int action, int item2)
 				if(i-1==item) i=item2+1;
 				else if(i-1==item2) i=item+1;
 			}
-			if(i) d+=sprintf(d, "%d ", i);
-			if(!*s || d>buf+sizeof(buf)-20) break;
+			if(i) d+=_stprintf(d, _T("%d "), i);
+			if(!*s || d>buf+sizeA(buf)-20) break;
 		}
 		if(d>buf){
 			*(d-1)=0;
@@ -497,13 +497,13 @@ void correctMultiCmd(int item, int action, int item2)
 //return true if the function f returns true for at least one subcommand
 bool HotKey::parseMultiCmd(bool (HotKey::*f)() const) const
 {
-	char *s;
+	TCHAR *s;
 	int i;
 
 	if(!lock){
 		lock++;
 		for(s=args;; s++){
-			i=strtol(s, &s, 10);
+			i=_tcstol(s, &s, 10);
 			if(!i) break;
 			i--;
 			if(i>=0 && i<numKeys && (hotKeyA[i].*f)()){
@@ -600,11 +600,11 @@ void buttonToArray(int &param)
 	param=a;
 }
 
-bool checkProcessList(char *list, DWORD pid)
+bool checkProcessList(TCHAR *list, DWORD pid)
 {
-	char *s, *e;
+	TCHAR *s, *e;
 	for(s=list; *s;){
-		e=strchr(s, ';');
+		e=_tcschr(s, ';');
 		if(e) *e=0;
 		bool b= checkProcess(pid, s);
 		if(e) *e=';';
@@ -616,7 +616,7 @@ bool checkProcessList(char *list, DWORD pid)
 	return false;
 }
 
-bool checkProcessList(char *list)
+bool checkProcessList(TCHAR *list)
 {
 	HWND w= GetForegroundWindow();
 	DWORD pid;
@@ -626,7 +626,7 @@ bool checkProcessList(char *list)
 	return false;
 }
 
-bool checkFullscreen(char *list)
+bool checkFullscreen(TCHAR *list)
 {
 	HWND w= GetForegroundWindow();
 	DWORD pid;
@@ -636,7 +636,7 @@ bool checkFullscreen(char *list)
 		if(rc.left<=0 && rc.top<=0 &&
 			rc.right>=GetSystemMetrics(SM_CXSCREEN) &&
 			rc.bottom>=GetSystemMetrics(SM_CYSCREEN)){
-			return !checkProcessList(list, pid) && !checkProcess(pid, "explorer.exe");
+			return !checkProcessList(list, pid) && !checkProcess(pid, _T("explorer.exe"));
 		}
 	}
 	return false;
@@ -848,12 +848,12 @@ LPARAM clickFromHook(WPARAM mesg, LPARAM lP)
 	return 0;
 }
 
-char IgnoreLeftRight(LPARAM vk)
+TCHAR IgnoreLeftRight(LPARAM vk)
 {
 	if(vk==VK_LSHIFT || vk==VK_RSHIFT) return VK_SHIFT;
 	if(vk==VK_LCONTROL || vk==VK_RCONTROL) return VK_CONTROL;
 	if(vk==VK_LMENU || vk==VK_RMENU) return VK_MENU;
-	return (char)vk;
+	return (TCHAR)vk;
 }
 
 
@@ -889,10 +889,10 @@ LRESULT keyFromHook(WPARAM mesg, LPARAM vk, LPARAM scan)
 			if(mesg==WM_KEYUP){
 				//check password
 				BYTE p[Dpasswd];
-				encrypt(p,Dpasswd,passwd,passwdLen,passwdAlg);
-				if(!memcmp(p,password,Dpasswd)){ 
+				encrypt(p, Dpasswd, passwd, passwdLen, passwdAlg);
+				if(!memcmp(p, password, Dpasswd)){
 					//unlock
-					PostMessage(hWin,WM_USER+6341,0,0);
+					PostMessage(hWin, WM_USER+6341, 0, 0);
 				}
 				passwdLen=0;
 			}
@@ -959,7 +959,7 @@ void installHook(HHOOK &hook, int type, char *proc, HOOKPROC hproc)
 	if(!hook){
 		mod=inst;
 		if(isWin9X){
-			if(!klib) klib=LoadLibrary("hook.dll");
+			if(!klib) klib=LoadLibrary(_T("hook.dll"));
 			hproc = (HOOKPROC)GetProcAddress(mod=klib, proc);
 		}
 		if(hproc){

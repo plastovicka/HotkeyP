@@ -9,7 +9,7 @@ modify it under the terms of the GNU General Public License.
 
 /*
 getEnv is intended to be a simple wrapper around the std::getenv function
-that uses std::string instead of plain char *.
+that uses std::string instead of plain TCHAR *.
 It was written mainly so std::getenv could be replaced with other
 functions, because on Microsoft Windows, Microsoft's version of this
 function is not secure for some reason.  Microsoft recommends using
@@ -17,22 +17,22 @@ their _dupenv_s function but that function is only available when
 linking with the Microsoft C run-time libraries.
 */
 // original version using the portable std::getenv function
-static const std::string getEnv(const std::string pVar)
+static const tstring getEnv(const tstring pVar)
 {
-	if(pVar=="HotkeyP"){
-		char fn[256];
-		getExeDir(fn, "");
+	if(pVar==_T("HotkeyP")){
+		TCHAR fn[256];
+		getExeDir(fn, _T(""));
 		return fn;
 	}
-	const char * val = getenv(pVar.c_str());
-	return val ? val : "";
+	const TCHAR * val = _tgetenv(pVar.c_str());
+	return val ? val : _T("");
 }
 
 // Microsoft specific version that uses Microsoft's _dupenv_s function
 //static const std::string getEnv( const std::string pVar )
 //{
 //    std::string results;
-//    char * pValue = 0;
+//    TCHAR * pValue = 0;
 //    std::size_t len = 0;
 //    errno_t err = _dupenv_s( & pValue, & len, pVar.c_str() );
 //    if ( !err ) results.insert( 0, pValue, len );
@@ -55,13 +55,13 @@ environment, it is replaced with an empty string.
 Two consecutive percent signs (i.e. "%%") are replaced with a single
 percent sign.
 */
-std::string ExpandVars(std::string s)
+tstring ExpandVars(tstring s)
 {
 	std::string::size_type idxEnd = s.find('%');
 	if(idxEnd == std::string::npos) return s;
 
 	std::string::size_type idxBeg = 0;
-	std::string ret;
+	tstring ret;
 	do
 	{
 		ret += s.substr(idxBeg, idxEnd - idxBeg);
@@ -70,7 +70,7 @@ std::string ExpandVars(std::string s)
 		idxEnd = s.find('%', idxBeg);
 		if(idxEnd == std::string::npos) break;
 		// extract var
-		std::string var = s.substr(idxBeg, idxEnd - idxBeg);
+		tstring var = s.substr(idxBeg, idxEnd - idxBeg);
 		idxBeg = idxEnd + 1;
 		if(var.empty())
 			ret += '%';

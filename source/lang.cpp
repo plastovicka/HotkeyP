@@ -13,43 +13,71 @@
 #include "hdr.h"
 #pragma hdrstop
 #include "lang.h"
+#include "hotkeyp.h"
 
 #ifndef MAXLNGSTR
 #define MAXLNGSTR 1500
+#endif
+
+#ifndef MAXLNG_PARALLEL
+#define MAXLNG_PARALLEL 16
 #endif
 
 extern char *cmdNames[];
 
 //---------------------------------------------------------------------------
 const int MAXLANG=60;
-char lang[64];         //current language name
-char *langFile;        //file content (\n replaced with \0)
-char *lngstr[MAXLNGSTR];   //pointers to lines in langFile
-char *lngNames[MAXLANG+1]; //all found languages names
+TCHAR lang[64];         //current language name
+TCHAR *langFile;        //file content (\n replaced with \0)
+TCHAR *lngstr[MAXLNGSTR];   //pointers to lines in langFile
+TCHAR *lngNames[MAXLANG+1]; //all found languages names
+static TCHAR *recycl[MAXLNG_PARALLEL]; //temporary buffers for Unicode strings
 extern bool isWin9X;
 //-------------------------------------------------------------------------
 #define sizeA(A) (sizeof(A)/sizeof(*A))
 
-char *lng(int i, char *s)
+TCHAR *lng(int i, char *s)
 {
-	return (i>=0 && i<sizeA(lngstr) && lngstr[i]) ? lngstr[i] : s;
+	if(i>=0 && i<sizeA(lngstr) && lngstr[i]) return lngstr[i];
+#ifdef UNICODE
+	if(!s) return 0;
+	static int ind;
+	int len=strlen(s)+1;
+	TCHAR *w= new TCHAR[len];
+	MultiByteToWideChar(CP_ACP, 0, s, -1, w, len);
+	delete[] recycl[ind];
+	recycl[ind]=w;
+	ind++;
+	if(ind==sizeA(recycl)) ind=0;
+	return w;
+#else
+	return s;
+#endif
 }
 
-//return pointer to name after a path
-char const *cutPath(char const *s) // zef: made const correct
+#ifdef UNICODE
+WCHAR *lng(int i, WCHAR *s)
 {
-	char const *t;
-	t=strchr(s, 0);
+	if(i>=0 && i<sizeA(lngstr) && lngstr[i]) return lngstr[i];
+	return s;
+}
+#endif
+
+//return pointer to name after a path
+TCHAR const *cutPath(TCHAR const *s) // zef: made const correct
+{
+	TCHAR const *t;
+	t=_tcschr(s, 0);
 	while(t>=s && *t!='\\') t--;
 	t++;
 	return t;
 }
 
 //concatenate current directory and e, write result to fn
-void getExeDir(char *fn, char *e)
+void getExeDir(TCHAR *fn, TCHAR *e)
 {
 	GetModuleFileName(0, fn, 192);
-	strcpy(cutPath(fn), e);
+	_tcscpy(cutPath(fn), e);
 }
 //-------------------------------------------------------------------------
 static BOOL CALLBACK enumControls(HWND hwnd, LPARAM)
@@ -68,7 +96,7 @@ void setDlgTexts(HWND hDlg)
 
 void setDlgTexts(HWND hDlg, int id)
 {
-	char *s=lng(id, 0);
+	TCHAR *s=lng(id, (char*)0);
 	if(s) SetWindowText(hDlg, s);
 	setDlgTexts(hDlg);
 }
@@ -100,7 +128,7 @@ static int *subPtr;
 static void fillPopup(HMENU h)
 {
 	int i, id, j;
-	char *s, *a;
+	TCHAR *s, *a;
 	UINT f;
 	HMENU sub;
 	MENUITEMINFO mii;
@@ -110,17 +138,17 @@ static void fillPopup(HMENU h)
 		id=GetMenuItemID(h, i);
 		if(id==29999){
 			for(j=0; (a=lngNames[j])!=0; j++){
-				f=MF_BYPOSITION|(_stricmp(a, lang) ? 0 : MF_CHECKED);
+				f=MF_BYPOSITION|(_tcsicmp(a, lang) ? 0 : MF_CHECKED);
 				w[0]=0;
 				if(!isWin9X){
-					size_t len = strlen(a);
+					size_t len = _tcslen(a);
 					// L"\x10c" does not compile correctly in Microsoft Visual C++ 6.0
-					if(len==5 && !_strnicmp(a+1, "esky", 4)){ wcscpy(w, L"0esky"); w[0]=0x10c; }
-					if(len==7 && !_strnicmp(a, "Espa", 4)){ wcscpy(w, L"Espa0ol"); w[4]=0xf1; }
-					if(len==20 && !_strnicmp(a, "Portugu", 7)){ wcscpy(w, L"Portugu0s brasileiro"); w[7]=0xea; }
+					if(len==5 && !_tcsnicmp(a+1, _T("esky"), 4)){ wcscpy(w, L"0esky"); w[0]=0x10c; }
+					if(len==7 && !_tcsnicmp(a, _T("Espa"), 4)){ wcscpy(w, L"Espa0ol"); w[4]=0xf1; }
+					if(len==20 && !_tcsnicmp(a, _T("Portugu"), 7)){ wcscpy(w, L"Portugu0s brasileiro"); w[7]=0xea; }
 				}
 				if(w[0]) InsertMenuW(h, 0xFFFFFFFF, f, 30000+j, w);
-				else InsertMenuA(h, 0xFFFFFFFF, f, 30000+j, a);
+				else InsertMenu(h, 0xFFFFFFFF, f, 30000+j, a);
 			}
 			DeleteMenu(h, 0, MF_BYPOSITION);
 		}
@@ -132,9 +160,10 @@ static void fillPopup(HMENU h)
 					fillPopup(sub);
 				}
 			}
-			s=lng(id, 0);
+			s=lng(id, (char*)0);
 			if(!s && id>=1000 && id<1500 && cmdNames){
-				s=cmdNames[id-1000];
+				convertA2T(cmdNames[id-1000], name);
+				s=name;
 			}
 			if(s){
 				mii.cbSize=sizeof(MENUITEMINFO);
@@ -142,7 +171,7 @@ static void fillPopup(HMENU h)
 				mii.fType=MFT_STRING;
 				mii.fState=MFS_ENABLED;
 				mii.dwTypeData=s;
-				mii.cch= (UINT)strlen(s);
+				mii.cch= (UINT)_tcslen(s);
 				SetMenuItemInfo(h, i, TRUE, &mii);
 			}
 		}
@@ -153,7 +182,7 @@ static void fillPopup(HMENU h)
 //subId are string numbers for submenus
 HMENU loadMenu(char *name, int *subId)
 {
-	HMENU hMenu= LoadMenu(inst, name);
+	HMENU hMenu= LoadMenuA(inst, name);
 	subPtr=subId;
 	fillPopup(hMenu);
 	return hMenu;
@@ -169,7 +198,7 @@ void loadMenu(HWND hwnd, char *name, int *subId)
 //-------------------------------------------------------------------------
 static void parseLng()
 {
-	char *s, *d, *e;
+	TCHAR *s, *d, *e;
 	int id, err=0, line=1;
 
 	for(s=langFile; *s; s++){
@@ -177,7 +206,7 @@ static void parseLng()
 			//comment
 		}
 		else{
-			id=(int)strtol(s, &e, 10);
+			id=(int)_tcstol(s, &e, 10);
 			if(s==e){
 				if(!err) msglng(755, "Error in %s\nLine %d", lang, line);
 				err++;
@@ -234,21 +263,20 @@ void scanLangDir()
 	int n;
 	HANDLE h;
 	WIN32_FIND_DATA fd;
-	char buf[256];
+	TCHAR buf[256];
 
-	lngNames[0]="English";
-	getExeDir(buf, "language\\*.lng");
+	lngNames[0]=_T("English");
+	getExeDir(buf, _T("language\\*.lng"));
 	h = FindFirstFile(buf, &fd);
 	if(h!=INVALID_HANDLE_VALUE){
 		n=1;
 		do{
 			if(!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)){
-				int len= (int)strlen(fd.cFileName)-4;
+				int len= (int)_tcslen(fd.cFileName)-4;
 				if(len>0){
-					char *s= new char[len+1];
-					memcpy(s, fd.cFileName, len);
-					s[len]='\0';
-					lngNames[n++]=s;
+					cpStr(lngNames[n], fd.cFileName);
+					lngNames[n][len] = 0;
+					n++;
 				}
 			}
 		} while(FindNextFile(h, &fd) && n<MAXLANG);
@@ -259,12 +287,12 @@ void scanLangDir()
 void loadLang()
 {
 	memset(lngstr, 0, sizeof(lngstr));
-	char buf[256];
-	GetModuleFileName(0, buf, sizeof(buf)-static_cast<int>(strlen(lang))-14);
-	strcpy(cutPath(buf), "language\\");
-	char *fn=strchr(buf, 0);
-	strcpy(fn, lang);
-	strcat(buf, ".lng");
+	TCHAR buf[256];
+	GetModuleFileName(0, buf, sizeA(buf)-static_cast<int>(_tcslen(lang))-14);
+	_tcscpy(cutPath(buf), _T("language\\"));
+	TCHAR *fn=_tcschr(buf, 0);
+	_tcscpy(fn, lang);
+	_tcscat(buf, _T(".lng"));
 	HANDLE f=CreateFile(buf, GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0);
 	if(f!=INVALID_HANDLE_VALUE){
 		DWORD len=GetFileSize(f, 0);
@@ -273,13 +301,24 @@ void loadLang()
 		}
 		else{
 			delete[] langFile;
-			langFile= new char[len+3];
+			char *langFileA= new char[len+3];
 			DWORD r;
-			ReadFile(f, langFile, len, &r, 0);
+			ReadFile(f, langFileA, len, &r, 0);
 			if(r<len){
 				msglng(754, "Error reading file %s", fn);
 			}
 			else{
+				UINT cp=CP_ACP;
+				if(langFileA[0]=='#' && langFileA[1]=='C' && langFileA[2]=='P'){
+					cp=atoi(langFileA+3);
+				}
+#ifdef UNICODE
+				langFile= new TCHAR[len+3];
+				MultiByteToWideChar(cp, 0, langFileA, len, langFile, len);
+				delete[] langFileA;
+#else
+				langFile= langFileA;
+#endif
 				langFile[len]='\n';
 				langFile[len+1]='\n';
 				langFile[len+2]='\0';
@@ -293,7 +332,7 @@ void loadLang()
 int setLang(int cmd)
 {
 	if(cmd>=30000 && cmd<30000+MAXLANG && lngNames[cmd-30000]){
-		strcpy(lang, lngNames[cmd-30000]);
+		_tcscpy(lang, lngNames[cmd-30000]);
 		loadLang();
 		langChanged();
 		return 1;
@@ -306,23 +345,23 @@ void initLang()
 	scanLangDir();
 	if(!lang[0]){
 		//language detection
-		const char* s;
+		const TCHAR* s;
 		switch(PRIMARYLANGID(GetUserDefaultLangID()))
 		{
-			case LANG_CATALAN: s="Catalan"; break;
-			case LANG_CZECH: s="Èesky"; break;
-			case LANG_FRENCH: s="French"; break;
-			case LANG_GREEK: s="Greek"; break;
-			case LANG_CHINESE: s="Chinese (Simplified)"; break;
-			case LANG_ITALIAN: s="Italiano"; break;
-			case LANG_DUTCH: s="Nederlands"; break;
-			case LANG_POLISH: s="Polish"; break;
-			case LANG_PORTUGUESE: s="Português brasileiro"; break;
-			case LANG_RUSSIAN: s="Russian"; break;
-			case LANG_SLOVAK: s="Slovak"; break;
-			default: s="English"; break;
+			case LANG_CATALAN: s=_T("Catalan"); break;
+			case LANG_CZECH: s=_T("Èesky"); break;
+			case LANG_FRENCH: s=_T("French"); break;
+			case LANG_GREEK: s=_T("Greek"); break;
+			case LANG_CHINESE: s=_T("Chinese (Simplified)"); break;
+			case LANG_ITALIAN: s=_T("Italiano"); break;
+			case LANG_DUTCH: s=_T("Nederlands"); break;
+			case LANG_POLISH: s=_T("Polish"); break;
+			case LANG_PORTUGUESE: s=_T("Português brasileiro"); break;
+			case LANG_RUSSIAN: s=_T("Russian"); break;
+			case LANG_SLOVAK: s=_T("Slovak"); break;
+			default: s=_T("English"); break;
 		}
-		strcpy(lang, s);
+		_tcscpy(lang, s);
 	}
 	loadLang();
 }
