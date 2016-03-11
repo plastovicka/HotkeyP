@@ -10,10 +10,10 @@
 
 extern HINSTANCE inst;
 extern HWND hWin;
-extern char *title;
+extern const TCHAR *title;
 
 //---------------------------------------------------------------------------
-void addTrayIcon(char *tooltip, HICON icon, UINT id)
+void addTrayIcon(const TCHAR *tooltip, HICON icon, UINT id)
 {
 	NOTIFYICONDATA myNID;
 	myNID.cbSize = sizeof(NOTIFYICONDATA);

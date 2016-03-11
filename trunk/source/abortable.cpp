@@ -100,7 +100,7 @@ void delayAndExecuteHotKey(HINSTANCE instance, HWND parent, int hotKeyIndex)
 	{
 		if(hk->ask)
 		{
-			int j = msg1(MB_ICONQUESTION | MB_YESNO, "%s\r\n\n%s\r\n%s %s",
+			int j = msg1(MB_ICONQUESTION | MB_YESNO, _T("%s\r\n\n%s\r\n%s %s"),
 				lng(764, "Do you want to execute this command ?"),
 				hk->note,
 				(hk->cmd >= 0) ? getCmdName(hk->cmd) : hk->exe,
@@ -136,7 +136,7 @@ void delayAndExecuteHotKey(HINSTANCE instance, HWND parent, int hotKeyIndex)
 			// box and invoke the dialog box.  Note: this is modal and will not
 			// return until the dialog box closes.
 			pCancelCmdHotKey = hk;
-			INT_PTR results = DialogBox(instance, "CNTDOWN", parent, cntDownCallback);
+			INT_PTR results = DialogBox(instance, _T("CNTDOWN"), parent, cntDownCallback);
 			// No protection needed here since only one thread can get in.
 			delayDialogActive = false;
 			if(results != IDOK) return;

@@ -7,12 +7,14 @@
 #define _WIN32_WINNT 0x600
 #define _WIN32_IE 0x0500
 #define _CRT_SECURE_NO_DEPRECATE 1
+#define _CRT_NON_CONFORMING_SWPRINTFS
 #include <windows.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <tchar.h>
 #include <tlhelp32.h>
 #include <wininet.h>
 #include <shlobj.h>
@@ -25,6 +27,8 @@
 #include <winioctl.h>
 #include <psapi.h>
 #include <string>
+
+typedef std::basic_string<TCHAR> tstring;
 
 #ifndef WM_MOUSEHWHEEL
 

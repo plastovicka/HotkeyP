@@ -16,8 +16,8 @@ class TvolumeParam
 	HMIXEROBJ hMix;
 	int mxId, whichMxId;
 	int rec, record;
-	char *which, *line;
-	char *endpointName, *endpointNameLong;
+	TCHAR *which, *line;
+	TCHAR *endpointName, *endpointNameLong;
 	int value;
 	int action;
 	bool match;
@@ -25,7 +25,7 @@ class TvolumeParam
 	LPWSTR defaultAudioDeviceId;
 	bool isDefaultEndpoint;
 	MIXERLINE mixerLine;
-	char *names[10];
+	TCHAR *names[10];
 	LPWSTR endpointId;
 
 	bool IsMatch();
@@ -38,9 +38,9 @@ class TvolumeParam
 	HRESULT part(IPart *pPartPrev, DataFlow flow);
 	HRESULT conector(IConnector *pConnFrom, DataFlow flow);
 	HRESULT endpoint();
-	void propValue(char *&s, IPropertyStore *pProps, const PROPERTYKEY &key);
+	void propValue(TCHAR *&s, IPropertyStore *pProps, const PROPERTYKEY &key);
 public:
-	void volume(char *which1, int _value, int _action);
+	void volume(TCHAR *which1, int _value, int _action);
 };
 
 TendpointName *endpointNameList;
@@ -49,7 +49,7 @@ TendpointName *endpointNameList;
 	if (FAILED(hres)) { goto Exit; }
 #define SAFE_RELEASE(punk)  \
 	if ((punk) != NULL)  \
-{ (punk)->Release(); (punk) = NULL; }
+	{ (punk)->Release(); (punk) = NULL; }
 
 HRESULT conector(IConnector *pConnFrom, DataFlow flow);
 
@@ -63,9 +63,9 @@ int textY(int i)
 	return 6+(fontH+9)*i;
 }
 
-int streqi(char *s1, char *s2, int len)
+int streqi(TCHAR *s1, TCHAR *s2, int len)
 {
-	return !_strnicmp(s1, s2, len) && s2[len]==0;
+	return !_tcsnicmp(s1, s2, len) && s2[len]==0;
 }
 
 void setCurVolume(int line, int mute, int value)
@@ -85,26 +85,26 @@ void setCurVolume(int line, int mute, int value)
 }
 
 //get i item from the "Show these audio lines" option
-bool getVolumeName(int i, char *&name, int &len, int &mxId, int &rec, bool display)
+bool getVolumeName(int i, TCHAR *&name, int &len, int &mxId, int &rec, bool display)
 {
-	char *s, *e, *eq;
+	TCHAR *s, *e, *eq;
 
 	mxId=0;
 	rec=0;
 	s=volumeStr;
 	if(!*s && i==0){
 	l0:
-		name="Mixer";
+		name = _T("Mixer");
 		len=5;
 		return true;
 	}
 	do{
-		e=strchr(s, ',');
+		e=_tcschr(s, ',');
 		if(!i--){
 			//i-th item found
-			if(!e) e=strchr(s, 0);
+			if(!e) e=_tcschr(s, 0);
 			//parse display name
-			eq= strchr(s, '=');
+			eq= _tcschr(s, '=');
 			if(eq && eq<e){
 				if(display){
 					name= s;
@@ -143,7 +143,7 @@ bool getVolumeName(int i, char *&name, int &len, int &mxId, int &rec, bool displ
 
 int volumeH()
 {
-	char *name;
+	TCHAR *name;
 	int n, len, mxId, rec;
 
 	for(n=0; getVolumeName(n, name, len, mxId, rec, true); n++);
@@ -153,12 +153,12 @@ int volumeH()
 bool TvolumeParam::IsMatch()
 {
 	int l, len, x, r;
-	char *name;
+	TCHAR *name;
 
 	match=false;
 	if(mxId==whichMxId && rec==record){
-		for(char **u=names; *u; u++){
-			if(!_stricmp(*u, which)){ match=true; break; }
+		for(TCHAR **u=names; *u; u++){
+			if(!_tcsicmp(*u, which)){ match=true; break; }
 		}
 	}
 	for(l=0;; l++){
@@ -168,7 +168,7 @@ bool TvolumeParam::IsMatch()
 			return true;
 		}
 		if(x==mxId && r==rec){
-			for(char **u=names; *u; u++){
+			for(TCHAR **u=names; *u; u++){
 				if(streqi(name, *u, len)){
 					popupLine=l;
 					return true;
@@ -202,13 +202,13 @@ void TvolumeParam::controls(IPart *pPartNext, LPWSTR ppwstrName)
 
 		names[0]=names[1]=0;
 		if(controlIID==__uuidof(IAudioBass)){
-			names[0]="Bass";
+			names[0] = _T("Bass");
 		}
 		if(controlIID==__uuidof(IAudioTreble)){
-			names[0]="Treble";
+			names[0] = _T("Treble");
 		}
 		if(!wcsncmp(ppwstrName, L"Wave", 4) && controlIID==__uuidof(IAudioVolumeLevel)){
-			names[0]="Wave";
+			names[0] = _T("Wave");
 		}
 		if(names[0] && IsMatch()){
 			IPerChannelDbLevel *pVolume;
@@ -460,29 +460,33 @@ void TvolumeParam::volumeVista1()
 		isDefaultEndpoint = !wcscmp(endpointId, defaultAudioDeviceId);
 	}
 	else{
-		isDefaultEndpoint = !_stricmp("Speakers", endpointName);
+		isDefaultEndpoint = !_tcsicmp(_T("Speakers"), endpointName);
 	}
-	if(isDefaultEndpoint) names[n++]="Mixer";
+	if(isDefaultEndpoint) names[n++] = _T("Mixer");
 	names[n]=0;
 	if(IsMatch()) volumeVista2();
 
 	//search topology of default endpoint, but not if hotkey parameter and options are Mixer
 	if(!rec && isDefaultEndpoint){
-		if(!record && _stricmp(which, "Mixer") || *volumeStr && _stricmp(volumeStr, "Mixer"))
+		if(!record && _tcsicmp(which, _T("Mixer")) || *volumeStr && _tcsicmp(volumeStr, _T("Mixer")))
 			endpoint();
 	}
 }
 
-void TvolumeParam::propValue(char *&s, IPropertyStore *pProps, const PROPERTYKEY &key)
+void TvolumeParam::propValue(TCHAR *&s, IPropertyStore *pProps, const PROPERTYKEY &key)
 {
 	s=0;
 	PROPVARIANT var;
 	PropVariantInit(&var);
 	if(SUCCEEDED(pProps->GetValue(key, &var))){
-		//convert name from Unicode to ANSI
 		size_t len = wcslen(var.pwszVal)+1;
-		s = new char[len];
+		s = new TCHAR[len];
+#ifdef UNICODE
+		wcscpy(s, var.pwszVal);
+#else
+		//convert name from Unicode to ANSI
 		WideCharToMultiByte(CP_ACP, 0, var.pwszVal, -1, s, len, 0, 0);
+#endif
 	}
 	PropVariantClear(&var);
 }
@@ -622,7 +626,7 @@ void TvolumeParam::volume1()
 	names[1]=mixerLine.szName;
 	names[2]=0;
 	if(mixerLine.dwComponentType==MIXERLINE_COMPONENTTYPE_DST_SPEAKERS){
-		names[2]="Mixer";
+		names[2]=_T("Mixer");
 		names[3]=0;
 	}
 	if(IsMatch()){
@@ -633,13 +637,13 @@ void TvolumeParam::volume1()
 }
 
 //volume action for all devices and all audio lines
-void TvolumeParam::volume(char *which1, int _value, int _action)
+void TvolumeParam::volume(TCHAR *which1, int _value, int _action)
 {
 	this->value=_value;
 	this->action=_action;
 	record=0;
 	whichMxId=mxId=0;
-	if(!which1) which1="";
+	if(!which1) which1 = _T("");
 l1:
 	while(*which1==' ') which1++;
 	if((*which1=='r' || *which1=='R') && which1[1]==':'){
@@ -652,7 +656,7 @@ l1:
 		which1+=2;
 		goto l1;
 	}
-	if(!*which1) which1="Mixer";
+	if(!*which1) which1 = _T("Mixer");
 	which=which1;
 
 	memset(curVolume, -1, sizeof(curVolume));
@@ -668,11 +672,11 @@ l1:
 					//speakers volume
 					volume1();
 					//bass
-					names[0]= "Bass";
+					names[0] = _T("Bass");
 					names[1]=0;
 					if(IsMatch()) volume2(MIXERCONTROL_CONTROLTYPE_BASS, 0);
 					//treble
-					names[0]= "Treble";
+					names[0] = _T("Treble");
 					if(IsMatch()) volume2(MIXERCONTROL_CONTROLTYPE_TREBLE, 0);
 					//source line volume
 					for(int src=mixerLine.cConnections-1; src>=0; src--){
@@ -688,7 +692,7 @@ l1:
 	}
 }
 
-void volume(char *which, int value, int action)
+void volume(TCHAR *which, int value, int action)
 {
 	TvolumeParam data;
 	data.volume(which, value, action);
