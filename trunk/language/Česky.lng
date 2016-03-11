@@ -1,10 +1,10 @@
-
+#CP1250
 ;soubor s nápovìdou
 13=language\\cz.chm
 14=WhatsNew_CZ.txt
 
 ;okno about
-300=(C) 2003-2015  Petr Laštovièka
+300=(C) 2003-2016  Petr Laštovièka
 301=Verze
 
 1=OK

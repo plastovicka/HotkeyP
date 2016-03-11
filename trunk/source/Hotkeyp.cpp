@@ -1,5 +1,5 @@
 /*
- (C) 2003-2014  Petr Lastovicka
+ (C) 2003-2016  Petr Lastovicka
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License.
@@ -68,16 +68,16 @@ const BYTE specialWinKeysList[]={'E', 'R', 'D', 'F', 'M', VK_F1, VK_PAUSE, VK_TA
  0};
 
 TmainButton mainButton[]={
-		{108, 503, "&Add"},
-		{104, 502, "&Insert"},
-		{102, 500, "&Edit"},
-		{216, 504, "D&uplicate"},
-		{103, 501, "&Delete"},
-		{107, 505, "&Run"},
-		{212, 510, "&Options"},
+	{108, 503, "&Add"},
+	{104, 502, "&Insert"},
+	{102, 500, "&Edit"},
+	{216, 504, "D&uplicate"},
+	{103, 501, "&Delete"},
+	{107, 505, "&Run"},
+	{212, 510, "&Options"},
 };
 
-const int version=6;  // config file version number
+const int version=7;  // HTK file version number, 2 opacity, 3 lirc, 4 category, 5 sound, 6 delay, 7 unicode
 const char *magic="hotKeys"; //config file header
 COLORREF colors[]={
 	0x90f0a0, 0xffc0c0, 0xf5f5f5, 0xe8d2c7, 0xf5fafa, 0, 0, 0, 0,
@@ -85,8 +85,8 @@ COLORREF colors[]={
 const int senz=15;
 
 TfileName exeBuf, lockBMP, regFile, iniFile, snapFile, wavFile;
-char keyMap[1024], *keyMapIndex[256];
-char *title="HotkeyP"; //window title
+TCHAR keyMap[1024], *keyMapIndex[256];
+const TCHAR *title = _T("HotkeyP"); //window title
 HotKey *hotKeyA;       //hotkeys table
 int menuSubId[]={404, 405, 403, 402, 401, 400};
 int popupSubId[]={0, 609, 608, 607, 606, 605, 604, 603, 602, 601, 600};
@@ -157,14 +157,14 @@ const int splitterW=4;
 
 double pcLockDx, pcLockDy;
 LPARAM keyLastScan;
-char *pcLockParam;
-char *showTextStr;
+TCHAR *pcLockParam;
+TCHAR *showTextStr;
 static HotKey dlgKey;
 POINT mousePos;
 static int show, oldW, oldH;
-char notDelayApp[512], delayApp[512];
+TCHAR notDelayApp[512], delayApp[512];
 HHOOK hookK, hookM;
-static char searchBuf[32];
+static TCHAR searchBuf[32];
 static int searchLen;
 static DWORD searchLastKey;
 static COLORREF custom[16];
@@ -172,7 +172,7 @@ DiskInfo disks[26];
 Tpopup popup[Npopup];
 Zoom zoom;
 static int treeLock;
-char **categoryName;
+TCHAR **categoryName;
 
 HWND hWin, hHotKeyDlg, listBox, hWndLock, hWndLircState, tree, hWndBeforeLock;
 HINSTANCE inst;
@@ -187,135 +187,135 @@ HIMAGELIST himl;
 DWORD idHookThreadK, idHookThreadM;
 HANDLE joyThread;
 
-const char *subkey="Software\\Petr Lastovicka\\hotkey";
-const char *runkey="Software\\Microsoft\\Windows\\CurrentVersion\\Run";
-const char *runName="HotkeyP";
+const TCHAR *subkey=_T("Software\\Petr Lastovicka\\hotkey");
+const TCHAR *runkey=_T("Software\\Microsoft\\Windows\\CurrentVersion\\Run");
+const TCHAR *runName=_T("HotkeyP");
 struct Treg { char *s; int *i; } regVal[]={
-		{"height", &dlgH},
-		{"width", &dlgW},
-		{"X", &dlgX},
-		{"Y", &dlgY},
-		{"volumeX", &popupVolume.x},
-		{"volumeY", &popupVolume.y},
-		{"volumeW", &popupVolume.width},
-		{"volumeDelay", &popupVolume.delay},
-		{"volumeOpacity", &popupVolume.opacity},
-		{"diskFreePrecision", &diskfreePrec},
-		{"diskFreeX", &popupDiskFree.x},
-		{"diskFreeY", &popupDiskFree.y},
-		{"diskFreeWidth", &popupDiskFree.width},
-		{"diskFreeOpacity", &popupDiskFree.opacity},
-		{"showTextX", &popupShowText.x},
-		{"showTextY", &popupShowText.y},
-		{"showTextOpacity", &popupShowText.opacity},
-		{"colId", &colWidth[0]},
-		{"colKey", &colWidth[1]},
-		{"colNote", &colWidth[2]},
-		{"sort", &sortedCol},
-		{"descending", &descending},
-		{"trayicon", &trayicon},
-		{"hiliteicon", &iconDelay},
-		{"autoRun", &autoRun},
-		{"minimizeToTray", &minToTray},
-		{"closeToTray", &closeToTray},
-		{"insertAfterCurrent", &insertAfterCurrent},
-		{"notDelayLeftButton", &notDelayButtons[M_Left]},
-		{"notDelayM", &notDelayButtons[M_Middle]},
-		{"notDelayRightButton", &notDelayButtons[M_Right]},
-		{"notDelayX1", &notDelayButtons[M_X1]},
-		{"notDelayX2", &notDelayButtons[M_X1+1]},
-		{"mouseDelay", &mouseDelay},
-		{"optionsPage", &optionsPage},
-		{"lockColorMode", &isLockColor},
-		{"lockSpeed", &lockSpeed},
-		{"lockMute", &lockMute},
-		{"highPriority", &highPriority},
-		{"oldTaskMgr", &disableTaskMgr},
-		{"oldMute", &oldMute},
-		{"lircPort", &lircPort},
-		{"lircRepeat", &lircRepeat},
-		{"lircOn", &lircEnabled},
-		{"hook", &useHook},
-		{"notDelayFullscreen", &notDelayFullscreen},
-		{"hookInterval", &keepHookInterval},
-		{"hookRefresh", &keepHook},
-		{"joyThreshold", &joyThreshold},
-		{"joyMultiplier", &joyMultiplier},
-		{"joyNotFullscreen", &joyNotFullscreen},
-		{"joyMouseEnabled", &joyMouseEnabled},
-		{"joyMouseJoy", &joyMouseJoy},
-		{"joyMouseX", &joyMouseX},
-		{"joyMouseY", &joyMouseY},
-		{"treeW", &treeW},
-		{"vers", &passwdAlg},
-		{"hidePasswd", &hidePasswd},
+	{"height", &dlgH},
+	{"width", &dlgW},
+	{"X", &dlgX},
+	{"Y", &dlgY},
+	{"volumeX", &popupVolume.x},
+	{"volumeY", &popupVolume.y},
+	{"volumeW", &popupVolume.width},
+	{"volumeDelay", &popupVolume.delay},
+	{"volumeOpacity", &popupVolume.opacity},
+	{"diskFreePrecision", &diskfreePrec},
+	{"diskFreeX", &popupDiskFree.x},
+	{"diskFreeY", &popupDiskFree.y},
+	{"diskFreeWidth", &popupDiskFree.width},
+	{"diskFreeOpacity", &popupDiskFree.opacity},
+	{"showTextX", &popupShowText.x},
+	{"showTextY", &popupShowText.y},
+	{"showTextOpacity", &popupShowText.opacity},
+	{"colId", &colWidth[0]},
+	{"colKey", &colWidth[1]},
+	{"colNote", &colWidth[2]},
+	{"sort", &sortedCol},
+	{"descending", &descending},
+	{"trayicon", &trayicon},
+	{"hiliteicon", &iconDelay},
+	{"autoRun", &autoRun},
+	{"minimizeToTray", &minToTray},
+	{"closeToTray", &closeToTray},
+	{"insertAfterCurrent", &insertAfterCurrent},
+	{"notDelayLeftButton", &notDelayButtons[M_Left]},
+	{"notDelayM", &notDelayButtons[M_Middle]},
+	{"notDelayRightButton", &notDelayButtons[M_Right]},
+	{"notDelayX1", &notDelayButtons[M_X1]},
+	{"notDelayX2", &notDelayButtons[M_X1+1]},
+	{"mouseDelay", &mouseDelay},
+	{"optionsPage", &optionsPage},
+	{"lockColorMode", &isLockColor},
+	{"lockSpeed", &lockSpeed},
+	{"lockMute", &lockMute},
+	{"highPriority", &highPriority},
+	{"oldTaskMgr", &disableTaskMgr},
+	{"oldMute", &oldMute},
+	{"lircPort", &lircPort},
+	{"lircRepeat", &lircRepeat},
+	{"lircOn", &lircEnabled},
+	{"hook", &useHook},
+	{"notDelayFullscreen", &notDelayFullscreen},
+	{"hookInterval", &keepHookInterval},
+	{"hookRefresh", &keepHook},
+	{"joyThreshold", &joyThreshold},
+	{"joyMultiplier", &joyMultiplier},
+	{"joyNotFullscreen", &joyNotFullscreen},
+	{"joyMouseEnabled", &joyMouseEnabled},
+	{"joyMouseJoy", &joyMouseJoy},
+	{"joyMouseX", &joyMouseX},
+	{"joyMouseY", &joyMouseY},
+	{"treeW", &treeW},
+	{"vers", &passwdAlg},
+	{"hidePasswd", &hidePasswd},
 };
-struct Tregs { char *s; char *i; DWORD n; } regValS[]={
-		{"file", iniFile, sizeof(iniFile)},
-		{"language", lang, sizeof(lang)},
-		{"volumeStr", volumeStr, sizeof(volumeStr)},
-		{"regFile", regFile, sizeof(regFile)},
-		{"keyMap", keyMap, sizeof(keyMap)},
-		{"lockBMP", lockBMP, sizeof(lockBMP)},
-		{"lircAddress", lircAddress, sizeof(lircAddress)},
-		{"lircExe", lircExe, sizeof(lircExe)},
-		{"delayApp", delayApp, sizeof(delayApp)},
-		{"notDelayApp", notDelayApp, sizeof(notDelayApp)},
-		{"snapshotFile", snapFile, sizeof(snapFile)},
-		{"joyApp", joyApp, sizeof(joyApp)},
-		{"joyFullscreenApp", joyFullscreenApp, sizeof(joyFullscreenApp)},
+struct Tregs { char *s; TCHAR *i; DWORD n; } regValS[]={
+	{"file", iniFile, sizeof(iniFile)}, //n is size in bytes
+	{"language", lang, sizeof(lang)},
+	{"volumeStr", volumeStr, sizeof(volumeStr)},
+	{"regFile", regFile, sizeof(regFile)},
+	{"keyMap", keyMap, sizeof(keyMap)},
+	{"lockBMP", lockBMP, sizeof(lockBMP)},
+	{"lircAddress", lircAddress, sizeof(lircAddress)},
+	{"lircExe", lircExe, sizeof(lircExe)},
+	{"delayApp", delayApp, sizeof(delayApp)},
+	{"notDelayApp", notDelayApp, sizeof(notDelayApp)},
+	{"snapshotFile", snapFile, sizeof(snapFile)},
+	{"joyApp", joyApp, sizeof(joyApp)},
+	{"joyFullscreenApp", joyFullscreenApp, sizeof(joyFullscreenApp)},
 };
-struct Tregs2 { char *s; char **i; } regValS2[]={
-		{"param", &pcLockParam},
+struct Tregs2 { char *s; TCHAR **i; } regValS2[]={
+	{"param", &pcLockParam},
 };
-struct Tregb { TCHAR *s; void *i; DWORD n; } regValB[]={
-		{"font", &font, sizeof(LOGFONT)},
-		{"colors", colors, sizeof(colors)},
-		{"data", password, sizeof(password)},
-		{"buttons", mainBtnEnabled, sizeof(mainBtnEnabled)},
+struct Tregb { char *s; void *i; DWORD n; } regValB[]={
+	{"font", &font, sizeof(LOGFONT)},
+	{"colors", colors, sizeof(colors)},
+	{"data", password, sizeof(password)},
+	{"buttons", mainBtnEnabled, sizeof(mainBtnEnabled)},
 };
 
 OPENFILENAME htkOfn={
 	OPENFILENAME_SIZE_VERSION_400, 0, 0, 0, 0, 0, 1,
-	iniFile, sizeof(iniFile),
-	0, 0, 0, 0, 0, 0, 0, "HTK", 0, 0, 0
+	iniFile, sizeA(iniFile),
+	0, 0, 0, 0, 0, 0, 0, _T("HTK"), 0, 0, 0
 };
 OPENFILENAME exeOfn={
 	OPENFILENAME_SIZE_VERSION_400, 0, 0, 0, 0, 0, 1,
-	exeBuf, sizeof(exeBuf),
-	0, 0, 0, 0, 0, 0, 0, "EXE", 0, 0, 0
+	exeBuf, sizeA(exeBuf),
+	0, 0, 0, 0, 0, 0, 0, _T("EXE"), 0, 0, 0
 };
 OPENFILENAME argOfn={
 	OPENFILENAME_SIZE_VERSION_400, 0, 0, 0, 0, 0, 1,
-	exeBuf, sizeof(exeBuf),
-	0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0
+	exeBuf, sizeA(exeBuf),
+	0, 0, 0, 0, 0, 0, 0, _T(""), 0, 0, 0
 };
 OPENFILENAME regOfn={
 	OPENFILENAME_SIZE_VERSION_400, 0, 0, 0, 0, 0, 1,
-	regFile, sizeof(regFile),
-	0, 0, 0, 0, 0, 0, 0, "REG", 0, 0, 0
+	regFile, sizeA(regFile),
+	0, 0, 0, 0, 0, 0, 0, _T("REG"), 0, 0, 0
 };
 OPENFILENAME snapOfn={
 	OPENFILENAME_SIZE_VERSION_400, 0, 0, 0, 0, 0, 1,
-	snapFile, sizeof(snapFile),
-	0, 0, 0, 0, 0, 0, 0, "BMP", 0, 0, 0
+	snapFile, sizeA(snapFile),
+	0, 0, 0, 0, 0, 0, 0, _T("BMP"), 0, 0, 0
 };
 OPENFILENAME wavOfn ={
 	OPENFILENAME_SIZE_VERSION_400, 0, 0, 0, 0, 0, 1,
-	wavFile, sizeof(wavFile),
-	0, 0, 0, 0, 0, 0, 0, "WAV", 0, 0, 0
+	wavFile, sizeA(wavFile),
+	0, 0, 0, 0, 0, 0, 0, _T("WAV"), 0, 0, 0
 };
 //-------------------------------------------------------------------------
-int vmsg(char *caption, char *text, int btn, va_list v)
+int vmsg(LPCTSTR caption, TCHAR *text, int btn, va_list v)
 {
-	char buf[1024];
+	TCHAR buf[1024];
 	if(!text) return IDCANCEL;
-	_vsnprintf(buf, sizeof(buf), text, v);
-	buf[sizeof(buf)-1]=0;
+	_vsntprintf(buf, sizeA(buf), text, v);
+	buf[sizeA(buf)-1]=0;
 	return MessageBox(0, buf, caption, btn|MB_SETFOREGROUND);
 }
 
-int msg1(int btn, char *text, ...)
+int msg1(int btn, TCHAR *text, ...)
 {
 	va_list ap;
 	va_start(ap, text);
@@ -324,7 +324,7 @@ int msg1(int btn, char *text, ...)
 	return result;
 }
 
-void msg(char *text, ...)
+void msg(TCHAR *text, ...)
 {
 	va_list ap;
 	va_start(ap, text);
@@ -369,7 +369,7 @@ void moveW(HDWP p, HWND hDlg, int id, int dx, int dy)
 }
 
 //test if folder exists
-bool testDir(char *dir)
+bool testDir(TCHAR *dir)
 {
 	if(!dir[0]) return false;
 	DWORD attr= GetFileAttributes(dir);
@@ -377,11 +377,11 @@ bool testDir(char *dir)
 }
 
 //read edit box
-int getText(HWND dlg, int id, char *&s)
+int getText(HWND dlg, int id, TCHAR *&s)
 {
 	delete[] s;
 	int l= (int)SendMessage(GetDlgItem(dlg, id), WM_GETTEXTLENGTH, 0, 0)+1;
-	s = new char[l];
+	s = new TCHAR[l];
 	return GetDlgItemText(dlg, id, s, l);
 }
 
@@ -393,22 +393,30 @@ void cpStr(char *&dest, char const *src)
 	delete[] old; //src can be a pointer into old 
 }
 
-void cpStrQuot(char *&dest, char *src)
+void cpStr(WCHAR *&dest, WCHAR const *src)
+{
+	WCHAR *old=dest;
+	dest = new WCHAR[wcslen(src)+1];
+	wcscpy(dest, src);
+	delete[] old; //src can be a pointer into old 
+}
+
+void cpStrQuot(TCHAR *&dest, TCHAR *src)
 {
 	delete[] dest;
-	size_t len=strlen(src);
-	char *d= dest= new char[len+3];
+	size_t len=_tcslen(src);
+	TCHAR *d= dest= new TCHAR[len+3];
 	*d++='\"';
-	strcpy(d, src);
+	_tcscpy(d, src);
 	d+=len;
 	*d++='\"';
 	*d=0;
 }
 
-void cutQuot(char *&s)
+void cutQuot(TCHAR *&s)
 {
 	if(s[0]=='\"'){
-		char *e= strchr(s, 0)-1;
+		TCHAR *e= _tcschr(s, 0)-1;
 		if(*e=='\"'){
 			*e=0;
 			cpStr(s, s+1);
@@ -416,24 +424,24 @@ void cutQuot(char *&s)
 	}
 }
 
-bool isWWW(char const *s) // zef: made const correct
+bool isWWW(TCHAR const *s) // zef: made const correct
 {
-	return !_strnicmp(s, "www.", 4) || !_strnicmp(s, "http://", 7)
-		|| !_strnicmp(s, "https://", 8) || !_strnicmp(s, "mailto:", 7);
+	return !_tcsnicmp(s, _T("www."), 4) || !_tcsnicmp(s, _T("http://"), 7)
+		|| !_tcsnicmp(s, _T("https://"), 8) || !_tcsnicmp(s, _T("mailto:"), 7);
 }
 
-bool isExe(char const *f) // zef: made const correct
+bool isExe(TCHAR const *f) // zef: made const correct
 {
 	if(isWWW(f)) return false;
-	char const *s=strchr(f, 0)-3;
+	TCHAR const *s=_tcschr(f, 0)-3;
 	if(s<=f || s[-1]!='.') return false;
-	return !_stricmp(s, "exe") || !_stricmp(s, "com") ||
-	 !_stricmp(s, "bat") || !_stricmp(s, "scr") || !_stricmp(s, "cmd");
+	return !_tcsicmp(s, _T("exe")) || !_tcsicmp(s, _T("com")) ||
+		!_tcsicmp(s, _T("bat")) || !_tcsicmp(s, _T("scr")) || !_tcsicmp(s, _T("cmd"));
 }
 
-char *getCmdName(int id)
+TCHAR *getCmdName(int id)
 {
-	return (unsigned(id)<sizeA(cmdNames)) ? lng(1000+id, cmdNames[id]) : "Unknown command";
+	return (unsigned(id)<sizeA(cmdNames)) ? lng(1000+id, cmdNames[id]) : _T("Unknown command");
 }
 
 
@@ -461,7 +469,7 @@ void destroyAll()
 	selectedCategory=-1;
 }
 
-BOOL createProcess(char *exe)
+BOOL createProcess(TCHAR *exe)
 {
 	PROCESS_INFORMATION pi;
 	STARTUPINFO si;
@@ -485,17 +493,21 @@ void HotKey::resolveLNK()
 	IShellLink *psl;
 	IPersistFile *ppf;
 	WIN32_FIND_DATA wfd;
-	char buf[MAX_PATH];
-	WCHAR wsz[MAX_PATH];
+	TCHAR buf[MAX_PATH];
 
-	char *s=strchr(exe, 0)-4;
-	if(s<=exe || (_stricmp(s, ".lnk") && _stricmp(s, ".pif"))) return;
+	TCHAR *s=_tcschr(exe, 0)-4;
+	if(s<=exe || (_tcsicmp(s, _T(".lnk")) && _tcsicmp(s, _T(".pif")))) return;
 
 	CoInitialize(0);
 	if(SUCCEEDED(CoCreateInstance(CLSID_ShellLink, NULL,
 		CLSCTX_INPROC_SERVER, IID_IShellLink, (void**)&psl))){
 		if(SUCCEEDED(psl->QueryInterface(IID_IPersistFile, (void**)&ppf))){
+#ifdef UNICODE
+			WCHAR *wsz=exe;
+#else
+			WCHAR wsz[MAX_PATH];
 			MultiByteToWideChar(CP_ACP, 0, exe, -1, wsz, MAX_PATH);
+#endif
 			if(SUCCEEDED(ppf->Load(wsz, STGM_READ))){
 				if(SUCCEEDED(psl->Resolve(0, SLR_NO_UI))){
 					if(SUCCEEDED(psl->GetPath(buf, sizeA(buf), &wfd, 0))){
@@ -548,61 +560,61 @@ int HotKey::getIcon()
 			icon= (cmd < sizeA(cmdIcons)) ? cmdIcons[cmd] : -1;
 		}
 		else{
-			const std::string fullExe = getFullExe();
-			const char *_exe = fullExe.c_str();
+			const tstring fullExe = getFullExe();
+			const TCHAR *_exe = fullExe.c_str();
 			if(isWWW(_exe)){
-				icon= !_strnicmp(_exe, "mailto:", 7) ? 15 : 19;
+				icon= !_tcsnicmp(_exe, _T("mailto:"), 7) ? 15 : 19;
 			}
 			else{
 				icon= -1;
-				char *s;
-				char buf[MAX_PATH], buf2[MAX_PATH];
+				TCHAR *s;
+				TCHAR buf[MAX_PATH], buf2[MAX_PATH];
 				int iconIndex=0;
 				bool docIcon = false;
 				if(isExe(_exe)){
 					//get full path of the exe file
-					SearchPath(0, _exe, 0, sizeof(buf), buf, &s);
+					SearchPath(0, _exe, 0, sizeA(buf), buf, &s);
 				}
 				else{
-						{
-							//get file extension of the document
-							const char *t=strrchr(_exe, '.');
-							if(t){
-								//find DefaultIcon in the registry
-								HKEY key;
-								DWORD d;
-								if(RegOpenKeyEx(HKEY_CLASSES_ROOT, t, 0, KEY_QUERY_VALUE, &key)==ERROR_SUCCESS){
-									d=sizeof(buf)-13;
-									if(RegQueryValueEx(key, 0, 0, 0, (BYTE*)buf, &d)==ERROR_SUCCESS){
-										strcat(buf, "\\DefaultIcon");
-										HKEY key2;
-										if(RegOpenKeyEx(HKEY_CLASSES_ROOT, buf, 0, KEY_QUERY_VALUE, &key2)==ERROR_SUCCESS){
-											d=sizeof(buf2);
-											if(RegQueryValueEx(key2, 0, 0, 0, (BYTE*)buf2, &d)==ERROR_SUCCESS){
-												if(ExpandEnvironmentStrings(buf2, buf, sizeof(buf)-1)){
-													//parse icon index
-													char * u=strrchr(buf, ',');
-													if(u){
-														char *e;
-														iconIndex= strtol(u+1, &e, 10);
-														if(!*e) *u=0;
-													}
-													//remove quotes
-													if(*buf=='"'){
-														strchr(buf, 0)[-1]=0;
-														strcpy(buf, buf+1);
-													}
-													//ignore empty string or "%1"
-													if(*buf && *buf!='%') docIcon=true;
+					{
+						//get file extension of the document
+						const TCHAR *t=_tcsrchr(_exe, '.');
+						if(t){
+							//find DefaultIcon in the registry
+							HKEY key;
+							DWORD d;
+							if(RegOpenKeyEx(HKEY_CLASSES_ROOT, t, 0, KEY_QUERY_VALUE, &key)==ERROR_SUCCESS){
+								d=sizeof(buf)-13*sizeof(TCHAR);
+								if(RegQueryValueEx(key, 0, 0, 0, (BYTE*)buf, &d)==ERROR_SUCCESS){
+									_tcscat(buf, _T("\\DefaultIcon"));
+									HKEY key2;
+									if(RegOpenKeyEx(HKEY_CLASSES_ROOT, buf, 0, KEY_QUERY_VALUE, &key2)==ERROR_SUCCESS){
+										d=sizeof(buf2);
+										if(RegQueryValueEx(key2, 0, 0, 0, (BYTE*)buf2, &d)==ERROR_SUCCESS){
+											if(ExpandEnvironmentStrings(buf2, buf, sizeA(buf)-1)){
+												//parse icon index
+												TCHAR * u=_tcsrchr(buf, ',');
+												if(u){
+													TCHAR *e;
+													iconIndex= _tcstol(u+1, &e, 10);
+													if(!*e) *u=0;
 												}
+												//remove quotes
+												if(*buf=='"'){
+													_tcschr(buf, 0)[-1]=0;
+													_tcscpy(buf, buf+1);
+												}
+												//ignore empty string or "%1"
+												if(*buf && *buf!='%') docIcon=true;
 											}
-											RegCloseKey(key2);
 										}
+										RegCloseKey(key2);
 									}
-									RegCloseKey(key);
 								}
+								RegCloseKey(key);
 							}
 						}
+					}
 				l1:
 					//which exe is used to open the document
 					if(!docIcon) FindExecutable(_exe, dir, buf);
@@ -621,13 +633,13 @@ int HotKey::getIcon()
 }
 
 // Gets the fully expanded executable to invoke
-std::string HotKey::getFullExe() const
+tstring HotKey::getFullExe() const
 {
 	return ExpandVars(exe);
 }
 
 // Gets the fully expanded executable or command name that will be invoked
-std::string HotKey::getFullCmd() const
+tstring HotKey::getFullCmd() const
 {
 	if(cmd >= 0)
 			return getCmdName(cmd);
@@ -645,12 +657,12 @@ void myInvalidParameterHandler(const wchar_t*, const wchar_t*, const wchar_t*, u
 void drawLockText()
 {
 	HDC dc;
-	char *s;
+	TCHAR *s;
 	int i;
 	double K;
 	HGDIOBJ oldF;
 	LOGFONT logfont;
-	char buf[24+Dpasswd];
+	TCHAR buf[24+Dpasswd];
 	RECT rc;
 	static RECT rcOld;
 	static int R, G, B;
@@ -658,7 +670,7 @@ void drawLockText()
 
 	//get text
 	if(passwdLen && !hidePasswd){
-		s=buf+sprintf(buf, "%.20s:  ", lng(373, "Password"));
+		s=buf+_stprintf(buf, _T("%.20s:  "), lng(373, "Password"));
 		for(i=0; i<passwdLen; i++) s[i]='*';
 		s[i]=0;
 		s=buf;
@@ -672,7 +684,7 @@ void drawLockText()
 	logfont.lfHeight=28;
 	logfont.lfWeight=FW_NORMAL;
 	logfont.lfCharSet=DEFAULT_CHARSET;
-	strcpy(logfont.lfFaceName, "Arial");
+	_tcscpy(logfont.lfFaceName, _T("Arial"));
 	dc=GetDC(hWndLock);
 	oldF=SelectObject(dc, CreateFontIndirect(&logfont));
 	//move
@@ -750,8 +762,8 @@ bool isEmptyPassword()
 void restoreTaskMgr()
 {
 	HKEY key;
-	if(RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", 0, KEY_SET_VALUE, &key)==ERROR_SUCCESS){
-		RegSetValueEx(key, "DisableTaskMgr", 0, REG_DWORD, (LPBYTE)&disableTaskMgr, 4);
+	if(RegOpenKeyExA(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", 0, KEY_SET_VALUE, &key)==ERROR_SUCCESS){
+		RegSetValueExA(key, "DisableTaskMgr", 0, REG_DWORD, (LPBYTE)&disableTaskMgr, 4);
 		RegCloseKey(key);
 	}
 }
@@ -782,15 +794,15 @@ void sortChanged()
 	}
 }
 
-HMENU insertSubmenu(HMENU menu, char const *name)
+HMENU insertSubmenu(HMENU menu, TCHAR const *name)
 {
 	HMENU p;
 	for(int i=GetMenuItemCount(menu)-1; i>=0; i--){
 		p=GetSubMenu(menu, i);
 		if(p){
-			char buf[96];
+			TCHAR buf[96];
 			GetMenuString(menu, i, buf, sizeA(buf), MF_BYPOSITION);
-			if(!strcmp(name, buf)) return p;
+			if(!_tcscmp(name, buf)) return p;
 		}
 	}
 	p=CreatePopupMenu();
@@ -798,15 +810,15 @@ HMENU insertSubmenu(HMENU menu, char const *name)
 	return p;
 }
 
-void addItemToSubmenu(HMENU menu, bool checked, int id, char const *name)
+void addItemToSubmenu(HMENU menu, bool checked, int id, TCHAR const *name)
 {
-	for(char const *s=name; *s; s++){
+	for(TCHAR const *s=name; *s; s++){
 		if(*s=='-' && s[1]=='>'){
 			if(s==name){
 				name+=2;
 			}
 			else{
-				std::string menuName(name, s);
+				tstring menuName(name, s);
 				addItemToSubmenu(insertSubmenu(menu, menuName.c_str()), checked, id, s+2);
 				return;
 			}
@@ -922,14 +934,14 @@ void setCur(int item)
 
 //---------------------------------------------------------------------------
 
-int findCategory(char *name)
+int findCategory(TCHAR *name)
 {
 	if(!*name) return 0;
 	for(int i=1; i<numCategories; i++){
-		if(!strcmp(categoryName[i], name)) return i;
+		if(!_tcscmp(categoryName[i], name)) return i;
 	}
 	//add new category
-	char **A = new char*[numCategories+1];
+	TCHAR **A = new TCHAR*[numCategories+1];
 	if(categoryName) memcpy(A, categoryName, numCategories*sizeof(A[0]));
 	A[numCategories] = 0;
 	cpStr(A[numCategories], name);
@@ -940,7 +952,7 @@ int findCategory(char *name)
 
 static HTREEITEM hTreeItem;
 
-void addTreeItem(char *text, LPARAM param)
+void addTreeItem(TCHAR *text, LPARAM param)
 {
 	TV_INSERTSTRUCT tvins;
 	TV_ITEM &tvi = tvins.item;
@@ -1008,13 +1020,13 @@ void fillCategories(HWND hWnd, int sel)
 	for(int i=1; i<numCategories; i++){
 		SendMessage(combo, CB_ADDSTRING, 0, (LPARAM)categoryName[i]);
 	}
-	SetDlgItemText(hWnd, 118, (sel>0) ? categoryName[sel] : "");
+	SetDlgItemText(hWnd, 118, (sel>0) ? categoryName[sel] : _T(""));
 }
 
 void swapCategory(int i1, int i2)
 {
 	int i;
-	char *w;
+	TCHAR *w;
 
 	if(i1<=0 || i2>=numCategories) return;
 	w=categoryName[i1];
@@ -1035,7 +1047,7 @@ void swapCategory(int i1, int i2)
 void deleteCategory()
 {
 	int i, *p;
-	char **item;
+	TCHAR **item;
 
 	//delete category name
 	item= &categoryName[selectedCategory];
@@ -1070,7 +1082,7 @@ BOOL CALLBACK assignCategoryProc(HWND hWnd, UINT msg, WPARAM wP, LPARAM)
 			wP=LOWORD(wP);
 			switch(wP){
 				case IDOK:
-					GetDlgItemText(hWnd, 118, exeBuf, sizeof(exeBuf));
+					GetDlgItemText(hWnd, 118, exeBuf, sizeA(exeBuf));
 					c=findCategory(exeBuf);
 					for(i=0; i<numList; i++){
 						if(getSel(i)){
@@ -1143,7 +1155,7 @@ int CALLBACK sortKey(LPARAM a, LPARAM b, LPARAM p)
 
 int CALLBACK sortNote(LPARAM a, LPARAM b, LPARAM p)
 {
-	return int(p) * _stricmp(hotKeyA[b].getNote(), hotKeyA[a].getNote());
+	return int(p) * _tcsicmp(hotKeyA[b].getNote(), hotKeyA[a].getNote());
 }
 
 bool HotKey::inCategory(int _category)
@@ -1234,19 +1246,73 @@ void initList()
 	buildTree();
 }
 //-------------------------------------------------------------------------
+static const int MaxLineLen = 5000;
 
-char *fReadStr(FILE *f)
+TCHAR *fReadStr(FILE *f, int version)
 {
-	char buf[1024];
-	if(fgets(buf, sizeof(buf), f)==0){
+	char buf[MaxLineLen];
+	if(fgets(buf, MaxLineLen, f)==0){
+		buf[0]='\n';
+		buf[1]=0;
+	}
+	if(version < 7){
+#ifdef UNICODE
+		int l = MultiByteToWideChar(CP_ACP, 0, buf, -1, NULL, 0);
+		amin(l, 2);
+		TCHAR *s= new TCHAR[l];
+		MultiByteToWideChar(CP_ACP, 0, buf, -1, s, l);
+		s[l-2]=0; //trim '\n'
+		return s;
+#else
+		size_t l= strlen(buf);
+		char *s= new char[l];
+		s[--l]=0;
+		memcpy(s, buf, l);
+		return s;
+#endif
+	}
+	else
+	{
+		int l = MultiByteToWideChar(CP_UTF8, 0, buf, -1, NULL, 0);
+		amin(l, 2);
+		WCHAR *w= new WCHAR[l];
+		MultiByteToWideChar(CP_UTF8, 0, buf, -1, w, l);
+		w[l-2]=0; //trim '\n'
+#ifdef UNICODE
+		return w;
+#else
+		l = WideCharToMultiByte(CP_ACP, 0, w, -1, NULL, 0, 0, 0);
+		char *a= new char[l];
+		WideCharToMultiByte(CP_ACP, 0, w, -1, a, l, 0, 0);
+		delete[] w;
+		return a;
+#endif
+	}
+}
+
+void fWriteStr(FILE *f, TCHAR *s)
+{
+	if(s){
+		char buf[MaxLineLen-1];
+		convertT2W(s, w);
+		WideCharToMultiByte(CP_UTF8, 0, w, -1, buf, MaxLineLen-2, 0, 0);
+		buf[MaxLineLen-2]=0;
+		fputs(buf, f);
+	}
+	fputc('\n', f);
+}
+
+char *fReadStrA(FILE *f)
+{
+	char buf[MaxLineLen];
+	if(fgets(buf, MaxLineLen, f)==0){
 		buf[0]='\n';
 		buf[1]=0;
 	}
 	size_t l= strlen(buf);
 	char *s= new char[l];
-	l--;
+	s[--l]=0;
 	memcpy(s, buf, l);
-	s[l]=0;
 	return s;
 }
 
@@ -1258,8 +1324,8 @@ void modified()
 	modif=true;
 }
 
-//read config file
-void rd(char *fn)
+//read HTK file
+void rd(TCHAR *fn)
 {
 	FILE *f;
 	HotKey *hk;
@@ -1267,7 +1333,7 @@ void rd(char *fn)
 	char buf[16];
 
 	if(!fn || !*fn) return;
-	if((f=fopen(fn, "rt"))==0){
+	if((f=_tfopen(fn, _T("rt")))==0){
 		msglng(730, "Cannot open file %s", fn);
 	}
 	else{
@@ -1297,12 +1363,12 @@ void rd(char *fn)
 				memset(hotKeyA, 0, numKeys*sizeof(hotKeyA[0]));
 				for(i=0; i<numKeys; i++){
 					hk= &hotKeyA[i];
-					hk->note= fReadStr(f);
-					hk->exe= fReadStr(f);
-					hk->args= fReadStr(f);
-					hk->dir= fReadStr(f);
+					hk->note= fReadStr(f, v);
+					hk->exe= fReadStr(f, v);
+					hk->args= fReadStr(f, v);
+					hk->dir= fReadStr(f, v);
 					// zef: added support to play sound file per command
-					if(v>=5) hk->sound = fReadStr(f); else cpStr(hk->sound, "");
+					if(v>4) hk->sound = fReadStr(f, v); else cpStr(hk->sound, _T(""));
 					fscanf(f, "%d %d %d %d %d %d %d",
 						&hk->scanCode, &hk->vkey, &hk->modifiers,
 						&hk->cmdShow, &hk->priority, &flags, &hk->cmd);
@@ -1316,7 +1382,7 @@ void rd(char *fn)
 						if(v>3) fscanf(f, " %d", &hk->category);
 						if(v>2 && hk->vkey==vkLirc){
 							fgetc(f);
-							hk->lirc=fReadStr(f);
+							hk->lirc=fReadStrA(f);
 							ungetc('\n', f);
 						}
 					}
@@ -1326,9 +1392,9 @@ void rd(char *fn)
 					aminmax(hk->category, 0, numCategories-1);
 				}
 				delete[] categoryName;
-				categoryName= new char*[numCategories];
+				categoryName= new TCHAR*[numCategories];
 				for(i=1; i<numCategories; i++){
-					categoryName[i]= fReadStr(f);
+					categoryName[i]= fReadStr(f, v);
 				}
 				modified();
 				modif=false;
@@ -1339,24 +1405,27 @@ void rd(char *fn)
 	}
 }
 
-//save config file
-bool wr(char *fn)
+//save HTK file
+bool wr(TCHAR *fn)
 {
 	FILE *f;
 	HotKey *hk;
 	int i;
 
 start:
-	if((f=fopen(fn, "wt"))==0){
+	if((f=_tfopen(fn, _T("wt")))==0){
 		msglng(733, "Cannot create file %s", fn);
 	}
 	else{
 		fprintf(f, "%s%d %d %d\n", magic, version, numKeys, numCategories);
 		for(i=0; i<numKeys; i++){
 			hk= &hotKeyA[i];
-			// zef: added support to play sound file per command
-			fprintf(f, "%s\n%s\n%s\n%s\n%s\n%d %d %d %d %d %d %d %d %d",
-				hk->note, hk->exe, hk->args, hk->dir, hk->sound ? hk->sound : "",
+			fWriteStr(f, hk->note);
+			fWriteStr(f, hk->exe);
+			fWriteStr(f, hk->args);
+			fWriteStr(f, hk->dir);
+			fWriteStr(f, hk->sound);
+			fprintf(f, "%d %d %d %d %d %d %d %d %d",
 				hk->scanCode, hk->vkey, hk->modifiers,
 				hk->cmdShow, hk->priority,
 				(int)hk->multInst|(hk->autoStart<<1)|(hk->trayMenu<<2)|(hk->ask<<3)|(hk->delay<<4),
@@ -1367,7 +1436,7 @@ start:
 			fputc('\n', f);
 		}
 		for(i=1; i<numCategories; i++){
-			fprintf(f, "%s\n", categoryName[i]);
+			fWriteStr(f, categoryName[i]);
 		}
 		if(fclose(f)){
 			if(msg1(MB_ICONEXCLAMATION|MB_RETRYCANCEL,
@@ -1425,19 +1494,19 @@ void setRun()
 {
 	HKEY key;
 	DWORD i, d;
-	char buf1[MAX_PATH], buf2[MAX_PATH];
+	TCHAR buf1[MAX_PATH], buf2[MAX_PATH];
 
 	if(!autoRun){
 		delRun(HKEY_CURRENT_USER);
 	}
 	else{
 		if(RegOpenKeyEx(HKEY_CURRENT_USER, runkey, 0, KEY_QUERY_VALUE|KEY_SET_VALUE, &key)==ERROR_SUCCESS){
-			i=GetModuleFileName(0, buf1, sizeof(buf1)-2);
+			i=GetModuleFileName(0, buf1, sizeA(buf1)-2);
 			if(i){
-				strcat(buf1, " 0");
+				_tcscat(buf1, _T(" 0"));
 				d=sizeof(buf2);
 				if(RegQueryValueEx(key, runName, 0, 0, (BYTE*)buf2, &d)!=ERROR_SUCCESS ||
-					strcmp(buf1, buf2)){
+					_tcscmp(buf1, buf2)){
 					RegSetValueEx(key, runName, 0, REG_SZ, (BYTE*)buf1, i+3);
 				}
 			}
@@ -1454,13 +1523,13 @@ void deleteini()
 
 	delreg=true;
 	if(RegDeleteKey(HKEY_CURRENT_USER, subkey)==ERROR_SUCCESS){
-		if(RegOpenKeyEx(HKEY_CURRENT_USER,
+		if(RegOpenKeyExA(HKEY_CURRENT_USER,
 			"Software\\Petr Lastovicka", 0, KEY_QUERY_VALUE|KEY_SET_VALUE, &key)==ERROR_SUCCESS){
 			i=1;
 			RegQueryInfoKey(key, 0, 0, 0, &i, 0, 0, 0, 0, 0, 0, 0);
 			RegCloseKey(key);
 			if(!i)
-			 RegDeleteKey(HKEY_CURRENT_USER, "Software\\Petr Lastovicka");
+			 RegDeleteKeyA(HKEY_CURRENT_USER, "Software\\Petr Lastovicka");
 		}
 	}
 	delRun(HKEY_CURRENT_USER);
@@ -1474,20 +1543,22 @@ void writeini()
 		msglng(735, "Cannot write to Windows registry");
 	else{
 		for(Treg *u=regVal; u<endA(regVal); u++){
-			RegSetValueEx(key, u->s, 0, REG_DWORD,
+			RegSetValueExA(key, u->s, 0, REG_DWORD,
 				(BYTE *)u->i, sizeof(int));
 		}
 		for(Tregs *v=regValS; v<endA(regValS); v++){
-			RegSetValueEx(key, v->s, 0, REG_SZ,
-				(BYTE *)v->i, (int)strlen(v->i)+1);
+			convertA2T(v->s, name);
+			RegSetValueEx(key, name, 0, REG_SZ,
+				(BYTE *)v->i, (DWORD)sizeof(TCHAR)*(_tcslen(v->i)+1));
 		}
 		for(Tregs2 *z=regValS2; z<endA(regValS2); z++){
-			char *t= *z->i;
-			if(t) RegSetValueEx(key, z->s, 0, REG_SZ,
-				(BYTE *)t, (int)strlen(t)+1);
+			TCHAR *t= *z->i;
+			convertA2T(z->s, name);
+			if(t) RegSetValueEx(key, name, 0, REG_SZ,
+				(BYTE *)t, (DWORD)sizeof(TCHAR)*(_tcslen(t)+1));
 		}
 		for(Tregb *w=regValB; w<endA(regValB); w++){
-			RegSetValueEx(key, w->s, 0, REG_BINARY, (BYTE *)w->i, w->n);
+			RegSetValueExA(key, w->s, 0, REG_BINARY, (BYTE *)w->i, w->n);
 		}
 		RegCloseKey(key);
 	}
@@ -1501,24 +1572,26 @@ void readini()
 	if(RegOpenKeyEx(HKEY_CURRENT_USER, subkey, 0, KEY_QUERY_VALUE, &key)==ERROR_SUCCESS){
 		for(Treg *u=regVal; u<endA(regVal); u++){
 			d=sizeof(int);
-			RegQueryValueEx(key, u->s, 0, 0, (BYTE *)u->i, &d);
+			RegQueryValueExA(key, u->s, 0, 0, (BYTE *)u->i, &d);
 		}
 		for(Tregs *v=regValS; v<endA(regValS); v++){
 			d=v->n;
-			RegQueryValueEx(key, v->s, 0, 0, (BYTE *)v->i, &d);
+			convertA2T(v->s, name);
+			RegQueryValueEx(key, name, 0, 0, (BYTE *)v->i, &d);
 		}
 		for(Tregs2 *z=regValS2; z<endA(regValS2); z++){
-			if(RegQueryValueEx(key, z->s, 0, 0, 0, &d)==ERROR_SUCCESS && d<10000000){
-				char *&s= *z->i;
+			convertA2T(z->s, name);
+			if(RegQueryValueEx(key, name, 0, 0, 0, &d)==ERROR_SUCCESS && d<10000000){
+				TCHAR *&s= *z->i;
 				delete[] s;
-				s= new char[d];
+				s= new TCHAR[d];
 				s[0]=0;
-				RegQueryValueEx(key, z->s, 0, 0, (BYTE*)s, &d);
+				RegQueryValueEx(key, name, 0, 0, (BYTE*)s, &d);
 			}
 		}
 		for(Tregb *w=regValB; w<endA(regValB); w++){
 			d=w->n;
-			RegQueryValueEx(key, w->s, 0, 0, (BYTE *)w->i, &d);
+			RegQueryValueExA(key, w->s, 0, 0, (BYTE *)w->i, &d);
 		}
 		RegCloseKey(key);
 	}
@@ -1543,10 +1616,10 @@ DWORD getVer()
 	VS_FIXEDFILEINFO *v;
 	UINT i;
 
-	r=FindResource(0, (char*)VS_VERSION_INFO, RT_VERSION);
+	r=FindResource(0, (TCHAR*)VS_VERSION_INFO, RT_VERSION);
 	h=LoadResource(0, r);
 	s=LockResource(h);
-	if(!s || !VerQueryValue(s, "\\", (void**)&v, &i)) return 0;
+	if(!s || !VerQueryValue(s, _T("\\"), (void**)&v, &i)) return 0;
 	return v->dwFileVersionMS;
 }
 
@@ -1561,7 +1634,7 @@ BOOL CALLBACK AboutProc(HWND hWnd, UINT msg, WPARAM wP, LPARAM)
 			setDlgTexts(hWnd, 11);
 			d=getVer();
 			sprintf(buf, "%d.%d", HIWORD(d), LOWORD(d));
-			SetDlgItemText(hWnd, 101, buf);
+			SetDlgItemTextA(hWnd, 101, buf);
 			return TRUE;
 
 		case WM_COMMAND:
@@ -1572,9 +1645,9 @@ BOOL CALLBACK AboutProc(HWND hWnd, UINT msg, WPARAM wP, LPARAM)
 					EndDialog(hWnd, wP);
 					return TRUE;
 				case 123:
-					GetDlgItemText(hWnd, wP, buf, static_cast<int>(sizeA(buf)-13));
-					if(!strcmp(lang, "English")) strcat(buf, "/indexEN.html");
-					ShellExecute(0, 0, buf, 0, 0, SW_SHOWNORMAL);
+					GetDlgItemTextA(hWnd, wP, buf, static_cast<int>(sizeA(buf)-13));
+					if(!_tcscmp(lang, _T("English"))) strcat(buf, "/indexEN.html");
+					ShellExecuteA(0, 0, buf, 0, 0, SW_SHOWNORMAL);
 					break;
 			}
 			break;
@@ -1600,7 +1673,7 @@ bool shiftPressed()
 //-------------------------------------------------------------------------
 void acceptKey(UINT vkey, DWORD scan)
 {
-	char buf[64];
+	TCHAR buf[64];
 
 	dlgKey.vkey=vkey;
 	dlgKey.scanCode=scan;
@@ -1647,7 +1720,7 @@ LRESULT CALLBACK hotKeyClassProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			break;
 		case WM_APPCOMMAND:
 		case WM_CHAR:
-			return 0; //don't add a char to edit box
+			return 0; //don't add a TCHAR to edit box
 		case WM_KILLFOCUS:
 			if(GetKeyState(VK_TAB)<0 && (!dlgKey.vkey || shiftPressed())){
 				acceptKey(VK_TAB);
@@ -1669,22 +1742,22 @@ LRESULT CALLBACK hotKeyClassProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 	return CallWindowProc((WNDPROC)editWndProc, hWnd, mesg, wP, lP);
 }
 //-------------------------------------------------------------------------
-int findCmd(const char *s)
+int findCmd(const TCHAR *s)
 {
 	for(int i=0; i<sizeA(cmdNames); i++){
-		if(!_stricmp(s, getCmdName(i))){
+		if(!_tcsicmp(s, getCmdName(i))){
 			return i;
 		}
 	}
 	return -1;
 }
 //-------------------------------------------------------------------------
-static char inputText[3][Dpasswd];
+static TCHAR inputText[3][Dpasswd];
 static int inputLen[3];
 
 BOOL CALLBACK passwdClassProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 {
-	char buf[Dpasswd+1];
+	TCHAR buf[Dpasswd+1];
 	int i, j;
 
 	i=GetDlgCtrlID(hWnd)-170;
@@ -1695,7 +1768,7 @@ BOOL CALLBACK passwdClassProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 				if(len>0) len--;
 			}
 			else if(wP!=VK_MENU && len<Dpasswd){
-				inputText[i][len++]=(char)wP;
+				inputText[i][len++]=(TCHAR)wP;
 			}
 			for(j=0; j<Dpasswd; j++) buf[j]='*';
 			buf[len]=0;
@@ -1706,7 +1779,7 @@ BOOL CALLBACK passwdClassProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			break;
 		case WM_SETFOCUS:
 			len=0;
-			SetWindowText(hWnd, "");
+			SetWindowText(hWnd, _T(""));
 		default:
 			return CallWindowProc((WNDPROC)editWndProc, hWnd, mesg, wP, lP);
 	}
@@ -1767,13 +1840,13 @@ void checkDlgButton(HWND w, int id, bool c)
 BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 {
 	HotKey *hk;
-	char buf[256];
-	static char *cmdBuf;
+	TCHAR buf[256];
+	static TCHAR *cmdBuf;
 	int i;
 	DWORD a;
 	HWND combo, edit;
-	char *filePart;
-	char const * docPart;
+	TCHAR *filePart;
+	TCHAR const * docPart;
 
 	switch(mesg){
 		case WM_INITDIALOG:
@@ -1826,7 +1899,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			return TRUE;
 
 		case WM_DROPFILES:
-			DragQueryFile((HDROP)wP, 0, exeBuf, sizeof(exeBuf));
+			DragQueryFile((HDROP)wP, 0, exeBuf, sizeA(exeBuf));
 			DragFinish((HDROP)wP);
 			SetDlgItemText(hWnd, 101, exeBuf);
 			SetForegroundWindow(hWnd);
@@ -1897,14 +1970,14 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 						ma->Release();
 					}
 				}
-					break;
+								 break;
 				case 117: //internal command
 				{
 					RECT rc;
 					GetWindowRect(GetDlgItem(hWnd, 117), &rc);
 					showPopup(rc.left, rc.bottom, "CMDPOPUP", popupSubId, hHotKeyDlg);
 				}
-					break;
+				break;
 				case 7: //help
 					getText(hWnd, 101, cmdBuf);
 					showHelp(findCmd(cmdBuf));
@@ -1934,12 +2007,12 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					hk->delay= IsDlgButtonChecked(hWnd, 316)==BST_CHECKED;
 					hk->opacity= GetDlgItemInt(hWnd, 114, 0, FALSE);
 					hk->cmd=findCmd(hk->exe);
-					GetDlgItemText(hWnd, 118, exeBuf, sizeof(exeBuf));
+					GetDlgItemText(hWnd, 118, exeBuf, sizeA(exeBuf));
 					hk->category= findCategory(exeBuf);
 					LeaveCriticalSection(&listCritSect);
 					if(hk->cmd>=0){
 						//internal command
-						cpStr(hk->exe, "");
+						cpStr(hk->exe, _T(""));
 					}
 					else{
 						if(!*hk->exe){
@@ -1959,18 +2032,18 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 							cutQuot(hk->dir);
 							/*
 							//find full path
-							if(SearchPath(0,hk->exe,".exe",sizeof(exeBuf),exeBuf,&filePart)
-							|| SearchPath(0,hk->exe,".com",sizeof(exeBuf),exeBuf,&filePart)
-							|| SearchPath(0,hk->exe,".bat",sizeof(exeBuf),exeBuf,&filePart)){
+							if(SearchPath(0,hk->exe,".exe",sizeA(exeBuf),exeBuf,&filePart)
+							|| SearchPath(0,hk->exe,".com",sizeA(exeBuf),exeBuf,&filePart)
+							|| SearchPath(0,hk->exe,".bat",sizeA(exeBuf),exeBuf,&filePart)){
 							cpStr(hk->exe,exeBuf);
 							} */
 							//append extension
-							if(!SearchPath(0, hk->exe, 0, sizeof(exeBuf), exeBuf, &filePart)){
-								static char *E[]={".exe", ".com", ".bat"};
+							if(!SearchPath(0, hk->exe, 0, sizeA(exeBuf), exeBuf, &filePart)){
+								static TCHAR *E[]={_T(".exe"), _T(".com"), _T(".bat")};
 								for(int j=0; j<3; j++){
-									if(SearchPath(0, hk->exe, E[j], sizeof(exeBuf)-4, exeBuf, &filePart)){
-										strcpy(exeBuf, hk->exe);
-										strcat(exeBuf, E[j]);
+									if(SearchPath(0, hk->exe, E[j], sizeA(exeBuf)-4, exeBuf, &filePart)){
+										_tcscpy(exeBuf, hk->exe);
+										_tcscat(exeBuf, E[j]);
 										cpStr(hk->exe, exeBuf);
 										break;
 									}
@@ -1978,7 +2051,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 							}
 							//find associated application
 							// zef: added support for environment vars in commands
-							std::string fullExe = hk->getFullExe();
+							tstring fullExe = hk->getFullExe();
 							a=GetFileAttributes(fullExe.c_str());
 							HINSTANCE result=FindExecutable(fullExe.c_str(), hk->dir, exeBuf);
 							if(result>(HINSTANCE)32 ||
@@ -1988,7 +2061,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 									if(isExe(docPart)){
 										//cut off extension
 										// zef: re-wrote to be const correct
-										std::string docPartCpy(docPart, strlen(docPart)-4);
+										tstring docPartCpy(docPart, _tcslen(docPart)-4);
 										cpStr(hk->note, docPartCpy.c_str());
 									}
 									else{
@@ -2052,7 +2125,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 						}
 					}
 					if(hk->cmd==63 && *hk->args && isEmptyPassword()){
-						DialogBoxParam(inst, "PASSWD", hWin, (DLGPROC)passwdProc, 0);
+						DialogBoxParam(inst, _T("PASSWD"), hWin, (DLGPROC)passwdProc, 0);
 					}
 					EndDialog(hWnd, wP);
 					break;
@@ -2136,7 +2209,7 @@ int editKey1(HotKey *hk)
 {
 	editing=true;
 	setHook();
-	int result= (int)DialogBoxParam(inst, "HOTKEYWIN",
+	int result= (int)DialogBoxParam(inst, _T("HOTKEYWIN"),
 		hWin, (DLGPROC)hotkeyProc, (LPARAM)hk);
 	editing=false;
 	hHotKeyDlg=0;
@@ -2168,7 +2241,7 @@ void delKey(int item)
 }
 
 //create new hotkey
-void addKey(char *exe, bool makeCopy, int item)
+void addKey(TCHAR *exe, bool makeCopy, int item)
 {
 	if(item<0) item=0;
 	//default attributes
@@ -2280,7 +2353,7 @@ void mainButtonChanged()
 static int oldTrayIcon=-1, oldDiskPrec=-1, oldPriority=-1, oldPort=-1, oldLirc=-1, oldHook, oldKeepHook=-1, oldHookInterval=-1, oldJoyMouse=-1;
 static Tpopup oldPopup[Npopup];
 static COLORREF clold[Ncl];
-static char oldAddress[64];
+static TCHAR oldAddress[64];
 static TfileName oldLircExe;
 
 void oldOptions()
@@ -2294,8 +2367,8 @@ void oldOptions()
 	oldKeepHook=keepHook;
 	oldHookInterval=keepHookInterval;
 	oldJoyMouse=joyMouseEnabled;
-	strcpy(oldAddress, lircAddress);
-	strcpy(oldLircExe, lircExe);
+	_tcscpy(oldAddress, lircAddress);
+	_tcscpy(oldLircExe, lircExe);
 	memcpy(oldPopup, popup, sizeof(oldPopup));
 	memcpy(clold, colors, sizeof(clold));
 }
@@ -2336,8 +2409,8 @@ void optionChanged()
 	keyMapChanged();
 	mainButtonChanged();
 	InvalidateRect(listBox, 0, TRUE);
-	if(oldPort!=lircPort || strcmp(oldAddress, lircAddress) ||
-		oldLirc!=lircEnabled || strcmp(oldLircExe, lircExe)) lircEnd(true);
+	if(oldPort!=lircPort || _tcscmp(oldAddress, lircAddress) ||
+		oldLirc!=lircEnabled || _tcscmp(oldLircExe, lircExe)) lircEnd(true);
 	lircStart();
 	aminmax(joyThreshold, 0, 1000);
 	InvalidateRect(popupVolume.hWnd, 0, TRUE);
@@ -2362,73 +2435,73 @@ int getRadioButton(HWND hWnd, int item1, int item2)
 
 struct TintValue{ int *value; WORD id; short dlgId; };
 struct TboolValue{ int *value; WORD id; short dlgId; };
-struct TstrValue{ char *value; int len; WORD id; short dlgId; };
+struct TstrValue{ TCHAR *value; int len; WORD id; short dlgId; };
 struct TgroupValue{ int *value; WORD first; WORD last; short dlgId; };
 struct TcomboValue{ int *value; WORD id; WORD lngId; char **strA; WORD len; short dlgId; };
 
 static TintValue intOpts[]={
-		{&iconDelay, 101, 0},
-		{&mouseDelay, 120, 2},
-		{&popupVolume.width, 102, 1},
-		{&popupVolume.delay, 103, 1},
-		{&diskfreePrec, 104, 1},
-		{&popupDiskFree.width, 105, 1},
-		{&popupVolume.opacity, 180, 1},
-		{&popupDiskFree.opacity, 181, 1},
-		{&popupShowText.opacity, 182, 1},
-		{&lockSpeed, 146, 1},
-		{&lircPort, 133, 2},
-		{&lircRepeat, 134, 2},
-		{&keepHookInterval, 145, 0},
-		{&joyThreshold, 167, 3},
-		{&joyMultiplier, 168, 3},
-		{&joyMouseJoy, 187, 3},
+	{&iconDelay, 101, 0},
+	{&mouseDelay, 120, 2},
+	{&popupVolume.width, 102, 1},
+	{&popupVolume.delay, 103, 1},
+	{&diskfreePrec, 104, 1},
+	{&popupDiskFree.width, 105, 1},
+	{&popupVolume.opacity, 180, 1},
+	{&popupDiskFree.opacity, 181, 1},
+	{&popupShowText.opacity, 182, 1},
+	{&lockSpeed, 146, 1},
+	{&lircPort, 133, 2},
+	{&lircRepeat, 134, 2},
+	{&keepHookInterval, 145, 0},
+	{&joyThreshold, 167, 3},
+	{&joyMultiplier, 168, 3},
+	{&joyMouseJoy, 187, 3},
 };
 static TboolValue boolOpts[]={
-		{&insertAfterCurrent, 342, 0},
-		{&trayicon, 320, 0},
-		{&autoRun, 331, 0},
-		{&minToTray, 334, 0},
-		{&closeToTray, 335, 0},
-		{&lockMute, 355, 1},
-		{&highPriority, 357, 0},
-		{&mainBtnEnabled[0], mainButton[0].langId, 0},
-		{&mainBtnEnabled[1], mainButton[1].langId, 0},
-		{&mainBtnEnabled[2], mainButton[2].langId, 0},
-		{&mainBtnEnabled[3], mainButton[3].langId, 0},
-		{&mainBtnEnabled[4], mainButton[4].langId, 0},
-		{&mainBtnEnabled[5], mainButton[5].langId, 0},
-		{&mainBtnEnabled[6], mainButton[6].langId, 0},
-		{&lircEnabled, 360, 2},
-		{&notDelayButtons[M_Left], 378, 2},
-		{&notDelayButtons[M_Middle], 379, 2},
-		{&notDelayButtons[M_Right], 380, 2},
-		{&notDelayButtons[M_X1], 381, 2},
-		{&notDelayButtons[M_X1+1], 382, 2},
-		{&notDelayFullscreen, 349, 2},
-		{&keepHook, 386, 0},
-		{&joyNotFullscreen, 390, 3},
-		{&joyMouseEnabled, 391, 3},
-		{&hidePasswd, 395, 1},
+	{&insertAfterCurrent, 342, 0},
+	{&trayicon, 320, 0},
+	{&autoRun, 331, 0},
+	{&minToTray, 334, 0},
+	{&closeToTray, 335, 0},
+	{&lockMute, 355, 1},
+	{&highPriority, 357, 0},
+	{&mainBtnEnabled[0], mainButton[0].langId, 0},
+	{&mainBtnEnabled[1], mainButton[1].langId, 0},
+	{&mainBtnEnabled[2], mainButton[2].langId, 0},
+	{&mainBtnEnabled[3], mainButton[3].langId, 0},
+	{&mainBtnEnabled[4], mainButton[4].langId, 0},
+	{&mainBtnEnabled[5], mainButton[5].langId, 0},
+	{&mainBtnEnabled[6], mainButton[6].langId, 0},
+	{&lircEnabled, 360, 2},
+	{&notDelayButtons[M_Left], 378, 2},
+	{&notDelayButtons[M_Middle], 379, 2},
+	{&notDelayButtons[M_Right], 380, 2},
+	{&notDelayButtons[M_X1], 381, 2},
+	{&notDelayButtons[M_X1+1], 382, 2},
+	{&notDelayFullscreen, 349, 2},
+	{&keepHook, 386, 0},
+	{&joyNotFullscreen, 390, 3},
+	{&joyMouseEnabled, 391, 3},
+	{&hidePasswd, 395, 1},
 };
 static TstrValue strOpts[]={
-		{volumeStr, sizeA(volumeStr), 151, 1},
-		{keyMap, sizeA(keyMap), 152, 0},
-		{lockBMP, sizeA(lockBMP), 156, 1},
-		{lircExe, sizeA(lircExe), 131, 2},
-		{lircAddress, sizeA(lircAddress), 132, 2},
-		{notDelayApp, sizeA(notDelayApp), 174, 2},
-		{delayApp, sizeA(delayApp), 175, 2},
-		{joyApp, sizeA(joyApp), 194, 3},
-		{joyFullscreenApp, sizeA(joyFullscreenApp), 195, 3},
+	{volumeStr, sizeA(volumeStr), 151, 1},
+	{keyMap, sizeA(keyMap), 152, 0},
+	{lockBMP, sizeA(lockBMP), 156, 1},
+	{lircExe, sizeA(lircExe), 131, 2},
+	{lircAddress, sizeA(lircAddress), 132, 2},
+	{notDelayApp, sizeA(notDelayApp), 174, 2},
+	{delayApp, sizeA(delayApp), 175, 2},
+	{joyApp, sizeA(joyApp), 194, 3},
+	{joyFullscreenApp, sizeA(joyFullscreenApp), 195, 3},
 };
 
 static TgroupValue groupOpts[]={
-		{&isLockColor, 350, 351, 1},
-		{&useHook, 396, 399, 0},
+	{&isLockColor, 350, 351, 1},
+	{&useHook, 396, 399, 0},
 };
 static TcomboValue comboOpts[]={
-		{0, 0, 0, 0, 0, -1},
+	{0, 0, 0, 0, 0, -1},
 };
 
 //procedure for options dialog
@@ -2493,7 +2566,7 @@ BOOL propPageInit(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP, int curPage)
 				}
 			}
 			if(cmd==373){
-				DialogBoxParam(inst, "PASSWD", hWin, (DLGPROC)passwdProc, 0);
+				DialogBoxParam(inst, _T("PASSWD"), hWin, (DLGPROC)passwdProc, 0);
 			}
 			break;
 		case WM_NOTIFY:
@@ -2566,7 +2639,7 @@ BOOL CALLBACK optionsMouseLirc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 
 BOOL CALLBACK optionsJoystick(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 {
-	char c[2];
+	TCHAR c[2];
 	if(mesg==WM_INITDIALOG){
 		c[1]=0;
 		c[0]=axisInd2Name(joyMouseX);
@@ -2620,9 +2693,9 @@ void options()
 }
 
 //-------------------------------------------------------------------------
-char const *HotKey::getNote() const
+TCHAR const *HotKey::getNote() const
 {
-	if(!note) return "";
+	if(!note) return _T("");
 	if(!*note && cmd>=0) return getCmdName(cmd);
 	return note;
 }
@@ -2635,14 +2708,14 @@ void search(UINT vkey)
 	//convert virtual key code to character
 	BYTE keystate[256];
 	GetKeyboardState(keystate);
-	char ch[2];
+	TCHAR ch[2];
 	if(ToAscii(vkey, 0, keystate, (LPWORD)&ch, 0)!=1) return;
 	//append character to the search string
-	if(searchLen==sizeof(searchBuf)) return;
+	if(searchLen==sizeA(searchBuf)) return;
 	searchBuf[searchLen++]=ch[0];
 	//find item which begins with the string
 	for(int i=0; i<numKeys; i++){
-		if(!_strnicmp(hotKeyA[i].getNote(), searchBuf, searchLen)){
+		if(!_tcsnicmp(hotKeyA[i].getNote(), searchBuf, searchLen)){
 			setCur(i);
 			break;
 		}
@@ -2690,7 +2763,7 @@ UINT_PTR APIENTRY CFHookProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM)
 BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 {
 	int i, j, x, cmd, h, item, index, top;
-	char *s;
+	TCHAR *s;
 	RECT rc;
 	POINT pt;
 	HotKey *hk;
@@ -2709,11 +2782,11 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			GetClientRect(hWnd, &rc);
 			h= rc.bottom-GetSystemMetrics(SM_CYMENU);
 			//create treeview
-			tree = CreateWindowEx(0, WC_TREEVIEW, "Categories",
+			tree = CreateWindowEx(0, WC_TREEVIEW, _T("Categories"),
 				WS_CHILD | TVS_SHOWSELALWAYS | WS_BORDER | WS_VISIBLE | TVS_DISABLEDRAGDROP,
 				0, 0, treeW, h, hWnd, (HMENU)121, inst, NULL);
 			//create listview
-			listBox = CreateWindow(WC_LISTVIEW, "",
+			listBox = CreateWindow(WC_LISTVIEW, _T(""),
 				WS_CHILD | LVS_REPORT |
 				LVS_SHOWSELALWAYS | WS_VISIBLE | WS_TABSTOP,
 				treeW+splitterW, 0, pt.x-11-treeW-splitterW, h,
@@ -2721,10 +2794,10 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			ListView_SetExtendedListViewStyle(listBox, LVS_EX_FULLROWSELECT);
 			//add icons to the listview
 			himl = ImageList_Create(16, 16, ILC_COLOR16, 35, 10);
-			hbmp = (HBITMAP)LoadImage(inst, "ASCDESC", IMAGE_BITMAP, 0, 0, LR_LOADTRANSPARENT|LR_LOADMAP3DCOLORS);
+			hbmp = (HBITMAP)LoadImageA(inst, "ASCDESC", IMAGE_BITMAP, 0, 0, LR_LOADTRANSPARENT|LR_LOADMAP3DCOLORS);
 			ImageList_Add(himl, hbmp, (HBITMAP)NULL);
 			DeleteObject(hbmp);
-			hbmp = (HBITMAP)LoadImage(inst, "ICONS", IMAGE_BITMAP, 0, 0, LR_LOADTRANSPARENT);
+			hbmp = (HBITMAP)LoadImageA(inst, "ICONS", IMAGE_BITMAP, 0, 0, LR_LOADTRANSPARENT);
 			ImageList_Add(himl, hbmp, (HBITMAP)NULL);
 			DeleteObject(hbmp);
 			ListView_SetImageList(listBox, himl, LVSIL_SMALL);
@@ -2743,11 +2816,11 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			SendDlgItemMessage(hWnd, 106, BM_SETIMAGE, IMAGE_ICON, (LPARAM)LoadIcon(inst, MAKEINTRESOURCE(4)));
 			DragAcceptFiles(hWnd, TRUE);
 			//message that is used when the taskbar (explorer.exe) is restarted
-			taskbarRestart = RegisterWindowMessage(TEXT("Taskbarcreated"));
+			taskbarRestart = RegisterWindowMessage(_T("Taskbarcreated"));
 			return FALSE;
 
 		case WM_DROPFILES:
-			DragQueryFile((HDROP)wP, 0, exeBuf, sizeof(exeBuf));
+			DragQueryFile((HDROP)wP, 0, exeBuf, sizeA(exeBuf));
 			DragFinish((HDROP)wP);
 			SetForegroundWindow(hWnd);
 			addKey(exeBuf, 0, numKeys);
@@ -2765,23 +2838,23 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					LV_DISPINFO *pnmv= (LV_DISPINFO*)lP;
 					hk = &hotKeyA[pnmv->item.lParam];
 					if(pnmv->item.mask & LVIF_TEXT){
-						char *buf = pnmv->item.pszText;
+						TCHAR *buf = pnmv->item.pszText;
 						*buf=0;
 						if(pnmv->item.lParam>=numKeys) break;
 						int n = pnmv->item.cchTextMax;
 						switch(pnmv->item.iSubItem){
 							case 0:
-								sprintf(buf, "%d", (hk-hotKeyA)+1);
+								_stprintf(buf, _T("%d"), (hk-hotKeyA)+1);
 								break;
 							case 1:
 								printKey(buf, hk);
 								break;
 							case 2: {
-								char const * note= hk->getNote();
+								TCHAR const * note= hk->getNote();
 								lstrcpyn(buf, note, n-2);
 								if(hk->cmd>=0 && note!=hk->note && *hk->args){
 									i=lstrlen(note);
-									strcpy(buf+i, ": ");
+									_tcscpy(buf+i, _T(": "));
 									i+=2;
 									lstrcpyn(buf+i, hk->args, n-i);
 								}
@@ -2792,7 +2865,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 						pnmv->item.iImage= hk->getIcon();
 					}
 				}
-					break;
+				break;
 				case LVN_COLUMNCLICK:
 				{
 					NM_LISTVIEW *pnm= (NM_LISTVIEW *)lP;
@@ -2817,7 +2890,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					ListView_EnsureVisible(listBox, max(i, 0), TRUE);
 					setCur(item);
 				}
-					break;
+				break;
 				case LVN_KEYDOWN:
 					search(((LV_KEYDOWN*)lP)->wVKey);
 					break;
@@ -3020,7 +3093,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 						setFont();
 					}
 				}
-					break;
+				break;
 				case 207: //New file
 					if(!saveAtExit()) break;
 					unregisterKeys();
@@ -3031,17 +3104,17 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 				case 208: //Help
 				case 200: //What's new
 				{
-					char buf[256];
+					TCHAR buf[256];
 					getExeDir(buf, (cmd==200) ? lng(14, "WhatsNew.txt") : lng(13, "help.chm"));
 					if(cmd==200 || !showHelp(0)){
-						if(ShellExecute(0, "open", buf, 0, 0, SW_SHOWNORMAL)==(HINSTANCE)ERROR_FILE_NOT_FOUND){
+						if(ShellExecute(0, _T("open"), buf, 0, 0, SW_SHOWNORMAL)==(HINSTANCE)ERROR_FILE_NOT_FOUND){
 							msglng(739, "File %s not found", buf);
 						}
 					}
 				}
-					break;
+				break;
 				case 209: //About
-					DialogBox(inst, "ABOUT", hWnd, (DLGPROC)AboutProc);
+					DialogBox(inst, _T("ABOUT"), hWnd, (DLGPROC)AboutProc);
 					break;
 				case 210: //Show window
 					SetForegroundWindow(hWin);
@@ -3057,15 +3130,15 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					si.cb= sizeof(STARTUPINFO);
 					si.dwFlags= STARTF_USESHOWWINDOW;
 					si.wShowWindow= SW_HIDE;
-					s= new char[MAX_PATH+75];
-					strcpy(s, "regedit.exe /S \"");
-					strcat(s, regFile);
-					strcat(s, "\"");
+					s= new TCHAR[MAX_PATH+75];
+					_tcscpy(s, _T("regedit.exe /S \""));
+					_tcscat(s, regFile);
+					_tcscat(s, _T("\""));
 					if(cmd==214){
 						s[13]='E';
-						strcat(s, " \"HKEY_CURRENT_USER\\");
-						strcat(s, subkey);
-						strcat(s, "\"");
+						_tcscat(s, _T(" \"HKEY_CURRENT_USER\\"));
+						_tcscat(s, subkey);
+						_tcscat(s, _T("\""));
 						writeini();
 					}
 					if(CreateProcess(0, s, 0, 0, 0, 0, 0, 0, &si, &pi)){
@@ -3089,7 +3162,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					}
 					break;
 				case 215: //run spy
-					createProcess("spy.exe");
+					createProcess(_T("spy.exe"));
 					break;
 				case 217: //category up
 					swapCategory(selectedCategory-1, selectedCategory);
@@ -3099,11 +3172,11 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					break;
 				case 219: //rename category
 					if(selectedCategory>0){
-						DialogBox(inst, "RENAMECAT", hWin, (DLGPROC)renameCategoryProc);
+						DialogBox(inst, _T("RENAMECAT"), hWin, (DLGPROC)renameCategoryProc);
 					}
 					break;
 				case 220: //assign category to selected hotkeys
-					DialogBox(inst, "ASSIGNCAT", hWin, (DLGPROC)assignCategoryProc);
+					DialogBox(inst, _T("ASSIGNCAT"), hWin, (DLGPROC)assignCategoryProc);
 					break;
 				case 221: //delete category
 					if(selectedCategory>0){
@@ -3221,7 +3294,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 				 break;
 			 case 12: //paste text - try again
 				 KillTimer(hWin, 12);
-				 if(pasteTextData.busy) parseMacro("\\^\\V");
+				 if(pasteTextData.busy) parseMacro(_T("\\^\\V"));
 				 break;
 			 case 13: //paste text - restore clipboard or paste next text
 				 KillTimer(hWin, 13);
@@ -3230,7 +3303,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 				 break;
 			 case 14: //paste text - Ctrl+V
 				 KillTimer(hWin, 14);
-				 parseMacro("\\^\\V");
+				 parseMacro(_T("\\^\\V"));
 				 SetTimer(hWin, 12, 1000, 0);
 				 lockPaste--;
 				 break;
@@ -3329,7 +3402,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 						showPopup(p.x, p.y, "ICONPOPUP", iconSubId, hWin);
 						PostMessage(hWin, WM_NULL, 0, 0);
 					}
-						break;
+					break;
 				}
 			}
 			else if(wP>=100 && wP<100+sizeA(trayIconA)){
@@ -3371,10 +3444,10 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			DestroyWindow(hWndLock);
 			DeleteObject(lockImg);
 			setHook();
-			TregisterServiceProcess p= (TregisterServiceProcess)GetProcAddress(GetModuleHandle("kernel32.dll"), "RegisterServiceProcess");
+			TregisterServiceProcess p= (TregisterServiceProcess)GetProcAddress(GetModuleHandleA("kernel32.dll"), "RegisterServiceProcess");
 			if(p) p(0, 0);
 			restoreAfterLock();
-			cpStr(pcLockParam, "");
+			cpStr(pcLockParam, _T(""));
 			writeini();
 			forceNoKey();
 			if(hWndBeforeLock) SetForegroundWindow(hWndBeforeLock);
@@ -3409,7 +3482,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 		case WM_COPYDATA:
 			u= ((COPYDATASTRUCT*)lP)->dwData - 13000;
 			if(u<sizeA(cmdNames)){
-				command((int)u, (char*)((COPYDATASTRUCT*)lP)->lpData);
+				command((int)u, (TCHAR*)((COPYDATASTRUCT*)lP)->lpData);
 			}
 			break;
 
@@ -3429,7 +3502,7 @@ LRESULT popupWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 	RECT rc;
 	HBRUSH br;
 	HGDIOBJ oldP, oldB;
-	char buf[32], *name, *t, *u;
+	TCHAR buf[32], *name, *t, *u;
 	PAINTSTRUCT ps;
 	static const int clTab[]={clVol0, clVol1, clVol2, clVol3, clVol4};
 	static const int CBkgnd[]={clVolBkgnd, clDskBkgnd, clTxtBkgnd};
@@ -3466,35 +3539,35 @@ LRESULT popupWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 						DeleteObject(br);
 						//audio line name
 						SetTextAlign(dc, TA_LEFT);
-						if(len==5 && !strcmp(name, "Mixer")){
+						if(len==5 && !_tcscmp(name, _T("Mixer"))){
 							name=lng(1078, "Volume");
-							len= static_cast<int>(strlen(name));
+							len= static_cast<int>(_tcslen(name));
 						}
 						//prefixes R:, 1:
 						t=0;
 						if(mxId>0 || rec){
 							t=name;
-							name= u= new char[len+8];
-							if(mxId>0){ *u++= (char)(mxId+'1'); *u++=':'; *u++=' '; }
+							name= u= new TCHAR[len+8];
+							if(mxId>0){ *u++= (TCHAR)(mxId+'1'); *u++=':'; *u++=' '; }
 							if(rec){ *u++='R'; *u++=':'; }
-							lstrcpynA(u, t, len+1);
-							len= static_cast<int>(strlen(name));
+							lstrcpyn(u, t, len+1);
+							len= static_cast<int>(_tcslen(name));
 						}
 						TextOut(dc, x, rc.top, name, len);
 						if(t) delete[] name;
 						//volume value
 						SetTextAlign(dc, TA_CENTER);
-						t="???";
+						t=_T("???");
 						if(curVolume[k][1]>0){
 							t=lng(752, "Muted");
 						}
 						else if(curVolume[k][0]>=0){
-							sprintf(t=buf, "%d %%", curVolume[k][0]);
+							_stprintf(t=buf, _T("%d %%"), curVolume[k][0]);
 						}
 						else if(curVolume[k][1]==0){
-							t="";
+							t=_T("");
 						}
-						TextOut(dc, x2, rc.top, t, (int)strlen(t));
+						TextOut(dc, x2, rc.top, t, (int)_tcslen(t));
 					}
 					break;
 				case P_DiskFree:
@@ -3512,12 +3585,12 @@ LRESULT popupWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 						DeleteObject(br);
 						//drive letter
 						SetTextAlign(dc, TA_LEFT);
-						buf[0]=(char)(k+'A');
+						buf[0]=(TCHAR)(k+'A');
 						buf[1]=':';
 						TextOut(dc, 2, y, buf, 2);
 						//free space
 						SetTextAlign(dc, TA_CENTER);
-						TextOut(dc, p->width>>1, y, d->text, (int)strlen(d->text));
+						TextOutA(dc, p->width>>1, y, d->text, (int)strlen(d->text));
 						y=rc.bottom+diskSepH;
 						if(k){
 							//horizontal line
@@ -3536,7 +3609,7 @@ LRESULT popupWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			DeleteObject(SelectObject(dc, oldP));
 			EndPaint(hWnd, &ps);
 		}
-			break;
+		break;
 		case WM_NCHITTEST:
 			return HTCAPTION;
 		case WM_MOVE:
@@ -3573,12 +3646,12 @@ void createPopups()
 		wc.cbWndExtra=0;
 		wc.style= CS_SAVEBITS;
 		wc.hbrBackground=0;
-		wc.lpszClassName="HotkeyPopup";
+		wc.lpszClassName=_T("HotkeyPopup");
 		RegisterClass(&wc);
 		//create popup windows
 		for(int i=0; i<Npopup; i++){
 			Tpopup *p= &popup[i];
-			p->hWnd= CreateWindowEx(WS_EX_TOOLWINDOW, "HotkeyPopup", "",
+			p->hWnd= CreateWindowEx(WS_EX_TOOLWINDOW, _T("HotkeyPopup"), _T(""),
 				WS_POPUP, 0, 0, 100, 10, hWin, 0, inst, 0);
 			setOpacity(p->hWnd, p->opacity);
 		}
@@ -3732,17 +3805,17 @@ LRESULT lockWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 }
 
 //-------------------------------------------------------------------------
-int commandS(char *cmdLine)
+int commandS(TCHAR *cmdLine)
 {
 	int i, cmd, cmdLen, l;
-	char *s, *param;
+	TCHAR *s, *param;
 	bool quot=false;
 
 	if(*cmdLine==' ') cmdLine++;
 	cmdLine++;
 	if(cmdLine[0]>='0' && cmdLine[0]<='9'){
 		//command number
-		cmd=strtol(cmdLine, &param, 10);
+		cmd=_tcstol(cmdLine, &param, 10);
 		if(cmd>=1000) cmd-=1000;
 	}
 	else{
@@ -3751,8 +3824,9 @@ int commandS(char *cmdLine)
 		param=0;
 		cmd=0;
 		for(i=0; i<sizeA(cmdNames); i++){
-			l=static_cast<int>(strlen(cmdNames[i]));
-			if(!_strnicmp(cmdLine, cmdNames[i], l) &&
+			convertA2T(cmdNames[i], name);
+			l=static_cast<int>(_tcslen(name));
+			if(!_tcsnicmp(cmdLine, name, l) &&
 					(cmdLine[l]==0 || cmdLine[l]==' ') && l>cmdLen){
 				cmdLen=l;
 				param=cmdLine+l;
@@ -3761,7 +3835,7 @@ int commandS(char *cmdLine)
 		}
 	}
 	if(!param || cmd>=sizeA(cmdNames)){
-		msg("Unknown command: %s", cmdLine);
+		msg(_T("Unknown command: %s"), cmdLine);
 		return 4;
 	}
 	if(*param==' ') param++;
@@ -3780,7 +3854,13 @@ int commandS(char *cmdLine)
 	return 0;
 }
 //-------------------------------------------------------------------------
-int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int cmdShow)
+int PASCAL
+#ifdef UNICODE
+wWinMain
+#else
+WinMain
+#endif
+(HINSTANCE hInstance, HINSTANCE, LPTSTR cmdLine, int cmdShow)
 {
 	MSG mesg;
 	WNDCLASS wc;
@@ -3795,10 +3875,10 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int cmdShow)
 
 	//DPIAware
 	typedef BOOL(WINAPI *TGetProcAddress)();
-	TGetProcAddress getProcAddress = (TGetProcAddress)GetProcAddress(GetModuleHandle("user32"), "SetProcessDPIAware");
-	if(getProcAddress) getProcAddress();
+	TGetProcAddress DPIAware = (TGetProcAddress)GetProcAddress(GetModuleHandleA("user32"), "SetProcessDPIAware");
+	if(DPIAware) DPIAware();
 
-	if(!strcmp(cmdLine, "--htmlhelp")) return helpProcess();
+	if(!_tcscmp(cmdLine, _T("--htmlhelp"))) return helpProcess();
 	cmdLineCmd=-1;
 	InitializeCriticalSection(&cdCritSect);
 	//Windows version
@@ -3806,7 +3886,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int cmdShow)
 	GetVersionEx(&v);
 	isWin9X = v.dwPlatformId==VER_PLATFORM_WIN32_WINDOWS;
 	isVista = v.dwMajorVersion > 5;
-	TIsWow64Process isWow64Process = (TIsWow64Process)GetProcAddress(GetModuleHandle("kernel32.dll"), "IsWow64Process");
+	TIsWow64Process isWow64Process = (TIsWow64Process)GetProcAddress(GetModuleHandleA("kernel32.dll"), "IsWow64Process");
 	if(isWow64Process){
 		BOOL b;
 		if(isWow64Process(GetCurrentProcess(), &b) && b) isWin64=true;
@@ -3833,9 +3913,9 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int cmdShow)
 	}
 
 	//default options
-	strcpy(lircExe, "C:\\Program Files\\WinLIRC\\winlirc.exe");
-	strcpy(lircAddress, "127.0.0.1");
-	if(!isVista) strcpy(volumeStr, "Mixer,Wave");
+	_tcscpy(lircExe, _T("C:\\Program Files\\WinLIRC\\winlirc.exe"));
+	_tcscpy(lircAddress, _T("127.0.0.1"));
+	if(!isVista) _tcscpy(volumeStr, _T("Mixer,Wave"));
 	popupVolume.x=5000; popupVolume.y=9000; popupVolume.width=180;
 	popupVolume.refresh=1000; popupVolume.delay=2400;
 	popupDiskFree.x=5000; popupDiskFree.y=6666; popupDiskFree.width=180;
@@ -3844,8 +3924,8 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int cmdShow)
 	font.lfHeight=-15;
 	font.lfWeight=FW_NORMAL;
 	font.lfCharSet=DEFAULT_CHARSET;
-	strcpy(font.lfFaceName, "Arial");
-	cpStr(pcLockParam, "");
+	_tcscpy(font.lfFaceName, _T("Arial"));
+	cpStr(pcLockParam, _T(""));
 	//read registry settings
 	readini();
 	//system font height
@@ -3854,13 +3934,13 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int cmdShow)
 	if(cmdLine[0]=='-'){
 		return commandS(cmdLine);
 	}
-	l=strlen(cmdLine);
+	l=_tcslen(cmdLine);
 	show=-1;
 	if(cmdLine[l-1]=='0') show=0;
 	if(cmdLine[l-1]=='1') show=1;
 
 	//only activate window if this program is already running
-	HWND w=FindWindow("PlasHotKey", 0);
+	HWND w=FindWindowA("PlasHotKey", 0);
 	if(w){
 		if(show!=0){
 			ShowWindow(w, cmdShow);
@@ -3868,7 +3948,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int cmdShow)
 		}
 		return 1;
 	}
-	if(GetProcAddress(GetModuleHandle("comctl32.dll"), "DllGetVersion")){
+	if(GetProcAddress(GetModuleHandleA("comctl32.dll"), "DllGetVersion")){
 		INITCOMMONCONTROLSEX iccs;
 		iccs.dwSize= sizeof(INITCOMMONCONTROLSEX);
 		iccs.dwICC= ICC_LISTVIEW_CLASSES|ICC_TREEVIEW_CLASSES;
@@ -3879,9 +3959,9 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int cmdShow)
 	}
 	initLang();
 	//delete old help files
-	getExeDir(exeBuf, "hotkeyp_CZ.txt");
+	getExeDir(exeBuf, _T("hotkeyp_CZ.txt"));
 	DeleteFile(exeBuf);
-	getExeDir(exeBuf, "hotkeyp_EN.txt");
+	getExeDir(exeBuf, _T("hotkeyp_EN.txt"));
 	DeleteFile(exeBuf);
 	//register classes
 	wc.style=0;
@@ -3893,25 +3973,25 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int cmdShow)
 	wc.hCursor=LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground=(HBRUSH)COLOR_BTNFACE;
 	wc.lpszMenuName=NULL;
-	wc.lpszClassName="PlasHotKey";
-	if(!RegisterClass(&wc)){ msg("RegisterClass error"); return 2; }
+	wc.lpszClassName=_T("PlasHotKey");
+	if(!RegisterClass(&wc)){ msg(_T("RegisterClass error")); return 2; }
 
 	wc.lpfnWndProc= (WNDPROC)lockWndProc;
-	wc.lpszClassName="HotkeyLock";
+	wc.lpszClassName=_T("HotkeyLock");
 	wc.hCursor=0;
 	RegisterClass(&wc);
 
 	wc.lpfnWndProc= (WNDPROC)zoomProc;
-	wc.lpszClassName="HotkeyZoom";
+	wc.lpszClassName=_T("HotkeyZoom");
 	wc.hbrBackground=0;
 	RegisterClass(&wc);
 
 	//create main window
-	hWin = CreateDialog(hInstance, "WIN", 0, (DLGPROC)MainWndProc);
-	if(!hWin){ msg("CreateDialog error"); return 3; }
+	hWin = CreateDialog(hInstance, _T("WIN"), 0, (DLGPROC)MainWndProc);
+	if(!hWin){ msg(_T("CreateDialog error")); return 3; }
 	haccel=LoadAccelerators(hInstance, MAKEINTRESOURCE(3));
 	createPopups();
-	zoom.wnd = CreateWindowEx(WS_EX_TOOLWINDOW, "HotkeyZoom", "Magnifier", WS_POPUP|WS_BORDER, 0, 0, 100, 100, 0, 0, inst, 0);
+	zoom.wnd = CreateWindowEx(WS_EX_TOOLWINDOW, _T("HotkeyZoom"), _T("Magnifier"), WS_POPUP|WS_BORDER, 0, 0, 100, 100, 0, 0, inst, 0);
 
 	InitializeCriticalSection(&listCritSect);
 	HANDLE hThreadK= CreateThread(0, 0, hookProc, 0, 0, &idHookThreadK);
@@ -3929,7 +4009,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int cmdShow)
 	optionChanged();
 	srand((unsigned)time(0));
 	//enable drag&drop from processes which have normal integrity level
-	TChangeWindowMessageFilter pChangeWindowMessageFilter = (TChangeWindowMessageFilter)GetProcAddress(GetModuleHandle("user32.dll"), "ChangeWindowMessageFilter");
+	TChangeWindowMessageFilter pChangeWindowMessageFilter = (TChangeWindowMessageFilter)GetProcAddress(GetModuleHandleA("user32.dll"), "ChangeWindowMessageFilter");
 	if(pChangeWindowMessageFilter){
 		pChangeWindowMessageFilter(WM_DROPFILES, 1);
 		pChangeWindowMessageFilter(0x0049, 1);
@@ -3940,10 +4020,10 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int cmdShow)
 	while(GetMessage(&mesg, NULL, 0, 0)>0)
 	 if(mesg.hwnd==popupVolume.hWnd || mesg.hwnd==popupDiskFree.hWnd || mesg.hwnd==popupShowText.hWnd ||
 			!TranslateAccelerator(hWin, haccel, &mesg)){
-		if(!IsDialogMessage(hWin, &mesg)){
-			TranslateMessage(&mesg);
-			DispatchMessage(&mesg);
-		}
+		 if(!IsDialogMessage(hWin, &mesg)){
+			 TranslateMessage(&mesg);
+			 DispatchMessage(&mesg);
+		 }
 	 }
 
 	lircEnd();

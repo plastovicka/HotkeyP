@@ -11,11 +11,11 @@
 
 
 struct HotKey {
-	char *note;      //comment
-	char *exe;       //exe file or document with full path
-	char *args;      //parameters
-	char *dir;       //working directory
-	char *sound;     //sound to play (zef)
+	TCHAR *note;      //comment
+	TCHAR *exe;       //exe file or document with full path
+	TCHAR *args;      //parameters
+	TCHAR *dir;       //working directory
+	TCHAR *sound;     //sound to play (zef)
 	UINT modifiers;  //ctrl,shift,alt,win
 	UINT vkey;       //virtual key code
 	LPARAM scanCode; //scan key code (lParam from WM_KEYDOWN)
@@ -39,7 +39,7 @@ struct HotKey {
 	int category;
 	int item;
 
-	char const *getNote() const; //listview item description
+	TCHAR const *getNote() const; //listview item description
 	void resolveLNK();
 	bool isActive() const;  //global hotkey or the window is active
 	bool isLocal() const;   //cmd is only to active window
@@ -49,8 +49,8 @@ struct HotKey {
 	void destroy();  //destructor
 	bool inCategory(int _category);
 	int getIcon();
-	std::string getFullExe() const;    // gets fully expanded exe name (zef)
-	std::string getFullCmd() const;    // gets command name or fully expanded exe name (zef)
+	tstring getFullExe() const;    // gets fully expanded exe name (zef)
+	tstring getFullCmd() const;    // gets command name or fully expanded exe name (zef)
 };
 
 struct Tpopup {
@@ -98,7 +98,7 @@ struct TendpointName
 {
 	TendpointName *nxt;
 	WCHAR *id;
-	char *name, *nameLong;
+	TCHAR *name, *nameLong;
 	~TendpointName(){ delete[] name; delete[] nameLong; delete[] id; }
 };
 
@@ -126,21 +126,21 @@ struct ClipboardData
 struct CharList
 {
 	CharList* next;
-	char* text;
+	TCHAR* text;
 };
 
 struct PasteTextData
 {
 	ClipboardData *prev; //previous clipboard content
-	char *text;  //text which will be pasted to the active window
+	TCHAR *text;  //text which will be pasted to the active window
 	enum{ M=50 };
-	char *L[M];  //list box
+	TCHAR *L[M];  //list box
 	int n;       //length of L
-	CharList *queueFirst,*queueLast;
+	CharList *queueFirst, *queueLast;
 	bool busy;
 	void save();
 	void restore();
-	void addToQueue(char *s);
+	void addToQueue(TCHAR *s);
 	bool processQueue();
 };
 
@@ -172,7 +172,7 @@ enum{ K_NONE, K_ONLYDOWN, K_DOWN, K_UP };
 #define extraInfoIGNORE 0x96143581
 const int diskSepH=2, showTextBorder=7;
 
-typedef char TfileName[MAX_PATH];
+typedef TCHAR TfileName[MAX_PATH];
 
 extern int numKeys, fontH, sentToActiveWnd, buttons, ignoreButtons, ignoreButtons2, passwdLen, pcLockX, pcLockY, diskfreePrec, curVolume[Mvolume][2], iconDelay, oldMute, lockSpeed, lockMute, disableTaskMgr, lircEnabled, useHook, cmdLineCmd, lastButtons, notDelayButtons[15], notDelayFullscreen, mouseDelay, keepHook, keepHookInterval, oldCDautorun, passwdAlg, hidePasswd, cmdFromKeyPress, lockPaste;
 extern double pcLockDx, pcLockDy;
@@ -182,9 +182,9 @@ extern LPARAM keyLastScan;
 extern DWORD idHookThreadK, idHookThreadM;
 extern POINT mousePos;
 extern bool modif, altDown, blockedKeys[256], pcLocked, isWin9X, isWin64, isVista, disableAll, disableMouse, disableJoystick, disableLirc, disableKeys, isHilited, editing, isZoom, preventWinMenu;
-extern char volumeStr[256], *pcLockParam, notDelayApp[512], delayApp[512];
+extern TCHAR volumeStr[256], *pcLockParam, notDelayApp[512], delayApp[512];
 extern TfileName iniFile, lockBMP, exeBuf;
-extern const char *subkey;
+extern const TCHAR *subkey;
 extern BYTE specialWinKeys[256];
 extern CRITICAL_SECTION cdCritSect, listCritSect;
 extern HHOOK hookK, hookM;
@@ -199,10 +199,10 @@ extern const int shift2Tab[Nshift2];
 extern bool keyReal[256];
 extern Tpopup popup[Npopup];
 extern DiskInfo disks[26];
-extern char *showTextStr;
+extern TCHAR *showTextStr;
 extern OPENFILENAME snapOfn;
 extern BYTE password[Dpasswd];
-extern char keyMap[1024], *keyMapIndex[256];
+extern TCHAR keyMap[1024], *keyMapIndex[256];
 extern HideInfo trayIconA[30];
 extern Zoom zoom;
 extern PasteTextData pasteTextData;
@@ -211,7 +211,7 @@ extern HideInfo hiddenApp;
 extern HWND hiddenWin;
 
 extern int lircPort;
-extern char lircAddress[64];
+extern TCHAR lircAddress[64];
 extern TfileName lircExe;
 extern int lircRepeat;
 extern char *lircButton;
@@ -219,39 +219,40 @@ extern HANDLE lircThread;
 
 extern HANDLE joyThread;
 extern int joyMouseEnabled, joyMouseJoy, joyMouseX, joyMouseY, joyNotFullscreen, joyThreshold, joyMultiplier;
-extern char joyApp[512];
-extern char joyFullscreenApp[512];
+extern TCHAR joyApp[512];
+extern TCHAR joyFullscreenApp[512];
 
-BOOL createProcess(char *exe);
+BOOL createProcess(TCHAR *exe);
 void registerHK(int i, bool disable);
 void registerKeys();
 void unregisterKeys();
 bool saveAtExit();
-void command(int cmd, char *param, HotKey *hk=0);
-void volume(char *which, int value, int action);
+void command(int cmd, TCHAR *param, HotKey *hk = 0);
+void volume(TCHAR *which, int value, int action);
 void diskFree();
 void resetDiskfree();
 void writeini();
-bool wr(char *fn);
+bool wr(TCHAR *fn);
 bool save1(OPENFILENAME &ofn, DWORD flags);
 int volumeH();
-bool getVolumeName(int i, char *&name, int &len, int &mxId, int &rec, bool display);
+bool getVolumeName(int i, TCHAR *&name, int &len, int &mxId, int &rec, bool display);
 int textY(int i);
 void cpStr(char *&dest, char const *src);
+void cpStr(WCHAR *&dest, WCHAR const *src);
 bool isShiftKey(int c);
 void checkWait();
 void buttonToArray(int &param);
-DWORD findProcess(char const *exe);
-bool checkProcess(DWORD pid, char *exe);
-void privilege(char *name);
+DWORD findProcess(TCHAR const *exe);
+bool checkProcess(DWORD pid, TCHAR *exe);
+void privilege(TCHAR *name);
 void initList();
 void setHook();
 void ignoreHotkey(HotKey *hk);
 LRESULT CALLBACK VolumeWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP);
 LRESULT CALLBACK DiskFreeWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP);
 LRESULT CALLBACK showTextWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP);
-HWND findWindow(char const *exe, DWORD pid); // zef: made const correct
-int msg1(int btn, char *text, ...);
+HWND findWindow(TCHAR const *exe, DWORD pid); // zef: made const correct
+int msg1(int btn, TCHAR *text, ...);
 void keyEventUp(int c);
 void keyEventDown(int c);
 void forceNoKey();
@@ -261,28 +262,28 @@ void mouse_eventDown(int i);
 void mouse_eventUp(int i);
 void mouse_event2(DWORD f, int d);
 void setOpacity(HWND w, int o);
-char *formatText(char *param);
-bool cmdToWindow(int cmd, char *param);
+TCHAR *formatText(TCHAR *param);
+bool cmdToWindow(int cmd, TCHAR *param);
 void closeAll2();
 void modifyTrayIcon();
 void createPopups();
-bool checkProcessList(char *list);
-bool checkFullscreen(char *list);
-bool isExe(char const *f);
-bool testDir(char *dir);
-char *getCmdName(int id);
+bool checkProcessList(TCHAR *list);
+bool checkFullscreen(TCHAR *list);
+bool isExe(TCHAR const *f);
+bool testDir(TCHAR *dir);
+TCHAR *getCmdName(int id);
 void unhideApp(HideInfo *info);
 bool hideMainWindow();
 void unhideAll();
-void copyToClipboard1(char *s);
-void parseMacro(char *s);
+void copyToClipboard1(TCHAR *s);
+void parseMacro(TCHAR *s);
 void readini();
-void removeDrive(char DriveLetter);
+void removeDrive(TCHAR DriveLetter);
 void removeUSBdrives();
 
 void executeHotKey(int i);
 void delayAndExecuteHotKey(HINSTANCE instance, HWND parent, int hotKeyIndex);
-void printKey(char *s, HotKey* hk);
+void printKey(TCHAR *s, HotKey* hk);
 void correctMultiCmd(int item, int action, int item2=0);
 void keyMapChanged();
 void postHotkey(int i, LPARAM updown);
@@ -294,7 +295,7 @@ DWORD WINAPI hookProc(LPVOID);
 void messageToHook(UINT mesg, WPARAM wP, bool mouse);
 bool unDelayButtons();
 
-extern "C" int encrypt(BYTE *out, int outLen, char *in, int inLen, int alg);
+extern "C" int encrypt(BYTE *out, int outLen, TCHAR *in, int inLen, int alg);
 
 int helpProcess();
 bool showHelp(int anchorId);
@@ -304,15 +305,15 @@ void lircEnd(bool wait=false);
 void lircNotify();
 
 DWORD WINAPI joyProc(void *);
-char axisInd2Name(int i);
-int axisName2Ind(char c);
+TCHAR axisInd2Name(int i);
+int axisName2Ind(TCHAR c);
 bool joyGlobalEnabled();
 
-std::string ExpandVars(std::string s);
+tstring ExpandVars(tstring s);
 
 typedef BOOL(__stdcall *TSetSuspendState)(BOOL, BOOL, BOOL);
 typedef BOOL(__stdcall *TLockWorkStation)();
-typedef BOOL(__stdcall *TdiskFreeFunc)(LPCTSTR, ULARGE_INTEGER*, ULARGE_INTEGER*, ULARGE_INTEGER*);
+typedef BOOL(__stdcall *TdiskFreeFunc)(LPCSTR, ULARGE_INTEGER*, ULARGE_INTEGER*, ULARGE_INTEGER*);
 typedef BOOL(__stdcall *TmemInfo)(HANDLE, PROCESS_MEMORY_COUNTERS*, DWORD);
 typedef BOOL(__stdcall *TsetOpacityFunc)(HWND, COLORREF, BYTE, DWORD);
 typedef BOOL(__stdcall *TGetLayeredWindowAttributes)(HWND, COLORREF*, BYTE*, DWORD*);
@@ -320,7 +321,7 @@ typedef DWORD(__stdcall *TregisterServiceProcess)(DWORD, DWORD);
 typedef BOOL(__stdcall *TGetGUIThreadInfo)(DWORD, LPGUITHREADINFO);
 typedef LRESULT(__stdcall *TSendMessageTimeout)(HWND, UINT, WPARAM, LPARAM, UINT, UINT, PDWORD_PTR);
 typedef DWORD(__stdcall *TGetProcessId)(HANDLE);
-typedef LONG(__stdcall *TChangeDisplaySettingsEx)(LPCTSTR, LPDEVMODE, HWND, DWORD, LPVOID);
+typedef LONG(__stdcall *TChangeDisplaySettingsEx)(LPCSTR, LPDEVMODEA, HWND, DWORD, LPVOID);
 typedef BOOL(__stdcall *TChangeWindowMessageFilter)(UINT message, DWORD dwFlag);
 typedef BOOL(__stdcall *TIsWow64Process)(HANDLE, PBOOL);
 
@@ -346,6 +347,47 @@ template <class T> inline void amin(T &x, int l){
 
 inline int random(int num){ return(int)(((long)rand()*num)/(RAND_MAX+1)); }
 
+//-------------------------------------------------------------------------
+
+#ifdef UNICODE 
+#define tcscpyA(d,s) \
+	MultiByteToWideChar(CP_ACP, 0, s, -1, d, 256)
+#define convertT2W(t,w) \
+	WCHAR *w=t
+#define convertW2T(w,t) \
+	TCHAR *t=w
+#define convertA2T(a,t) \
+	int cnvlen##t=strlen(a)+1;\
+	TCHAR *t=(TCHAR*)_alloca(2*cnvlen##t);\
+	MultiByteToWideChar(CP_ACP, 0, a, -1, t, cnvlen##t);
+#define convertT2A(t,a) \
+	int cnvlen##a=wcslen(t)*2+1;\
+	char *a=(char*)_alloca(cnvlen##a);\
+	a[0]=0;\
+	WideCharToMultiByte(CP_ACP, 0, t, -1, a, cnvlen##a, 0,0);
+#else
+#define tcscpyA(d,s) \
+	strcpy(d,s)
+#define convertT2A(t,a) \
+	char *a=t
+#define convertA2T(a,t) \
+	TCHAR *t=a
+#define convertW2T(w,t) \
+	int cnvlen##t=wcslen(w)*2+1;\
+	TCHAR *t=(TCHAR*)_alloca(cnvlen##t);\
+	WideCharToMultiByte(CP_ACP, 0, w, -1, t, cnvlen##t, 0,0);
+#define convertT2W(t,w) \
+	int cnvlen##w=strlen(t)+1;\
+	WCHAR *w=(WCHAR*)_alloca(2*cnvlen##w);\
+	MultiByteToWideChar(CP_ACP, 0, t, -1, w, cnvlen##w);
+#endif
+
+#define convertA2W(cp,a,w) \
+	int cnvlen##w=strlen(a)+1;\
+	WCHAR *w=(WCHAR*)_alloca(2*cnvlen##w);\
+	MultiByteToWideChar(cp, 0, a, -1, w, cnvlen##w);
+
+//-------------------------------------------------------------------------
 
 extern "C"{
 	HWND WINAPI HtmlHelpA(HWND hwndCaller, LPCSTR pszFile, UINT uCommand, DWORD_PTR dwData);

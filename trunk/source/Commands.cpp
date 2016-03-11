@@ -1,5 +1,5 @@
 /*
- (C) 2003-2014  Petr Lastovicka
+ (C) 2003-2016  Petr Lastovicka
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License.
@@ -16,9 +16,9 @@ Nvolume=2,
  lockPaste;
 
 UINT cancelAutoPlay;
-char volumeStr[256];
+TCHAR volumeStr[256];
 bool blockedKeys[256];
-char *showTextLast;
+TCHAR *showTextLast;
 PasteTextData pasteTextData;
 bool keyReal[256];
 static bool shifts[Nshift], shifts0[Nshift2];
@@ -34,41 +34,41 @@ struct Tvk {
 	char *s;
 	int vk;
 } vks[]={
-		{"ESCAPE", VK_ESCAPE}, {"ESC", VK_ESCAPE}, {"F10", VK_F10},
-		{"F11", VK_F11}, {"F12", VK_F12}, {"F1", VK_F1}, {"F2", VK_F2},
-		{"F3", VK_F3}, {"F4", VK_F4}, {"F5", VK_F5}, {"F6", VK_F6}, {"F7", VK_F7},
-		{"F8", VK_F8}, {"F9", VK_F9}, {"PRINTSCREEN", VK_SNAPSHOT},
-		{"PRINTSCRN", VK_SNAPSHOT}, {"SCROLLLOCK", VK_SCROLL},
-		{"PAUSE", VK_PAUSE}, {"BREAK", VK_CANCEL}, {"CLEAR", VK_CLEAR},
-		{"INSERT", VK_INSERT}, {"INS", VK_INSERT}, {"DELETE", VK_DELETE},
-		{"DEL", VK_DELETE}, {"HOME", VK_HOME}, {"END", VK_END},
-		{"PAGEUP", VK_PRIOR}, {"PAGEDOWN", VK_NEXT}, {"LEFT", VK_LEFT},
-		{"RIGHT", VK_RIGHT}, {"UP", VK_UP}, {"DOWN", VK_DOWN}, {"TAB", VK_TAB},
-		{"CAPSLOCK", VK_CAPITAL}, {"CAPS", VK_CAPITAL}, {"BACKSPACE", VK_BACK},
-		{"BS", VK_BACK}, {"ENTER", VK_RETURN}, {"SPACE", VK_SPACE},
-		{"SHIFT", VK_SHIFT}, {"CONTROL", VK_CONTROL}, {"CTRL", VK_CONTROL},
-		{"RSHIFT", VK_RSHIFT}, {"RCONTROL", VK_RCONTROL}, {"RCTRL", VK_RCONTROL},
-		{"^", VK_CONTROL}, {"ALT", VK_MENU}, {"RALT", VK_RMENU}, {"MENU", VK_MENU}, {"RMENU", VK_RMENU},
-		{"WIN", VK_LWIN}, {"LWIN", VK_LWIN}, {"RWIN", VK_RWIN}, {"APPS", VK_APPS},
-		{"NUMLOCK", VK_NUMLOCK}, {"DIVIDE", VK_DIVIDE}, {"MULTIPLY", VK_MULTIPLY},
-		{"SUBTRACT", VK_SUBTRACT}, {"ADD", VK_ADD}, {"DECIMAL", VK_DECIMAL},
-		{"NUM0", VK_NUMPAD0}, {"NUM1", VK_NUMPAD1}, {"NUM2", VK_NUMPAD2},
-		{"NUM3", VK_NUMPAD3}, {"NUM4", VK_NUMPAD4}, {"NUM5", VK_NUMPAD5},
-		{"NUM6", VK_NUMPAD6}, {"NUM7", VK_NUMPAD7}, {"NUM8", VK_NUMPAD8},
-		{"NUM9", VK_NUMPAD9}, {"BACK", VK_BROWSER_BACK},
-		{"FORWARD", VK_BROWSER_FORWARD}, {"REFRESH", VK_BROWSER_REFRESH},
-		{"SEARCH", VK_BROWSER_SEARCH}, {"FAVORITES", VK_BROWSER_FAVORITES},
-		{"BROWSER", VK_BROWSER_HOME}, {"MUTE", VK_VOLUME_MUTE},
-		{"VOLUME_DOWN", VK_VOLUME_DOWN}, {"VOLUME_UP", VK_VOLUME_UP},
-		{"NEXT_TRACK", VK_MEDIA_NEXT_TRACK}, {"PREV_TRACK", VK_MEDIA_PREV_TRACK},
-		{"STOP", VK_MEDIA_STOP}, {"PLAY_PAUSE", VK_MEDIA_PLAY_PAUSE}, {"MEDIA_SELECT", VK_LAUNCH_MEDIA_SELECT},
-		{"MAIL", VK_LAUNCH_MAIL}, {"POWER", VK_SLEEP}, {"LAUNCH_APP1", VK_LAUNCH_APP1}, {"LAUNCH_APP2", VK_LAUNCH_APP2},
-		{"LBUTTON", 100100+M_Left}, {"RBUTTON", 100100+M_Right}, {"MBUTTON", 100100+M_Middle},
-		{"XBUTTON1", 100100+M_X1}, {"XBUTTON2", 100100+M_X1+1},
-		{"WHEELUP", 100100+M_WheelUp}, {"WHEELDOWN", 100100+M_WheelDown},
-		{"WHEELRIGHT", 100100+M_WheelRight}, {"WHEELLEFT", 100100+M_WheelLeft},
-		{"WAIT", 100000}, {"SHOW", 100001}, {"SLEEP", 100002}, {"REP", 100003},
-		{"DOUBLECLICK", 100004},
+	{"ESCAPE", VK_ESCAPE}, {"ESC", VK_ESCAPE}, {"F10", VK_F10},
+	{"F11", VK_F11}, {"F12", VK_F12}, {"F1", VK_F1}, {"F2", VK_F2},
+	{"F3", VK_F3}, {"F4", VK_F4}, {"F5", VK_F5}, {"F6", VK_F6}, {"F7", VK_F7},
+	{"F8", VK_F8}, {"F9", VK_F9}, {"PRINTSCREEN", VK_SNAPSHOT},
+	{"PRINTSCRN", VK_SNAPSHOT}, {"SCROLLLOCK", VK_SCROLL},
+	{"PAUSE", VK_PAUSE}, {"BREAK", VK_CANCEL}, {"CLEAR", VK_CLEAR},
+	{"INSERT", VK_INSERT}, {"INS", VK_INSERT}, {"DELETE", VK_DELETE},
+	{"DEL", VK_DELETE}, {"HOME", VK_HOME}, {"END", VK_END},
+	{"PAGEUP", VK_PRIOR}, {"PAGEDOWN", VK_NEXT}, {"LEFT", VK_LEFT},
+	{"RIGHT", VK_RIGHT}, {"UP", VK_UP}, {"DOWN", VK_DOWN}, {"TAB", VK_TAB},
+	{"CAPSLOCK", VK_CAPITAL}, {"CAPS", VK_CAPITAL}, {"BACKSPACE", VK_BACK},
+	{"BS", VK_BACK}, {"ENTER", VK_RETURN}, {"SPACE", VK_SPACE},
+	{"SHIFT", VK_SHIFT}, {"CONTROL", VK_CONTROL}, {"CTRL", VK_CONTROL},
+	{"RSHIFT", VK_RSHIFT}, {"RCONTROL", VK_RCONTROL}, {"RCTRL", VK_RCONTROL},
+	{"^", VK_CONTROL}, {"ALT", VK_MENU}, {"RALT", VK_RMENU}, {"MENU", VK_MENU}, {"RMENU", VK_RMENU},
+	{"WIN", VK_LWIN}, {"LWIN", VK_LWIN}, {"RWIN", VK_RWIN}, {"APPS", VK_APPS},
+	{"NUMLOCK", VK_NUMLOCK}, {"DIVIDE", VK_DIVIDE}, {"MULTIPLY", VK_MULTIPLY},
+	{"SUBTRACT", VK_SUBTRACT}, {"ADD", VK_ADD}, {"DECIMAL", VK_DECIMAL},
+	{"NUM0", VK_NUMPAD0}, {"NUM1", VK_NUMPAD1}, {"NUM2", VK_NUMPAD2},
+	{"NUM3", VK_NUMPAD3}, {"NUM4", VK_NUMPAD4}, {"NUM5", VK_NUMPAD5},
+	{"NUM6", VK_NUMPAD6}, {"NUM7", VK_NUMPAD7}, {"NUM8", VK_NUMPAD8},
+	{"NUM9", VK_NUMPAD9}, {"BACK", VK_BROWSER_BACK},
+	{"FORWARD", VK_BROWSER_FORWARD}, {"REFRESH", VK_BROWSER_REFRESH},
+	{"SEARCH", VK_BROWSER_SEARCH}, {"FAVORITES", VK_BROWSER_FAVORITES},
+	{"BROWSER", VK_BROWSER_HOME}, {"MUTE", VK_VOLUME_MUTE},
+	{"VOLUME_DOWN", VK_VOLUME_DOWN}, {"VOLUME_UP", VK_VOLUME_UP},
+	{"NEXT_TRACK", VK_MEDIA_NEXT_TRACK}, {"PREV_TRACK", VK_MEDIA_PREV_TRACK},
+	{"STOP", VK_MEDIA_STOP}, {"PLAY_PAUSE", VK_MEDIA_PLAY_PAUSE}, {"MEDIA_SELECT", VK_LAUNCH_MEDIA_SELECT},
+	{"MAIL", VK_LAUNCH_MAIL}, {"POWER", VK_SLEEP}, {"LAUNCH_APP1", VK_LAUNCH_APP1}, {"LAUNCH_APP2", VK_LAUNCH_APP2},
+	{"LBUTTON", 100100+M_Left}, {"RBUTTON", 100100+M_Right}, {"MBUTTON", 100100+M_Middle},
+	{"XBUTTON1", 100100+M_X1}, {"XBUTTON2", 100100+M_X1+1},
+	{"WHEELUP", 100100+M_WheelUp}, {"WHEELDOWN", 100100+M_WheelDown},
+	{"WHEELRIGHT", 100100+M_WheelRight}, {"WHEELLEFT", 100100+M_WheelLeft},
+	{"WAIT", 100000}, {"SHOW", 100001}, {"SLEEP", 100002}, {"REP", 100003},
+	{"DOUBLECLICK", 100004},
 };
 
 char *controlPanels[]={
@@ -248,9 +248,9 @@ void waitWhileKey()
 }
 
 static int waitCmd, waitCount;
-static char *waitParam;
+static TCHAR *waitParam;
 
-bool waitWhileKey(int cmd, char *param)
+bool waitWhileKey(int cmd, TCHAR *param)
 {
 	if(!hookK){
 		waitWhileKey();
@@ -358,7 +358,7 @@ void restoreShift()
 	}
 }
 
-int hex(char c)
+int hex(TCHAR c)
 {
 	if(c>='0' && c<='9') return c-'0';
 	if(c>='A' && c<='F') return c-'A'+10;
@@ -366,10 +366,10 @@ int hex(char c)
 	return -1;
 }
 
-int parseKey(char *&s, int &vk, int &updown)
+int parseKey(TCHAR *&s, int &vk, int &updown)
 {
 	int i;
-	char z;
+	TCHAR z;
 
 	updown=0;
 	if(*s=='\\' && *(s+1)!='\\'){
@@ -400,7 +400,7 @@ int parseKey(char *&s, int &vk, int &updown)
 					goto l1;
 				}
 				shiftsUp();
-				char *k=s;
+				TCHAR *k=s;
 				while(*s && *s!=' ' && *s!='.' && *s!='\\') s++;
 				z=*s;
 				*s=0;
@@ -408,7 +408,8 @@ int parseKey(char *&s, int &vk, int &updown)
 				*s=z;
 				return 0;
 			}
-			if(!_strnicmp(s, v->s, strlen(v->s))){
+			convertA2T(v->s, name);
+			if(!_tcsnicmp(s, name, strlen(v->s))){
 				s+=strlen(v->s);
 				vk=v->vk;
 				goto l1;
@@ -429,10 +430,10 @@ int parseKey(char *&s, int &vk, int &updown)
 	}
 }
 
-void parseMacro1(char *s, int cmd)
+void parseMacro1(TCHAR *s, int cmd)
 {
 	int vk, d, updown, code;
-	char *s1;
+	TCHAR *s1;
 	bool rep=false;
 
 	forceNoShift();
@@ -464,7 +465,7 @@ void parseMacro1(char *s, int cmd)
 							break;
 						case 100002:
 							s1=s;
-							d=strtol(s, &s, 10);
+							d =_tcstol(s, &s, 10);
 							if(*s==' ' || *s=='.') s++;
 							if(d==0){
 								Sleep(s1==s ? 1000 : 10);
@@ -511,7 +512,7 @@ void parseMacro1(char *s, int cmd)
 	if(rep || hookK && !isWin9X) restoreShift();
 }
 
-void parseMacro(char *s)
+void parseMacro(TCHAR *s)
 {
 	keyWin=0;
 	parseMacro1(s, 0);
@@ -527,7 +528,7 @@ HWND getActiveWindow()
 
 struct TfindWinInfo
 {
-	char *s;
+	TCHAR *s;
 	HWND found;
 	int eval;
 	DWORD pid;
@@ -538,19 +539,19 @@ BOOL CALLBACK enumWinStr(HWND hWnd, LPARAM param)
 	int e;
 	DWORD pid;
 	TfindWinInfo *data= (TfindWinInfo*)param;
-	char buf[512];
+	TCHAR buf[512];
 
 	if(!data->pid || !GetWindowThreadProcessId(hWnd, &pid) || data->pid==pid){
 		e=0;
 		//compare window title
-		GetWindowText(hWnd, buf, sizeof(buf));
-		if(strstr(buf, data->s)){
+		GetWindowText(hWnd, buf, sizeA(buf));
+		if(_tcsstr(buf, data->s)){
 			e=20; //substring
-			if(!strcmp(buf, data->s)) e+=10; //exact match
+			if(!_tcscmp(buf, data->s)) e+=10; //exact match
 		}
 		//compare window class
-		GetClassName(hWnd, buf, sizeof(buf));
-		if(!strcmp(buf, data->s)) e+=10;
+		GetClassName(hWnd, buf, sizeA(buf));
+		if(!_tcscmp(buf, data->s)) e += 10;
 		//better score for visible window
 		if(e && IsWindowVisible(hWnd)){
 			e+=100;
@@ -565,7 +566,7 @@ BOOL CALLBACK enumWinStr(HWND hWnd, LPARAM param)
 	return TRUE;
 }
 
-HWND getWindow2(char *s, DWORD pid)
+HWND getWindow2(TCHAR *s, DWORD pid)
 {
 	if(!s || !*s) return getActiveWindow();
 	TfindWinInfo i;
@@ -583,24 +584,24 @@ HWND getWindow2(char *s, DWORD pid)
 	return w;
 }
 
-HWND getWindow(char *s)
+HWND getWindow(TCHAR *s)
 {
 	return getWindow2(s, 0);
 }
 
-bool checkProcess(DWORD pid, char *exe)
+bool checkProcess(DWORD pid, TCHAR *exe)
 {
-	static char lastExe[15];
+	static TCHAR lastExe[15];
 	static HANDLE lastProcess;
 	static DWORD lastPid;
 	PROCESSENTRY32 pe;
-	char const *result;
+	TCHAR const *result;
 
 	if(pid==lastPid){
 		result=lastExe;
 	}
 	else{
-		result="";
+		result=_T("");
 		pe.dwSize = sizeof(PROCESSENTRY32);
 		HANDLE h = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 		if(h!=(HANDLE)-1){
@@ -609,23 +610,23 @@ bool checkProcess(DWORD pid, char *exe)
 				if(pe.th32ProcessID==pid){
 					CloseHandle(lastProcess);
 					lastProcess=OpenProcess(PROCESS_QUERY_INFORMATION, 0, lastPid=pid);
-					strncpy(lastExe, result=cutPath(pe.szExeFile), sizeA(lastExe));
+					_tcsncpy(lastExe, result=cutPath(pe.szExeFile), sizeA(lastExe));
 					break;
 				}
 			} while(Process32Next(h, &pe));
 			CloseHandle(h);
 		}
 	}
-	return !_strnicmp(result, cutPath(exe), 15);
+	return !_tcsnicmp(result, cutPath(exe), 15);
 }
 
 
 struct TwndProp {
 	HWND w;
 	DWORD pid;
-	char title[512];
-	char wndClass[512];
-	char *s;
+	TCHAR title[512];
+	TCHAR wndClass[512];
+	TCHAR *s;
 };
 
 bool checkWindowOr(TwndProp *info);
@@ -634,7 +635,7 @@ bool checkWindowOr(TwndProp *info);
 bool checkWindowUnary(TwndProp *info)
 {
 	bool b=true;
-	char *s, c;
+	TCHAR *s, c;
 
 	if(*info->s == '('){
 		info->s++;
@@ -662,9 +663,9 @@ bool checkWindowUnary(TwndProp *info)
 		c=*s;
 		*s=0;
 		//compare window class
-		if(strcmp(info->wndClass, info->s))
+		if(_tcscmp(info->wndClass, info->s))
 			//compare window title
-			if(!strstr(info->title, info->s))
+			if(!_tcsstr(info->title, info->s))
 				//compare exe file name
 				if(!info->pid || !checkProcess(info->pid, info->s))
 					b=false;
@@ -695,14 +696,14 @@ bool checkWindowOr(TwndProp *info)
 	return b;
 }
 
-HWND checkWindow(char *s)
+HWND checkWindow(TCHAR *s)
 {
 	TwndProp info;
 	info.w = GetForegroundWindow();
 	if(s && *s){
 		//get window properties
-		GetClassName(info.w, info.wndClass, sizeof(info.wndClass));
-		GetWindowText(info.w, info.title, sizeof(info.title));
+		GetClassName(info.w, info.wndClass, sizeA(info.wndClass));
+		GetWindowText(info.w, info.title, sizeA(info.title));
 		info.pid=0;
 		GetWindowThreadProcessId(info.w, &info.pid);
 		//parse expression
@@ -761,9 +762,9 @@ void ignoreHotkey(HotKey *hk)
 //73: //command to active window
 //94: //macro to active window
 //30: //test if the window is active 
-bool cmdToWindow(int cmd, char *param)
+bool cmdToWindow(int cmd, TCHAR *param)
 {
-	char *u1, *u2, *u3, *s2, *s3, c2, c3, *s;
+	TCHAR *u1, *u2, *u3, *s2, *s3, c2, c3, *s;
 	HWND w;
 	bool result=false;
 
@@ -802,7 +803,7 @@ bool cmdToWindow(int cmd, char *param)
 	if(u2){ c2=*u2; *u2=0; }
 	if(u3){ c3=*u3; *u3=0; }
 	//find window
-	HWND(*f)(char*) = (cmd<30 ? getWindow : checkWindow);
+	HWND(*f)(TCHAR*) = (cmd<30 ? getWindow : checkWindow);
 	if(s3 && c2==' ' && (!u3 || *u3!='\"')){
 		*u2=' ';
 		noMsg++;
@@ -829,7 +830,7 @@ bool cmdToWindow(int cmd, char *param)
 			}
 			if(w){
 				if(cmd&1){
-					PostMessage(w, WM_COMMAND, strtol(param, &s, 10), 0);
+					PostMessage(w, WM_COMMAND, _tcstol(param, &s, 10), 0);
 				}
 				else{
 					keyWin= (cmd>90) ? 0 : w;
@@ -849,9 +850,9 @@ bool cmdToWindow(int cmd, char *param)
 	return result;
 }
 //---------------------------------------------------------------------------
-int strToIntStr(char *param, char **param2)
+int strToIntStr(TCHAR *param, TCHAR **param2)
 {
-	int result = strtol(param, param2, 10);
+	int result = _tcstol(param, param2, 10);
 	if(**param2==':'){
 		*param2=param;
 		return 0;
@@ -860,9 +861,9 @@ int strToIntStr(char *param, char **param2)
 	return result;
 }
 
-DWORD iconProc(char *param, int hide)
+DWORD iconProc(TCHAR *param, int hide)
 {
-	char *name;
+	TCHAR *name;
 	int id= strToIntStr(param, &name);
 	for(int cnt=0; cnt<10; cnt++){
 		Sleep(500*cnt);
@@ -875,12 +876,12 @@ DWORD iconProc(char *param, int hide)
 
 DWORD WINAPI hideIconProc(LPVOID param)
 {
-	return iconProc((char*)param, 1);
+	return iconProc((TCHAR*)param, 1);
 }
 
 DWORD WINAPI restoreIconProc(LPVOID param)
 {
-	return iconProc((char*)param, 0);
+	return iconProc((TCHAR*)param, 0);
 }
 //---------------------------------------------------------------------------
 
@@ -888,12 +889,12 @@ BOOL CALLBACK hideProc(HWND w, LPARAM param)
 {
 	HideInfo *info = (HideInfo*)param;
 	DWORD pid;
-	char buf[16];
+	TCHAR buf[16];
 
 	if(IsWindowVisible(w) &&
 		GetWindowThreadProcessId(w, &pid) && pid==info->pid){
-		if(!checkProcess(pid, "explorer.exe") ||
-			GetClassName(w, buf, sizeA(buf)) && !strcmp(buf, "ExploreWClass")){
+		if(!checkProcess(pid, _T("explorer.exe")) ||
+			GetClassName(w, buf, sizeA(buf)) && !_tcscmp(buf, _T("ExploreWClass"))){
 			HICON icon = (HICON)GetClassLongPtr(w, GCLP_HICONSM);
 			if(icon && (!info->icon || w==info->activeWnd)){
 				info->icon= icon;
@@ -992,7 +993,7 @@ void Tpopup::show(bool toggle)
 	}
 }
 
-void volumeCmd(char *which, int value, int action)
+void volumeCmd(TCHAR *which, int value, int action)
 {
 	volume(which, value, action);
 	//show window
@@ -1037,7 +1038,7 @@ struct SCSI_PASS_THROUGH_DIRECT_WITH_BUFFER {
 #define DTC_CDROM 5
 
 
-int getCDinfo(char letter)
+int getCDinfo(TCHAR letter)
 {
 	ULONG returned;
 	SCSI_PASS_THROUGH_DIRECT_WITH_BUFFER swb;
@@ -1071,7 +1072,7 @@ int getCDinfo(char letter)
 }
 
 //action: 0=info,2=eject,3=close,4=speed
-void cdCmd(char letter, int action, int param=0)
+void cdCmd(TCHAR letter, int action, int param=0)
 {
 	ULONG	returned;
 	bool bBeenHereBefore=false;
@@ -1134,14 +1135,14 @@ DWORD WINAPI cdProc(LPVOID param)
 
 	int op=(((int)param)>>8)&255;
 	int speed=((int)param)>>16;
-	char d[3];
-	d[0]=(char)(int)param;
+	TCHAR d[3];
+	d[0]=(TCHAR)(int)param;
 	d[1]=':';
 	d[2]=0;
 
 	EnterCriticalSection(&cdCritSect);
 	m.dwCallback=0;
-	m.lpstrDeviceType="CDAudio";
+	m.lpstrDeviceType=_T("CDAudio");
 	m.lpstrElementName=d;
 	m.lpstrAlias=0;
 	if(mciSendCommand(0, MCI_OPEN, MCI_OPEN_TYPE|MCI_OPEN_ELEMENT, (WPARAM)&m)){
@@ -1207,9 +1208,9 @@ void createThread(LPTHREAD_START_ROUTINE proc, LPVOID param)
 }
 
 //CD command, drive is e.g. "D:"
-void audioCD(char *drive, int op, int speed=0)
+void audioCD(TCHAR *drive, int op, int speed=0)
 {
-	char d[3];
+	TCHAR d[3];
 
 	d[1]=':';
 	d[2]=0;
@@ -1237,28 +1238,28 @@ void audioCD(char *drive, int op, int speed=0)
 	}
 }
 
-DWORD strToDword(char *&s)
+DWORD strToDword(TCHAR *&s)
 {
-	return strtoul(s, &s, 10);
+	return _tcstoul(s, &s, 10);
 }
 
-LONG changeDisplay(char *device, DEVMODE &dm, DWORD flag)
+LONG changeDisplay(char *device, DEVMODEA &dm, DWORD flag)
 {
 	if(device){
-		TChangeDisplaySettingsEx p= (TChangeDisplaySettingsEx)GetProcAddress(GetModuleHandle("user32.dll"), "ChangeDisplaySettingsExA");
+		TChangeDisplaySettingsEx p= (TChangeDisplaySettingsEx)GetProcAddress(GetModuleHandleA("user32.dll"), "ChangeDisplaySettingsExA");
 		return p(device, &dm, 0, flag, 0);
 	}
 	else{
-		return ChangeDisplaySettings(&dm, flag);
+		return ChangeDisplaySettingsA(&dm, flag);
 	}
 }
 
 //change monitor resolution, color bit depth, frequency, display number
-void resolution(char *param)
+void resolution(TCHAR *param)
 {
 	DWORD w, h, c, f, d, w2, h2, c2, f2;
-	char *s;
-	DEVMODE dm;
+	TCHAR *s;
+	DEVMODEA dm;
 	char device[22];
 	strcpy(device, "\\\\.\\DISPLAY0");
 
@@ -1269,10 +1270,11 @@ void resolution(char *param)
 	f=strToDword(s);
 	d=strToDword(s);
 	if(d>0) _itoa(d, device+11, 10);
+	char *dev = (d>0) ? device : 0;
 
 	dm.dmSize = sizeof(dm);
-	if(!EnumDisplaySettings((d>0) ? device : 0, ENUM_CURRENT_SETTINGS, &dm)){
-		msg("EnumDisplaySettings failed for display %d", d); // (error code %d)", d, GetLastError());
+	if(!EnumDisplaySettingsA(dev, ENUM_CURRENT_SETTINGS, &dm)){
+		msg(_T("EnumDisplaySettings failed for display %d"), d); // (error code %d)", d, GetLastError());
 		return;
 	}
 	if(*param){
@@ -1305,7 +1307,6 @@ void resolution(char *param)
 		}
 	}
 
-	char *dev = (d>0) ? device : 0;
 	dm.dmFields=DM_PELSWIDTH|DM_PELSHEIGHT|DM_BITSPERPEL|DM_DISPLAYFREQUENCY;
 	LONG err = changeDisplay(dev, dm, CDS_UPDATEREGISTRY);
 	if(err==DISP_CHANGE_NOTUPDATED) err = changeDisplay(dev, dm, 0);
@@ -1313,44 +1314,44 @@ void resolution(char *param)
 		case DISP_CHANGE_SUCCESSFUL:
 			break;
 		case DISP_CHANGE_BADMODE:
-			msg("The graphics mode is not supported");
+			msg(_T("The graphics mode is not supported"));
 			break;
 		case DISP_CHANGE_RESTART:
-			msg("The computer must be restarted in order for the graphics mode to work");
+			msg(_T("The computer must be restarted in order for the graphics mode to work"));
 			break;
 		default:
-			msg("ChangeDisplaySettings failed for display %d (error code %d)", d, err);
+			msg(_T("ChangeDisplaySettings failed for display %d (error code %d)"), d, err);
 			break;
 	}
 }
 
 struct TsearchInfo
 {
-	char *result;
+	TCHAR *result;
 	int recurse, action, pass;
 	bool done;
 	unsigned maxWallpaper;
-	char const *last;
-	char prev[MAX_PATH];
-	char lastPath[MAX_PATH];
+	TCHAR const *last;
+	TCHAR prev[MAX_PATH];
+	TCHAR lastPath[MAX_PATH];
 };
 
-void getFullPathName(char *fn, char *path)
+void getFullPathName(TCHAR *fn, TCHAR *path)
 {
-	char *dummy;
+	TCHAR *dummy;
 	GetFullPathName(fn, 256, path, &dummy);
 }
 
-void search(char *dir, TsearchInfo *info)
+void search(TCHAR *dir, TsearchInfo *info)
 {
 	HANDLE h;
 	WIN32_FIND_DATA fd;
-	char *s, oldDir[MAX_PATH], ext[4];
+	TCHAR *s, oldDir[MAX_PATH], ext[4];
 
-	GetCurrentDirectory(sizeof(oldDir), oldDir);
+	GetCurrentDirectory(sizeA(oldDir), oldDir);
 	SetCurrentDirectory(dir);
 
-	h = FindFirstFile("*.*", &fd);
+	h = FindFirstFile(_T("*.*"), &fd);
 	if(h!=INVALID_HANDLE_VALUE){
 		do{
 			if(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY){
@@ -1359,12 +1360,12 @@ void search(char *dir, TsearchInfo *info)
 				}
 			}
 			else{
-				s=strchr(fd.cFileName, 0);
+				s=_tcschr(fd.cFileName, 0);
 				while(*--s!='\\'){
 					if(*s=='.'){
-						ext[0]=(char)toupper(s[1]);
-						ext[1]=(char)toupper(s[2]);
-						ext[2]=(char)toupper(s[3]);
+						ext[0]=(TCHAR)toupper(s[1]);
+						ext[1]=(TCHAR)toupper(s[2]);
+						ext[2]=(TCHAR)toupper(s[3]);
 						if(ext[0]=='B' && ext[1]=='M' && ext[2]=='P' ||
 							 ext[0]=='J' && ext[1]=='P' && (ext[2]=='G' || ext[2]=='E') ||
 							 ext[0]=='G' && ext[1]=='I' && ext[2]=='F'){
@@ -1381,21 +1382,21 @@ void search(char *dir, TsearchInfo *info)
 									if(info->pass){
 										info->done=true;
 									}
-									else if(!_stricmp(info->last, fd.cFileName) &&
-									 !_stricmp(info->lastPath, info->result)){
+									else if(!_tcsicmp(info->last, fd.cFileName) &&
+									 !_tcsicmp(info->lastPath, info->result)){
 										info->pass++;
 									}
 									break;
 								case 2:
 									getFullPathName(fd.cFileName, info->result);
-									if(!_stricmp(info->last, fd.cFileName) &&
-										!_stricmp(info->lastPath, info->result)){
+									if(!_tcsicmp(info->last, fd.cFileName) &&
+										!_tcsicmp(info->lastPath, info->result)){
 										if(info->prev[0]){
-											strcpy(info->result, info->prev);
+											_tcscpy(info->result, info->prev);
 											info->done=true;
 										}
 									}
-									else strcpy(info->prev, info->result);
+									else _tcscpy(info->prev, info->result);
 									break;
 							}
 						}
@@ -1409,7 +1410,7 @@ void search(char *dir, TsearchInfo *info)
 	SetCurrentDirectory(oldDir);
 }
 
-void searchC(char *dir, TsearchInfo *info)
+void searchC(TCHAR *dir, TsearchInfo *info)
 {
 	info->done=false;
 	info->pass=0;
@@ -1420,17 +1421,17 @@ void searchC(char *dir, TsearchInfo *info)
 }
 
 //change wallpaper
-void changeWallpaper(char *dir, int action)
+void changeWallpaper(TCHAR *dir, int action)
 {
 	HKEY key;
 	DWORD d=0, d2;
 	int foundInd=0, b;
-	char result0[MAX_PATH], *u, *s, *wallpaperStr=0, *wallpaperStr2;
+	TCHAR result0[MAX_PATH], *u, *s, *wallpaperStr=0, *wallpaperStr2;
 	TsearchInfo info;
 
 	u=0;
 	if(dir[0]=='\"'){
-		u=strchr(dir, 0)-1;
+		u=_tcschr(dir, 0)-1;
 		if(*u=='\"'){
 			dir++;
 			*u=0;
@@ -1441,17 +1442,17 @@ void changeWallpaper(char *dir, int action)
 	}
 	info.lastPath[0]=0;
 	if(RegOpenKeyEx(HKEY_CURRENT_USER, subkey, 0, KEY_QUERY_VALUE, &key)==ERROR_SUCCESS){
-		if(RegQueryValueEx(key, "wallpaper", 0, 0, 0, &d)==ERROR_SUCCESS){
-			wallpaperStr= new char[d+4];
+		if(RegQueryValueEx(key, _T("wallpaper"), 0, 0, 0, &d)==ERROR_SUCCESS){
+			wallpaperStr= new TCHAR[d+4];
 			*(DWORD*)(wallpaperStr+d)=0;
-			if(RegQueryValueEx(key, "wallpaper", 0, 0, (BYTE*)wallpaperStr, &d)==ERROR_SUCCESS){
-				for(s=wallpaperStr; (DWORD)(s-wallpaperStr)<d; s=strchr(s, 0)+1){
-					b=strcmp(s, dir);
-					s=strchr(s, 0)+1;
+			if(RegQueryValueEx(key, _T("wallpaper"), 0, 0, (BYTE*)wallpaperStr, &d)==ERROR_SUCCESS){
+				for(s=wallpaperStr; (DWORD)(s-wallpaperStr)<d; s=_tcschr(s, 0)+1){
+					b=_tcscmp(s, dir);
+					s=_tcschr(s, 0)+1;
 					d2=static_cast<int>(s-wallpaperStr);
 					if(d<=d2) d=d2+1;
 					if(!b){
-						lstrcpyn(info.lastPath, s, sizeof(info.lastPath));
+						lstrcpyn(info.lastPath, s, sizeA(info.lastPath));
 						foundInd=int(s-wallpaperStr);
 						break;
 					}
@@ -1481,8 +1482,8 @@ void changeWallpaper(char *dir, int action)
 		}
 	}
 	else{
-		char buf[256];
-		if(GetWindowsDirectory(buf, sizeof(buf))){
+		TCHAR buf[256];
+		if(GetWindowsDirectory(buf, sizeA(buf))){
 			info.recurse=0;
 			searchC(buf, &info);
 		}
@@ -1490,24 +1491,24 @@ void changeWallpaper(char *dir, int action)
 	if(info.result[0]){
 		if(RegCreateKey(HKEY_CURRENT_USER, subkey, &key)==ERROR_SUCCESS){
 			if(!foundInd){
-				d2=(int)strlen(dir)+2;
+				d2=(int)_tcslen(dir)+2;
 				wallpaperStr2=wallpaperStr;
-				wallpaperStr=new char[d+d2];
+				wallpaperStr=new TCHAR[d+d2];
 				memcpy(wallpaperStr, wallpaperStr2, d);
 				delete[] wallpaperStr2;
-				strcpy(wallpaperStr+d, dir);
+				_tcscpy(wallpaperStr+d, dir);
 				d+=d2;
 				wallpaperStr[foundInd=d-1]=0;
 			}
-			d2=(int)strlen(info.result)-(int)strlen(wallpaperStr+foundInd);
+			d2=(int)_tcslen(info.result)-(int)_tcslen(wallpaperStr+foundInd);
 			d+=d2;
 			wallpaperStr2=wallpaperStr;
-			wallpaperStr=new char[d];
+			wallpaperStr=new TCHAR[d];
 			memcpy(wallpaperStr, wallpaperStr2, foundInd);
-			strcpy(wallpaperStr+foundInd, info.result);
-			memcpy(strchr(wallpaperStr+foundInd, 0), strchr(wallpaperStr2+foundInd, 0), d-foundInd-(int)strlen(info.result));
+			_tcscpy(wallpaperStr+foundInd, info.result);
+			memcpy(_tcschr(wallpaperStr+foundInd, 0), _tcschr(wallpaperStr2+foundInd, 0), d-foundInd-(int)_tcslen(info.result));
 			delete[] wallpaperStr2;
-			RegSetValueEx(key, "wallpaper", 0, REG_BINARY, (BYTE*)wallpaperStr, d);
+			RegSetValueEx(key, _T("wallpaper"), 0, REG_BINARY, (BYTE*)wallpaperStr, d);
 			RegCloseKey(key);
 		}
 		if(!SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, info.result, SPIF_UPDATEINIFILE|SPIF_SENDCHANGE)){
@@ -1518,8 +1519,7 @@ void changeWallpaper(char *dir, int action)
 			hr = CoCreateInstance(CLSID_ActiveDesktop, NULL, CLSCTX_INPROC_SERVER,
 				IID_IActiveDesktop, (void**)&pActiveDesktop);
 			if(hr==S_OK){
-				WCHAR resultW[MAX_PATH];
-				MultiByteToWideChar(CP_ACP, 0, info.result, -1, resultW, sizeA(resultW));
+				convertT2W(info.result, resultW);
 				pActiveDesktop->SetWallpaper(resultW, 0);
 				pActiveDesktop->ApplyChanges(AD_APPLY_ALL);
 				pActiveDesktop->Release();
@@ -1535,16 +1535,16 @@ void changeWallpaper(char *dir, int action)
 	delete[] wallpaperStr;
 }
 
-void deleteTemp(char *dir, FILETIME *time)
+void deleteTemp(TCHAR *dir, FILETIME *time)
 {
 	HANDLE h;
 	bool b;
 	WIN32_FIND_DATA fd;
-	char oldDir[MAX_PATH];
+	TCHAR oldDir[MAX_PATH];
 
-	if(GetCurrentDirectory(sizeof(oldDir), oldDir)){
+	if(GetCurrentDirectory(sizeA(oldDir), oldDir)){
 		if(SetCurrentDirectory(dir)){
-			h = FindFirstFile("*", &fd);
+			h = FindFirstFile(_T("*"), &fd);
 			if(h!=INVALID_HANDLE_VALUE){
 				do{
 					b= *(LONGLONG*)&fd.ftLastWriteTime < *(LONGLONG*)time &&
@@ -1576,7 +1576,7 @@ void deleteTemp(char *dir, FILETIME *time)
 	}
 }
 
-void privilege(char *name)
+void privilege(TCHAR *name)
 {
 	HANDLE token;
 	TOKEN_PRIVILEGES tkp;
@@ -1584,9 +1584,9 @@ void privilege(char *name)
 	if(OpenProcessToken(GetCurrentProcess(),
 		 TOKEN_ADJUST_PRIVILEGES|TOKEN_QUERY, &token))
 	 if(LookupPrivilegeValue(0, name, &tkp.Privileges[0].Luid)){
-		tkp.PrivilegeCount=1;
-		tkp.Privileges[0].Attributes=SE_PRIVILEGE_ENABLED;
-		AdjustTokenPrivileges(token, FALSE, &tkp, 0, 0, 0);
+		 tkp.PrivilegeCount=1;
+		 tkp.Privileges[0].Attributes=SE_PRIVILEGE_ENABLED;
+		 AdjustTokenPrivileges(token, FALSE, &tkp, 0, 0, 0);
 	 }
 }
 
@@ -1620,15 +1620,15 @@ void closeAll(int param)
 
 void closeAll2()
 {
-	if(isCloseAll) EnumWindows(closeProc, findProcess("explorer.exe"));
+	if(isCloseAll) EnumWindows(closeProc, findProcess(_T("explorer.exe")));
 }
 
 void saveDesktopIcons(int action)
 {
-	HWND w = FindWindowEx(FindWindowEx(FindWindow("Progman", "Program Manager"), 0, "SHELLDLL_DefView", 0), 0, WC_LISTVIEW, 0/*"FolderView"*/);
+	HWND w = FindWindowEx(FindWindowExA(FindWindowA("Progman", "Program Manager"), 0, "SHELLDLL_DefView", 0), 0, WC_LISTVIEW, 0/*"FolderView"*/);
 	if(w){
 		DWORD tid = GetWindowThreadProcessId(w, 0);
-		if(!klib) klib=LoadLibrary("hook.dll");
+		if(!klib) klib=LoadLibraryA("hook.dll");
 		HOOKPROC hproc = (HOOKPROC)GetProcAddress(klib, "_CallWndProcD@12");
 		if(hproc){
 			HHOOK hook= SetWindowsHookEx(WH_CALLWNDPROC, hproc, (HINSTANCE)klib, tid);
@@ -1659,13 +1659,13 @@ void addDrive(char *root)
 	DiskInfo *d;
 	TdiskFreeFunc p;
 
-	p= (TdiskFreeFunc)GetProcAddress(GetModuleHandle("kernel32.dll"), "GetDiskFreeSpaceExA");
+	p= (TdiskFreeFunc)GetProcAddress(GetModuleHandleA("kernel32.dll"), "GetDiskFreeSpaceExA");
 	if(p){
 		if(!p(root, (ULARGE_INTEGER*)&free, (ULARGE_INTEGER*)&total, 0)) return;
 	}
 	else{
 		DWORD sectPerClust, bytesPerSect, freeClust, totalClust;
-		if(!GetDiskFreeSpace(root, &sectPerClust, &bytesPerSect, &freeClust, &totalClust)) return;
+		if(!GetDiskFreeSpaceA(root, &sectPerClust, &bytesPerSect, &freeClust, &totalClust)) return;
 		free= freeClust*(DWORDLONG)sectPerClust*bytesPerSect;
 		total= totalClust*(DWORDLONG)sectPerClust*bytesPerSect;
 	}
@@ -1702,7 +1702,7 @@ void diskFree()
 	popupDiskFree.height=0;
 	for(c='A'; c<='Z'; c++){
 		root[0]=c;
-		t=GetDriveType(root);
+		t=GetDriveTypeA(root);
 		if(t==DRIVE_FIXED || t==DRIVE_REMOTE){
 			popupDiskFree.height+= diskSepH+1;
 			addDrive(root);
@@ -1752,12 +1752,12 @@ void screenshot(HWND wnd)
 	//get pixels
 	bits = new BYTE[h*(w*4+4)];
 	if(!GetDIBits(dcb, hBmp, 0, h, bits, (BITMAPINFO*)&bmi, DIB_RGB_COLORS)){
-		msg("GetDIBits failed");
+		msg(_T("GetDIBits failed"));
 	}
 	else{
 		//save file
 		if(save1(snapOfn, OFN_PATHMUSTEXIST)){
-			f=fopen(snapOfn.lpstrFile, "wb");
+			f=_tfopen(snapOfn.lpstrFile, _T("wb"));
 			if(!f){
 				msglng(733, "Cannot create file %s", snapOfn.lpstrFile);
 			}
@@ -1781,7 +1781,7 @@ void screenshot(HWND wnd)
 	DeleteDC(dcb);
 }
 
-void moveCmd(char *param, int actionx, int actiony)
+void moveCmd(TCHAR *param, int actionx, int actiony)
 {
 	RECT rcd, rcw;
 	int x, y;
@@ -1846,7 +1846,7 @@ int getOpacity(HWND w)
 	if(w){
 		static TGetLayeredWindowAttributes getLayeredWindowAttributes;
 		if(!getLayeredWindowAttributes)
-			getLayeredWindowAttributes= (TGetLayeredWindowAttributes)GetProcAddress(GetModuleHandle("user32.dll"), "GetLayeredWindowAttributes");
+			getLayeredWindowAttributes= (TGetLayeredWindowAttributes)GetProcAddress(GetModuleHandleA("user32.dll"), "GetLayeredWindowAttributes");
 		if(getLayeredWindowAttributes){
 			COLORREF color;
 			BYTE alpha;
@@ -1864,7 +1864,7 @@ void setOpacity(HWND w, int o)
 	if(w && o){
 		static TsetOpacityFunc p;
 		if(!p){
-			p= (TsetOpacityFunc)GetProcAddress(GetModuleHandle("user32.dll"), "SetLayeredWindowAttributes");
+			p= (TsetOpacityFunc)GetProcAddress(GetModuleHandleA("user32.dll"), "SetLayeredWindowAttributes");
 			if(!p) return;
 		}
 		LONG s=GetWindowLong(w, GWL_EXSTYLE);
@@ -1988,23 +1988,27 @@ void PasteTextData::restore()
 	}
 }
 
-bool pasteFromClipboard(char *s, DWORD &len)
+bool pasteFromClipboard(TCHAR *s, DWORD &len)
 {
 	HGLOBAL hmem;
-	char *ptr;
+	TCHAR *ptr;
 	bool result=false;
 
 	if(OpenClipboard(0)){
 		if((hmem= GetClipboardData(isWin9X ? CF_TEXT : CF_UNICODETEXT))!=0){
-			if((ptr=(char*)GlobalLock(hmem))!=0){
+			if((ptr=(TCHAR*)GlobalLock(hmem))!=0){
 				if(isWin9X){
 					lstrcpyn(s, ptr, len);
 				}
 				else{
 					s[len-1]=0;
+#ifdef UNICODE
+					lstrcpyn(s, (WCHAR*)ptr, len);
+#else
 					WideCharToMultiByte(CP_ACP, 0, (WCHAR*)ptr, -1, s, len-1, 0, 0);
+#endif
 				}
-				len= strlen(s);
+				len= _tcslen(s);
 				result=true;
 				GlobalUnlock(hmem);
 			}
@@ -2014,19 +2018,23 @@ bool pasteFromClipboard(char *s, DWORD &len)
 	return result;
 }
 
-void copyToClipboard1(char *s)
+void copyToClipboard1(TCHAR *s)
 {
 	HGLOBAL hmem;
-	char *ptr;
-	DWORD len=strlen(s)+1;
+	TCHAR *ptr;
+	DWORD len=_tcslen(s)+1;
 
 	if(s && (hmem=GlobalAlloc(GMEM_DDESHARE, isWin9X ? len : 2*len))!=0){
-		if((ptr=(char*)GlobalLock(hmem))!=0){
+		if((ptr=(TCHAR*)GlobalLock(hmem))!=0){
 			if(isWin9X){
-				strcpy(ptr, s);
+				_tcscpy(ptr, s);
 			}
 			else{
+#ifdef UNICODE
+				memcpy(ptr, s, 2*len);
+#else
 				MultiByteToWideChar(CP_ACP, 0, s, -1, (WCHAR*)ptr, len);
+#endif
 			}
 			GlobalUnlock(hmem);
 			SetClipboardData(isWin9X ? CF_TEXT : CF_UNICODETEXT, hmem);
@@ -2037,17 +2045,17 @@ void copyToClipboard1(char *s)
 	}
 }
 
-char *formatText(char *param)
+TCHAR *formatText(TCHAR *param)
 {
 	int i;
 	time_t t;
 	DWORD n;
-	char *buf, *buf2, *s, *d;
+	TCHAR *buf, *buf2, *s, *d;
 	const int M=1024; //max. length
 
 	setlocale(LC_ALL, "");
-	i=static_cast<int>(strlen(param))+2*M;
-	buf=new char[i];
+	i=static_cast<int>(_tcslen(param))+2*M;
+	buf=new TCHAR[i];
 	for(d=buf, s=param;; s++){
 		if(int(d-buf)>=i-M){ *d=0; break; } //buffer overflow
 		*d=*s;
@@ -2085,9 +2093,9 @@ char *formatText(char *param)
 		}
 	}
 	i+=512;
-	buf2=new char[i];
+	buf2=new TCHAR[i];
 	time(&t);
-	if(!strftime(buf2, i, buf, localtime(&t))){
+	if(!_tcsftime(buf2, i, buf, localtime(&t))){
 		//error
 		delete[] buf2;
 		return buf;
@@ -2099,7 +2107,7 @@ char *formatText(char *param)
 INT_PTR CALLBACK pasteTextProc(HWND hWnd, UINT msg, WPARAM wP, LPARAM)
 {
 	int i, w;
-	char *s;
+	TCHAR *s;
 	HWND list;
 
 	switch(msg){
@@ -2110,7 +2118,7 @@ INT_PTR CALLBACK pasteTextProc(HWND hWnd, UINT msg, WPARAM wP, LPARAM)
 			w=10;
 			for(i=0; i<pasteTextData.n; i++){
 				s= pasteTextData.L[i];
-				aminmax(w, strlen(s), 150);
+				aminmax(w, _tcslen(s), 150);
 				SendMessage(list, LB_ADDSTRING, 0, (LPARAM)s);
 			}
 			//select the first item
@@ -2146,15 +2154,15 @@ HWND GetFocusGlobal()
 {
 	GUITHREADINFO gui;
 	gui.cbSize = sizeof(GUITHREADINFO);
-	TGetGUIThreadInfo p= (TGetGUIThreadInfo)GetProcAddress(GetModuleHandle("user32.dll"), "GetGUIThreadInfo");
+	TGetGUIThreadInfo p= (TGetGUIThreadInfo)GetProcAddress(GetModuleHandleA("user32.dll"), "GetGUIThreadInfo");
 	if(p && p(0, &gui)) return gui.hwndFocus;
 	return 0;
 }
 
-void pasteText(char *param)
+void pasteText(TCHAR *param)
 {
 	int i, n, sel;
-	char *s, *e, *t;
+	TCHAR *s, *e, *t;
 	DWORD editSelPos= (DWORD)-1;
 	DWORD_PTR p;
 	TSendMessageTimeout f=0;
@@ -2167,11 +2175,11 @@ void pasteText(char *param)
 	//split param to items
 	n=0;
 	for(s=param;; s=e+2){
-		e=strstr(s, "%|");
+		e=_tcsstr(s, _T("%|"));
 		while(e){
 			for(i=0, t=e; t>=param && *t=='%'; i++, t--);
 			if(i&1) break;
-			e=strstr(e+2, "%|");
+			e=_tcsstr(e+2, _T("%|"));
 		}
 		if(e) *e=0;
 		pasteTextData.L[n++] = formatText(s);
@@ -2191,7 +2199,7 @@ void pasteText(char *param)
 		}
 		//show dialog box
 		pasteTextData.n=n;
-		sel= DialogBox(inst, "LIST", 0, pasteTextProc);
+		sel= DialogBox(inst, _T("LIST"), 0, pasteTextProc);
 		if(editSelPos!=-1){
 			//restore keyboard focus
 			DWORD tid = GetWindowThreadProcessId(focus, 0);
@@ -2228,7 +2236,7 @@ void pasteText(char *param)
 	lockPaste--;
 }
 
-void PasteTextData::addToQueue(char *s)
+void PasteTextData::addToQueue(TCHAR *s)
 {
 	CharList *item = new CharList;
 	item->next=0;
@@ -2269,13 +2277,13 @@ void wndInfo(HWND w)
 	PROCESS_MEMORY_COUNTERS m;
 	PROCESSENTRY32 pe;
 	MODULEENTRY32 me;
-	char *p, *e, *o, t[128], c[128];
+	TCHAR *p, *e, *o, t[128], c[128];
 
-	GetWindowText(w, t, sizeof(t));
-	GetClassName(w, c, sizeof(c));
+	GetWindowText(w, t, sizeA(t));
+	GetClassName(w, c, sizeA(c));
 	GetWindowThreadProcessId(w, &pid);
 	n=(HMODULE)GetWindowLongPtr(w, GWLP_HINSTANCE);
-	e="";
+	e=_T("");
 	pe.dwSize = sizeof(PROCESSENTRY32);
 	h = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 	if(h!=(HANDLE)-1){
@@ -2285,7 +2293,7 @@ void wndInfo(HWND w)
 		} while(Process32Next(h, &pe));
 		CloseHandle(h);
 	}
-	o="";
+	o=_T("");
 	me.dwSize = sizeof(MODULEENTRY32);
 	h = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, pid);
 	if(h!=(HANDLE)-1){
@@ -2296,12 +2304,12 @@ void wndInfo(HWND w)
 		CloseHandle(h);
 	}
 
-	p="";
+	p=_T("");
 	m.WorkingSetSize=0;
 	if((h=OpenProcess(PROCESS_QUERY_INFORMATION, 0, pid))!=0){
 		d=GetPriorityClass(h);
 		if(!isWin9X){
-			psapi=LoadLibrary("psapi.dll");
+			psapi=LoadLibraryA("psapi.dll");
 			getMemInfo= (TmemInfo)GetProcAddress(psapi, "GetProcessMemoryInfo");
 			if(getMemInfo){
 				getMemInfo(h, &m, sizeof(PROCESS_MEMORY_COUNTERS));
@@ -2319,12 +2327,12 @@ void wndInfo(HWND w)
 //Windows 7 and later have "show desktop" button (next to the clock) which activates hidden WorkerW window
 HWND fixWorkerW(HWND w)
 {
-	char c[32];
+	TCHAR c[32];
 	HWND w2;
 
-	if(GetClassName(w, c, sizeof(c))>0 && !strcmp(c, "WorkerW"))
+	if(GetClassName(w, c, sizeA(c))>0 && !_tcscmp(c, _T("WorkerW")))
 	{
-		w2=FindWindow("Progman", "Program Manager");
+		w2=FindWindow(_T("Progman"), _T("Program Manager"));
 		if(w2)
 		{
 			if(GetWindowThreadProcessId(w, 0) == GetWindowThreadProcessId(w2, 0))
@@ -2342,27 +2350,28 @@ void click(DWORD down, DWORD up)
 	restoreShift();
 }
 
-bool noCmdLine(char *param)
+bool noCmdLine(TCHAR *param)
 {
 	if(cmdLineCmd<0) return false;
-	HWND w= FindWindow("PlasHotKey", 0);
+	HWND w= FindWindow(_T("PlasHotKey"), 0);
 	if(w){
 		COPYDATASTRUCT d;
 		d.lpData= param;
-		d.cbData= strlen(param)+1;
+		d.cbData= _tcslen(param)+1;
 		d.dwData= cmdLineCmd+13000;
 		SendMessage(w, WM_COPYDATA, (WPARAM)w, (LPARAM)&d);
 	}
 	else{
-		msg("This command cannot be executed, because HotkeyP.exe is not running");
+		msg(_T("This command cannot be executed, because HotkeyP.exe is not running"));
 	}
 	return true;
 }
 //-------------------------------------------------------------------------
-void command(int cmd, char *param, HotKey *hk)
+void command(int cmd, TCHAR *param, HotKey *hk)
 {
 	HWND w;
-	char *param2, *s, *buf;
+	TCHAR *param2, *s;
+	char *buf;
 	int iparam= strToIntStr(param, &param2);
 	int vol= iparam ? iparam : 1;
 	int i, j;
@@ -2430,13 +2439,15 @@ void command(int cmd, char *param, HotKey *hk)
 		case 12: //control panels
 		case 50: case 51: case 52: case 53: case 54:
 		case 55: case 56: case 57:
-			buf= new char[strlen(param)+64];
+			buf= new char[_tcslen(param)+64];
 			strcpy(buf, "rundll32.exe shell32.dll,Control_RunDLL ");
 			if(!*param && cmd!=12){
-				param=controlPanels[cmd-50];
+				strcat(buf, controlPanels[cmd-50]);
+				strcat(buf, ".cpl");
 			}
-			if(*param){
-				strcat(buf, param);
+			else if(*param){
+				convertT2A(param, a);
+				strcat(buf, a);
 				strcat(buf, ".cpl");
 			}
 			WinExec(buf, SW_NORMAL);
@@ -2449,10 +2460,10 @@ void command(int cmd, char *param, HotKey *hk)
 			volumeCmd(param2, -vol, 0);
 			break;
 		case 15:
-			volumeCmd("Wave", vol, 0);
+			volumeCmd(_T("Wave"), vol, 0);
 			break;
 		case 16:
-			volumeCmd("Wave", -vol, 0);
+			volumeCmd(_T("Wave"), -vol, 0);
 			break;
 		case 17: //mute
 			volumeCmd(param2, 1, 1);
@@ -2464,28 +2475,31 @@ void command(int cmd, char *param, HotKey *hk)
 			if(!waitWhileKey(cmd, param)) break;
 			if(!pcLocked) GetCursorPos(&mousePos);
 			w=hWin;
-			if(!w) w=FindWindow("Shell_TrayWnd", 0);
+			if(!w) w=FindWindowA("Shell_TrayWnd", 0);
 			DefWindowProc(w, WM_SYSCOMMAND, SC_MONITORPOWER, *param ? iparam : 2);
 			SetTimer(hWin, 2, 100, 0);
 			break;
 		case 20: //process priority
 			if(!*param) iparam=1;
-			for(i=0; i<Npriority; i++){
-				if(!_stricmp(priorTab[i], param)) iparam=i;
+			else{
+				convertT2A(param, paramA);
+				for(i=0; i<Npriority; i++){
+					if(!_stricmp(priorTab[i], paramA)) iparam=i;
+				}
 			}
 			priority(iparam);
 			break;
 		case 22: //empty recycle bin
 		{
-			HINSTANCE lib = LoadLibrary("shell32.dll");
+			HINSTANCE lib = LoadLibraryA("shell32.dll");
 			if(lib){
-				typedef int(__stdcall *TemptyBin)(HWND, LPCTSTR, WORD);
+				typedef int(__stdcall *TemptyBin)(HWND, LPCSTR, WORD);
 				TemptyBin emptyBin = (TemptyBin)GetProcAddress(lib, "SHEmptyRecycleBinA");
 				if(emptyBin) emptyBin(hWin, "", (WORD)iparam);
 				FreeLibrary(lib);
 			}
 		}
-			break;
+		break;
 		case 23: //random wallpaper
 		case 82:
 			changeWallpaper(param, 0);
@@ -2550,7 +2564,7 @@ void command(int cmd, char *param, HotKey *hk)
 		case 37: //move mouse cursor
 		{
 			int x, y;
-			if(sscanf(param, "%d %d", &x, &y)!=2){
+			if(_stscanf(param, _T("%d %d"), &x, &y)!=2){
 				mouse_event(MOUSEEVENTF_MOVE|MOUSEEVENTF_ABSOLUTE,
 					32767, 32767, 0, 0);
 			}
@@ -2558,9 +2572,9 @@ void command(int cmd, char *param, HotKey *hk)
 				mouse_event(MOUSEEVENTF_MOVE, x, y, 0, 0);
 			}
 		}
-			break;
+		break;
 		case 38: //shutdown dialog
-			PostMessage(FindWindow("Shell_TrayWnd", 0), WM_CLOSE, 0, 0);
+			PostMessage(FindWindowA("Shell_TrayWnd", 0), WM_CLOSE, 0, 0);
 			break;
 		case 43:
 			click(MOUSEEVENTF_LEFTDOWN, MOUSEEVENTF_LEFTUP);
@@ -2578,7 +2592,7 @@ void command(int cmd, char *param, HotKey *hk)
 			priority(cmd-55);
 			break;
 		case 58: //mute wave
-			volumeCmd("Wave", 1, 1);
+			volumeCmd(_T("Wave"), 1, 1);
 			break;
 		case 61: //multi command
 		case 70: //commands list
@@ -2588,7 +2602,7 @@ void command(int cmd, char *param, HotKey *hk)
 			}
 			noMsg++;
 			for(s=param;; s++){
-				i=strtol(s, &s, 10);
+				i=_tcstol(s, &s, 10);
 				if(!i) break;
 				i--;
 				if(i<0 || i>=numKeys){
@@ -2598,12 +2612,12 @@ void command(int cmd, char *param, HotKey *hk)
 				executeHotKey(i);
 				if(cmd==70){
 					//move the first number to the end of parameter
-					char sep=*s;
+					TCHAR sep=*s;
 					if(!sep || !hk) break;
-					strcpy(param, s+1);
-					s=strchr(param, 0);
+					_tcscpy(param, s+1);
+					s=_tcschr(param, 0);
 					*s=sep;
-					_itoa(i+1, s+1, 10);
+					_itot(i+1, s+1, 10);
 					if(*iniFile) wr(iniFile);
 					break;
 				}
@@ -2614,7 +2628,7 @@ void command(int cmd, char *param, HotKey *hk)
 			break;
 		case 63: //lock computer
 			if(!*param){
-				TLockWorkStation p= (TLockWorkStation)GetProcAddress(GetModuleHandle("user32.dll"), "LockWorkStation");
+				TLockWorkStation p= (TLockWorkStation)GetProcAddress(GetModuleHandleA("user32.dll"), "LockWorkStation");
 				if(p) p();
 			}
 			else if(!pcLocked){
@@ -2626,7 +2640,7 @@ void command(int cmd, char *param, HotKey *hk)
 				cpStr(pcLockParam, param);
 				lockImg=(HGDIOBJ)LoadImage(0, lockBMP, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 				hWndBeforeLock= GetForegroundWindow();
-				hWndLock= CreateWindow("HotkeyLock", "", WS_POPUP, 0, 0, 10, 10, hWin, 0, inst, 0);
+				hWndLock= CreateWindow(_T("HotkeyLock"), _T(""), WS_POPUP, 0, 0, 10, 10, hWin, 0, inst, 0);
 				pcLockX=GetSystemMetrics(SM_CXSCREEN)>>1;
 				pcLockY=GetSystemMetrics(SM_CYSCREEN)>>1;
 				double alpha=random(10000)*(3.141592654/5000);
@@ -2634,13 +2648,13 @@ void command(int cmd, char *param, HotKey *hk)
 				pcLockDx=lockSpeed*cos(alpha)/2;
 				pcLockDy=lockSpeed*sin(alpha)/2;
 				SetTimer(hWin, 8, 60, 0);
-				TregisterServiceProcess p= (TregisterServiceProcess)GetProcAddress(GetModuleHandle("kernel32.dll"), "RegisterServiceProcess");
+				TregisterServiceProcess p= (TregisterServiceProcess)GetProcAddress(GetModuleHandleA("kernel32.dll"), "RegisterServiceProcess");
 				if(p) p(0, 1);
-				if(RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", 0, KEY_QUERY_VALUE|KEY_SET_VALUE, &key)==ERROR_SUCCESS){
+				if(RegOpenKeyExA(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", 0, KEY_QUERY_VALUE|KEY_SET_VALUE, &key)==ERROR_SUCCESS){
 					d=4;
-					RegQueryValueEx(key, "DisableTaskMgr", 0, 0, (LPBYTE)&disableTaskMgr, &d);
+					RegQueryValueExA(key, "DisableTaskMgr", 0, 0, (LPBYTE)&disableTaskMgr, &d);
 					d=1;
-					RegSetValueEx(key, "DisableTaskMgr", 0, REG_DWORD, (LPBYTE)&d, 4);
+					RegSetValueExA(key, "DisableTaskMgr", 0, REG_DWORD, (LPBYTE)&d, 4);
 					RegCloseKey(key);
 				}
 				if(lockMute) volume(0, 1, 3);
@@ -2652,7 +2666,7 @@ void command(int cmd, char *param, HotKey *hk)
 			if(!waitWhileKey(cmd, param)) break;
 			isHilited=false;
 			modifyTrayIcon();
-			HMODULE l= LoadLibrary("powrprof.dll");
+			HMODULE l= LoadLibraryA("powrprof.dll");
 			if(l){
 				TSetSuspendState p;
 				p= (TSetSuspendState)GetProcAddress(l, "SetSuspendState");
@@ -2660,7 +2674,7 @@ void command(int cmd, char *param, HotKey *hk)
 				FreeLibrary(l);
 			}
 		}
-			break;
+		break;
 		case 65: //minimize others
 			noMinimWnd=GetForegroundWindow();
 			for(;;){
@@ -2711,7 +2725,7 @@ void command(int cmd, char *param, HotKey *hk)
 			restoreShift();
 			break;
 		case 81: //show desktop
-			parseMacro("\\rep\\wind");
+			parseMacro(_T("\\rep\\wind"));
 			break;
 		case 83: //previous task
 		case 84: //next task
@@ -2730,7 +2744,7 @@ void command(int cmd, char *param, HotKey *hk)
 			break;
 		case 85: //show text
 			if(IsWindowVisible(popupShowText.hWnd) &&
-				showTextLast && !strcmp(showTextLast, param)){
+				showTextLast && !_tcscmp(showTextLast, param)){
 				//hide popup window
 				PostMessage(hWin, WM_TIMER, 50+P_ShowText, 0);
 			}
@@ -2772,7 +2786,7 @@ void command(int cmd, char *param, HotKey *hk)
 							if(!j) b|=k;
 							else k=!b;
 						}
-							break;
+						break;
 						default:
 							s++;
 					}
@@ -2811,22 +2825,22 @@ void command(int cmd, char *param, HotKey *hk)
 		{
 			if(isWin9X) break;
 			SC_HANDLE schSCManager = OpenSCManager(0, 0, SC_MANAGER_CONNECT);
-			if(!schSCManager) msg("Cannot open SC manager");
+			if(!schSCManager) msg(_T("Cannot open SC manager"));
 			else{
 				SC_HANDLE schService = OpenService(schSCManager, param, cmd==93 ? SERVICE_START : SERVICE_STOP);
-				if(!schService) msg("Cannot open service %s", param);
+				if(!schService) msg(_T("Cannot open service %s"), param);
 				else{
 					if(cmd==93){
 						if(!StartService(schService, 0, 0)){
 							d=GetLastError();
-							if(d!=1056) msg("Cannot start service (error %u)", d);
+							if(d!=1056) msg(_T("Cannot start service (error %u)"), d);
 						}
 					}
 					else{
 						SERVICE_STATUS status;
 						if(!ControlService(schService, SERVICE_CONTROL_STOP, &status)){
 							d=GetLastError();
-							if(d!=1062) msg("Cannot stop service (error %u)", d);
+							if(d!=1062) msg(_T("Cannot stop service (error %u)"), d);
 						}
 					}
 					CloseServiceHandle(schService);
@@ -2867,7 +2881,7 @@ void command(int cmd, char *param, HotKey *hk)
 				hideMainWindow();
 			}
 			else if(w && IsWindowVisible(w)){
-				char title[64];
+				TCHAR title[64];
 				GetWindowText(w, title, 64);
 				for(i=0; i<sizeA(trayIconA); i++){
 					HideInfo *info = &trayIconA[i];
@@ -2899,7 +2913,7 @@ void command(int cmd, char *param, HotKey *hk)
 			break;
 		case 105: //delete temporary files
 			if(GetTempPath(sizeA(exeBuf), exeBuf)){
-				if(strlen(exeBuf)>4){
+				if(_tcslen(exeBuf)>4){
 					FILETIME f;
 					SYSTEMTIME time;
 					GetSystemTime(&time);
