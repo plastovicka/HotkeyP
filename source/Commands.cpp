@@ -408,8 +408,7 @@ int parseKey(TCHAR *&s, int &vk, int &updown)
 				*s=z;
 				return 0;
 			}
-			convertA2T(v->s, name);
-			if(!_tcsnicmp(s, name, strlen(v->s))){
+			if(!strnicmpA(s, v->s)){
 				s+=strlen(v->s);
 				vk=v->vk;
 				goto l1;

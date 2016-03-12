@@ -424,6 +424,23 @@ void cutQuot(TCHAR *&s)
 	}
 }
 
+//return false if strings are equal case-insensitive
+//s1 is not null-terminated
+//s2 is ASCII
+bool strnicmpA(TCHAR *s1, char *s2)
+{
+	for(; ; s1++, s2++)
+	{
+		int c2 = *s2;
+		if(!c2) return false; //equal
+		int c1 = *s1;
+		if(c1>='a' && c1<='z') c1 -= 'a' - 'A';
+		if(c2>='a' && c2<='z') c2 -= 'a' - 'A';
+		if(c1!=c2) break;
+	}
+	return true; //different
+}
+
 bool isWWW(TCHAR const *s) // zef: made const correct
 {
 	return !_tcsnicmp(s, _T("www."), 4) || !_tcsnicmp(s, _T("http://"), 7)
@@ -3831,13 +3848,13 @@ int commandS(TCHAR *cmdLine)
 		param=0;
 		cmd=0;
 		for(i=0; i<sizeA(cmdNames); i++){
-			convertA2T(cmdNames[i], name);
-			l=static_cast<int>(_tcslen(name));
-			if(!_tcsnicmp(cmdLine, name, l) &&
-					(cmdLine[l]==0 || cmdLine[l]==' ') && l>cmdLen){
-				cmdLen=l;
-				param=cmdLine+l;
-				cmd=i;
+			if(!strnicmpA(cmdLine, cmdNames[i])){
+				l=(int)strlen(cmdNames[i]);
+				if((cmdLine[l]==0 || cmdLine[l]==' ') && l>cmdLen){
+					cmdLen=l;
+					param=cmdLine+l;
+					cmd=i;
+				}
 			}
 		}
 	}
