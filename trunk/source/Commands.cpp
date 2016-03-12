@@ -1370,14 +1370,14 @@ void search(TCHAR *dir, TsearchInfo *info)
 							 ext[0]=='J' && ext[1]=='P' && (ext[2]=='G' || ext[2]=='E') ||
 							 ext[0]=='G' && ext[1]=='I' && ext[2]=='F'){
 							switch(info->action){
-								default:
+								default: //random
 									seed=seed*367413989+174680251;
 									if(seed>=info->maxWallpaper){
 										info->maxWallpaper=seed;
 										getFullPathName(fd.cFileName, info->result);
 									}
 									break;
-								case 1:
+								case 1: //next
 									getFullPathName(fd.cFileName, info->result);
 									if(info->pass){
 										info->done=true;
@@ -1387,7 +1387,7 @@ void search(TCHAR *dir, TsearchInfo *info)
 										info->pass++;
 									}
 									break;
-								case 2:
+								case 2: //previous
 									getFullPathName(fd.cFileName, info->result);
 									if(!_tcsicmp(info->last, fd.cFileName) &&
 										!_tcsicmp(info->lastPath, info->result)){
@@ -1429,6 +1429,7 @@ void changeWallpaper(TCHAR *dir, int action)
 	TCHAR result0[MAX_PATH], *u, *s, *wallpaperStr=0, *wallpaperStr2;
 	TsearchInfo info;
 
+	//remove quotes
 	u=0;
 	if(dir[0]=='\"'){
 		u=_tcschr(dir, 0)-1;
@@ -1441,26 +1442,39 @@ void changeWallpaper(TCHAR *dir, int action)
 		}
 	}
 	info.lastPath[0]=0;
+	//registry value contains pairs (directory, last wallpaper file), both are null-terminated
 	if(RegOpenKeyEx(HKEY_CURRENT_USER, subkey, 0, KEY_QUERY_VALUE, &key)==ERROR_SUCCESS){
-		if(RegQueryValueEx(key, _T("wallpaper"), 0, 0, 0, &d)==ERROR_SUCCESS){
-			wallpaperStr= new TCHAR[d+4];
-			*(DWORD*)(wallpaperStr+d)=0;
-			if(RegQueryValueEx(key, _T("wallpaper"), 0, 0, (BYTE*)wallpaperStr, &d)==ERROR_SUCCESS){
-				for(s=wallpaperStr; (DWORD)(s-wallpaperStr)<d; s=_tcschr(s, 0)+1){
-					b=_tcscmp(s, dir);
-					s=_tcschr(s, 0)+1;
-					d2=static_cast<int>(s-wallpaperStr);
-					if(d<=d2) d=d2+1;
-					if(!b){
-						lstrcpyn(info.lastPath, s, sizeA(info.lastPath));
-						foundInd=int(s-wallpaperStr);
-						break;
+		if(RegQueryValueEx(key, _T("wallpaper"), 0, 0, 0, &d2)==ERROR_SUCCESS){
+			d=d2/sizeof(TCHAR);
+			if(d>0){
+				wallpaperStr= new TCHAR[d+4];
+				if(RegQueryValueEx(key, _T("wallpaper"), 0, 0, (BYTE*)wallpaperStr, &d2)==ERROR_SUCCESS){
+					if(wallpaperStr[d-1]){
+						//error, value is not null-terminated
+						d=0;
+					}
+					else{
+						*(DWORD*)(wallpaperStr+d)=0;
+						//find dir
+						for(s=wallpaperStr; (DWORD)(s-wallpaperStr)<d; s=_tcschr(s, 0)+1){
+							b=_tcscmp(s, dir);
+							s=_tcschr(s, 0)+1;
+							d2=static_cast<int>(s-wallpaperStr);
+							if(d<=d2) d=d2+1;
+							if(!b){
+								//dir was found, copy file name to lastPath
+								lstrcpyn(info.lastPath, s, sizeA(info.lastPath));
+								foundInd=int(s-wallpaperStr);
+								break;
+							}
+						}
 					}
 				}
 			}
 		}
 		RegCloseKey(key);
 	}
+
 	seed=(unsigned)GetTickCount();
 	info.action=action;
 	info.maxWallpaper=0;
@@ -1474,14 +1488,17 @@ void changeWallpaper(TCHAR *dir, int action)
 			msglng(749, "Cannot find folder or file %s", dir);
 		}
 		else if(!(a&FILE_ATTRIBUTE_DIRECTORY)){
+			//parameter is file name
 			info.result=dir;
 		}
 		else{
+			//parameter is folder
 			info.recurse=1;
 			searchC(dir, &info);
 		}
 	}
 	else{
+		//hotkey has no parameter
 		TCHAR buf[256];
 		if(GetWindowsDirectory(buf, sizeA(buf))){
 			info.recurse=0;
@@ -1489,28 +1506,33 @@ void changeWallpaper(TCHAR *dir, int action)
 		}
 	}
 	if(info.result[0]){
+		//write file name to registry
 		if(RegCreateKey(HKEY_CURRENT_USER, subkey, &key)==ERROR_SUCCESS){
 			if(!foundInd){
+				//append dir to registry value
 				d2=(int)_tcslen(dir)+2;
 				wallpaperStr2=wallpaperStr;
 				wallpaperStr=new TCHAR[d+d2];
-				memcpy(wallpaperStr, wallpaperStr2, d);
+				memcpy(wallpaperStr, wallpaperStr2, d * sizeof(TCHAR));
 				delete[] wallpaperStr2;
 				_tcscpy(wallpaperStr+d, dir);
 				d+=d2;
+				//append null character
 				wallpaperStr[foundInd=d-1]=0;
 			}
+			//replace previous file name with result
 			d2=(int)_tcslen(info.result)-(int)_tcslen(wallpaperStr+foundInd);
 			d+=d2;
 			wallpaperStr2=wallpaperStr;
 			wallpaperStr=new TCHAR[d];
-			memcpy(wallpaperStr, wallpaperStr2, foundInd);
+			memcpy(wallpaperStr, wallpaperStr2, foundInd * sizeof(TCHAR));
 			_tcscpy(wallpaperStr+foundInd, info.result);
-			memcpy(_tcschr(wallpaperStr+foundInd, 0), _tcschr(wallpaperStr2+foundInd, 0), d-foundInd-(int)_tcslen(info.result));
+			memcpy(_tcschr(wallpaperStr+foundInd, 0), _tcschr(wallpaperStr2+foundInd, 0), (d-foundInd-(int)_tcslen(info.result)) * sizeof(TCHAR));
 			delete[] wallpaperStr2;
-			RegSetValueEx(key, _T("wallpaper"), 0, REG_BINARY, (BYTE*)wallpaperStr, d);
+			RegSetValueEx(key, _T("wallpaper"), 0, REG_BINARY, (BYTE*)wallpaperStr, d * sizeof(TCHAR));
 			RegCloseKey(key);
 		}
+		//change wallpaper
 		if(!SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, info.result, SPIF_UPDATEINIFILE|SPIF_SENDCHANGE)){
 #ifndef NOWALLPAPER
 			CoInitialize(0);
@@ -2026,16 +2048,14 @@ void copyToClipboard1(TCHAR *s)
 
 	if(s && (hmem=GlobalAlloc(GMEM_DDESHARE, isWin9X ? len : 2*len))!=0){
 		if((ptr=(TCHAR*)GlobalLock(hmem))!=0){
-			if(isWin9X){
-				_tcscpy(ptr, s);
-			}
-			else{
 #ifdef UNICODE
-				memcpy(ptr, s, 2*len);
+			memcpy(ptr, s, 2*len);
 #else
+			if(isWin9X)
+				strcpy(ptr, s);
+			else
 				MultiByteToWideChar(CP_ACP, 0, s, -1, (WCHAR*)ptr, len);
 #endif
-			}
 			GlobalUnlock(hmem);
 			SetClipboardData(isWin9X ? CF_TEXT : CF_UNICODETEXT, hmem);
 		}

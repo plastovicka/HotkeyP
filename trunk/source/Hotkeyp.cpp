@@ -2709,7 +2709,11 @@ void search(UINT vkey)
 	BYTE keystate[256];
 	GetKeyboardState(keystate);
 	TCHAR ch[2];
+#ifdef UNICODE
+	if(ToUnicode(vkey, 0, keystate, ch, 2, 0)!=1) return;
+#else
 	if(ToAscii(vkey, 0, keystate, (LPWORD)&ch, 0)!=1) return;
+#endif
 	//append character to the search string
 	if(searchLen==sizeA(searchBuf)) return;
 	searchBuf[searchLen++]=ch[0];
@@ -3147,7 +3151,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 						CloseHandle(pi.hProcess);
 					}
 					else{
-						msglng(743, "Cannot run %s", "regedit.exe");
+						msglng(743, "Cannot run %s", _T("regedit.exe"));
 					}
 					delete[] s;
 					if(cmd==213){
@@ -3162,8 +3166,11 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					}
 					break;
 				case 215: //run spy
-					createProcess(_T("spy.exe"));
+				{
+					convertA2T("spy.exe", s); //CreateProcessW can modify the contents of the string
+					createProcess(s);
 					break;
+				}
 				case 217: //category up
 					swapCategory(selectedCategory-1, selectedCategory);
 					break;

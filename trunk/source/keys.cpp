@@ -159,7 +159,7 @@ void printKey(TCHAR *s, HotKey* hk)
 			t+=i+1;
 			e=_tcschr(t, ';');
 			if(e){
-				memcpy(s0, t, i=min(int(e-t), 31));
+				memcpy(s0, t, (i=min(int(e-t), 31)) * sizeof(TCHAR));
 				s0[i]=0;
 			}
 			else{
