@@ -239,6 +239,7 @@ bool getVolumeName(int i, TCHAR *&name, int &len, int &mxId, int &rec, bool disp
 int textY(int i);
 void cpStr(char *&dest, char const *src);
 void cpStr(WCHAR *&dest, WCHAR const *src);
+bool strnicmpA(TCHAR *s1, char *s2);
 bool isShiftKey(int c);
 void checkWait();
 void buttonToArray(int &param);
