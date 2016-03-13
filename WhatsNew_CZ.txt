@@ -5,7 +5,10 @@ HotKeyP
 - pøíkaz "Maximalizovat všechna okna"
 - pøíkaz "Skrýt okno" zmìní tray ikonu na žlutou
 - %HotkeyP% v pøíkazu je nahrazeno instalaèní složkou
-- parametr %l pøíkazu "Vložit text" už není omezen na 1024 znakù
+
+opravené chyby:
+- "Vložit text" s parametrem %l byl omezen na 1024 znakù
+- "Lupa" po rychlém pohybu myši zùstala na místì
 
 4.7.1 (3.7.2014)
 opravené chyby:

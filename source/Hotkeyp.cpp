@@ -3688,11 +3688,8 @@ LRESULT zoomProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 {
 	static int cnt;
 	switch(mesg){
-		case WM_MOUSEMOVE:
-			if(--cnt<0){
-				cnt=1;
-				zoom.move();
-			}
+		case WM_TIMER:
+			zoom.move();
 			break;
 		case WM_LBUTTONDOWN:
 		case WM_RBUTTONDOWN:
@@ -3728,6 +3725,8 @@ void Zoom::move()
 	HDC dc0;
 
 	GetCursorPos(&p);
+	if(p.x==prevPos.x && p.y==prevPos.y) return;
+	prevPos=p;
 	GetWindowRect(wnd, &rc);
 	p0.x = rc.left+(width>>1);
 	p0.y = rc.top+(height>>1);
@@ -3772,7 +3771,6 @@ void Zoom::start()
 	dc = CreateCompatibleDC(dc0);
 	oldBmp = SelectObject(dc, bmp);
 	//hide mouse cursor
-	SetCapture(wnd);
 	POINT p;
 	GetCursorPos(&p);
 	ShowCursor(FALSE);
@@ -3785,16 +3783,18 @@ void Zoom::start()
 	//show window
 	SetWindowPos(wnd, HWND_TOPMOST, x, y,
 		width, height, SWP_SHOWWINDOW|SWP_NOACTIVATE);
+	//start timer
+	SetTimer(wnd, 1, 15, 0);
 }
 
 void Zoom::end()
 {
-	ReleaseCapture();
 	ShowWindow(wnd, SW_HIDE);
 	ShowCursor(TRUE);
 	SelectObject(dc, oldBmp);
 	DeleteObject(bmp);
 	DeleteDC(dc);
+	KillTimer(wnd, 1);
 	isZoom=false;
 }
 //-------------------------------------------------------------------------
