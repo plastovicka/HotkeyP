@@ -969,10 +969,13 @@ void Tpopup::show(bool toggle)
 	if(!IsWindowVisible(hWnd)){
 		aminmax(x, 1, 10000);
 		aminmax(y, 1, 10000);
-		aminmax(width, 50, 2000);
+		int cx = GetSystemMetrics(SM_CXSCREEN);
+		int cy = GetSystemMetrics(SM_CYSCREEN);
+		aminmax(width, 50, cx);
+		aminmax(height, 10, cy);
 		SetWindowPos(hWnd, HWND_TOPMOST,
-			int(GetSystemMetrics(SM_CXSCREEN)*x/10000)-width/2,
-			int(GetSystemMetrics(SM_CYSCREEN)*y/10000)-height/2,
+			int(cx*x/10000)-width/2,
+			int(cy*y/10000)-height/2,
 			width, height, SWP_NOACTIVATE);
 		ShowWindow(hWnd, SW_SHOWNOACTIVATE);
 		SetTimer(hWin, 60+ind, refresh, 0);
