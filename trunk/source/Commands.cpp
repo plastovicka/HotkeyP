@@ -2009,27 +2009,40 @@ void PasteTextData::restore()
 	}
 }
 
-bool pasteFromClipboard(TCHAR *s, DWORD &len)
+static void resizeBuffer(TCHAR *&buf, size_t &bufLen, TCHAR *&ptr, size_t M)
+{
+	size_t len= ptr-buf;
+	if(len+M >= bufLen){
+		//increase buffer size
+		TCHAR *buf2=new TCHAR[bufLen+=M];
+		memcpy(buf2, buf, len * sizeof(TCHAR));
+		ptr= buf2+len;
+		delete[] buf;
+		buf=buf2;
+	}
+}
+
+//copy text from clipboard to dest
+bool pasteFromClipboard(TCHAR *&dest, TCHAR *&buf, size_t &bufLen)
 {
 	HGLOBAL hmem;
 	TCHAR *ptr;
+	size_t len;
 	bool result=false;
 
 	if(OpenClipboard(0)){
-		if((hmem= GetClipboardData(isWin9X ? CF_TEXT : CF_UNICODETEXT))!=0){
-			if((ptr=(TCHAR*)GlobalLock(hmem))!=0){
-				if(isWin9X){
-					lstrcpyn(s, ptr, len);
-				}
-				else{
-					s[len-1]=0;
+		if((hmem= GetClipboardData(
 #ifdef UNICODE
-					lstrcpyn(s, (WCHAR*)ptr, len);
+			CF_UNICODETEXT
 #else
-					WideCharToMultiByte(CP_ACP, 0, (WCHAR*)ptr, -1, s, len-1, 0, 0);
+			CF_TEXT
 #endif
-				}
-				len= _tcslen(s);
+			))!=0){
+			if((ptr=(TCHAR*)GlobalLock(hmem))!=0){
+				len= _tcslen(ptr);
+				resizeBuffer(buf, bufLen, dest, len);
+				memcpy(dest, ptr, len * sizeof(TCHAR));
+				dest+=len;
 				result=true;
 				GlobalUnlock(hmem);
 			}
@@ -2066,17 +2079,17 @@ void copyToClipboard1(TCHAR *s)
 
 TCHAR *formatText(TCHAR *param)
 {
-	int i;
+	size_t i;
 	time_t t;
 	DWORD n;
 	TCHAR *buf, *buf2, *s, *d;
-	const int M=1024; //max. length
+	const int M=512;
+	bool isTime=false;
 
 	setlocale(LC_ALL, "");
-	i=static_cast<int>(_tcslen(param))+2*M;
-	buf=new TCHAR[i];
+	buf=new TCHAR[i=_tcslen(param)+1024];
 	for(d=buf, s=param;; s++){
-		if(int(d-buf)>=i-M){ *d=0; break; } //buffer overflow
+		resizeBuffer(buf, i, d, M);
 		*d=*s;
 		if(*s==0) break;
 		if(*s=='%'){
@@ -2085,6 +2098,7 @@ TCHAR *formatText(TCHAR *param)
 				default:
 					d++;
 					*d++=*s;
+					isTime=true;
 					break;
 				case 0:
 					s--;
@@ -2102,8 +2116,7 @@ TCHAR *formatText(TCHAR *param)
 					if(GetComputerName(d, &n)) d+=n;
 					break;
 				case 'l':
-					n=M;
-					if(pasteFromClipboard(d, n)) d+=n;
+					pasteFromClipboard(d, buf, i);
 					break;
 			}
 		}
@@ -2111,6 +2124,9 @@ TCHAR *formatText(TCHAR *param)
 			d++;
 		}
 	}
+	if(!isTime) return buf;
+
+	//format date and time
 	i+=512;
 	buf2=new TCHAR[i];
 	time(&t);
