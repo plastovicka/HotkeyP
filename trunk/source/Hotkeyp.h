@@ -110,6 +110,7 @@ struct Zoom
 	HBITMAP bmp;
 	HGDIOBJ oldBmp;
 	HDC dc;
+	POINT prevPos;
 	void start();
 	void move();
 	void end();
