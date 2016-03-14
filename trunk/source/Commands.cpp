@@ -435,6 +435,7 @@ void parseMacro1(TCHAR *s, int cmd)
 	TCHAR *s1;
 	bool rep=false;
 
+	int capslock=GetKeyState(VK_CAPITAL)&1;
 	forceNoShift();
 	while(*s){
 		code=parseKey(s, vk, updown);
@@ -447,22 +448,23 @@ void parseMacro1(TCHAR *s, int cmd)
 				return;
 			case 1: //special key or command
 				if(vk<100000){
+					if(vk==VK_CAPITAL) capslock=0;
 					keyPress(vk, updown);
 				}
-				else if(vk>=100100){
+				else if(vk>=100100){ //LBUTTON, RBUTTON, ...
 					if(updown!=1) mouse_eventDown(vk%100);
 					if(updown!=2) mouse_eventUp(vk%100);
 				}
 				else{
 					switch(vk){
-						case 100000:
+						case 100000: //WAIT
 							waitWhileKey();
 							break;
-						case 100001:
+						case 100001: //SHOW
 							SetForegroundWindow(keyWin);
 							Sleep(10);
 							break;
-						case 100002:
+						case 100002: //SLEEP
 							s1=s;
 							d =_tcstol(s, &s, 10);
 							if(*s==' ' || *s=='.') s++;
@@ -474,10 +476,10 @@ void parseMacro1(TCHAR *s, int cmd)
 								Sleep(d*100);
 							}
 							break;
-						case 100003:
+						case 100003: //REP
 							rep=true;
 							break;
-						case 100004:
+						case 100004: //DOUBLECLICK
 							doubleClick();
 							break;
 					}
@@ -485,6 +487,17 @@ void parseMacro1(TCHAR *s, int cmd)
 				break;
 			case 2: //character
 				if(updown!=1){
+					if(capslock==1){
+						if(LOBYTE(vk)>='A' && LOBYTE(vk)<='Z' && (vk&0x600)==0){
+							//invert shift
+							vk^=0x100;
+						}
+						else if(vk!=VK_SPACE){
+							//toggle capslock off
+							keyPress(VK_CAPITAL, 0);
+							capslock=2;
+						}
+					}
 					if(vk&0x100) keyDown(VK_SHIFT);
 					if(vk&0x200) keyDown(VK_CONTROL);
 					if(vk&0x400) keyDown(VK_MENU);
@@ -508,6 +521,7 @@ void parseMacro1(TCHAR *s, int cmd)
 		}
 	}
 	shiftsUp();
+	if(capslock==2) keyPress(VK_CAPITAL, 0);
 	if(rep || hookK && !isWin9X) restoreShift();
 }
 
