@@ -6,6 +6,7 @@ HotKeyP
 - command "Maximize all"
 - command "Hide window" changes tray icon to yellow
 - %HotkeyP% in command path is replaced by installation folder
+- caps lock is turned off during "Macro"
 
 fixed bugs:
 - "Paste text" with parameter %l truncated text to 1024 characters
