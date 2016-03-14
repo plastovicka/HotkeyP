@@ -84,3 +84,71 @@ tstring ExpandVars(tstring s)
 
 	return ret + s.substr(idxBeg);
 }
+
+//-------------------------------------------------------------------------
+
+static DWORD processIntegrityLevel=0xffff;
+
+DWORD GetProcessIntegrityLevel()
+{
+	if(processIntegrityLevel==0xffff)
+	{
+		processIntegrityLevel=0;
+		HANDLE hToken;
+		if(OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken))
+		{
+			DWORD tokenSize = 0;
+			GetTokenInformation(hToken, TokenIntegrityLevel, NULL, 0, &tokenSize);
+			if(tokenSize>0)
+			{
+				void *token = operator new(tokenSize);
+				if(GetTokenInformation(hToken, TokenIntegrityLevel, token, tokenSize, &tokenSize))
+				{
+					processIntegrityLevel = *GetSidSubAuthority(*(void**)token, 0);
+				}
+				operator delete(token);
+			}
+			CloseHandle(hToken);
+		}
+	}
+	return processIntegrityLevel;
+}
+
+bool isElevated()
+{
+	return GetProcessIntegrityLevel() > SECURITY_MANDATORY_MEDIUM_RID;
+}
+
+BOOL CreateMediumIntegrityProcess(LPWSTR exe, DWORD creationFlags, LPCWSTR dir, STARTUPINFOW *si, PROCESS_INFORMATION *pi)
+{
+	static TCreateProcessWithTokenW pCreateProcessWithTokenW;
+	if(!pCreateProcessWithTokenW){
+		pCreateProcessWithTokenW = (TCreateProcessWithTokenW)GetProcAddress(GetModuleHandleA("Advapi32"), "CreateProcessWithTokenW");
+		if(!pCreateProcessWithTokenW) return FALSE;
+	}
+	BOOL result = FALSE;
+	DWORD pid = 0;
+	GetWindowThreadProcessId(GetShellWindow(), &pid);
+	HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, pid);
+	if(hProcess){
+		HANDLE hToken, hToken2;
+		if(OpenProcessToken(hProcess, TOKEN_DUPLICATE, &hToken)){
+			if(DuplicateTokenEx(hToken, TOKEN_ALL_ACCESS, 0, SecurityImpersonation, TokenPrimary, &hToken2)){
+				result = pCreateProcessWithTokenW(hToken2, 0, NULL, exe, creationFlags, NULL, dir, si, pi);
+				CloseHandle(hToken2);
+			}
+			CloseHandle(hToken);
+		}
+		CloseHandle(hProcess);
+	}
+	return result;
+}
+
+#ifndef UNICODE
+BOOL CreateMediumIntegrityProcess(LPSTR exe, DWORD creationFlags, LPCSTR dir, STARTUPINFO *si, PROCESS_INFORMATION *pi)
+{
+	convertT2W(exe, exew);
+	convertT2W(dir, dirw);
+	return CreateMediumIntegrityProcess(exew, creationFlags, dirw, reinterpret_cast<STARTUPINFOW*>(si), pi);
+}
+#endif

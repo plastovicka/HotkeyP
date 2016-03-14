@@ -77,7 +77,7 @@ TmainButton mainButton[]={
 	{212, 510, "&Options"},
 };
 
-const int version=7;  // HTK file version number, 2 opacity, 3 lirc, 4 category, 5 sound, 6 delay, 7 unicode
+const int version=7;  // HTK file version number, 2 opacity, 3 lirc, 4 category, 5 sound, 6 delay, 7 unicode,admin
 const char *magic="hotKeys"; //config file header
 COLORREF colors[]={
 	0x90f0a0, 0xffc0c0, 0xf5f5f5, 0xe8d2c7, 0xf5fafa, 0, 0, 0, 0,
@@ -486,16 +486,21 @@ void destroyAll()
 	selectedCategory=-1;
 }
 
-BOOL createProcess(TCHAR *exe)
+BOOL createProcess(TCHAR *exe, DWORD wait, bool hidden)
 {
 	PROCESS_INFORMATION pi;
 	STARTUPINFO si;
 	BOOL result;
 
-	memset(&si, 0, sizeof(STARTUPINFO));
+	ZeroMemory(&si, sizeof(STARTUPINFO));
 	si.cb= sizeof(STARTUPINFO);
+	if(hidden){
+		si.dwFlags= STARTF_USESHOWWINDOW;
+		si.wShowWindow= SW_HIDE;
+	}
 	if((result= CreateProcess(0, exe, 0, 0, FALSE, 0, 0, 0, &si, &pi))!=0){
 		CloseHandle(pi.hThread);
+		if(wait) WaitForSingleObject(pi.hProcess, wait);
 		CloseHandle(pi.hProcess);
 	}
 	else{
@@ -1393,7 +1398,8 @@ void rd(TCHAR *fn)
 					hk->autoStart= (flags>>1)&1;
 					hk->trayMenu= (flags>>2)&1;
 					hk->ask= (flags>>3)&1;
-					hk->delay= (flags>>4)&1;
+					hk->delay= (flags>>4)&1; //v>5
+					hk->admin= (flags>>5)&1; //v>6
 					if(v>1){
 						fscanf(f, " %d", &hk->opacity);
 						if(v>3) fscanf(f, " %d", &hk->category);
@@ -1445,7 +1451,7 @@ start:
 			fprintf(f, "%d %d %d %d %d %d %d %d %d",
 				hk->scanCode, hk->vkey, hk->modifiers,
 				hk->cmdShow, hk->priority,
-				(int)hk->multInst|(hk->autoStart<<1)|(hk->trayMenu<<2)|(hk->ask<<3)|(hk->delay<<4),
+				(int)hk->multInst|(hk->autoStart<<1)|(hk->trayMenu<<2)|(hk->ask<<3)|(hk->delay<<4)|(hk->admin<<5),
 				hk->cmd, hk->opacity, hk->category);
 			if(hk->vkey==vkLirc){
 				fprintf(f, " %s", hk->lirc);
@@ -1881,6 +1887,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			checkDlgButton(hWnd, 312, hk->autoStart);
 			checkDlgButton(hWnd, 313, hk->ask);
 			checkDlgButton(hWnd, 316, hk->delay && !hk->ask);
+			checkDlgButton(hWnd, 317, hk->admin);
 			if(hk->opacity) SetDlgItemInt(hWnd, 114, hk->opacity, FALSE);
 			dlgKey.scanCode=hk->scanCode;
 			dlgKey.vkey=hk->vkey;
@@ -2022,6 +2029,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					hk->autoStart= IsDlgButtonChecked(hWnd, 312)==BST_CHECKED;
 					hk->ask= IsDlgButtonChecked(hWnd, 313)==BST_CHECKED;
 					hk->delay= IsDlgButtonChecked(hWnd, 316)==BST_CHECKED;
+					hk->admin= IsDlgButtonChecked(hWnd, 317)==BST_CHECKED;
 					hk->opacity= GetDlgItemInt(hWnd, 114, 0, FALSE);
 					hk->cmd=findCmd(hk->exe);
 					GetDlgItemText(hWnd, 118, exeBuf, sizeA(exeBuf));
@@ -2792,8 +2800,6 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 	HBITMAP hbmp;
 	ULONG_PTR u;
 	static UINT taskbarRestart;
-	PROCESS_INFORMATION pi;
-	STARTUPINFO si;
 
 	switch(mesg) {
 		case WM_INITDIALOG:
@@ -3147,10 +3153,6 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 				case 213: //open settings
 				case 214: //save settings
 					if(!((cmd==213 ? open : save)(regOfn))) break;
-					memset(&si, 0, sizeof(STARTUPINFO));
-					si.cb= sizeof(STARTUPINFO);
-					si.dwFlags= STARTF_USESHOWWINDOW;
-					si.wShowWindow= SW_HIDE;
 					s= new TCHAR[MAX_PATH+75];
 					_tcscpy(s, _T("regedit.exe /S \""));
 					_tcscat(s, regFile);
@@ -3162,14 +3164,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 						_tcscat(s, _T("\""));
 						writeini();
 					}
-					if(CreateProcess(0, s, 0, 0, 0, 0, 0, 0, &si, &pi)){
-						CloseHandle(pi.hThread);
-						WaitForSingleObject(pi.hProcess, 10000);
-						CloseHandle(pi.hProcess);
-					}
-					else{
-						msglng(743, "Cannot run %s", _T("regedit.exe"));
-					}
+					createProcess(s, 10000, true);
 					delete[] s;
 					if(cmd==213){
 						oldOptions();
