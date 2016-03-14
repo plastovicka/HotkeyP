@@ -116,7 +116,7 @@ dlgW=620, dlgH=375, //main window size
  fontH,             //system font height
  numKeys,           //number of hotkeys
  numList,
- autoRun=1,
+ autoRun=0,
  buttons=-1,        //mouse buttons that are down (when hook is on)
  ignoreButtons=0,
  ignoreButtons2=0,
@@ -2148,6 +2148,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 							hk->opacity=0;
 							msglng(761, "Opacity can be specified only for executables");
 						}
+						hk->multInst= hk->admin= false;
 					}
 					if(hk->cmd==63 && *hk->args && isEmptyPassword()){
 						DialogBoxParam(inst, _T("PASSWD"), hWin, (DLGPROC)passwdProc, 0);
@@ -2285,6 +2286,7 @@ void addKey(TCHAR *exe, bool makeCopy, int item)
 		hk->cmdShow=copy->cmdShow;
 		hk->priority=copy->priority;
 		hk->multInst=copy->multInst;
+		hk->admin=copy->admin;
 		hk->cmd=copy->cmd;
 		hk->opacity=copy->opacity;
 		hk->category=copy->category;
