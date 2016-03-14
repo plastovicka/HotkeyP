@@ -4,7 +4,7 @@
 
 # TARGTYPE "Win32 (x86) Application" 0x0101
 
-CFG=hotkeyp - Win32 Debug no hook
+CFG=HOTKEYP - WIN32 RELEASE
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,13 +13,13 @@ CFG=hotkeyp - Win32 Debug no hook
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "hotkeyp.mak" CFG="hotkeyp - Win32 Debug no hook"
+!MESSAGE NMAKE /f "hotkeyp.mak" CFG="HOTKEYP - WIN32 RELEASE"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
 !MESSAGE "hotkeyp - Win32 Release" (based on "Win32 (x86) Application")
 !MESSAGE "hotkeyp - Win32 Debug" (based on "Win32 (x86) Application")
-!MESSAGE "hotkeyp - Win32 Debug no hook" (based on "Win32 (x86) Application")
+!MESSAGE "hotkeyp - Win32 Release Unicode" (based on "Win32 (x86) Application")
 !MESSAGE 
 
 # Begin Project
@@ -39,8 +39,8 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
-# PROP Intermediate_Dir "Release"
+# PROP Output_Dir "obj\Release"
+# PROP Intermediate_Dir "obj\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib /nologo /subsystem:windows /machine:I386 /out:"./HotkeyP.exe"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib /nologo /subsystem:windows /machine:I386 /out:"./HotkeyP98.exe"
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
 PreLink_Cmds=c:\_Petr\cw\hotkeyp\hotkeypdbg.exe -send window command 203 C:\_Petr\CW\hotkeyp\hotkeyp.exe
@@ -69,8 +69,8 @@ PreLink_Cmds=c:\_Petr\cw\hotkeyp\hotkeypdbg.exe -send window command 203 C:\_Pet
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "Debug"
-# PROP Intermediate_Dir "Debug"
+# PROP Output_Dir "obj\Debug"
+# PROP Intermediate_Dir "obj\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
@@ -91,37 +91,35 @@ SOURCE="$(InputPath)"
 PreLink_Cmds=c:\_Petr\cw\hotkeyp\hotkeyp.exe -send window command 203 PlasHotKey
 # End Special Build Tool
 
-!ELSEIF  "$(CFG)" == "hotkeyp - Win32 Debug no hook"
+!ELSEIF  "$(CFG)" == "hotkeyp - Win32 Release Unicode"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "hotkeyp___Win32_Debug_no_hook"
-# PROP BASE Intermediate_Dir "hotkeyp___Win32_Debug_no_hook"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "hotkeyp___Win32_Release_Unicode"
+# PROP BASE Intermediate_Dir "hotkeyp___Win32_Release_Unicode"
 # PROP BASE Ignore_Export_Lib 0
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "hotkeyp___Win32_Debug_no_hook"
-# PROP Intermediate_Dir "hotkeyp___Win32_Debug_no_hook"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "obj\Release_Unicode"
+# PROP Intermediate_Dir "obj\Release_Unicode"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MDd /W4 /GX /ZI /Od /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W4 /GX /ZI /Od /D "NOHOOK" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /YX /FD /GZ /c
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
-# ADD BASE RSC /l 0x405 /d "_DEBUG"
-# ADD RSC /l 0x405 /d "_DEBUG"
+# ADD BASE CPP /nologo /MT /W3 /GX /O1 /D "NDEBUG" /D "_MBCS" /D "WIN32" /D "_WINDOWS" /Yu"hdr.h" /FD /c
+# ADD CPP /nologo /MT /W3 /GX /O1 /D "NDEBUG" /D "UNICODE" /D "_UNICODE" /D "WIN32" /D "_WINDOWS" /Yu"hdr.h" /FD /c
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
+# ADD BASE RSC /l 0x405 /d "NDEBUG"
+# ADD RSC /l 0x405 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 version.lib winmm.lib comctl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib ws2_32.lib /nologo /subsystem:windows /debug /machine:I386 /out:"./hotkeypDBG.exe" /pdbtype:sept
-# SUBTRACT BASE LINK32 /nodefaultlib
-# ADD LINK32 oleaut32.lib htmlhelp.lib version.lib winmm.lib comctl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib uuid.lib ws2_32.lib /nologo /subsystem:windows /debug /machine:I386 /out:"./hotkeypDBG_NHK.exe" /pdbtype:sept
-# SUBTRACT LINK32 /nodefaultlib
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib /nologo /subsystem:windows /machine:I386 /out:"./HotkeyP.exe"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib /nologo /subsystem:windows /machine:I386 /out:"./HotkeyP.exe"
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
-PreLink_Cmds=c:\_Petr\cw\hotkeyp\hotkeyp.exe -send window command 203 PlasHotKey
+PreLink_Cmds=c:\_Petr\cw\hotkeyp\hotkeypdbg.exe -send window command 203 C:\_Petr\CW\hotkeyp\hotkeyp.exe
 # End Special Build Tool
 
 !ENDIF 
@@ -130,7 +128,7 @@ PreLink_Cmds=c:\_Petr\cw\hotkeyp\hotkeyp.exe -send window command 203 PlasHotKey
 
 # Name "hotkeyp - Win32 Release"
 # Name "hotkeyp - Win32 Debug"
-# Name "hotkeyp - Win32 Debug no hook"
+# Name "hotkeyp - Win32 Release Unicode"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"

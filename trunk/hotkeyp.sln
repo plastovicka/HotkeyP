@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Windows Desktop
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hook", "hook.vcxproj", "{44604F0E-A2BF-48BF-BD2A-1CF9A002395A}"
 EndProject
@@ -14,8 +14,6 @@ Global
 		Debug no hook|x64 = Debug no hook|x64
 		Debug|Win32 = Debug|Win32
 		Debug|x64 = Debug|x64
-		Release no uiAccess|Win32 = Release no uiAccess|Win32
-		Release no uiAccess|x64 = Release no uiAccess|x64
 		Release|Win32 = Release|Win32
 		Release|x64 = Release|x64
 	EndGlobalSection
@@ -24,9 +22,6 @@ Global
 		{44604F0E-A2BF-48BF-BD2A-1CF9A002395A}.Debug no hook|x64.ActiveCfg = Release|x64
 		{44604F0E-A2BF-48BF-BD2A-1CF9A002395A}.Debug|Win32.ActiveCfg = Release|Win32
 		{44604F0E-A2BF-48BF-BD2A-1CF9A002395A}.Debug|x64.ActiveCfg = Release|x64
-		{44604F0E-A2BF-48BF-BD2A-1CF9A002395A}.Release no uiAccess|Win32.ActiveCfg = Release|Win32
-		{44604F0E-A2BF-48BF-BD2A-1CF9A002395A}.Release no uiAccess|x64.ActiveCfg = Release|x64
-		{44604F0E-A2BF-48BF-BD2A-1CF9A002395A}.Release no uiAccess|x64.Build.0 = Release|x64
 		{44604F0E-A2BF-48BF-BD2A-1CF9A002395A}.Release|Win32.ActiveCfg = Release|Win32
 		{44604F0E-A2BF-48BF-BD2A-1CF9A002395A}.Release|x64.ActiveCfg = Release|x64
 		{C2C03DD4-8923-40E0-9545-69FCFA1DB9DF}.Debug no hook|Win32.ActiveCfg = Debug no hook|Win32
@@ -37,10 +32,6 @@ Global
 		{C2C03DD4-8923-40E0-9545-69FCFA1DB9DF}.Debug|Win32.Build.0 = Debug|Win32
 		{C2C03DD4-8923-40E0-9545-69FCFA1DB9DF}.Debug|x64.ActiveCfg = Debug|x64
 		{C2C03DD4-8923-40E0-9545-69FCFA1DB9DF}.Debug|x64.Build.0 = Debug|x64
-		{C2C03DD4-8923-40E0-9545-69FCFA1DB9DF}.Release no uiAccess|Win32.ActiveCfg = Release no uiAccess|Win32
-		{C2C03DD4-8923-40E0-9545-69FCFA1DB9DF}.Release no uiAccess|Win32.Build.0 = Release no uiAccess|Win32
-		{C2C03DD4-8923-40E0-9545-69FCFA1DB9DF}.Release no uiAccess|x64.ActiveCfg = Release no uiAccess|x64
-		{C2C03DD4-8923-40E0-9545-69FCFA1DB9DF}.Release no uiAccess|x64.Build.0 = Release no uiAccess|x64
 		{C2C03DD4-8923-40E0-9545-69FCFA1DB9DF}.Release|Win32.ActiveCfg = Release|Win32
 		{C2C03DD4-8923-40E0-9545-69FCFA1DB9DF}.Release|Win32.Build.0 = Release|Win32
 		{C2C03DD4-8923-40E0-9545-69FCFA1DB9DF}.Release|x64.ActiveCfg = Release|x64
@@ -49,9 +40,6 @@ Global
 		{FC026265-FF93-49E2-B657-18FA728B3235}.Debug no hook|x64.ActiveCfg = Debug|x64
 		{FC026265-FF93-49E2-B657-18FA728B3235}.Debug|Win32.ActiveCfg = Debug|Win32
 		{FC026265-FF93-49E2-B657-18FA728B3235}.Debug|x64.ActiveCfg = Debug|x64
-		{FC026265-FF93-49E2-B657-18FA728B3235}.Release no uiAccess|Win32.ActiveCfg = Release|Win32
-		{FC026265-FF93-49E2-B657-18FA728B3235}.Release no uiAccess|x64.ActiveCfg = Release|x64
-		{FC026265-FF93-49E2-B657-18FA728B3235}.Release no uiAccess|x64.Build.0 = Release|x64
 		{FC026265-FF93-49E2-B657-18FA728B3235}.Release|Win32.ActiveCfg = Release|Win32
 		{FC026265-FF93-49E2-B657-18FA728B3235}.Release|x64.ActiveCfg = Release|x64
 	EndGlobalSection

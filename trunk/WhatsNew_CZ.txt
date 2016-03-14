@@ -2,6 +2,7 @@ HotKeyP
 -------
 
 - Unicode
+- klávesové zkratky mají možnost "Spustit jako správce"
 - pøíkaz "Maximalizovat všechna okna"
 - pøíkaz "Skrýt okno" zmìní tray ikonu na žlutou
 - %HotkeyP% v pøíkazu je nahrazeno instalaèní složkou

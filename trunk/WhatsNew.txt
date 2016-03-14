@@ -2,6 +2,7 @@ HotKeyP
 -------
 
 - Unicode
+- hotkeys have option "Run as administrator"
 - command "Maximize all"
 - command "Hide window" changes tray icon to yellow
 - %HotkeyP% in command path is replaced by installation folder

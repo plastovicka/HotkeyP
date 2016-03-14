@@ -33,6 +33,7 @@ struct HotKey {
 	bool autoStart;  //execute this hotkey when HotkeyP starts
 	bool ask;        //ask before executing this hotkey
 	bool delay;      //wait before executing this hotkey
+	bool admin;      //run as administrator
 	bool isDown;
 	char *lirc;      //WinLIRC remote control button name
 	int icon;        //index into the small image list
@@ -223,7 +224,7 @@ extern int joyMouseEnabled, joyMouseJoy, joyMouseX, joyMouseY, joyNotFullscreen,
 extern TCHAR joyApp[512];
 extern TCHAR joyFullscreenApp[512];
 
-BOOL createProcess(TCHAR *exe);
+BOOL createProcess(TCHAR *exe, DWORD wait = 0, bool hidden = false);
 void registerHK(int i, bool disable);
 void registerKeys();
 void unregisterKeys();
@@ -312,6 +313,8 @@ int axisName2Ind(TCHAR c);
 bool joyGlobalEnabled();
 
 tstring ExpandVars(tstring s);
+bool isElevated();
+BOOL CreateMediumIntegrityProcess(LPTSTR pszCommandLine, DWORD creationFlags, LPCTSTR dir, STARTUPINFO *si, PROCESS_INFORMATION *pi);
 
 typedef BOOL(__stdcall *TSetSuspendState)(BOOL, BOOL, BOOL);
 typedef BOOL(__stdcall *TLockWorkStation)();
@@ -326,6 +329,7 @@ typedef DWORD(__stdcall *TGetProcessId)(HANDLE);
 typedef LONG(__stdcall *TChangeDisplaySettingsEx)(LPCSTR, LPDEVMODEA, HWND, DWORD, LPVOID);
 typedef BOOL(__stdcall *TChangeWindowMessageFilter)(UINT message, DWORD dwFlag);
 typedef BOOL(__stdcall *TIsWow64Process)(HANDLE, PBOOL);
+typedef BOOL(__stdcall *TCreateProcessWithTokenW)(HANDLE, DWORD, LPCWSTR, LPWSTR, DWORD, LPVOID, LPCWSTR, LPSTARTUPINFOW, LPPROCESS_INFORMATION);
 
 
 #define popupVolume popup[P_Volume]
@@ -379,9 +383,12 @@ inline int random(int num){ return(int)(((long)rand()*num)/(RAND_MAX+1)); }
 	TCHAR *t=(TCHAR*)_alloca(cnvlen##t);\
 	WideCharToMultiByte(CP_ACP, 0, w, -1, t, cnvlen##t, 0,0);
 #define convertT2W(t,w) \
-	int cnvlen##w=strlen(t)+1;\
-	WCHAR *w=(WCHAR*)_alloca(2*cnvlen##w);\
-	MultiByteToWideChar(CP_ACP, 0, t, -1, w, cnvlen##w);
+	WCHAR *w=0;\
+	if(t){\
+		int cnvlen##w=strlen(t)+1;\
+		w=(WCHAR*)_alloca(2*cnvlen##w);\
+		MultiByteToWideChar(CP_ACP, 0, t, -1, w, cnvlen##w);\
+	}
 #endif
 
 #define convertA2W(cp,a,w) \

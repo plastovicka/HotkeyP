@@ -8,12 +8,13 @@
 308=&Window:
 310=&Opacity:
 309=&Enable multiple instances
-311=Add to the systray icon &menu
+311=Add to the notification icon &menu
 312=Run &automatically after Windows starts
 313=As&k before executing this hotkey
 316=Wai&t before executing this hotkey
+317=R&un as administrator
 314=Cate&gory:
-306=&Note:
+306=Descriptio&n:
 1=OK
 2=Cancel
 7=Help

@@ -385,18 +385,20 @@ void executeHotKey(int i)
 				si.cb= sizeof(STARTUPINFO);
 				si.dwFlags= STARTF_USESHOWWINDOW;
 				si.wShowWindow= showCnst[hk->cmdShow];
+				pi.dwProcessId=0;
 				w=GetForegroundWindow();
 				bool success=false;
+				DWORD prior = priorCnst[hk->priority];
 				//run process
-				if(CreateProcess(0, s, 0, 0, 0, priorCnst[hk->priority],
-					0, workDir, &si, &pi)){
+				if(!hk->admin && isElevated() && CreateMediumIntegrityProcess(s, prior, workDir, &si, &pi) ||
+					(!hk->admin || isElevated() || isWin9X) && CreateProcess(0, s, 0, 0, 0, prior, 0, workDir, &si, &pi)){
 					if(hk->process) CloseHandle(hk->process);
 					hk->process=pi.hProcess;
 					hk->processId=pi.dwProcessId;
 					CloseHandle(pi.hThread);
 					success=true;
 				}
-				else if(GetLastError()==ERROR_ELEVATION_REQUIRED){
+				else if((hk->admin && !isElevated()) || GetLastError()==ERROR_ELEVATION_REQUIRED){
 					SHELLEXECUTEINFO sei;
 					ZeroMemory(&sei, sizeof(sei));
 					sei.cbSize=sizeof(SHELLEXECUTEINFO);
@@ -407,6 +409,7 @@ void executeHotKey(int i)
 					cpStr(s, args);
 					sei.lpParameters=s;
 					sei.nShow=showCnst[hk->cmdShow];
+					if(hk->admin) sei.lpVerb=_T("runas");
 					BOOL vis = IsWindowVisible(hWin);
 					BOOL iconic = IsIconic(hWin);
 					if(!vis){
@@ -437,7 +440,7 @@ void executeHotKey(int i)
 					}
 				}
 				if(success){
-					if(hk->opacity){
+					if(hk->opacity && pi.dwProcessId){
 						TopacityInfo *o = new TopacityInfo;
 						o->opacity= hk->opacity;
 						o->pid= pi.dwProcessId;
