@@ -602,6 +602,7 @@ BEGIN
         END
         POPUP "HotkeyP"
         BEGIN
+            MENUITEM " ",                           1113
             MENUITEM " ",                           1087
             MENUITEM " ",                           1097
             MENUITEM " ",                           1088
@@ -783,7 +784,7 @@ BEGIN
             VALUE "FileDescription", "HotkeyP\0"
             VALUE "FileVersion", "4, 7, 1, 1\0"
             VALUE "InternalName", "\0"
-            VALUE "LegalCopyright", "© 2004-2014  Petr Laštovièka\0"
+            VALUE "LegalCopyright", "© 2004-2016  Petr Laštovièka\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "hotkeyp.exe\0"
             VALUE "PrivateBuild", "\0"
