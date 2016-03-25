@@ -299,6 +299,7 @@ DWORD WINAPI opacityProc(LPVOID param)
 void executeHotKey(int i)
 {
 	TCHAR *workDir, *filePart, *s;
+	const TCHAR *exe;
 	HWND w;
 	DWORD d;
 	DWORD_PTR dp;
@@ -314,17 +315,30 @@ void executeHotKey(int i)
 		workDir=0;
 		if(*hk->dir) workDir=hk->dir;
 		tstring fullExe = hk->getFullExe(); // zef: added support for environment vars in paths
-		if(!isExe(fullExe.c_str())){
+		exe=fullExe.c_str();
+		if(!isExe(exe)){
 			//document
-			if(!workDir){
-				_tcscpy(exeBuf, fullExe.c_str());
-				filePart=cutPath(exeBuf);
-				if(filePart>exeBuf){
-					*(filePart-1)=0;
-					workDir=exeBuf;
+			if(!hk->admin && isElevated()){
+				//use explorer.exe to open document at medium integrity level
+				if(!_tcsnicmp(exe, _T("www."), 4)){
+					_tcscpy(exeBuf, _T("http://"));
+					_tcscpy(exeBuf+7, exe);
+					exe=exeBuf;
 				}
+				ShellExecute(0, 0, _T("explorer.exe"), exe, 0, SW_SHOWNORMAL);
 			}
-			ShellExecute(0, 0, hk->exe, *hk->args ? hk->args : 0, workDir, showCnst[hk->cmdShow]);
+			else{
+				//use ShellExecute to open document in associated application
+				if(!workDir){
+					_tcscpy(exeBuf, exe);
+					filePart=cutPath(exeBuf);
+					if(filePart>exeBuf){
+						*(filePart-1)=0;
+						workDir=exeBuf;
+					}
+				}
+				ShellExecute(0, 0, exe, *hk->args ? hk->args : 0, workDir, showCnst[hk->cmdShow]);
+			}
 		}
 		else{
 			//close finished processes handles
@@ -340,7 +354,7 @@ void executeHotKey(int i)
 				}
 			}
 			//find out whether program is already running
-			if(!hk->multInst && (w=findWindow(fullExe.c_str(), hk->processId))!=0){
+			if(!hk->multInst && (w=findWindow(exe, hk->processId))!=0){
 				if(w==GetForegroundWindow() && !IsIconic(w)){
 					//minimize
 					PostMessage(w, WM_SYSCOMMAND, SC_MINIMIZE, 0);
@@ -367,17 +381,17 @@ void executeHotKey(int i)
 				//append parameters to exe file name
 				TCHAR *args=hk->args;
 				size_t len=fullExe.length();
-				if(!*args && len>4 && !_tcsicmp(fullExe.c_str()+len-4, _T(".scr"))) args=_T("/S"); //screen saver needs parameter /S
+				if(!*args && len>4 && !_tcsicmp(exe+len-4, _T(".scr"))) args=_T("/S"); //screen saver needs parameter /S
 				s= new TCHAR[len+_tcslen(args)+4];
 				s[0]='\"';
-				_tcscpy(s+1, fullExe.c_str());
+				_tcscpy(s+1, exe);
 				_tcscat(s, _T("\""));
 				if(*args){
 					_tcscat(s, _T(" "));
 					_tcscat(s, args);
 				}
 				//set working directory
-				if(!workDir && SearchPath(0, fullExe.c_str(), 0, sizeA(exeBuf), exeBuf, &filePart)){
+				if(!workDir && SearchPath(0, exe, 0, sizeA(exeBuf), exeBuf, &filePart)){
 					workDir=exeBuf;
 					*filePart=0;
 				}
@@ -405,7 +419,7 @@ void executeHotKey(int i)
 					sei.fMask=SEE_MASK_NOCLOSEPROCESS;
 					sei.hwnd=hWin;
 					sei.lpDirectory=workDir;
-					sei.lpFile=fullExe.c_str();
+					sei.lpFile=exe;
 					cpStr(s, args);
 					sei.lpParameters=s;
 					sei.nShow=showCnst[hk->cmdShow];

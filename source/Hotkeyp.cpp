@@ -2148,7 +2148,8 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 							hk->opacity=0;
 							msglng(761, "Opacity can be specified only for executables");
 						}
-						hk->multInst= hk->admin= false;
+						hk->multInst= false;
+						if(hk->cmd>=0) hk->admin=false;
 					}
 					if(hk->cmd==63 && *hk->args && isEmptyPassword()){
 						DialogBoxParam(inst, _T("PASSWD"), hWin, (DLGPROC)passwdProc, 0);
