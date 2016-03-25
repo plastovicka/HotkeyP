@@ -46,7 +46,7 @@ char *cmdNames[]={
 	"Disable joystick shortcuts", "Disable remote control", "Disable keyboard shortcuts", "Hide icon", "Restore tray icon",
 	/*100*/"CD speed", "Hide application", "Minimize to tray", "Magnifier", "Clear recent documents",
 	"Delete temporary files", "Save desktop icons", "Restore desktop icons", "Horizontal wheel", "Remove drive",
-	/*110*/"Opacity +", "Opacity -", "Maximize all"
+	/*110*/"Opacity +", "Opacity -", "Maximize all", "Show HotkeyP window"
 };
 
 BYTE cmdIcons[]={

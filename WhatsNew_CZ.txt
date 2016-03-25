@@ -3,7 +3,7 @@ HotKeyP
 
 - Unicode
 - klávesové zkratky mají možnost "Spustit jako správce"
-- pøíkaz "Maximalizovat všechna okna"
+- pøíkazy "Maximalizovat všechna okna", "Ukázat okno HotkeyP"
 - pøíkaz "Skrýt okno" zmìní tray ikonu na žlutou
 - %HotkeyP% v pøíkazu je nahrazeno instalaèní složkou
 - bìhem makra je vypnut Caps Lock
