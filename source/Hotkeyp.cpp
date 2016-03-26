@@ -486,7 +486,7 @@ void destroyAll()
 	selectedCategory=-1;
 }
 
-BOOL createProcess(TCHAR *exe, DWORD wait, bool hidden)
+BOOL createProcess(TCHAR *exe, DWORD wait, bool hidden, bool medium)
 {
 	PROCESS_INFORMATION pi;
 	STARTUPINFO si;
@@ -498,7 +498,9 @@ BOOL createProcess(TCHAR *exe, DWORD wait, bool hidden)
 		si.dwFlags= STARTF_USESHOWWINDOW;
 		si.wShowWindow= SW_HIDE;
 	}
-	if((result= CreateProcess(0, exe, 0, 0, FALSE, 0, 0, 0, &si, &pi))!=0){
+	result= medium && isElevated() ? CreateMediumIntegrityProcess(exe, 0, 0, &si, &pi) :
+		CreateProcess(0, exe, 0, 0, FALSE, 0, 0, 0, &si, &pi);
+	if(result){
 		CloseHandle(pi.hThread);
 		if(wait) WaitForSingleObject(pi.hProcess, wait);
 		CloseHandle(pi.hProcess);
@@ -3183,7 +3185,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 				case 215: //run spy
 				{
 					convertA2T("spy.exe", s); //CreateProcessW can modify the contents of the string
-					createProcess(s);
+					createProcess(s, 0, false, true); //run at medium integrity level
 					break;
 				}
 				case 217: //category up
