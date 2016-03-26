@@ -1,5 +1,5 @@
 /*
- (C) 2004-2006  Petr Lastovicka
+ (C) 2004-2016  Petr Lastovicka
  
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License.
@@ -17,6 +17,7 @@ HHOOK hookK,hookM,hookW,hookG;
 int lock;
 
 //-------------------------------------------------------------------------
+#ifndef _WIN64
 void getW1()
 {
  if(!IsWindow(hWin1)) hWin1=FindWindow("PlasHotkey",0);
@@ -50,7 +51,7 @@ LRESULT CALLBACK KeyboardProc95(int code, WPARAM wP, LPARAM lP)
  }
  return CallNextHookEx(hookK, code, wP, lP);
 }
-
+#endif
 //-------------------------------------------------------------------------
 
 void getW2()
@@ -61,7 +62,12 @@ void getW2()
 HHOOK getH2(int cmd)
 {
  getW2();
- return (HHOOK)SendMessage(hWin2,cmd,0,0);
+#ifdef _WIN64
+ HWND w = FindWindow("PlasSpy64",0);
+#else
+ HWND w = hWin2;
+#endif
+ return (HHOOK)SendMessage(w,cmd,0,0);
 }
 
 extern "C" __declspec(dllexport)

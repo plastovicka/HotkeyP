@@ -5,7 +5,7 @@ LANGUAGE LANG_CZECH, SUBLANG_DEFAULT
 
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 4,3,0,0
+ FILEVERSION 4,8,0,0
  PRODUCTVERSION 0,0,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -22,10 +22,14 @@ BEGIN
         BLOCK "040504b0"
         BEGIN
             VALUE "CompanyName", "Petr Laštovièka\0"
-            VALUE "FileDescription", "HotkeyP\0"
-            VALUE "FileVersion", "4, 3, 0, 0\0"
-            VALUE "LegalCopyright", "© 2004-2006  Petr Laštovièka\0"
-            VALUE "OriginalFilename", "hook.dll\0"
+            VALUE "FileDescription", "HotkeyP - hook\0"
+            VALUE "FileVersion", "4, 8, 0, 0\0"
+            VALUE "LegalCopyright", "© 2004-2016  Petr Laštovièka\0"
+#ifdef _WIN64
+						VALUE "OriginalFilename", "hook64.dll\0"
+#else
+						VALUE "OriginalFilename", "hook.dll\0"
+#endif
         END
     END
     BLOCK "VarFileInfo"

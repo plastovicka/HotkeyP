@@ -8,6 +8,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hotkeyp", "hotkeyp.vcxproj"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "spy", "spy.vcxproj", "{FC026265-FF93-49E2-B657-18FA728B3235}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "spy64", "spy64.vcxproj", "{AE775FD5-85BE-451F-97C4-1BEE13718EC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug no hook|Win32 = Debug no hook|Win32
@@ -37,11 +39,17 @@ Global
 		{C2C03DD4-8923-40E0-9545-69FCFA1DB9DF}.Release|x64.ActiveCfg = Release|x64
 		{C2C03DD4-8923-40E0-9545-69FCFA1DB9DF}.Release|x64.Build.0 = Release|x64
 		{FC026265-FF93-49E2-B657-18FA728B3235}.Debug no hook|Win32.ActiveCfg = Debug|Win32
-		{FC026265-FF93-49E2-B657-18FA728B3235}.Debug no hook|x64.ActiveCfg = Debug|x64
+		{FC026265-FF93-49E2-B657-18FA728B3235}.Debug no hook|x64.ActiveCfg = Debug|Win32
 		{FC026265-FF93-49E2-B657-18FA728B3235}.Debug|Win32.ActiveCfg = Debug|Win32
-		{FC026265-FF93-49E2-B657-18FA728B3235}.Debug|x64.ActiveCfg = Debug|x64
+		{FC026265-FF93-49E2-B657-18FA728B3235}.Debug|x64.ActiveCfg = Debug|Win32
 		{FC026265-FF93-49E2-B657-18FA728B3235}.Release|Win32.ActiveCfg = Release|Win32
-		{FC026265-FF93-49E2-B657-18FA728B3235}.Release|x64.ActiveCfg = Release|x64
+		{FC026265-FF93-49E2-B657-18FA728B3235}.Release|x64.ActiveCfg = Release|Win32
+		{AE775FD5-85BE-451F-97C4-1BEE13718EC1}.Debug no hook|Win32.ActiveCfg = Debug|x64
+		{AE775FD5-85BE-451F-97C4-1BEE13718EC1}.Debug no hook|x64.ActiveCfg = Debug|x64
+		{AE775FD5-85BE-451F-97C4-1BEE13718EC1}.Debug|Win32.ActiveCfg = Debug|x64
+		{AE775FD5-85BE-451F-97C4-1BEE13718EC1}.Debug|x64.ActiveCfg = Debug|x64
+		{AE775FD5-85BE-451F-97C4-1BEE13718EC1}.Release|Win32.ActiveCfg = Release|x64
+		{AE775FD5-85BE-451F-97C4-1BEE13718EC1}.Release|x64.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

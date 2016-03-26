@@ -224,7 +224,7 @@ extern int joyMouseEnabled, joyMouseJoy, joyMouseX, joyMouseY, joyNotFullscreen,
 extern TCHAR joyApp[512];
 extern TCHAR joyFullscreenApp[512];
 
-BOOL createProcess(TCHAR *exe, DWORD wait = 0, bool hidden = false);
+BOOL createProcess(TCHAR *exe, DWORD wait = 0, bool hidden = false, bool medium = false);
 void registerHK(int i, bool disable);
 void registerKeys();
 void unregisterKeys();
