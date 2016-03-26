@@ -19,7 +19,7 @@ void msg(char *text)
 void unhook()
 {
 	if(hook){
-		UnhookWindowsHookEx(hook); 
+		UnhookWindowsHookEx(hook);
 		hook=0;
 	}
 	if(hookG){
@@ -60,28 +60,29 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 	return 0;
 }
 //-------------------------------------------------------------------------
-int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int)
+int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int)
 {
 	MSG mesg;
 	WNDCLASS wc;
 	HWND hWin;
 
 	//hook64.exe should be started only from spy.exe
-	if(strcmp(cmdLine, "-s")) return 1;
+	char *arg = strrchr(cmdLine, ' ');
+	if(!arg || strcmp(arg + 1, "-s")) return 1;
 
 	klib=LoadLibrary("hook64.dll");
-	if(!klib){ msg("Cannot find hook64.dll"); return 1; }
+	if(!klib){ msg("Cannot find hook64.dll"); return 2; }
 
 	//register class
 	ZeroMemory(&wc, sizeof(wc));
 	wc.lpfnWndProc=(WNDPROC)MainWndProc;
 	wc.hInstance=hInstance;
 	wc.lpszClassName="PlasSpy64";
-	if(!hPrev && !RegisterClass(&wc)){ msg("RegisterClass error"); return 2; }
+	if(!RegisterClass(&wc)){ msg("RegisterClass error"); return 3; }
 
 	//create main window
 	hWin = CreateWindow("PlasSpy64", "Spy64", 0, 0, 0, 0, 0, NULL, NULL, hInstance, NULL);
-	if(!hWin){ msg("CreateWindow error"); return 3; }
+	if(!hWin){ msg("CreateWindow error"); return 4; }
 
 
 	while(GetMessage(&mesg, NULL, 0, 0)>0){
@@ -91,4 +92,12 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int)
 	unhook();
 	FreeLibrary(klib);
 	return 0;
+}
+
+
+EXTERN_C IMAGE_DOS_HEADER __ImageBase;
+
+int CALLBACK WinMainCRTStartup()
+{
+	return WinMain((HINSTANCE)&__ImageBase, NULL, GetCommandLine(), SW_SHOWDEFAULT);
 }
