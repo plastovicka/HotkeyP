@@ -1023,6 +1023,12 @@ void uninstallHook(bool mouse)
 	messageToHook(WM_USER+202, mouse, mouse);
 }
 
+void reloadHook()
+{
+	if(hookK){ uninstallHook(false); installHook(false); }
+	if(hookM){ uninstallHook(true); installHook(true); }
+}
+
 void setHook(bool mouse)
 {
 	int i;

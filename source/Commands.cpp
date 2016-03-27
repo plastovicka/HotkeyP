@@ -3002,6 +3002,9 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 		case 113: //Show HotkeyP window
 			SendMessage(hWin, WM_COMMAND, 210, 0);
 			break;
+		case 114: //Reload hook
+			reloadHook();
+			break;
 	}
 }
 //---------------------------------------------------------------------------
