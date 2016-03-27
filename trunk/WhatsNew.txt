@@ -3,7 +3,7 @@ HotkeyP
 
 - Unicode
 - hotkeys have option "Run as administrator"
-- commands "Maximize all", "Show HotkeyP window"
+- commands "Maximize all", "Show HotkeyP window", "Reload hook"
 - command "Hide window" changes tray icon to yellow
 - %HotkeyP% in command path is replaced by installation folder
 - caps lock is turned off during "Macro"

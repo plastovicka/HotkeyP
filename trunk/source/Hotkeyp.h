@@ -294,6 +294,7 @@ LRESULT keyFromHook(WPARAM mesg, LPARAM vk, LPARAM scan);
 LPARAM clickFromHook(WPARAM mesg, LPARAM lP);
 void installHook(bool mouse);
 void uninstallHook(bool mouse);
+void reloadHook();
 DWORD WINAPI hookProc(LPVOID);
 void messageToHook(UINT mesg, WPARAM wP, bool mouse);
 bool unDelayButtons();

@@ -327,6 +327,7 @@
 1111=Prùhlednost +
 1112=Maximalizovat všechna okna
 1113=Ukázat okno HotkeyP
+1114=Obnovit hook
 
 ;texty použité v programu, chybová hlášení
 730=Nelze otevøít soubor %s
