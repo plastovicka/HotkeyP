@@ -16,7 +16,7 @@ Nejrychleji vytvoříte klávesové zkratky tak, že přetáhnete položky z nab
 <A NAME=-1>
 Jako klávesovou zkratku lze použít libovolnou klávesu kombinovanou s Ctrl, Shift, Alt, Win. Pokud máte starou klávesnici ještě z období DOSu, pak na ni možná nebude klávesa Win. Jinak by měla být umístěna mezi Ctrl a Alt. Maximální počet klávesových zkratek je přibližně 1300. Nedoporučuje se jako klávesovou zkratku dávat CapsLock, F1, Shift+A, Ctrl+C, Alt+F4,... Všechny multimediální klávesy používat lze, ale máte-li nainstalován nějaký jiný program, který je blokuje, pak ho musíte ukončit. V možnostech programu lze klávesy přejmenovat, což se hodí zvláště pro ty klávesy, které se zobrazují jako číslo v závorkách.
 <p>
-Klávesovou zkratku lze přiřadit buď ke spustitelnému souboru, dokumentu, WWW stránce, nebo k některému z příkazů zabudovaných přímo v programu. V případě spustitelného souboru nebo dokumentu můžete jeho název rovnou napsat do editačního pole nebo můžete pomocí myši stisknout v pravé části okna tlačítko "...", čímž se zobrazí dialogové okno na otevření souboru. Pokud soubor zadáváte ručně a nenapíšete ho i s cestou, pak se prohledává složka Windows a složky ze systémové proměnné PATH. Pokud soubor zadáváte včetně cesty, můžete použít proměnné prostředí, například %SystemRoot%.
+Klávesovou zkratku lze přiřadit buď ke spustitelnému souboru, dokumentu, WWW stránce, nebo k některému z příkazů zabudovaných přímo v programu. V případě spustitelného souboru nebo dokumentu můžete jeho název rovnou napsat do editačního pole nebo můžete pomocí myši stisknout v pravé části okna tlačítko "...", čímž se zobrazí dialogové okno na otevření souboru. Pokud soubor zadáváte ručně a nenapíšete ho i s cestou, pak se prohledává složka Windows a složky ze systémové proměnné PATH. Pokud soubor zadáváte včetně cesty, můžete použít proměnné prostředí, například %SystemRoot%. Proměnná %HotkeyP% je nahrazena instalační složkou, ve které je HotkeyP.exe.
 <p>
 Zabudované příkazy se jednoduše vloží kliknutím na tlačítko "&lt;". 
 <p>
@@ -30,14 +30,16 @@ Pokud zaškrtnete <u>Přidat do menu u ikony v systémové liště</u>, přidá 
 <p>
 Možnost <u>Automaticky spustit po startu Windows</u> funguje jen tehdy, když je také HotkeyP spouštěn po startu Windows a nebo když se HotkeyP spustí s parametrem 0.     
 <p>
+Možnost <u>Spustit jako správce</u> zaškrtněte, pokud aplikace vyžaduje administrátorská oprávnění. Tato možnost se používá pouze pokud je ve Windows v Ovládacích panelech povoleno tzv. řízení uživatelských účtů (ve výchozím nastavení to povolené je). Pokud HotkeyP není spuštěn jako správce, pak se po stisku klávesové zkratky objeví otravné okno "Řízení uživatelských účtů", ve kterém musíte kliknout na tlačítko Ano. Pokud HotkeyP je spuštěn jako správce, pak může po stisku klávesové zkratky danou aplikaci hned spustit.
+<p>
 Do položky <u>Popis</u> napište text, který bude vidět v seznamu v hlavním okně. Pokud nic nezadáte, pak se bude zobrazovat název souboru bez cesty.
 <p>
-<u>Průhlednost</u> je číslo od 0 do 255, což znamená od zcela průhledného až po zcela neprůhledné. Při hodnotě 0 se průhlednost nastavovat nebude a aplikace se spustí rychleji. Průhlednost nefunguje ve Windows 95/98/ME/NT.
+<u>Průhlednost</u> je číslo od 0 do 255, což znamená od zcela průhledného až po zcela neprůhledné. Při hodnotě 0 se průhlednost nastavovat nebude a aplikace se spustí rychleji.
 
 <h2>Myší zkratky</h2>
 V dialogovém okně pro vytvoření nové klávesové zkratky přesuňte ukazatel myši nad bílý editační obdélník v horní části okna. Pak stiskněte libovolnou kombinaci tlačítek myši, kolečka myši a kláves Ctrl, Shift, Alt, Win. Objeví se slovo Myš a za ním součet znaků L, R, M, 4, 5, Up, Down, Left, Right, které znamenají levé, pravé, prostřední, čtvrté, páté tlačítko, otočení kolečkem nahoru, dolů, vlevo, vpravo.
 <p>
-Ve Windows 95/98/ME nefunguje čtvrté a páté tlačítko. Pokud vám nefunguje ani v novějších verzích Windows, pak máte buď špatný ovladač, nebo jsou tato tlačítka blokována jinými programy (například Genius Netscroll+). Takové programy budete muset ukončit a odstranit ze skupiny spouštěné při startu počítače. Pokud jste je instalovali spolu s ovladačem myši, pak je nesmíte odinstalovat, jinak by se odinstaloval i ovladač. 
+Pokud vám nefunguje čtvrté a páté tlačítko, pak máte buď špatný ovladač, nebo jsou tato tlačítka blokována jinými programy (například Genius Netscroll+). Takové programy budete muset ukončit a odstranit ze skupiny spouštěné při startu počítače. Pokud jste je instalovali spolu s ovladačem myši, pak je nesmíte odinstalovat, jinak by se odinstaloval i ovladač. 
 <p>
 Horizontální naklápění kolečka nefunguje ve Windows XP nebo starší.
 <p>
@@ -55,7 +57,7 @@ Seznam zkratek setřídíte kliknutím na záhlaví sloupců. Pokud je setříd�
 Pro přehlednost je vhodné si zkratky roztřídit, zvláště pokud jich máte hodně. V levé části hlavního okna se zobrazují kategorie. Některé z nich vznikají automaticky a nedají se upravovat (jsou to kategorie: klávesové, myš, joystick, dálkové ovládání, příkazy, programy, dokumenty, www odkazy, autostart, tray menu). Kromě nich si můžete vytvářet své vlastní kategorie. Novou kategorii vytvoříte tak, že nejdříve označíte zkratky, pak v menu "Kategorie" zvolíte "Přiřadit označeným položkám" a pak napíšete název nové kategorie a kliknete na Ok. Úplně stejným způsobem lze označené zkratky přesouvat mezi existujícími kategoriemi, pouze místo názvu nové kategorie vyberete už existující kategorii z rozbalovacího seznamu. Jestliže název kategorie dáte prázdný, potom se zkratky přesunou do kategorie "výchozí". Když odstraníte kategorii, potom se zkratky v ní obsažené také přesunou do kategorie "výchozí".
 
 <h2>Hook</h2>
-Funkce, která se vykonává při stisku jakékoli klávesy, se nazývá hook. Obvykle jej používají škodící spyware programy, které zjišťují vaše hesla a pak je odesílají přes internet. V programu HotkeyP můžete v možnostech hook zakázat. Potom ale nebudou fungovat některé multimediální klávesy (které se zobrazují jako číslo v hranatých závorkách) a také nebude možné přiřadit zkratku klávese CapsLock a kombinacím Win+M, Win+E, Win+R atd. Dále nebudou správně fungovat funkce "Makro" a "Vložit text". 
+Funkce, která se vykonává při stisku jakékoli klávesy, se nazývá hook (zavěšení). Obvykle jej používají škodící špehovací programy, které zjišťují vaše hesla a pak je odesílají přes internet. V programu HotkeyP můžete v možnostech hook zakázat. Potom ale nebudou fungovat některé multimediální klávesy (které se zobrazují jako číslo v hranatých závorkách) a také nebude možné přiřadit zkratku klávese CapsLock a kombinacím Win+M, Win+E, Win+R atd. Dále nebudou správně fungovat funkce "Makro" a "Vložit text". 
 Když zaškrtnete možnost "Hook používat pro všechny klávesové zkratky", budou klávesové zkratky fungovat i ve hrách a jiných DirectX aplikacích.
 <p>
 Hook nefunguje v aplikacích, které běží s administrátorskými právy (pokud je povoleno řízení uživatelských účtů).
@@ -81,7 +83,7 @@ Parametry:<br>
 0 - normální ukončení<br>
 1 - násilné ukončení, může dojít ke ztrátě neuložených dat<br>
 <p>
-POZOR!  Funkce "Režim spánku" nefunguje ve Windows 95/98/NT a nebo pokud ji nemáte povolenu v Ovládacích panelech\Možnosti napájení.
+POZOR!  Funkce "Režim spánku" nefunguje, pokud ji nemáte povolenu v Ovládacích panelech\Možnosti napájení.
 
 <A NAME=38>
 <h3>Dialog vypnutí systému</h3>
@@ -99,7 +101,6 @@ Zobrazí volné místo na pevných a síťových discích. Parametr určuje, jak
 <A NAME=109>
 <h3>Bezpečně odebrat zařízení</h3>
 Odebere přenosný disk ze systému. Nesmí být otevřen žádný soubor ani složka, který leží na odebíraném disku. Parametrem je písmeno disku. Pokud parametr nezadáte, pak se odeberou všechny USB disky.
-<br/>Tato funkce nefunguje ve Windows NT/95/98/ME.
 
 <A NAME=22>
 <h3>Vysypat koš</h3>
@@ -122,7 +123,7 @@ Názvy všech ovládacích panelů zjistíte tak, že ve složce C:\Windows\Syst
 
 <A NAME=86>
 <h3>Zablokovat klávesu</h3>
-Parametrem je jedna nebo více kláves, které se touto funkcí zablokují nebo odblokují. Názvy kláves jsou stejné jako u funkce <A href=#27>Makro</A>. Obvykle se používá s parametrem \win, protože klávesa Win leží mezi Ctrl a Alt, které se často používají ve hrách, a nechtěné zmáčknutí této klávesy způsobí vyskočení z celé obrazovky. Bohužel ve Windows 95/98/ME tato funkce nefunguje pro klávesu \win a některé další systémové klávesy.<br>
+Parametrem je jedna nebo více kláves, které se touto funkcí zablokují nebo odblokují. Názvy kláves jsou stejné jako u funkce <A href=#27>Makro</A>. Obvykle se používá s parametrem \win, protože klávesa Win leží mezi Ctrl a Alt, které se často používají ve hrách, a nechtěné zmáčknutí této klávesy způsobí vyskočení z celé obrazovky.<br>
 Tato funkce se hodí jen na dočasné zablokování klávesy. Když chcete nějakou klávesu zrušit trvale, pak pro ni vytvořte klávesovou zkratku, například příkaz Makro s prázdným parametrem. 
 
 <A NAME=91>
@@ -137,12 +138,12 @@ Znovu ukáže ikonu v systémové liště, která byla předtím skryta příkaz
 <A NAME=93>
 <h3>Spustit službu</h3>
 Spustí systémovou službu. Parametr je krátký název služby (nikoli zobrazovaný název). Zjistíte ho tak, že v seznamu služeb (ve Správě počítače) dvakrát kliknete na službu. Například "Služba publikování ve WWW" má název W3SVC.
-<br/>Tato funkce funguje pouze ve Windows NT/2000/2003/XP.
+<br>Tato funkce funguje jen když je HotkeyP spuštěn jako správce.
 
 <A NAME=92>
 <h3>Zastavit službu</h3>
 Parametr je název služby podobně jako u příkazu <A href=#93>Spustit službu</A>.
-<br/>Tato funkce funguje pouze ve Windows NT/2000/2003/XP.
+<br>Tato funkce funguje jen když je HotkeyP spuštěn jako správce.
 
 <A NAME=6>
 <h3>Spořič obrazovky</h3>
@@ -164,7 +165,7 @@ Buďte opatrní. Zadávejte jen taková rozlišení, o kterých víte, že je v�
 
 <A NAME=81>
 <h3>Ukázat plochu</h3>
-To samé jako Win+D. Nefunguje ve Windows 95.
+To samé jako Win+D.
 
 <A NAME=89>
 <h3>Snímek obrazovky</h3>
@@ -204,6 +205,10 @@ Minimalizuje, maximalizuje nebo zavře okno. Nepovinným parametrem je název ok
 Zapne nebo zruší vlastnost okna být zobrazeno vždy nad ostatními okny.
 Parametrem může být název okna podobně jako u předchozích tří příkazů.
 
+<A NAME=112>
+<h3>Maximalizovat všechna okna</h3>
+Maximalizuje všechna okna.
+
 <A NAME=65>
 <h3>Minimalizovat ostatní</h3>
 Minimalizuje všechna okna kromě právě aktivního okna.
@@ -232,12 +237,11 @@ Funguje podobně jako Alt+PrintScreen, ale místo do schránky se obrázek ulož
 <A NAME=77>
 <h3>Průhlednost</h3>
 Prvním parametrem je číslo od 0 do 255, což znamená od zcela průhledného až po zcela neprůhledné. Druhým nepovinným parametrem je název okna.
-<br/>Tato funkce nefunguje ve Windows 95/98/ME/NT.
 
 <A NAME=110><A NAME=111>
 <h3>Průhlednost -, Průhlednost +</h3>
 Sníží/zvýší průhlednost okna. Prvním nepovinným parametrem je číslo udávající, o kolik se má průhlednost změnit (výchozí hodnota je 10). Druhým nepovinným parametrem je název okna.
-<br/>Tato funkce nefunguje ve Windows 95/98/ME/NT/2000.
+<br/>Tato funkce vyžaduje Windows XP nebo novější.
 
 <A NAME=66>
 <h3>Informace</h3>
@@ -249,7 +253,7 @@ Násilně ukončí právě běžící aplikaci. Tuto funkci použijte jen v př�
 
 <A NAME=20><A NAME=46><A NAME=47><A NAME=48><A NAME=49><A NAME=59><A NAME=60>
 <h3>Priorita procesu</h3>
-Změní prioritu procesu, kterému patří právě aktivní okno. Podprůměrná a nadprůměrná priorita nefunguje ve Windows 95/98/ME/NT. Nejvyšší prioritu by měl používat jen administrátor.
+Změní prioritu procesu, kterému patří právě aktivní okno. Nejvyšší prioritu lze nastavit jen když je HotkeyP spuštěn jako správce.
 
 <A NAME=83><A NAME=84>
 <h3>Předchozí aplikace, Další aplikace</h3>
@@ -258,7 +262,7 @@ Simuluje stisk Alt+Tab nebo Alt+Shift+Tab. Správně to funguje jen s myšími z
 <A NAME=13><A NAME=14><A NAME=15><A NAME=16><A NAME=78>
 <h3>Hlasitost, Hlasitost +, Hlasitost -</h3>
 Změna hlasitosti. První parametr je celé číslo od 0 do 100, které udává, na jakou hodnotu se má hlasitost nastavit nebo o kolik procent se má zesílit nebo zeslabit. Druhý parametr je název zvukového zařízení (Mixer, Wave, MIDI, CD Audio, Line In, Microphone, Bass, Treble, ...). Názvy zařízení závisejí na konkrétní zvukové kartě a dají se zjistit z programu Ovládání hlasitosti, který je v příslušenství Windows. Bass a Treble jsou hloubky a výšky. Slovo Mixer znamená výchozí zařízení pro přehrávání zvuku. Pokud chcete měnit hlasitost nahrávání, pak před název zařízení napište R: (např. R:Microphone).
-<p>Když máte více zvukových karet, pak ve Windows&nbsp;NT/95/98/ME/2000/2003/XP před název zadejte číslo a dvojtečku (např. 2:Mixer). Ve Windows 2008/Vista/7/8 za název přidejte název zvukové karty v závorkách, např. Speakers (Creative SB X-Fi).
+<p>Když máte více zvukových karet, pak ve Windows&nbsp;XP a starších před název zadejte číslo a dvojtečku (např. 2:Mixer). Ve Windows Vista a novějších za název přidejte název zvukové karty v závorkách, např. Speakers (Creative SB X-Fi).
 <p>
 Při použití klávesové zkratky se zobrazí malé okno s aktuálními hodnotami hlasitosti. Okno lze přesouvat myší. Zobrazují se jen ty hlasitosti, které jsou v možnostech uvedeny v položce "Zobrazit tato zvuková zařízení:", kde jsou jejich názvy oddělené čárkami. Před název zařízení můžete navíc napsat zobrazovaný název a rovnítko, např. Hlasitost=Mixer,Mikrofon=R:Microphone. <br>
 
@@ -278,7 +282,6 @@ Přehrávání zvukového CD. Nesmí být ale spuštěn žádný jiný program n
 <A NAME=100>
 <h3>Rychlost CD</h3>
 Prvním parametrem je rychlost (např. 10, 16, 24, 32, 40 atd.). Druhý parametr je písmeno mechaniky.
-<br/>Tato funkce nefunguje ve Windows 95/98/ME.
 
 <A NAME=67>
 <h3>Vložit text</h3>
@@ -288,7 +291,8 @@ Parametrem je text, který se vloží do aktivního okna přes schránku pomocí
 <h3>Makro</h3>
 Simuluje stisk kláves nebo tlačítek myši. Parametr může kromě obyčejných znaků obsahovat \esc, \tab, \backspace, \enter, \space, \left, \right, \up, \down, \ins, \del, \home, \end, \pageup, \pagedown, \f1, \f2, ..., \shift, \rshift, \ctrl, \rctrl, \alt, \ralt, \win, \rwin, \apps, \capslock, \scrolllock, \pause, \printscreen, \divide, \multiply, \add, \subtract, \decimal, \0, \1, ..., \num0, \num1, ..., \A, \B, ..., \back, \forward, \refresh, \search, \favorites, \browser, \mail, \power, \volume_down, \volume_up, \mute, \play_pause, \stop, \prev_track, \next_track, \media_select, \launch_app1, \launch_app2,  \lbutton, \rbutton, \mbutton, \xbutton1, \xbutton2, \wheelup, \wheeldown, \doubleclick,  \sleep, \rep, \xAB.<br>
 Za každou s těchto speciálních sekvencí může (ale nemusí) následovat tečka. Když chcete klávesu jen stisknout nebo jen uvolnit, pak použijte příponu down nebo up. Dají se tím simulovat kombinace více kláves nebo tlačítek. Například \lbuttondown\rbutton\lbuttonup znamená kombinace myších tlačítek L+R.<br>
-Klávesy shift, ctrl, alt, win zůstávají stisknuté spolu s dalším znakem. Například \shift.a\shift.b je to samé jako \shiftdown.a\shiftup\shiftdown.b\shiftup a to je stejné jako AB. Ctrl se dá zapsat také jako \^ . Znaky ó,ď,ť,ň musíte zapsat jako ´o,ˇd,ˇt,ˇn.<br> 
+Klávesy shift, ctrl, alt, win zůstávají stisknuté spolu s dalším znakem. Například \shift.a\shift.b je to samé jako \shiftdown.a\shiftup\shiftdown.b\shiftup a to je stejné jako AB. Ctrl se dá zapsat také jako \^ . Znaky ó,ď,ť,ň musíte zapsat jako ´o,ˇd,ˇt,ˇn.<br>
+Makra \A \B \C atd. fungují na všech klávesnicích včetně ruské a řecké. Když v makru použijete písmena a b c nebo A B C, bude to fungovat pouze v jazycích používající latinku a kromě toho se bude simulovat stisk klávesy shift pro velká písmena (nebo naopak pro malá písmena, když je aktivní Caps Lock). Podobně makra \1 \2 \3 atd. znamenají stisk klávesy bez ohledu na jazyk. Makro obsahující číslice bez zpětného lomítka bude na české klávesnici simulovat stisk klávesy shift.<br>
 Za \x jsou dvě šestnáctkové číslice, které znamenají virtuální kód klávesy.<br> 
 Za sekvencí \sleep následuje celé číslo, které znamená dobu čekání v desetinách sekundy.<br>
 Jestliže v možnostech zaškrtnete nikdy nepoužívat hook, potom se při delším držení klávesové zkratky makro nebude opakovat. Pokud přesto chcete opakování povolit, na začátek parametru napište \rep. Bohužel to má nevýhodu, že když příliš rychle pustíte shifty, pak zůstanou trvale stisknuty.<br>
@@ -307,7 +311,7 @@ Tato funkce se od "Klávesy jinému oknu" liší tím, že se ignoruje v přípa
 
 <A NAME=21>
 <h3>Příkaz jinému oknu</h3>
-Pošle zprávu WM_COMMAND. První parametr je číslo příkazu. Čísla příkazů ve 32-bitových aplikacích se dají zjistit programem spy.exe (který lze spustit z menu Soubor). Druhý parametr a případně ještě třetí parametr určují okno, podobně jako u "Klávesy jinému oknu". Tato funkce se od "Klávesy jinému oknu" liší hlavně v tom, že funguje i pro minimalizovaná okna. Nelze to použít pro programy napsané v Javě nebo .Net Frameworku ani pro programy používající unixové uživatelské rozhraní. Zde jsou příkazy pro některé přehrávače: 
+Pošle zprávu WM_COMMAND. První parametr je číslo příkazu. Čísla příkazů se dají zjistit programem spy.exe (který lze spustit z menu Soubor). Druhý parametr a případně ještě třetí parametr určují okno, podobně jako u "Klávesy jinému oknu". Tato funkce se od "Klávesy jinému oknu" liší hlavně v tom, že funguje i pro minimalizovaná okna. Nelze to použít pro programy napsané v Javě nebo .Net Frameworku ani pro programy používající unixové uživatelské rozhraní. Zde jsou příkazy pro některé přehrávače: 
 <p>
 Windows Media Player<br>
 18808 - přehrát/pozastavit, 18809 - zastavit, 18810 - předchozí, 18811 - další 
@@ -342,15 +346,19 @@ Simuluje pohyb kolečkem myši. Parametr je velikost otočení. Hodnota 120 odpo
 <A NAME=108>
 <h3>Horizontální kolečko</h3>
 Simuluje pohyb (naklápění) kolečkem myši do stran. Parametr je velikost otočení. Hodnota 120 odpovídá otočení vpravo, -120 vlevo.
-<br/>Tato funkce nefunguje ve Windows NT/95/98/2000/ME/2003/XP.
+<br/>Tato funkce nefunguje ve Windows XP nebo starších.
 
 <A NAME=79><A NAME=80><A NAME=43><A NAME=44><A NAME=45>
 <h3>Stisk levého/pravého/prostředního/čtvrtého/pátého tlačítka</h3>
-Simuluje stisk tlačítka myši. Čtvrté a páté tlačítko nefunguje ve Windows 95/98/NT.
+Simuluje stisk tlačítka myši.
 
 <A NAME=76>
 <h3>Dvojklik</h3>
 Simuluje dvakrát stisk levého tlačítka. Na rozdíl od předchozího příkazu neuvolňuje shiftové klávesy.
+
+<A NAME=113>
+<h3>Ukázat okno HotkeyP</h3>
+Zobrazí okno HotkeyP se seznamem klávesových zkratek, podobně jako když kliknete na ikonku v systémové liště.
 
 <A NAME=87>
 <h3>Vypnout všechny zkratky</h3>
@@ -371,6 +379,10 @@ Zakáží se joystick zkratky a také se zastaví podproces, který každých 10
 <A NAME=96>
 <h3>Vypnout dálkové ovládání</h3>
 Zakáží se zkratky dálkového ovládání. Když chcete také ukončit spojení s WinLIRC, musíte v možnostech zrušit zaškrtnutí přepínače "Povolit". Parametr 1 znamená vypnout, 0 znamená zapnout, bez parametru tato funkce funguje jako přepínač. 
+
+<A NAME=114>
+<h3>Obnovit hook</h3>
+Tento příkaz je užitečný, když máte nainstalováno několik různých aplikací, které využívají klávesové zkratky. Pokud si jiná aplikace přivlastní klávesnici jen pro sebe a nepředává informaci o stisku kláves dále do HotkeyP, pak to tímto příkazem můžete opravit.
 
 <h2> Licence</h2>
 Na tento program se vztahuje licence "GNU General Public License". Zde jsou uvedeny jen nejdůležitější body. Celé její znění (33KB, v angličtině) lze stáhnout z autorovy webové stránky nebo <a href="http://opensource.org/licenses">http://opensource.org/licenses</a>. 

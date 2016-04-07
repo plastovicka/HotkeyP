@@ -11,7 +11,7 @@ When you run this program for the first time, you must save your hotkeys to the 
 <A NAME=-1>
 Hotkey can be any key combined with Ctrl, Shift, Alt, Win. Most keyboards have Win key placed between Ctrl and Alt. Maximum number of hotkeys is more than 1300. It is possible, but not recommended to define hotkeys like CapsLock, F1, Shift+A, Ctrl+C, Alt+F4. All multimedia keys can be used, but some other programs can block them and those programs must be closed or uninstalled. Some unknown keys are displayed as a number in parenthesis, but you can rename them in the options dialog box.   
 <p>
-Each hotkey can be assigned to an executable file, document, www page or to some internal command. You can write file name directly into the "<u>Command:</u>" edit box or you can use "..." button to open the file dialog or you can drag and drop files from Explorer. You can use environment variables in the file path, for example %SystemRoot%. If you don't specify path before the file name then directories from system variable PATH are searched. 
+Each hotkey can be assigned to an executable file, document, www page or to some internal command. You can write file name directly into the "<u>Command:</u>" edit box or you can use "..." button to open the file dialog or you can drag and drop files from Explorer. You can use environment variables in the file path, for example %SystemRoot%. Variable %HotkeyP% is replaced by the installation folder where is HotkeyP.exe. If you don't specify path before the file name then directories from system variable PATH are searched. 
 <p>
 You can also write a web page or email address directly to the command edit box. It must begin with www. or http:// or https:// or mailto:.
 <p>
@@ -25,14 +25,16 @@ If you check the "<u>Add to the notification icon menu</u>", this hotkey will be
 <p>
 The checkbox "<u>Run automatically after Windows starts</u>" (in the Hot Key dialog box) works only if the HotkeyP is run automatically after the Windows starts, or if you start the HotkeyP manually with parameter 0.
 <p>
+You should check "<u>Run as administrator</u>" only if the application needs admin privileges. This option is useful if the User account control (UAC) is enabled in the Windows control panel (it is enabled by default). If the HotkeyP is not running as admin, annoying "User Account Control" dialog will be shown when the hotkey is pressed. If the HotkeyP is running as admin, it will be able to launch applications as administrator directly without consent.
+<p>
 Write description of the command to the "<u>Description:</u>" field. If you leave this note empty, the filename without path is used. The description is visible in the listbox in the main window.
 <p>
-Opacity is an integer from 0 to 255 which means from transparent to opaque. If the value is zero, the opacity will not be set and a program will start faster. The opacity does not work on Windows 95/98/ME/NT.
+Opacity is an integer from 0 to 255 which means from transparent to opaque. If the value is zero, the opacity will not be set and a program will start faster.
 
 <h2>Mouse shortcuts</h2>
 Mouse shortcuts are created similarly to keyboard shortcuts. Move mouse cursor on the white edit box that is at the top of the "Hot Key" window. Then press one or more mouse buttons or rotate the mouse wheel. The word Mouse will appear in the edit box and the sum of L, R, M, 4, 5, Up, Down, Left, Right. That means left button, right button, middle button, X1 button, X2 button, wheel up, wheel down, wheel left, wheel right. Mouse buttons can be combined with keys Ctrl, Shift, Alt, Win.
 <p>
-The fourth and fifth buttons do not work on Windows 95/98/ME. If you have newer Windows and still cannot use these buttons, you maybe have installed a wrong driver or there is some application which blocks the fourth and fifth buttons (e.g. Genius Netscroll+ Optical Mouse). You will have to close that application and remove it from the startup group. You must not uninstall Genius software because it would uninstall the driver too. But you can delete or rename gnetmous.exe file if you want to use HotkeyP instead of it.             
+If your mouse has 5 buttons, but you cannot use the fourth and fifth buttons in HotkeyP, you may have installed a wrong driver or there is some application which blocks these buttons (e.g. Genius Netscroll+ Optical Mouse). You will have to close that application and remove it from the startup group. You must not uninstall Genius software because it would uninstall the driver too. But you can delete or rename gnetmous.exe file if you want to use HotkeyP instead of it.             
 <p>
 A horizontal wheel does not work on Windows XP or older.
 <p>
@@ -70,7 +72,7 @@ Parameter:<br>
 0 - normal shutdown<br>
 1 - forced shutdown, unsaved data may be lost<br>
 <p>
-WARNING!  Hibernation does not work on Windows 95/98/NT4 or if it is not enabled in Control Panel\Power options.
+WARNING!  Hibernation does not work if it is not enabled in Control Panel\Power options.
 
 <A NAME=38>
 <h3>Show shutdown dialog</h3>
@@ -88,7 +90,6 @@ Shows free space of all fixed and network drives. Parameter specifies the time, 
 <A NAME=109>
 <h3>Remove drive</h3>
 Safely removes a drive from the system. There must NOT be any file or folder opened on that drive. Parameter is a drive letter. If you run this command without parameters, then all USB drives will be removed.
-<br>This function does not work on Windows NT/95/98/ME.
 
 <A NAME=22>
 <h3>Empty recycle bin</h3>
@@ -111,7 +112,7 @@ Parameter can by a name of *.CPL file without path and without extension.
 
 <A NAME=86>
 <h3>Disable key</h3>
-Parameter is one or more keys that will be blocked/unblocked every time the hotkey is pressed. See command <A href=#27>Macro</A> for a key names list. The most usual parameter is \win. The Win key is between Ctrl and Alt keys which are often used in games and a fullscreen game is interrupted when you accidentally press the Win key. Unfortunately the Win key and other system keys cannot be disabled on Windows 95/98/ME.
+Parameter is one or more keys that will be blocked/unblocked every time the hotkey is pressed. See command <A href=#27>Macro</A> for a key names list. The most usual parameter is \win. The Win key is between Ctrl and Alt keys which are often used in games and a fullscreen game is interrupted when you accidentally press the Win key.
 <br>This function is used to temporary disable a key. If you want to disable some key permanently, create a keyboard shortcut for that key, for example command Macro with an empty parameter. 
 
 <A NAME=91>
@@ -126,12 +127,12 @@ Shows an icon which has been previously hidden by a command <A href=#91>Hide tra
 <A NAME=93>
 <h3>Start service</h3>
 Runs a system service. The parameter is a service short name (not a visible name or description). The name can be found if you open the service list (in This computer / Manage) and then double-click an item in the list. 
-<br>This function works only on Windows NT/2000/2003/XP.
+<br>This function works only if the HotkeyP is running as administrator.
 
 <A NAME=92>
 <h3>Stop service</h3>
 Parameter is a service name, see <A href=#93>Start service</A> for more details.
-<br>This function works only on Windows NT/2000/2003/XP.
+<br>This function works only if the HotkeyP is running as administrator.
 
 <A NAME=6>
 <h3>Screen saver</h3>
@@ -153,7 +154,7 @@ Be careful. Use only resolutions that are supported by your monitor.
 
 <A NAME=81>
 <h3>Show desktop</h3>
-It is the same as Win+D. It does not work on Windows 95.
+It is the same as Win+D.
 
 <A NAME=89>
 <h3>Desktop snapshot</h3>
@@ -188,6 +189,10 @@ The second parameter is a text that will be displayed in a popup window. The fir
 Minimizes, maximizes, closes window or changes always on top property.
 Parameter is a window name. That means a window title, a window title substring, a window class, or an executable file name without a path. If the parameter is omitted, these functions work with the currently active window.
 
+<A NAME=112>
+<h3>Maximize all</h3>
+Maximizes all windows.
+
 <A NAME=65>
 <h3>Minimize others</h3>
 Minimize all windows except a currently foreground window.
@@ -218,12 +223,11 @@ It is similar to Alt+PrintScreen, but a captured image is saved to BMP file.
 <A NAME=77>
 <h3>Opacity</h3>
 The first parameter is an integer from 0 to 255 that means from transparent to opaque. The second optional parameter is a window.
-<br>This function does not work on Windows 95/98/ME/NT. 
 
 <A NAME=110><A NAME=111>
 <h3>Opacity -, Opacity +</h3>
 Increases or decreases window opacity. The first optional parameter is an integer which means how much the opacity is changed (default value is 10). The second optional parameter specifies a window.
-<br>This function does not work on Windows 95/98/ME/NT/2000. 
+<br>This function requires Windows XP or later. 
 
 <A NAME=66>
 <h3>Information</h3>
@@ -236,7 +240,7 @@ Use this command to kill foreground application only if the application is not r
 
 <A NAME=20><A NAME=46><A NAME=47><A NAME=48><A NAME=49><A NAME=59><A NAME=60>
 <h3>Process priority</h3>
-Sets process priority of an active window. Priorities "below normal" and "above normal" work only on Windows 2000/XP. Real-time priority should be used only by the administrator.
+Sets process priority of an active window. Real-time priority can be used only if the HotkeyP is running as administrator.
 
 <A NAME=83><A NAME=84>
 <h3>Next task, Previous task</h3>
@@ -245,7 +249,7 @@ This is the same as Alt+Tab or Alt+Shift+Tab. It works only on Windows NT/2000/X
 <A NAME=13><A NAME=14><A NAME=15><A NAME=16><A NAME=78>
 <h3>Volume, Volume +, Volume -</h3>
 This command sets or increases or decreases audio volume. The first parameter is percent (an integer from 0 to 100). The second parameter is an audio line name (Mixer, Wave, MIDI, CD Audio, Line In, Microphone, Bass, Treble, ...). Actual names depend on your sound card and you can see them in the Volume Control application in Windows accessories. The Mixer is synonym for the default output volume. If you want to change recording volume, add prefix R: to the audio line name (for example R:Microphone).
-<p>If you have more than one sound card, write number and colon before audio line name on Windows&nbsp;NT/95/98/ME/2000/2003/XP (for example 2:Mixer), or append one space and sound card name in parenthesis on Windows 2008/Vista/7/8 (for example Speakers (Creative SB X-Fi)).
+<p>If you have more than one sound card, write number and colon before audio line name on Windows&nbsp;98/ME/2000/XP (for example 2:Mixer), or append one space and sound card name in parenthesis on Windows Vista/7/8/10 (for example Speakers (Creative SB X-Fi)).
 <p>The "Show these audio lines:" edit box in the options dialog box contains comma-separated audio line names that are displayed every time this hotkey is pressed. There can be a display name and equals sign before an audio line name (for example Volume=Mixer,Record=R:Microphone ).<br>
 
 <A NAME=17><A NAME=58>
@@ -265,7 +269,6 @@ Optional parameter is the drive letter.
 <A NAME=100>
 <h3>CD speed</h3>
 The first parameter is speed (10, 16, 24, 32, 40 etc.). The second parameter is drive letter.
-<br>This function does not work on Windows 95/98/ME.
 
 <A NAME=67>
 <h3>Paste text</h3>
@@ -275,7 +278,8 @@ The text can contain some special sequences: %r - end of line, %u - user name, %
 <A NAME=27>
 <h3>Macro</h3>
 Parameter is a text string which can contain sequences \esc, \tab, \backspace, \enter, \space, \left, \right, \up, \down, \ins, \del, \home, \end, \pageup, \pagedown, \f1, \f2, ..., \shift, \rshift, \ctrl, \rctrl, \alt, \ralt, \win, \rwin, \apps, \capslock, \scrolllock, \pause, \printscreen, \divide, \multiply, \add, \subtract, \decimal, \0, \1, ..., \num0, \num1, ..., \A, \B, ..., \back, \forward, \refresh, \search, \favorites, \browser, \mail, \power, \volume_down, \volume_up, \mute, \play_pause, \stop, \prev_track, \next_track, \media_select, \launch_app1, \launch_app2,  \lbutton, \rbutton, \mbutton, \xbutton1, \xbutton2, \wheelup, \wheeldown, \wheelleft, \wheelright, \doubleclick,  \sleep, \rep, \xAB.<br>
-There can be a dot after every special sequence. If you only want to press down or to release a key, use suffix down or up. It is useful for combinations of two or more keys or buttons. For example \lbuttondown\rbutton\lbuttonup means mouse buttons L+R. Keys shift, ctrl, alt, win remain pressed together with the next character. For example \shift.a\shift.b is the same as \shiftdown.a\shiftup\shiftdown.b\shiftup and this is the same as AB. The ctrl key can be written as \^ .<br>  
+There can be a dot after every special sequence. If you only want to press down or to release a key, use suffix down or up. It is useful for combinations of two or more keys or buttons. For example \lbuttondown\rbutton\lbuttonup means mouse buttons L+R. Keys shift, ctrl, alt, win remain pressed together with the next character. For example \shift.a\shift.b is the same as \shiftdown.a\shiftup\shiftdown.b\shiftup and this is the same as AB. The ctrl key can be written as \^ .<br>
+Macros \A \B \C etc. work with any keyboard layout (e.g. Russian or Greek) and can be used for shortcuts like \ctrl\C or \ctrl\V. If you use letters a b c or A B C, it will work only if the current language has Roman alphabet (Latin). It will also hold shift key for uppercase (or lowercase if the Caps Lock is active). Similarly, macros \1 \2 \3 etc. don't depend on the keyboard layout.<br>
 There is a number after \sleep command which means delay in tenth of a second.<br>
 There are two hexadecimal digits after \x sequence which mean a virtual key code.<br>
 If you have set the option never use the keyboard hook, then a macro will NOT be repeated while you hold down a hotkey for a while. If you still want a macro to be repeated, prepend sequence \rep to the macro parameter. It has a drawback - shifts will remain pressed if you release them too quickly.   
@@ -294,7 +298,7 @@ This command is similar to "Send keys to window", but it is ignored when the win
 
 <A NAME=21>
 <h3>Send window command</h3>
-Sends message WM_COMMAND to another window. The first parameter is a command number. Numbers can be found by spy.exe which can be started from the menu File. The spy tool can find commands only in 32-bit applications. Unfortunately, it does not work for all applications (e.g. programs written in Java or .Net Framework or programs which have Unix user interface). The second and the third parameters determine a window, similarly to command "Send keys to window".    
+Sends message WM_COMMAND to another window. The first parameter is a command number. Numbers can be found by spy.exe which can be started from the menu File. Unfortunately, it does not work for all applications (e.g. programs written in Java or .Net Framework or programs which have Unix user interface). The second and the third parameters determine a window, similarly to command "Send keys to window".    
 <p>
 Windows Media Player 9<br>
 18808 - play/pause, 18809 - stop, 18810 - previous, 18811 - next
@@ -329,15 +333,19 @@ Simulation of a mouse wheel. Parameter is amount of wheel movement. Value 120 me
 <A NAME=108>
 <h3>Horizontal wheel</h3>
 Simulation of a horizontal mouse wheel. Parameter is amount of wheel movement. Value 120 means elementary rotation right, value -120 means rotation left. 
-<br>This function does not work on Windows NT/95/98/2000/ME/2003/XP. 
+<br>This function does not work on Windows XP or older.
 
 <A NAME=79><A NAME=80><A NAME=43><A NAME=44><A NAME=45>
 <h3>Left click, Middle click, Right click, Fourth button click, Fifth button click</h3>
-Simulation of mouse button press. The fourth and the fifth button does not work on Windows 95/98/NT.
+Simulation of mouse button press.
 
 <A NAME=76>
 <h3>Double click</h3>
 Simulation of two left button clicks. Note: this command does not release shift keys.
+
+<A NAME=113>
+<h3>Show HotkeyP window</h3>
+Activates the HotkeyP main window. This command is same as clicking on the HotkeyP icon in the system notification area.
 
 <A NAME=87>
 <h3>Disable all hotkeys</h3>
@@ -358,6 +366,10 @@ It disables joystick shortcuts and also suspends the thread which every 10 ms re
 <A NAME=96>
 <h3>Disable remote control</h3>
 It disables remote control shortcuts, but it does not disconnect from WinLIRC. If you also want to close a connection to WinLIRC, you have to uncheck the option "Enable" which is on the "Mouse/Remote" options tab. The Parameter 1 means disable, 0 means enable, empty parameter means toggle.
+
+<A NAME=114>
+<h3>Reload hook</h3>
+This command is useful if you have multiple keyboard applications installed and the other application captures keyboard input and does not forward keystrokes to the HotkeyP. If some keyboard shortcuts stop working in HotkeyP, you can you this command to repair it.
 
 <h2>License</h2>
 This program is distributed under the terms of "GNU General Public License". You can get it from the author's web page or from <a href="http://opensource.org/licenses">http://opensource.org/licenses</a>. Here is only a short abstract of this license:

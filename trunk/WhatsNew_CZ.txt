@@ -1,15 +1,16 @@
 HotkeyP
 -------
 
-- Unicode
+4.8
+- všechny texty jsou v Unicode, což se hodí hlavnì pro pøíkaz "Vložit text"
 - klávesové zkratky mají možnost "Spustit jako správce"
 - pøíkazy "Maximalizovat všechna okna", "Ukázat okno HotkeyP", "Obnovit hook"
-- pøíkaz "Skrýt okno" zmìní tray ikonu na žlutou
+- pøíkaz "Skrýt okno" zmìní ikonu v systémové lištì na žlutou
 - %HotkeyP% v pøíkazu je nahrazeno instalaèní složkou
 - bìhem makra je vypnut Caps Lock
 
 opravené chyby:
-- "Vložit text" s parametrem %l byl omezen na 1024 znakù
+- "Vložit text" s parametrem %l byl oøíznut na 1024 znakù
 - "Lupa" po rychlém pohybu myši zùstala na místì
 - program Spy fungoval jen s 32bitovými procesy
 
