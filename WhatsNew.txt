@@ -1,7 +1,8 @@
 HotkeyP
 -------
 
-- Unicode
+4.8
+- all texts are Unicode, it's useful especially for the "Paste text" command
 - hotkeys have option "Run as administrator"
 - commands "Maximize all", "Show HotkeyP window", "Reload hook"
 - command "Hide window" changes tray icon to yellow

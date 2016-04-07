@@ -116,7 +116,7 @@ dlgW=620, dlgH=375, //main window size
  fontH,             //system font height
  numKeys,           //number of hotkeys
  numList,
- autoRun=0,
+ autoRun=1,
  buttons=-1,        //mouse buttons that are down (when hook is on)
  ignoreButtons=0,
  ignoreButtons2=0,
