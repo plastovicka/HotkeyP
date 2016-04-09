@@ -1272,14 +1272,14 @@ void initList()
 //-------------------------------------------------------------------------
 static const int MaxLineLen = 5000;
 
-TCHAR *fReadStr(FILE *f, int version)
+TCHAR *fReadStr(FILE *f, int htkVersion)
 {
 	char buf[MaxLineLen];
 	if(fgets(buf, MaxLineLen, f)==0){
 		buf[0]='\n';
 		buf[1]=0;
 	}
-	if(version < 7){
+	if(htkVersion < 7){
 #ifdef UNICODE
 		int l = MultiByteToWideChar(CP_ACP, 0, buf, -1, NULL, 0);
 		amin(l, 2);
@@ -3184,8 +3184,8 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					break;
 				case 215: //run spy
 				{
-					convertA2T("spy.exe", s); //CreateProcessW can modify the contents of the string
-					createProcess(s, 0, false, true); //run at medium integrity level
+					convertA2T("spy.exe", spyexe); //CreateProcessW can modify the contents of the string
+					createProcess(spyexe, 0, false, true); //run at medium integrity level
 					break;
 				}
 				case 217: //category up
@@ -3416,7 +3416,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					case WM_LBUTTONDOWN:
 						PostMessage(hWin, WM_COMMAND, IsWindowVisible(hWin) ? 204 : 210, 0);
 						break;
-					case WM_RBUTTONDOWN:
+					case WM_RBUTTONUP: //must not be WM_RBUTTONDOWN because the taskbar menu would be displayed on Windows 10
 					{
 						SetForegroundWindow(popupVolume.hWnd);
 						POINT p;

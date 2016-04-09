@@ -10,6 +10,7 @@ HotkeyP
 - bìhem makra je vypnut Caps Lock
 
 opravené chyby:
+- kliknutí pravým tlaèítkem na ikonku v systémové lištì zobrazilo menu hlavního panelu ve Windows 10
 - "Vložit text" s parametrem %l byl oøíznut na 1024 znakù
 - "Lupa" po rychlém pohybu myši zùstala na místì
 - program Spy fungoval jen s 32bitovými procesy
