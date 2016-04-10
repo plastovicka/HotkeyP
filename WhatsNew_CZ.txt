@@ -1,7 +1,7 @@
 HotkeyP
 -------
 
-4.8
+4.8 (10.4.2016)
 - všechny texty jsou v Unicode, což se hodí hlavnì pro pøíkaz "Vložit text"
 - klávesové zkratky mají možnost "Spustit jako správce"
 - pøíkazy "Maximalizovat všechna okna", "Ukázat okno HotkeyP", "Obnovit hook"

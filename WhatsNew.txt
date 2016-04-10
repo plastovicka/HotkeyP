@@ -1,7 +1,7 @@
 HotkeyP
 -------
 
-4.8
+4.8 (2016-04-10)
 - all texts are Unicode, it's useful especially for the "Paste text" command
 - hotkeys have option "Run as administrator"
 - commands "Maximize all", "Show HotkeyP window", "Reload hook"

@@ -10,6 +10,7 @@
 extern TCHAR lang[64];
 
 TCHAR *lng(int i, char *s);
+WCHAR *lng(int i, WCHAR *s);
 void initLang();
 int setLang(int cmd);
 void loadLang();

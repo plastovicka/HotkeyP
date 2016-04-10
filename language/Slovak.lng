@@ -27,7 +27,7 @@
 507=Všetky súbory\0*.*\0Spustite¾né súbory\0*.exe;*.com;*.bat;*.scr\0
 508=Všetky súbory\0*.*\0
 509=Konfiguraèné súbory (*.reg)\0*.reg\0Všetky súbory\0*.*\0
-511=Obrázok (*.bmp)\0
+511=Obrázok (*.bmp)\0*.bmp\0
 
 ;dialog klávesová zkratka
 307=P&riorita procesu:
