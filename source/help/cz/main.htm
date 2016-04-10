@@ -30,7 +30,7 @@ Pokud zaškrtnete <u>Přidat do menu u ikony v systémové liště</u>, přidá 
 <p>
 Možnost <u>Automaticky spustit po startu Windows</u> funguje jen tehdy, když je také HotkeyP spouštěn po startu Windows a nebo když se HotkeyP spustí s parametrem 0.     
 <p>
-Možnost <u>Spustit jako správce</u> zaškrtněte, pokud aplikace vyžaduje administrátorská oprávnění. Tato možnost se používá pouze pokud je ve Windows v Ovládacích panelech povoleno tzv. řízení uživatelských účtů (ve výchozím nastavení to povolené je). Pokud HotkeyP není spuštěn jako správce, pak se po stisku klávesové zkratky objeví otravné okno "Řízení uživatelských účtů", ve kterém musíte kliknout na tlačítko Ano. Pokud HotkeyP je spuštěn jako správce, pak může po stisku klávesové zkratky danou aplikaci hned spustit.
+Možnost <u>Spustit jako správce</u> zaškrtněte, pokud aplikace vyžaduje administrátorská oprávnění. Tato možnost se používá pouze pokud je ve Windows v Ovládacích panelech povoleno tzv. řízení uživatelských účtů (ve výchozím nastavení to povolené je). Pokud HotkeyP není spuštěn jako správce, pak se po stisku klávesové zkratky objeví otravné okno "Řízení uživatelských účtů", ve kterém musíte kliknout na tlačítko Ano. Pokud HotkeyP je <a href="#admin">spuštěn jako správce</a>, pak může po stisku klávesové zkratky danou aplikaci hned spustit.
 <p>
 Do položky <u>Popis</u> napište text, který bude vidět v seznamu v hlavním okně. Pokud nic nezadáte, pak se bude zobrazovat název souboru bez cesty.
 <p>
@@ -46,7 +46,7 @@ Horizontální naklápění kolečka nefunguje ve Windows XP nebo starší.
 Pro kombinace více tlačítek si v možnostech nastavte "Zpoždění tlačítek myši", což znamená maximální dobu mezi stiskem jednotlivých tlačítek. Jestliže je interval mezi stiskem tlačítek delší, pak se myší zkratka vykoná také, ale zároveň se oknu pod kurzorem pošle informace o stisknutém tlačítku. Například když máte zkratku R+L, stisknete pravé tlačítko, počkáte dostatečně dlouhou dobu a pak přidáte levé tlačítko, vykoná se příkaz pro tuto zkratku a jakmile pustíte pravé tlačítko, zobrazí se kontextové menu. Když chcete pravým tlačítkem přesunout (drag&drop) soubory v průzkumníku, musíte po stisku pravého tlačítka chvíli počkat, dokud se soubor neoznačí, a teprve pak pohnout myší. Pro levé tlačítko myši je toto zpožďování vypnuto, protože drag&drop levým tlačítkem je často používaná operace. Zpožďována nejsou taková tlačítka, pro která není vytvořena žádná myší zkratka. Například po vytvoření zkratky R+L se začne zpožďovat pravé tlačítko, po vytvoření zkratky M+R se začne zpožďovat prostřední tlačítko. Protože ve hrách je zpoždění nepřijatelné, je možné ho pro některé aplikace zakázat - do editačního pole v možnostech napište názvy exe souborů (bez cesty) oddělené středníky.         
 
 <h2>Dálkové ovládání</h2>
-Zkratky lze přiřadit také tlačítkům na dálkovém ovládání, pokud je jeho přijímač připojen k počítači přes sériový port a máte nainstalován WinLIRC (<A href="http://winlirc.sourceforge.net">http://winlirc.sourceforge.net</A>). Když se vám podaří správně nakonfigurovat WinLIRC, pak v možnostech HotkeyP zadejte cestu k souboru winlirc.exe a zaškrtněte přepínač Povolit.
+Zkratky lze přiřadit také tlačítkům na dálkovém ovládání. K počítači musí být připojeno infračervené čidlo a zároveň musíte mít nainstalován WinLIRC (<A href="http://winlirc.sourceforge.net">http://winlirc.sourceforge.net</A>). Když se vám podaří správně nakonfigurovat WinLIRC, pak v možnostech HotkeyP zadejte cestu k souboru winlirc.exe a zaškrtněte přepínač Povolit.
 
 <h2>Uložení a uspořádání seznamu zkratek</h2>
 Při prvním spuštění programu musíte vybrat soubor, do kterého se budou klávesové zkratky ukládat. Od té chvíle se budou všechny provedené změny ukládat automaticky. Pokud se k systému Windows přihlašuje více uživatelů, může si každý z nich vytvořit svůj vlastní soubor.
@@ -138,12 +138,12 @@ Znovu ukáže ikonu v systémové liště, která byla předtím skryta příkaz
 <A NAME=93>
 <h3>Spustit službu</h3>
 Spustí systémovou službu. Parametr je krátký název služby (nikoli zobrazovaný název). Zjistíte ho tak, že v seznamu služeb (ve Správě počítače) dvakrát kliknete na službu. Například "Služba publikování ve WWW" má název W3SVC.
-<br>Tato funkce funguje jen když je HotkeyP spuštěn jako správce.
+<br>Tato funkce funguje jen když je HotkeyP <a href="#admin">spuštěn jako správce</a>.
 
 <A NAME=92>
 <h3>Zastavit službu</h3>
 Parametr je název služby podobně jako u příkazu <A href=#93>Spustit službu</A>.
-<br>Tato funkce funguje jen když je HotkeyP spuštěn jako správce.
+<br>Tato funkce funguje jen když je HotkeyP <a href="#admin">spuštěn jako správce</a>.
 
 <A NAME=6>
 <h3>Spořič obrazovky</h3>
@@ -253,7 +253,7 @@ Násilně ukončí právě běžící aplikaci. Tuto funkci použijte jen v př�
 
 <A NAME=20><A NAME=46><A NAME=47><A NAME=48><A NAME=49><A NAME=59><A NAME=60>
 <h3>Priorita procesu</h3>
-Změní prioritu procesu, kterému patří právě aktivní okno. Nejvyšší prioritu lze nastavit jen když je HotkeyP spuštěn jako správce.
+Změní prioritu procesu, kterému patří právě aktivní okno. Nejvyšší prioritu lze nastavit jen když je HotkeyP <a href="#admin">spuštěn jako správce</a>.
 
 <A NAME=83><A NAME=84>
 <h3>Předchozí aplikace, Další aplikace</h3>
@@ -384,7 +384,21 @@ Zakáží se zkratky dálkového ovládání. Když chcete také ukončit spojen
 <h3>Obnovit hook</h3>
 Tento příkaz je užitečný, když máte nainstalováno několik různých aplikací, které využívají klávesové zkratky. Pokud si jiná aplikace přivlastní klávesnici jen pro sebe a nepředává informaci o stisku kláves dále do HotkeyP, pak to tímto příkazem můžete opravit.
 
-<h2> Licence</h2>
+<A NAME=admin>
+<h2>Spuštění HotkeyP jako správce</h2>
+Jestliže máte Windows XP nebo starší a nebo máte vypnuto Řízení uživatelských účtů, pak tuto kapitolu můžete přeskočit.<br>
+Pokud na počítači občas spouštíte nějaké aplikace jako správce a chcete v nich používat klávesové zkratky z HotkeyP, pak by také HotkeyP měl být spuštěn jako správce. Aby se HotkeyP spouštěl při automaticky při zapnutí počítače, je třeba vytvořit naplánovanou úlohu:
+<ul>
+<li>V nabídce Start najděte Příkazový řádek, klikněte na něj pravým tlačítkem a spusťte ho jako správce.
+<li>Zkopírujte následující příkaz a vložte ho do příkazového řádku (v něm nahraďte Program Files složkou, kde máte naintalován HotkeyP):<br>
+<code>schtasks.exe /create /sc onlogon /tn HotkeyP /rl highest /tr "'C:\Program Files (x86)\HotkeyP\HotkeyP.exe' 0" /f</code>
+<li>Spusťte Plánovač úloh.
+<li>V levém panelu zvolte Knihovna plánovače úloh. Pak dvakrát klikněte na úlohu s názvem HotkeyP a zobrazí se její její vlastnosti.
+<li>Na kartě Nastavení zrušte přepínač "Zastavit úlohu, pokud běží déle než 3 dny" a klikněte na OK.
+<li>V HotkeyP v možnostech nesmí být zaškrtnuto "Spouštět automaticky při startu Windows".
+</ul>
+
+<h2>Licence</h2>
 Na tento program se vztahuje licence "GNU General Public License". Zde jsou uvedeny jen nejdůležitější body. Celé její znění (33KB, v angličtině) lze stáhnout z autorovy webové stránky nebo <a href="http://opensource.org/licenses">http://opensource.org/licenses</a>. 
 <ol>
 <li> Program je zdarma. Je povoleno ho kopírovat nebo distribuovat na CD, třeba spolu s jinými programy. 

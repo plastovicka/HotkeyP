@@ -98,9 +98,11 @@ modif,     //the file has been modified
  altDown,   //used for task switch
  pcLocked,
  editing,
- isWin9X,
- isVista,
- isWin64,
+ isWin9X, //Windows 98/ME
+ isWinXP, //Windows XP or newer
+ isVista, //Windows Vista or newer
+ isWin8,  //Windows 8 or newer
+ isWin64, //64bit
  disableAll,
  disableMouse,
  disableJoystick,
@@ -3909,6 +3911,8 @@ WinMain
 	GetVersionEx(&v);
 	isWin9X = v.dwPlatformId==VER_PLATFORM_WIN32_WINDOWS;
 	isVista = v.dwMajorVersion > 5;
+	isWinXP = isVista || v.dwMajorVersion == 5 && v.dwMinorVersion >= 1;
+	isWin8 = v.dwMajorVersion > 6 || v.dwMajorVersion == 6 && v.dwMinorVersion >= 2;
 	TIsWow64Process isWow64Process = (TIsWow64Process)GetProcAddress(GetModuleHandleA("kernel32.dll"), "IsWow64Process");
 	if(isWow64Process){
 		BOOL b;

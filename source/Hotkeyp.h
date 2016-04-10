@@ -183,7 +183,7 @@ extern HWND hWin, hWndLock, hWndLircState, hHotKeyDlg, hWndBeforeLock;
 extern LPARAM keyLastScan;
 extern DWORD idHookThreadK, idHookThreadM;
 extern POINT mousePos;
-extern bool modif, altDown, blockedKeys[256], pcLocked, isWin9X, isWin64, isVista, disableAll, disableMouse, disableJoystick, disableLirc, disableKeys, isHilited, editing, isZoom, preventWinMenu;
+extern bool modif, altDown, blockedKeys[256], pcLocked, isWin9X, isWin64, isWinXP, isVista, isWin8, disableAll, disableMouse, disableJoystick, disableLirc, disableKeys, isHilited, editing, isZoom, preventWinMenu;
 extern TCHAR volumeStr[256], *pcLockParam, notDelayApp[512], delayApp[512];
 extern TfileName iniFile, lockBMP, exeBuf;
 extern const TCHAR *subkey;
@@ -316,6 +316,9 @@ bool joyGlobalEnabled();
 tstring ExpandVars(tstring s);
 bool isElevated();
 BOOL CreateMediumIntegrityProcess(LPTSTR pszCommandLine, DWORD creationFlags, LPCTSTR dir, STARTUPINFO *si, PROCESS_INFORMATION *pi);
+DWORD getWindowThreadProcessId(HWND w, DWORD *pid);
+bool queryFullProcessImageName(DWORD pid, TCHAR *buf);
+bool queryProcessImageName(DWORD pid, TCHAR *buf);
 
 typedef BOOL(__stdcall *TSetSuspendState)(BOOL, BOOL, BOOL);
 typedef BOOL(__stdcall *TLockWorkStation)();

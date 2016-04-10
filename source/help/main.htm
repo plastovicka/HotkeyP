@@ -25,7 +25,7 @@ If you check the "<u>Add to the notification icon menu</u>", this hotkey will be
 <p>
 The checkbox "<u>Run automatically after Windows starts</u>" (in the Hot Key dialog box) works only if the HotkeyP is run automatically after the Windows starts, or if you start the HotkeyP manually with parameter 0.
 <p>
-You should check "<u>Run as administrator</u>" only if the application needs admin privileges. This option is useful if the User account control (UAC) is enabled in the Windows control panel (it is enabled by default). If the HotkeyP is not running as admin, annoying "User Account Control" dialog will be shown when the hotkey is pressed. If the HotkeyP is running as admin, it will be able to launch applications as administrator directly without consent.
+You should check "<u>Run as administrator</u>" only if the application needs admin privileges. This option is useful if the User account control (UAC) is enabled in the Windows control panel (it is enabled by default). If the HotkeyP is not running as admin, annoying "User Account Control" dialog will be shown when the hotkey is pressed. If the HotkeyP is <a href="#admin">running as admin</a>, it will be able to launch applications as administrator directly without consent.
 <p>
 Write description of the command to the "<u>Description:</u>" field. If you leave this note empty, the filename without path is used. The description is visible in the listbox in the main window.
 <p>
@@ -41,7 +41,7 @@ A horizontal wheel does not work on Windows XP or older.
 There is option "Delay mouse buttons" in the options dialog box. It is used for shortcuts which consist of two or more buttons. HotkeyP will delay only those buttons for which some shortcut exists. For example, if you create shortcut R+L, the right button will be delayed, if you create shortcut M+R, the middle button will be delayed. If the interval between mouse buttons is longer than the "Delay mouse buttons" value, the shortcut will be executed too, but a message about buttons press will be sent to a window under the mouse cursor. For example, if you have a shortcut R+L and you wait too long between buttons R and L, the shortcut will be executed and after you release the right button, a context menu will be shown. If you want to drag&drop files with the right button, press the right button, then you must wait until the file is selected and after that you can start moving the mouse. This behavior is disabled for the left button, because drag&drop with the left button is used very often. The buttons delay is not convenient for games, so there is option to disable it for some applications. Write exe file names without paths to the edit box, separate them by semicolons.     
 <p>
 <h2>Remote control</h2>
-Hotkeys can be defined for a remote control buttons, too. You have to install the WinLIRC (<A href="http://winlirc.sourceforge.net">http://winlirc.sourceforge.net</A>). Unfortunately it supports only remote control receivers connected to a serial port. After you install and configure WinLIRC, go to HotkeyP options, set path to winlirc.exe and check Enable.  
+Hotkeys can be defined for a remote control buttons, too. You have to install the WinLIRC (<A href="http://winlirc.sourceforge.net">http://winlirc.sourceforge.net</A>). After you install and configure WinLIRC, go to HotkeyP options, set path to winlirc.exe and check Enable.  
 
 <h2>Categories</h2>
 It is convenient to classify your hotkeys, especially if you have many hotkeys. There is a category panel at the left side of the HotkeyP window. Some categories are created automatically and cannot be modified (these categories are: keyboard, mouse, joystick, remote, commands, programs, documents, web links, autorun, tray menu). Besides them you can create your own categories. Select hotkeys which will be in a new category, then choose command "Assign to selected hotkeys" from the menu Category, write name of the new category and click OK. The command "Assign to selected hotkeys" is used not only for creating new categories, but also to move hotkeys from one category to another, just choose some existing category from the dropdown list. If you leave the category name empty, selected hotkeys will be moved to the category "default". If you delete a category, all hotkeys from that category will be moved to default category.
@@ -50,7 +50,7 @@ It is convenient to classify your hotkeys, especially if you have many hotkeys. 
 Hook is a procedure that is called whenever a key is pressed. You can disable the hook in the options, but then some multimedia keys (which are displayed as number in brackets) will not work and you will not be able to set hotkeys for CapsLock and Win+M, Win+E, Win+R etc. The hook is also required for "Macro" and "Paste text" commands to work properly. 
 If you check option "Use keyboard hook for all hotkeys", the hotkeys will work in games and other DirectX applications too. 
 <p>
-The hook doesn't work in applications which run as administrator if you have enabled the user account control (UAC).
+The hook doesn't work in applications which are running as administrator unless the HotkeyP is <a href="#admin">running as administrator</a> too.
 
 <h2>Internal commands</h2>
 
@@ -127,12 +127,12 @@ Shows an icon which has been previously hidden by a command <A href=#91>Hide tra
 <A NAME=93>
 <h3>Start service</h3>
 Runs a system service. The parameter is a service short name (not a visible name or description). The name can be found if you open the service list (in This computer / Manage) and then double-click an item in the list. 
-<br>This function works only if the HotkeyP is running as administrator.
+<br>This function works only if the HotkeyP is <a href="#admin">running as administrator</a>.
 
 <A NAME=92>
 <h3>Stop service</h3>
 Parameter is a service name, see <A href=#93>Start service</A> for more details.
-<br>This function works only if the HotkeyP is running as administrator.
+<br>This function works only if the HotkeyP is <a href="#admin">running as administrator</a>.
 
 <A NAME=6>
 <h3>Screen saver</h3>
@@ -240,7 +240,7 @@ Use this command to kill foreground application only if the application is not r
 
 <A NAME=20><A NAME=46><A NAME=47><A NAME=48><A NAME=49><A NAME=59><A NAME=60>
 <h3>Process priority</h3>
-Sets process priority of an active window. Real-time priority can be used only if the HotkeyP is running as administrator.
+Sets process priority of an active window. Real-time priority can be used only if the HotkeyP is <a href="#admin">running as administrator</a>.
 
 <A NAME=83><A NAME=84>
 <h3>Next task, Previous task</h3>
@@ -370,6 +370,20 @@ It disables remote control shortcuts, but it does not disconnect from WinLIRC. I
 <A NAME=114>
 <h3>Reload hook</h3>
 This command is useful if you have multiple keyboard applications installed and the other application captures keyboard input and does not forward keystrokes to the HotkeyP. If some keyboard shortcuts stop working in HotkeyP, you can you this command to repair it.
+
+<A NAME=admin>
+<h2>Run HotkeyP as administrator</h2>
+You can skip this chapter if you have Windows XP or older or if you have disabled the User account control.<br>
+If you use some applications which require administrator rights, you need run HotkeyP as administrator too. Otherwise some keyboard shortcuts and HotkeyP commands would not work (especially macro and paste text). If you want to start HotkeyP automatically at Windows startup, you have to create a task.
+<ul>
+<li>Find the Command prompt in the Start menu, click the right mouse button and select Run as administrator.
+<li>Copy this command and paste it into the command prompt (replace Program Files by path where the HotkeyP is installed):<br>
+<code>schtasks.exe /create /sc onlogon /tn HotkeyP /rl highest /tr "'C:\Program Files (x86)\HotkeyP\HotkeyP.exe' 0" /f</code>
+<li>Start the Task scheduler.
+<li>Select "Task scheduler library" in the left panel. Then double-click the HotkeyP task to show its properties.
+<li>Click on the Settings tab and disable the option "Stop the task if it runs longer than 3 days". Then click OK and close the task scheduler window.
+<li>Start HotkeyP and disable option "Start automatically at Windows startup".
+</ul>
 
 <h2>License</h2>
 This program is distributed under the terms of "GNU General Public License". You can get it from the author's web page or from <a href="http://opensource.org/licenses">http://opensource.org/licenses</a>. Here is only a short abstract of this license:
