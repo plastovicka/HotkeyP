@@ -88,6 +88,8 @@ struct TOKEN_MANDATORY_LABEL {
 	SID_AND_ATTRIBUTES Label;
 };
 
+#define PROCESS_QUERY_LIMITED_INFORMATION  (0x1000)  
+
 #endif
 
 #endif

@@ -171,25 +171,22 @@ void printKey(TCHAR *s, HotKey* hk)
 }
 
 //-------------------------------------------------------------------------
-bool CmpProcessPath(PROCESSENTRY32 *pe, TCHAR const *exe, TCHAR const *n1)  // zef: made const correct
+bool CmpProcessPath(PROCESSENTRY32 *pe, TCHAR const *exe, TCHAR const *n1)
 {
-	if(!_tcsnicmp(cutPath(pe->szExeFile), n1, 15)){
-		MODULEENTRY32 me;
-		me.dwSize = sizeof(MODULEENTRY32);
-		HANDLE h = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, pe->th32ProcessID);
-		if(h==(HANDLE)-1) return true;
-		Module32First(h, &me);
-		do{
-			TCHAR const *n2 = me.szExePath;
-			if(n1==exe) n2 = cutPath(n2);
-			if(!_tcsicmp(exe, n2)){
-				CloseHandle(h);
-				return true;
-			}
-		} while(Module32Next(h, &me));
-		CloseHandle(h);
+	//compare file name
+	if(isWinXP){
+		if(_tcsicmp(pe->szExeFile, n1)) return false; //not equal
+		if(n1==exe) return true; //exe parameter is without path
 	}
-	return false;
+	else{
+		if(_tcsnicmp(pe->szExeFile, n1, 15)) return false;
+	}
+	//compare full path
+	TCHAR buf[MAX_PATH];
+	if(!queryFullProcessImageName(pe->th32ProcessID, buf)) return true;
+	TCHAR const *n2 = buf;
+	if(n1==exe) n2 = cutPath(buf);
+	return !_tcsicmp(exe, n2);
 }
 
 //find PID of process which belongs to exe file
@@ -220,7 +217,7 @@ BOOL CALLBACK enumWin(HWND hWnd, LPARAM pid)
 	unsigned long id;
 	RECT rc;
 
-	if(GetWindowThreadProcessId(hWnd, &id) && id==(DWORD)pid){
+	if(getWindowThreadProcessId(hWnd, &id) && id==(DWORD)pid){
 		if(IsWindowVisible(hWnd)){
 			GetWindowRect(hWnd, &rc);
 			if(!IsRectEmpty(&rc)){
@@ -637,7 +634,7 @@ bool checkProcessList(TCHAR *list)
 {
 	HWND w= GetForegroundWindow();
 	DWORD pid;
-	if(w && GetWindowThreadProcessId(w, &pid)){
+	if(w && getWindowThreadProcessId(w, &pid)){
 		return checkProcessList(list, pid);
 	}
 	return false;
@@ -647,7 +644,7 @@ bool checkFullscreen(TCHAR *list)
 {
 	HWND w= GetForegroundWindow();
 	DWORD pid;
-	if(w && GetWindowThreadProcessId(w, &pid)){
+	if(w && getWindowThreadProcessId(w, &pid)){
 		RECT rc;
 		GetWindowRect(w, &rc);
 		if(rc.left<=0 && rc.top<=0 &&

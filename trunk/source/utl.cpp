@@ -152,3 +152,86 @@ BOOL CreateMediumIntegrityProcess(LPSTR exe, DWORD creationFlags, LPCSTR dir, ST
 	return CreateMediumIntegrityProcess(exew, creationFlags, dirw, reinterpret_cast<STARTUPINFOW*>(si), pi);
 }
 #endif
+
+//-------------------------------------------------------------------------
+
+static BOOL CALLBACK findChildPID(HWND hWnd, LPARAM lp)
+{
+	DWORD pid;
+	if(GetWindowThreadProcessId(hWnd, &pid) && pid != *(DWORD*)lp){
+		//return the first child which has different pid than parent window
+		*(DWORD*)lp = pid;
+		return FALSE;
+	}
+	return TRUE;
+}
+
+DWORD getWindowThreadProcessId(HWND w, DWORD *pid)
+{
+	DWORD tid = GetWindowThreadProcessId(w, pid);
+	if(tid && isWin8){
+		//universal apps are in a window of ApplicationFrameHost.exe on Windows 10
+		TCHAR buf[32];
+		if(GetClassName(w, buf, sizeA(buf)) && !_tcscmp(buf, _T("ApplicationFrameWindow")))
+			EnumChildWindows(w, findChildPID, (LPARAM)pid);
+	}
+	return tid;
+}
+
+bool queryFullProcessImageName(DWORD pid, TCHAR *buf)
+{
+#ifdef UNICODE
+	if(isVista){
+		typedef BOOL(__stdcall *Tfunc)(HANDLE, DWORD, LPWSTR, PDWORD);
+		static Tfunc queryFullProcessImageNameW;
+		if(!queryFullProcessImageNameW)
+			queryFullProcessImageNameW = (Tfunc)GetProcAddress(GetModuleHandleA("kernel32.dll"), "QueryFullProcessImageNameW");
+		if(queryFullProcessImageNameW){
+			HANDLE h = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
+			if(h){
+				DWORD size = MAX_PATH;
+				BOOL result = queryFullProcessImageNameW(h, 0, buf, &size);
+				CloseHandle(h);
+				if(result) return true;
+			}
+		}
+	}
+#endif
+
+	//the first module of the process
+	MODULEENTRY32 me;
+	me.dwSize = sizeof(MODULEENTRY32);
+	HANDLE h = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, pid);
+	if(h!=(HANDLE)-1){
+		BOOL result = Module32First(h, &me);
+		CloseHandle(h);
+		if(result){
+			_tcscpy(buf, me.szExePath);
+			return true;
+		}
+	}
+	//failed
+	*buf=0;
+	return false;
+}
+
+bool queryProcessImageName(DWORD pid, TCHAR *buf)
+{
+	//search all processes
+	HANDLE h = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+	if(h!=(HANDLE)-1){
+		PROCESSENTRY32 pe;
+		pe.dwSize = sizeof(PROCESSENTRY32);
+		Process32First(h, &pe);
+		do{
+			if(pe.th32ProcessID==pid){
+				_tcscpy(buf, pe.szExeFile);
+				CloseHandle(h);
+				return true;
+			}
+		} while(Process32Next(h, &pe));
+		CloseHandle(h);
+	}
+	//failed
+	return false;
+}

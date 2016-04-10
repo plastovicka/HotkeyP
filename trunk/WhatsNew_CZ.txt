@@ -11,7 +11,10 @@ HotkeyP
 
 opravené chyby:
 - kliknutí pravým tlaèítkem na ikonku v systémové lištì zobrazilo menu hlavního panelu ve Windows 10
+- nešlo zjistit název exe souboru u univerzálních aplikací ve Windows 10
+- "Informace" neobsahovaly cestu k exe souboru u 64bitových aplikací
 - "Vložit text" s parametrem %l byl oøíznut na 1024 znakù
+- druhý parametr pøíkazu "Makro aktivnímu oknu" byl omezen na 15 znakù
 - "Lupa" po rychlém pohybu myši zùstala na místì
 - program Spy fungoval jen s 32bitovými procesy
 

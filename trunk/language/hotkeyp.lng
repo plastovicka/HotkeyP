@@ -199,7 +199,7 @@
 747=%s is not a CD drive
 749=Cannot find folder or file %s
 750=Can't change priority
-759=Title: %s\r\nWindow Class: %s\r\nProcess: %s\r\nModule: %s\r\nPriority: %s\r\nMemory: %d KB
+759=Title: %s\r\nWindow Class: %s\r\nProcess: %s\r\nPath: %s\r\nPriority: %s\r\nMemory: %d KB
 751=Can't terminate process
 758=Invalid multi-command number
 765=Do you want to delete category '%s' ?

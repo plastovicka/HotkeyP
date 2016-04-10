@@ -358,7 +358,7 @@
 756=Chyba v %s\nÈíslo %d je moc velké
 757=Chyba v %s\nVícenásobnı vıskyt %d
 758=Chybné èíslo vícenásobného pøíkazu
-759=Titulek: %s\r\nTøída: %s\r\nProces: %s\r\nModul: %s\r\nPriorita: %s\r\nPamì: %d KB
+759=Titulek: %s\r\nTøída: %s\r\nProces: %s\r\nCesta: %s\r\nPriorita: %s\r\nPamì: %d KB
 760=Opravdu chcete smazat konfiguraèní údaje z registru ?
 761=Prùhlednost se dá zvolit jen u pøíkazù typu EXE
 762=Pøesouvat lze jen tehdy, je-li seznam setøídìn podle prvního sloupce. 

@@ -70,27 +70,6 @@ int startConnection(TCHAR *address, int port)
 }
 
 
-bool processExist(TCHAR *fn)
-{
-	PROCESSENTRY32 pe;
-	bool result=false;
-
-	fn=cutPath(fn);
-	pe.dwSize = sizeof(PROCESSENTRY32);
-	HANDLE h = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-	if(h!=(HANDLE)-1){
-		Process32First(h, &pe);
-		do{
-			if(!_tcsnicmp(cutPath(pe.szExeFile), fn, 15)){
-				result=true;
-				break;
-			}
-		} while(Process32Next(h, &pe));
-		CloseHandle(h);
-	}
-	return result;
-}
-
 int lircLoop()
 {
 	int n, i, err;
@@ -100,7 +79,7 @@ int lircLoop()
 	static DWORD lastTick;
 
 	//start WinLIRC.exe
-	if(!processExist(lircExe)){
+	if(!findProcess(lircExe)){
 		if(!createProcess(lircExe)) return 10;
 		Sleep(300);
 	}

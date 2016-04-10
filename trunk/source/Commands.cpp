@@ -554,7 +554,7 @@ BOOL CALLBACK enumWinStr(HWND hWnd, LPARAM param)
 	TfindWinInfo *data= (TfindWinInfo*)param;
 	TCHAR buf[512];
 
-	if(!data->pid || !GetWindowThreadProcessId(hWnd, &pid) || data->pid==pid){
+	if(!data->pid || !getWindowThreadProcessId(hWnd, &pid) || data->pid==pid){
 		e=0;
 		//compare window title
 		GetWindowText(hWnd, buf, sizeA(buf));
@@ -602,35 +602,26 @@ HWND getWindow(TCHAR *s)
 	return getWindow2(s, 0);
 }
 
+//return true if process pid is running from file exe
 bool checkProcess(DWORD pid, TCHAR *exe)
 {
-	static TCHAR lastExe[15];
+	static TCHAR lastPath[MAX_PATH];
+	static TCHAR *lastName = _T("");
 	static HANDLE lastProcess;
 	static DWORD lastPid;
-	PROCESSENTRY32 pe;
-	TCHAR const *result;
 
-	if(pid==lastPid){
-		result=lastExe;
-	}
-	else{
-		result=_T("");
-		pe.dwSize = sizeof(PROCESSENTRY32);
-		HANDLE h = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-		if(h!=(HANDLE)-1){
-			Process32First(h, &pe);
-			do{
-				if(pe.th32ProcessID==pid){
-					CloseHandle(lastProcess);
-					lastProcess=OpenProcess(PROCESS_QUERY_INFORMATION, 0, lastPid=pid);
-					_tcsncpy(lastExe, result=cutPath(pe.szExeFile), sizeA(lastExe));
-					break;
-				}
-			} while(Process32Next(h, &pe));
-			CloseHandle(h);
+	if(pid!=lastPid){
+		if(!queryFullProcessImageName(pid, lastPath) && !queryProcessImageName(pid, lastPath)){
+			//error
+			lastPid=0;
+			return false;
 		}
+		lastName=cutPath(lastPath);
+		CloseHandle(lastProcess);
+		//get process handle to lock pid
+		lastProcess=OpenProcess(isVista ? PROCESS_QUERY_LIMITED_INFORMATION : PROCESS_QUERY_INFORMATION, 0, lastPid=pid);
 	}
-	return !_tcsnicmp(result, cutPath(exe), 15);
+	return !_tcsicmp(exe, lastName) || !_tcsicmp(exe, lastPath);
 }
 
 
@@ -718,7 +709,7 @@ HWND checkWindow(TCHAR *s)
 		GetClassName(info.w, info.wndClass, sizeA(info.wndClass));
 		GetWindowText(info.w, info.title, sizeA(info.title));
 		info.pid=0;
-		GetWindowThreadProcessId(info.w, &info.pid);
+		getWindowThreadProcessId(info.w, &info.pid);
 		//parse expression
 		info.s=s;
 		bool b =checkWindowOr(&info);
@@ -838,7 +829,7 @@ bool cmdToWindow(int cmd, TCHAR *param)
 		result=true;
 		if(cmd!=30){
 			DWORD pid;
-			if(s3 && GetWindowThreadProcessId(w, &pid)){
+			if(s3 && getWindowThreadProcessId(w, &pid)){
 				w=getWindow2(s3, pid);
 			}
 			if(w){
@@ -905,7 +896,7 @@ BOOL CALLBACK hideProc(HWND w, LPARAM param)
 	TCHAR buf[16];
 
 	if(IsWindowVisible(w) &&
-		GetWindowThreadProcessId(w, &pid) && pid==info->pid){
+		getWindowThreadProcessId(w, &pid) && pid==info->pid){
 		if(!checkProcess(pid, _T("explorer.exe")) ||
 			GetClassName(w, buf, sizeA(buf)) && !_tcscmp(buf, _T("ExploreWClass"))){
 			HICON icon = (HICON)GetClassLongPtr(w, GCLP_HICONSM);
@@ -924,12 +915,12 @@ BOOL CALLBACK hideProc(HWND w, LPARAM param)
 
 void hideApp(HWND w, HideInfo *info)
 {
-	if(w && GetWindowThreadProcessId(w, &info->pid)){
+	if(w && getWindowThreadProcessId(w, &info->pid)){
 		info->icon=0;
 		//remember foreground window
 		info->activeWnd=w;
 		DWORD pid;
-		if(GetWindowThreadProcessId(info->activeWnd, &pid) && pid!=info->pid){
+		if(getWindowThreadProcessId(info->activeWnd, &pid) && pid!=info->pid){
 			info->activeWnd=0;
 		}
 		//hide all windows which belong to the same process as window w
@@ -940,15 +931,24 @@ void hideApp(HWND w, HideInfo *info)
 void getExeIcon(HideInfo *info)
 {
 	//get icon from the exe file
-	MODULEENTRY32 me;
-	me.dwSize = sizeof(MODULEENTRY32);
-	HANDLE h = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, info->pid);
-	if(h!=(HANDLE)-1){
-		Module32First(h, &me);
-		ExtractIconEx(me.szExePath, 0, 0, &info->icon, 1);
-		CloseHandle(h);
+	TCHAR buf[MAX_PATH];
+	if(queryFullProcessImageName(info->pid, buf))
+		ExtractIconEx(buf, 0, 0, &info->icon, 1);
+
+	if(!info->icon){
+		//get icon from window
+		ULONG_PTR icon = 0;
+		HWND w = info->activeWnd;
+		if(w){
+			if(!icon) icon= SendMessage(w, WM_GETICON, ICON_SMALL2, 0);
+			if(!icon) icon= SendMessage(w, WM_GETICON, ICON_SMALL, 0);
+			if(!icon) icon= SendMessage(w, WM_GETICON, ICON_BIG, 0);
+			if(!icon) icon= GetClassLongPtr(w, GCLP_HICONSM);
+			if(!icon) icon= GetClassLongPtr(w, GCLP_HICON);
+		}
+		if(!icon) icon= GetClassLongPtr(hWin, GCLP_HICONSM); //HotkeyP icon
+		info->icon= (HICON)icon;
 	}
-	if(!info->icon) info->icon = (HICON)GetClassLongPtr(hWin, GCLP_HICONSM);
 }
 
 void unhideApp(HideInfo *info)
@@ -1868,7 +1868,7 @@ void priority(int p)
 	w=getWindow(0);
 	if(w){
 		BOOL ok=FALSE;
-		if(GetWindowThreadProcessId(w, &pid)){
+		if(getWindowThreadProcessId(w, &pid)){
 			if((h=OpenProcess(PROCESS_SET_INFORMATION, 0, pid))!=0){
 				aminmax(p, 0, Npriority-1);
 				ok=SetPriorityClass(h, priorCnst[p]);
@@ -2324,37 +2324,15 @@ void wndInfo(HWND w)
 	int i;
 	HANDLE h;
 	HMODULE psapi;
-	HMODULE n;
 	TmemInfo getMemInfo;
 	PROCESS_MEMORY_COUNTERS m;
-	PROCESSENTRY32 pe;
-	MODULEENTRY32 me;
-	TCHAR *p, *e, *o, t[128], c[128];
+	TCHAR *p, t[128], c[128], name[MAX_PATH], path[MAX_PATH];
 
 	GetWindowText(w, t, sizeA(t));
 	GetClassName(w, c, sizeA(c));
-	GetWindowThreadProcessId(w, &pid);
-	n=(HMODULE)GetWindowLongPtr(w, GWLP_HINSTANCE);
-	e=_T("");
-	pe.dwSize = sizeof(PROCESSENTRY32);
-	h = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-	if(h!=(HANDLE)-1){
-		Process32First(h, &pe);
-		do{
-			if(pe.th32ProcessID==pid){ e=pe.szExeFile; break; }
-		} while(Process32Next(h, &pe));
-		CloseHandle(h);
-	}
-	o=_T("");
-	me.dwSize = sizeof(MODULEENTRY32);
-	h = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, pid);
-	if(h!=(HANDLE)-1){
-		Module32First(h, &me);
-		do{
-			if(me.hModule==n){ o=me.szExePath; break; }
-		} while(Module32Next(h, &me));
-		CloseHandle(h);
-	}
+	getWindowThreadProcessId(w, &pid);
+	queryProcessImageName(pid, name);
+	queryFullProcessImageName(pid, path);
 
 	p=_T("");
 	m.WorkingSetSize=0;
@@ -2372,8 +2350,8 @@ void wndInfo(HWND w)
 			if(priorCnst[i]==d) p=lng(700+i, priorTab[i]);
 		}
 	}
-	msg1(MB_OK, lng(759, "Title: %s\r\nWindow Class: %s\r\nProcess: %s\r\nModule: %s\r\nPriority: %s\r\nMemory: %d KB"),
-		t, c, e, o, p, m.WorkingSetSize/1024);
+	msg1(MB_OK, lng(759, "Title: %s\r\nWindow Class: %s\r\nProcess: %s\r\nPath: %s\r\nPriority: %s\r\nMemory: %d KB"),
+		t, c, name, path, p, m.WorkingSetSize/1024);
 }
 
 //Windows 7 and later have "show desktop" button (next to the clock) which activates hidden WorkerW window
@@ -2479,7 +2457,7 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 		case 11: //kill process
 			w=getWindow(param);
 			if(w){
-				if(GetWindowThreadProcessId(w, &pid)){
+				if(getWindowThreadProcessId(w, &pid)){
 					if((h=OpenProcess(PROCESS_TERMINATE, 0, pid))!=0){
 						ok= TerminateProcess(h, (UINT)-1);
 						CloseHandle(h);
@@ -2929,15 +2907,17 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 		case 102: //minimize to system tray
 			if(noCmdLine(param)) break;
 			w=getWindow(param);
-			if(w==hWin && trayicon){
+			if(w==hWin && trayicon){ //HotkeyP window
 				hideMainWindow();
 			}
 			else if(w && IsWindowVisible(w)){
 				TCHAR title[64];
 				GetWindowText(w, title, 64);
+				//find free slot in array
 				for(i=0; i<sizeA(trayIconA); i++){
 					HideInfo *info = &trayIconA[i];
 					if(!info->pid){
+						//hide application and add icon
 						hideApp(w, info);
 						getExeIcon(info);
 						addTrayIcon(title, info->icon, 100+i);
