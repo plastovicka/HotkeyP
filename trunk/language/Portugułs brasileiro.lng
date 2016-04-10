@@ -157,7 +157,7 @@
 507=Todos os arquivos\0*.*\0Executáveis\0*.exe;*.com;*.bat;*.scr\0
 508=Todos os arquivos\0*.*\0
 509=Arquivos do Registro (*.reg)\0*.reg\0Todos os arquivos\0*.*\0
-511=Imagem BMP (*.bmp)\0
+511=Imagem BMP (*.bmp)\0*.bmp\0
 
 719=Mouse
 743=Não foi possível executar o %s !

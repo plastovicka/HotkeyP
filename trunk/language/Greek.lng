@@ -156,7 +156,7 @@
 507=All files\0*.*\0Executable files\0*.exe;*.com;*.bat;*.scr\0
 508=All files\0*.*\0
 509=Αρχεία διαμόρφωσης (*.reg)\0*.reg\0All files\0*.*\0
-511= Αρχείο BMP (*.bmp)\0
+511= Αρχείο BMP (*.bmp)\0*.bmp\0
 
 719=Ποντίκι
 743=Αδυναμία εκτέλεσης %s

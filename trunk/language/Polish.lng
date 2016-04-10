@@ -156,7 +156,7 @@
 507=Wszystkie pliki\0*.*\0Pliki wykonywalne\0*.exe;*.com;*.bat;*.scr\0
 508=Wszystkie pliki\0*.*\0
 509=Pliki konfig (*.reg)\0*.reg\0Wszystkie pliki\0*.*\0
-511=Pliki BMP (*.bmp)\0
+511=Pliki BMP (*.bmp)\0*.bmp\0
 
 719=Mysz
 743=Nie mo¿na uruchomiæ %s

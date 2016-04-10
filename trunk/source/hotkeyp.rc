@@ -133,7 +133,7 @@ BEGIN
     ICON            1,-1,83,20,20,20
     CTEXT           "Version",301,31,24,28,9
     LTEXT           "",101,61,24,15,8
-    CTEXT           "(C) 2003-2014  Petr Lastovicka",300,4,48,104,10
+    CTEXT           "(C) 2003-2016  Petr Lastovicka",300,4,48,104,10
     PUSHBUTTON      "http://petr.lastovicka.sweb.cz",123,7,64,99,11
 END
 

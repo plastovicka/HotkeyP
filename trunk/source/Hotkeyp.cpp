@@ -894,12 +894,12 @@ void langChanged()
 		SetWindowText(GetDlgItem(hWin, b->cmd), lng(b->langId, b->caption));
 	}
 	//file filters
-	htkOfn.lpstrFilter=lng(506, "Hotkeys (*.htk)\0*.htk\0All files\0*.*\0");
-	exeOfn.lpstrFilter=lng(507, "All files\0*.*\0Executable files\0*.exe;*.com;*.bat;*.scr\0");
-	argOfn.lpstrFilter=lng(508, "All files\0*.*\0");
-	regOfn.lpstrFilter=lng(509, "Config files (*.reg)\0*.reg\0All files\0*.*\0");
-	snapOfn.lpstrFilter=lng(511, "Bitmap images (*.bmp)\0*.bmp\0");
-	wavOfn.lpstrFilter = lng(512, "Waveform audio (*.wav)\0*.wav\0");
+	htkOfn.lpstrFilter=lng(506, _T("Hotkeys (*.htk)\0*.htk\0All files\0*.*\0"));
+	exeOfn.lpstrFilter=lng(507, _T("All files\0*.*\0Executable files\0*.exe;*.com;*.bat;*.scr\0"));
+	argOfn.lpstrFilter=lng(508, _T("All files\0*.*\0"));
+	regOfn.lpstrFilter=lng(509, _T("Config files (*.reg)\0*.reg\0All files\0*.*\0"));
+	snapOfn.lpstrFilter=lng(511, _T("Bitmap images (*.bmp)\0*.bmp\0"));
+	wavOfn.lpstrFilter = lng(512, _T("Waveform audio (*.wav)\0*.wav\0"));
 	//ListView
 	LV_COLUMN lvc;
 	static char *colNames[]={"", "Key", "Description"};

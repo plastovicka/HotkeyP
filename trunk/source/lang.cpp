@@ -19,10 +19,6 @@
 #define MAXLNGSTR 1500
 #endif
 
-#ifndef MAXLNG_PARALLEL
-#define MAXLNG_PARALLEL 16
-#endif
-
 extern char *cmdNames[];
 
 //---------------------------------------------------------------------------
@@ -30,26 +26,23 @@ const int MAXLANG=60;
 TCHAR lang[64];         //current language name
 TCHAR *langFile;        //file content (\n replaced with \0)
 TCHAR *lngstr[MAXLNGSTR];   //pointers to lines in langFile
+TCHAR *lngstrEng[MAXLNGSTR]; //English Unicode strings
 TCHAR *lngNames[MAXLANG+1]; //all found languages names
-static TCHAR *recycl[MAXLNG_PARALLEL]; //temporary buffers for Unicode strings
 extern bool isWin9X;
 //-------------------------------------------------------------------------
 #define sizeA(A) (sizeof(A)/sizeof(*A))
 
 TCHAR *lng(int i, char *s)
 {
-	if(i>=0 && i<sizeA(lngstr) && lngstr[i]) return lngstr[i];
+	if(i<0 || i>=MAXLNGSTR) return _T("");
+	if(lngstr[i]) return lngstr[i];
 #ifdef UNICODE
 	if(!s) return 0;
-	static int ind;
-	int len=strlen(s)+1;
-	TCHAR *w= new TCHAR[len];
-	MultiByteToWideChar(CP_ACP, 0, s, -1, w, len);
-	delete[] recycl[ind];
-	recycl[ind]=w;
-	ind++;
-	if(ind==sizeA(recycl)) ind=0;
-	return w;
+	if(!lngstrEng[i]) {
+		int len=strlen(s)+1;
+		MultiByteToWideChar(CP_ACP, 0, s, -1, lngstrEng[i] = new TCHAR[len], len);
+	}
+	return lngstrEng[i];
 #else
 	return s;
 #endif
