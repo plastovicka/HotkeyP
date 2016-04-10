@@ -15,6 +15,7 @@ fixed bugs:
 - "Information" about a window could not get full path of 64-bit processes
 - "Paste text" with parameter %l truncated text to 1024 characters
 - the second parameter of "Macro to active window" could not be longer than 15 characters
+- "Minimize to tray" did not work for the Explorer
 - "Magnifier" lost focus after quick mouse movement
 - the Spy application worked only with 32-bit processes
 

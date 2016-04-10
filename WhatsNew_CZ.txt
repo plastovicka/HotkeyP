@@ -15,6 +15,7 @@ opravené chyby:
 - "Informace" neobsahovaly cestu k exe souboru u 64bitových aplikací
 - "Vložit text" s parametrem %l byl oøíznut na 1024 znakù
 - druhý parametr pøíkazu "Makro aktivnímu oknu" byl omezen na 15 znakù
+- "Minimalizovat do tray" nefungovalo pro Prùzkumníka
 - "Lupa" po rychlém pohybu myši zùstala na místì
 - program Spy fungoval jen s 32bitovými procesy
 

@@ -897,11 +897,13 @@ BOOL CALLBACK hideProc(HWND w, LPARAM param)
 
 	if(IsWindowVisible(w) &&
 		getWindowThreadProcessId(w, &pid) && pid==info->pid){
-		if(!checkProcess(pid, _T("explorer.exe")) ||
-			GetClassName(w, buf, sizeA(buf)) && !_tcscmp(buf, _T("ExploreWClass"))){
-			HICON icon = (HICON)GetClassLongPtr(w, GCLP_HICONSM);
-			if(icon && (!info->icon || w==info->activeWnd)){
-				info->icon= icon;
+		if(!checkProcess(pid, _T("explorer.exe")) || 
+			//find all normal explorer windows (not desktop), ExploreWClass is on Windows XP or older after Browse context menu command
+			GetClassName(w, buf, sizeA(buf)) && (!_tcscmp(buf, _T("CabinetWClass")) || !_tcscmp(buf, _T("ExploreWClass"))))
+		{
+			if(!info->icon || w==info->activeWnd){
+				HICON icon = (HICON)GetClassLongPtr(w, GCLP_HICONSM);
+				if(icon) info->icon= icon;
 			}
 			ShowWindowAsync(w, SW_HIDE);
 			WndItem *i = new WndItem();
@@ -917,6 +919,7 @@ void hideApp(HWND w, HideInfo *info)
 {
 	if(w && getWindowThreadProcessId(w, &info->pid)){
 		info->icon=0;
+		info->mustDestroyIcon=false;
 		//remember foreground window
 		info->activeWnd=w;
 		DWORD pid;
@@ -933,17 +936,14 @@ void getExeIcon(HideInfo *info)
 	//get icon from the exe file
 	TCHAR buf[MAX_PATH];
 	if(queryFullProcessImageName(info->pid, buf))
-		ExtractIconEx(buf, 0, 0, &info->icon, 1);
+		if(ExtractIconEx(buf, 0, 0, &info->icon, 1)>0) info->mustDestroyIcon=true;
 
 	if(!info->icon){
 		//get icon from window
 		ULONG_PTR icon = 0;
 		HWND w = info->activeWnd;
 		if(w){
-			if(!icon) icon= SendMessage(w, WM_GETICON, ICON_SMALL2, 0);
-			if(!icon) icon= SendMessage(w, WM_GETICON, ICON_SMALL, 0);
-			if(!icon) icon= SendMessage(w, WM_GETICON, ICON_BIG, 0);
-			if(!icon) icon= GetClassLongPtr(w, GCLP_HICONSM);
+			icon= SendMessage(w, WM_GETICON, ICON_SMALL2, 0);
 			if(!icon) icon= GetClassLongPtr(w, GCLP_HICON);
 		}
 		if(!icon) icon= GetClassLongPtr(hWin, GCLP_HICONSM); //HotkeyP icon
@@ -962,6 +962,8 @@ void unhideApp(HideInfo *info)
 		delete i0;
 	}
 	info->list=0;
+	if(info->mustDestroyIcon) DestroyIcon(info->icon);
+	info->icon=0;
 	info->pid=0;
 	SetForegroundWindow(info->activeWnd);
 }
@@ -969,8 +971,10 @@ void unhideApp(HideInfo *info)
 void unhideAll()
 {
 	for(int i=0; i<sizeA(trayIconA); i++){
-		deleteTrayIcon(i+100);
-		unhideApp(&trayIconA[i]);
+		if(trayIconA[i].pid){
+			deleteTrayIcon(i+100);
+			unhideApp(&trayIconA[i]);
+		}
 	}
 	unhideApp(&hiddenApp);
 	if(hiddenWin) ShowWindowAsync(hiddenWin, SW_SHOW);
