@@ -180,12 +180,17 @@ DWORD getWindowThreadProcessId(HWND w, DWORD *pid)
 
 bool queryFullProcessImageName(DWORD pid, TCHAR *buf)
 {
-#ifdef UNICODE
 	if(isVista){
-		typedef BOOL(__stdcall *Tfunc)(HANDLE, DWORD, LPWSTR, PDWORD);
+		//Windows Vista or later
+		typedef BOOL(__stdcall *Tfunc)(HANDLE, DWORD, LPTSTR, PDWORD);
 		static Tfunc queryFullProcessImageNameW;
 		if(!queryFullProcessImageNameW)
-			queryFullProcessImageNameW = (Tfunc)GetProcAddress(GetModuleHandleA("kernel32.dll"), "QueryFullProcessImageNameW");
+			queryFullProcessImageNameW = (Tfunc)GetProcAddress(GetModuleHandleA("kernel32.dll"),
+#ifdef UNICODE
+				"QueryFullProcessImageNameW");
+#else
+				"QueryFullProcessImageNameA");
+#endif
 		if(queryFullProcessImageNameW){
 			HANDLE h = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
 			if(h){
@@ -196,19 +201,44 @@ bool queryFullProcessImageName(DWORD pid, TCHAR *buf)
 			}
 		}
 	}
-#endif
 
-	//the first module of the process
+	if(!isWin9X){
+		//Windows XP or Windows 2000
+		typedef DWORD(__stdcall *TGetModuleFileNameEx)(HANDLE, HMODULE, LPTSTR, DWORD);
+		static TGetModuleFileNameEx getModuleFileNameEx;
+		if(!getModuleFileNameEx){
+			getModuleFileNameEx= (TGetModuleFileNameEx)GetProcAddress(LoadLibraryA("psapi.dll"),
+#ifdef UNICODE
+				"GetModuleFileNameExW");
+#else
+				"GetModuleFileNameExA");
+#endif
+		}
+		if(getModuleFileNameEx){
+			HANDLE h = OpenProcess(PROCESS_QUERY_INFORMATION|PROCESS_VM_READ, FALSE, pid);
+			if(h){
+				BOOL result = getModuleFileNameEx(h, 0, buf, MAX_PATH);
+				CloseHandle(h);
+				if(result) return true;
+			}
+		}
+	}
+
+	//search modules, it works only for 32-bit processes
 	MODULEENTRY32 me;
 	me.dwSize = sizeof(MODULEENTRY32);
 	HANDLE h = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, pid);
 	if(h!=(HANDLE)-1){
-		BOOL result = Module32First(h, &me);
+		if(Module32First(h, &me))
+			do{
+				TCHAR *ext= _tcsrchr(me.szExePath, 0) - 4;
+				if(_tcsicmp(ext, _T(".dll")) && _tcsicmp(ext, _T(".drv"))){ //ignore dll modules
+					_tcscpy(buf, me.szExePath);
+					CloseHandle(h);
+					return true;
+				}
+			} while(Module32Next(h, &me));
 		CloseHandle(h);
-		if(result){
-			_tcscpy(buf, me.szExePath);
-			return true;
-		}
 	}
 	//failed
 	*buf=0;

@@ -93,6 +93,7 @@ struct HideInfo
 	HWND activeWnd;
 	DWORD pid;
 	HICON icon;
+	bool mustDestroyIcon;
 };
 
 struct TendpointName

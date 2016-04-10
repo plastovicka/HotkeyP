@@ -179,7 +179,9 @@ bool CmpProcessPath(PROCESSENTRY32 *pe, TCHAR const *exe, TCHAR const *n1)
 		if(n1==exe) return true; //exe parameter is without path
 	}
 	else{
-		if(_tcsnicmp(pe->szExeFile, n1, 15)) return false;
+		//szExeFile is truncated to 15 characters on Windows 2000
+		//szExeFile is with full path on Windows 98
+		if(_tcsnicmp(cutPath(pe->szExeFile), n1, 15)) return false;
 	}
 	//compare full path
 	TCHAR buf[MAX_PATH];
