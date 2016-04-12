@@ -12,6 +12,7 @@
 312=Activer automatiquement au démarrage de Windows
 313=Confirmer l'exécution du raccourci
 314=Catégorie :
+317=Démarrer en tant qu'Administrateur
 306=Nom :
 1=OK
 2=Annuler
@@ -352,3 +353,6 @@
 1105=Supprimer les fichiers temporaires
 1106=Sauver la position des icônes du Bureau
 1107=Restaurer la position des icônes du Bureau
+1112=Agrandir tout
+1113=Afficher la fenêtre HotkeyP
+1114=Redémarrer hook 
