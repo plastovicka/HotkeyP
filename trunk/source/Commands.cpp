@@ -1937,10 +1937,10 @@ BOOL CALLBACK enumMinimize(HWND hWnd, LPARAM)
 	return TRUE;
 }
 
-BOOL CALLBACK enumMaximize(HWND hWnd, LPARAM)
+BOOL CALLBACK enumMaximize(HWND hWnd, LPARAM ignore)
 {
 	LONG s=GetWindowLong(hWnd, GWL_STYLE);
-	if((s&WS_MAXIMIZEBOX) && IsWindowVisible(hWnd))
+	if((s&WS_MAXIMIZEBOX) && IsWindowVisible(hWnd) && (LPARAM)hWnd!=ignore)
 	{
 		HWND owner=GetWindow(hWnd, GW_OWNER);
 		if(owner)
@@ -2555,6 +2555,7 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 				if(!*param) hiddenWin=w;
 				ShowWindowAsync(w, IsWindowVisible(w) ? SW_HIDE : SW_SHOW);
 			}
+			modifyTrayIcon();
 			break;
 		case 94: //macro to active window
 		case 904://down
@@ -2907,6 +2908,7 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 			else{
 				hideApp(getWindow(param), &hiddenApp);
 			}
+			modifyTrayIcon();
 			break;
 		case 102: //minimize to system tray
 			if(noCmdLine(param)) break;
@@ -2981,7 +2983,11 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 			}
 			break;
 		case 112: //maximize all
-			EnumWindows(enumMaximize, 0);
+			w=GetForegroundWindow();
+			EnumWindows(enumMaximize, (LPARAM)w);
+			Sleep(100);
+			enumMaximize(w, 0);
+			SetForegroundWindow(w);
 			break;
 		case 113: //Show HotkeyP window
 			SendMessage(hWin, WM_COMMAND, 210, 0);
