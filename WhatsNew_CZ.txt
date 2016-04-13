@@ -1,5 +1,11 @@
 HotkeyP
 -------
+- zrušena zkratka Ctrl+N, která smazala všechny zkratky
+
+opravené chyby:
+- možnost "Pøed spuštìním pøíkazu chvíli poèkat" deaktivovala aktuální okno
+- "Maximalizovat všechna okna" náhodnì aktivovalo jiné okno
+- dotaz pøed "Skrýt aplikaci" nebo "Skrýt okno" zpùsobil, že se ikona nezmìnila na žlutou
 
 4.8 (10.4.2016)
 - všechny texty jsou v Unicode, což se hodí hlavnì pro pøíkaz "Vložit text"
