@@ -410,7 +410,7 @@ BEGIN
     BEGIN
         MENUITEM "&Open hotkeys...\tCtrl+O",    201
         MENUITEM "&Save hotkeys...\tCtrl+S",    202
-        MENUITEM "&Delete hotkeys\tCtrl+N",     207
+        MENUITEM "&Delete all hotkeys",     207
         MENUITEM SEPARATOR
         MENUITEM "O&pen settings...\tCtrl+I",   213
         MENUITEM "S&ave settings...\tCtrl+E",   214
@@ -634,7 +634,6 @@ BEGIN
     "X",            203,                    VIRTKEY, ALT
     VK_ESCAPE,      204,                    VIRTKEY 
     "F",            206,                    VIRTKEY, CONTROL
-    "N",            207,                    VIRTKEY, CONTROL
     VK_F1,          208,                    VIRTKEY 
     "M",            212,                    VIRTKEY, CONTROL
     "I",            213,                    VIRTKEY, CONTROL
