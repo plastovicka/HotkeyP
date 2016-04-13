@@ -136,10 +136,13 @@ void delayAndExecuteHotKey(HINSTANCE instance, HWND parent, int hotKeyIndex)
 			// box and invoke the dialog box.  Note: this is modal and will not
 			// return until the dialog box closes.
 			pCancelCmdHotKey = hk;
+			HWND wnd = GetForegroundWindow();
 			INT_PTR results = DialogBox(instance, _T("CNTDOWN"), parent, cntDownCallback);
+			SetForegroundWindow(wnd);
 			// No protection needed here since only one thread can get in.
 			delayDialogActive = false;
 			if(results != IDOK) return;
+			Sleep(100);
 		}
 		if(hk != &hotKeyA[hotKeyIndex]) return;
 	}
