@@ -1,6 +1,6 @@
 #CP1250
-; Translated by Tibor Kozma (tibor.kozma@gmail.com)
-; Last update - 13.06.2008 
+; Translated by Tibor Kozma
+; Last update - 14.04.2016 for v4.8
 
 ;súbor s nápovedou
 13=language\\cz.chm
@@ -11,7 +11,7 @@
 301=Verzia
 
 1=OK
-2=Storno
+2=Zruši
 7=Nápoveda
 
 ;tlaèidlá v hlavnom okne
@@ -28,6 +28,7 @@
 508=Všetky súbory\0*.*\0
 509=Konfiguraèné súbory (*.reg)\0*.reg\0Všetky súbory\0*.*\0
 511=Obrázok (*.bmp)\0*.bmp\0
+512=Zvuk (*.wav)\0*.wav\0
 
 ;dialog klávesová zkratka
 307=P&riorita procesu:
@@ -89,10 +90,6 @@
 366=spustené
 367=nespustené
 368=Hook pouíva
-396=&nikdy
-397=len pre s&ystémove klávesy
-398=&len pre multimediálne klávesy
-399=p&re všetky klávesové skratky
 385=Neoneskorova nasledu&júce aplikácie:
 386=Obnovova &hook kadıch
 387=&Prah citlivosti:
@@ -104,6 +101,10 @@
 393=&Vertikálna os:
 394=Èíslo &joysticku:
 395=N&ezobrazova heslo
+396=&nikdy
+397=len pre špeciálne s&ystémové klávesy
+398=len pre systémové a m&ultimediálne klávesy
+399=p&re všetky klávesové skratky
 
 ;Zamknutie poèítaèa
 370=Staré heslo:
@@ -113,6 +114,8 @@
 
 ;Premenovanie kategórie
 374=Názov:
+
+550=Bude vykonanı následujúci príkaz.\n\nAk ste klávesovú skratku stlaèili omylom, kliknite na Zruši alebo stlaète Esc a akcia bude prerušená.
 
 ;priority procesov
 700=nízka
@@ -139,6 +142,7 @@
 12=Klávesová skratka
 20=Premenova kategóriu
 21=Presunú oznaèené skratky do kategórie
+22=Preruši akciu
 
 15=Hlavné
 16=Príkazy
@@ -319,6 +323,11 @@
 1107=Obnovi pozície ikon na ploche
 1108=Horizontálne koliesko
 1109=Bezpeène odobra zariadenie
+1110=Prieh¾adnos -
+1111=Prieh¾adnos +
+1112=Maximalizova všetky okná
+1113=Ukáza okno HotkeyP
+1114=Obnovi hook
 
 ;texty pouité v programe, chybové hlásenia
 730=Nie je moné otvori súbor %s

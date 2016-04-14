@@ -355,4 +355,11 @@
 1107=Restaurer la position des icônes du Bureau
 1112=Agrandir tout
 1113=Afficher la fenêtre HotkeyP
-1114=Redémarrer hook 
+1114=Redémarrer hook
+315=Son :
+512=format audio (*.wav)\0*.wav\0
+316=Veuillez patientez durant l'exécution du raccourci
+22=Opération annulée
+550=La commande suivante est sur le point d' être exécutée.\n\n Pour annuler l'exécution , cliquez sur " Annuler ". (Sinon, soyez prêt pour les conséquences !)
+1110=Opacité +
+1111=Opacité -
