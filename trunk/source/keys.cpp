@@ -16,7 +16,7 @@ delayButtons=-1,
 bool preventWinMenu;
 
 HMODULE klib;
-TCHAR passwd[Dpasswd];
+char passwd[Dpasswd];
 int passwdLen;
 BYTE password[Dpasswd];
 
@@ -864,12 +864,12 @@ LPARAM clickFromHook(WPARAM mesg, LPARAM lP)
 	return 0;
 }
 
-TCHAR IgnoreLeftRight(LPARAM vk)
+char IgnoreLeftRight(LPARAM vk)
 {
 	if(vk==VK_LSHIFT || vk==VK_RSHIFT) return VK_SHIFT;
 	if(vk==VK_LCONTROL || vk==VK_RCONTROL) return VK_CONTROL;
 	if(vk==VK_LMENU || vk==VK_RMENU) return VK_MENU;
-	return (TCHAR)vk;
+	return (char)vk;
 }
 
 

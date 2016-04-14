@@ -300,7 +300,7 @@ DWORD WINAPI hookProc(LPVOID);
 void messageToHook(UINT mesg, WPARAM wP, bool mouse);
 bool unDelayButtons();
 
-extern "C" int encrypt(BYTE *out, int outLen, TCHAR *in, int inLen, int alg);
+extern "C" int encrypt(BYTE *out, int outLen, char *in, int inLen, int alg);
 
 int helpProcess();
 bool showHelp(int anchorId);

@@ -1779,7 +1779,7 @@ int findCmd(const TCHAR *s)
 	return -1;
 }
 //-------------------------------------------------------------------------
-static TCHAR inputText[3][Dpasswd];
+static char inputText[3][Dpasswd];
 static int inputLen[3];
 
 BOOL CALLBACK passwdClassProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
@@ -1795,7 +1795,7 @@ BOOL CALLBACK passwdClassProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 				if(len>0) len--;
 			}
 			else if(wP!=VK_MENU && len<Dpasswd){
-				inputText[i][len++]=(TCHAR)wP;
+				inputText[i][len++]=(char)wP;
 			}
 			for(j=0; j<Dpasswd; j++) buf[j]='*';
 			buf[len]=0;
