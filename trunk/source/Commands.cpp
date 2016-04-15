@@ -115,7 +115,7 @@ void keyDown1(int c)
 	}
 	if(keyWin){
 		PostMessage(keyWin, shifts[shAlt] ? WM_SYSKEYDOWN : WM_KEYDOWN, c, 1|(vkToScan(c)<<16));
-		Sleep(1);
+		Sleep(isShiftKey(c) ? 10 : 1);
 	}
 }
 
