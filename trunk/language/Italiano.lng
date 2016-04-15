@@ -362,3 +362,8 @@
 1112=Massimizza tutto
 1113=Mostra finestra di HotkeyP
 1114=Ricarica
+315=Suono:
+512=Forma d'onda audio (*.wav)\0*.wav\0
+316=Attendere prima di eseguire questa scorciatoia
+22=Annulla operazione
+550=Il seguente comando sta per essere eseguito.\n\n Se non vuoi eseguirlo clicca su "Annulla" per annullare l'operazione. (In caso contrario, vai avanti a tuo rischio!)

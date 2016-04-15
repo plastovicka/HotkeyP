@@ -1,6 +1,6 @@
 #CP1250
 ; Translated by Tibor Kozma
-; Last update - 14.04.2016 for v4.8
+; Last update - 15.04.2016 for v4.8
 
 ;súbor s nápovedou
 13=language\\cz.chm
@@ -43,6 +43,9 @@
 312=&Automaticky spusti po štarte Windows
 313=&Pred spustením príkazu sa spıta
 314=Kate&gória:
+315=Zvuk:
+316=Pred spustením príkazu chví¾u poèka
+317=Spusti ako správca 
 
 ;monosti
 320=Zobrazi ikonu v &systémovej lište
