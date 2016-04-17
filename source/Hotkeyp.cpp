@@ -431,7 +431,7 @@ void cutQuot(TCHAR *&s)
 //s2 is ASCII
 bool strnicmpA(TCHAR *s1, char *s2)
 {
-	for(; ; s1++, s2++)
+	for(;; s1++, s2++)
 	{
 		int c2 = *s2;
 		if(!c2) return false; //equal
@@ -1656,7 +1656,7 @@ bool saveAtExit()
 	return true;
 }
 //-------------------------------------------------------------------------
-DWORD getVer()
+VS_FIXEDFILEINFO *getVer()
 {
 	HRSRC r;
 	HGLOBAL h;
@@ -1668,20 +1668,21 @@ DWORD getVer()
 	h=LoadResource(0, r);
 	s=LockResource(h);
 	if(!s || !VerQueryValue(s, _T("\\"), (void**)&v, &i)) return 0;
-	return v->dwFileVersionMS;
+	return v;
 }
 
 //procedure for AboutBox
 BOOL CALLBACK AboutProc(HWND hWnd, UINT msg, WPARAM wP, LPARAM)
 {
 	char buf[48];
-	DWORD d;
+	VS_FIXEDFILEINFO *v;
 
 	switch(msg){
 		case WM_INITDIALOG:
 			setDlgTexts(hWnd, 11);
-			d=getVer();
-			sprintf(buf, "%d.%d", HIWORD(d), LOWORD(d));
+			v=getVer();
+			sprintf(buf, HIWORD(v->dwFileVersionLS) ? "%d.%d.%d" : "%d.%d",
+				HIWORD(v->dwFileVersionMS), LOWORD(v->dwFileVersionMS), HIWORD(v->dwFileVersionLS));
 			SetDlgItemTextA(hWnd, 101, buf);
 			return TRUE;
 
