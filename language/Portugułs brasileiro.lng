@@ -118,7 +118,7 @@
 402=&Arquivo
 201=&Carregar teclas de atalho...\tCtrl+O
 202=&Salvar teclas de atalho...\tCtrl+S
-207=A&pagar teclas de atalho\tCtrl+N
+207=A&pagar teclas de atalho
 213=A&brir configuração...\tCtrl+I
 214=S&alvar configuração...\tCtrl+E
 205=&Remover configuração
@@ -358,3 +358,5 @@
 767=Não foi possível remover o disco %c: !
 1108=Girar a roda horizontalmente
 1109=Remover pen drive com segurança
+1110=Opacidade +
+1111=Opacidade -
