@@ -3,6 +3,7 @@ HotkeyP
 
 4.8.1
 - removed shortcut Ctrl+N which used to delete all hotkeys
+- path to HTK file is not stored in the registry if the file is in the HotkeyP folder
 
 fixed bugs:
 - some minimized applications could not be restored to foreground when hotkey was pressed
