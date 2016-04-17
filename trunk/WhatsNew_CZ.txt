@@ -3,6 +3,7 @@ HotkeyP
 
 4.8.1
 - zrušena zkratka Ctrl+N, která smazala všechny zkratky
+- cesta k HTK souboru se neukládá do registru, pokud je soubor v instalaèní složce
 
 opravené chyby:
 - nìkteré minimalizované aplikace pøi stisku klávesové zkratky zùstaly na pozadí

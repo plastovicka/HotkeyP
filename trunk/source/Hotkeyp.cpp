@@ -92,7 +92,7 @@ int menuSubId[]={404, 405, 403, 402, 401, 400};
 int popupSubId[]={0, 609, 608, 607, 606, 605, 604, 603, 602, 601, 600};
 
 bool
-modif,     //the file has been modified
+modif,     //the HTK file has been modified
  delreg,    //user deleted the registry settings
  renaming,
  altDown,   //used for task switch
@@ -273,7 +273,7 @@ struct Tregs2 { char *s; TCHAR **i; } regValS2[]={
 struct Tregb { char *s; void *i; DWORD n; } regValB[]={
 	{"font", &font, sizeof(LOGFONT)},
 	{"colors", colors, sizeof(colors)},
-	{"data", password, sizeof(password)},
+	{"data2", password, sizeof(password)},
 	{"buttons", mainBtnEnabled, sizeof(mainBtnEnabled)},
 };
 
@@ -1573,17 +1573,25 @@ void writeini()
 			RegSetValueExA(key, u->s, 0, REG_DWORD,
 				(BYTE *)u->i, sizeof(int));
 		}
+
+		TfileName path;
+		getExeDir(path, _T(""));
+		int pathLen = (int)_tcslen(path);
 		for(Tregs *v=regValS; v<endA(regValS); v++){
+			TCHAR *s = v->i;
+			if(s==iniFile && !_tcsnicmp(path, s, pathLen)) s += pathLen; //convert absolute path to relative path
 			convertA2T(v->s, name);
 			RegSetValueEx(key, name, 0, REG_SZ,
-				(BYTE *)v->i, (DWORD)sizeof(TCHAR)*(_tcslen(v->i)+1));
+				(BYTE *)s, (DWORD)sizeof(TCHAR)*(_tcslen(s)+1));
 		}
+
 		for(Tregs2 *z=regValS2; z<endA(regValS2); z++){
 			TCHAR *t= *z->i;
 			convertA2T(z->s, name);
 			if(t) RegSetValueEx(key, name, 0, REG_SZ,
 				(BYTE *)t, (DWORD)sizeof(TCHAR)*(_tcslen(t)+1));
 		}
+
 		for(Tregb *w=regValB; w<endA(regValB); w++){
 			RegSetValueExA(key, w->s, 0, REG_BINARY, (BYTE *)w->i, w->n);
 		}
@@ -1601,11 +1609,23 @@ void readini()
 			d=sizeof(int);
 			RegQueryValueExA(key, u->s, 0, 0, (BYTE *)u->i, &d);
 		}
+
+		TCHAR buf[192+MAX_PATH];
+		getExeDir(buf, _T(""));
+		int pathLen = (int)_tcslen(buf);
 		for(Tregs *v=regValS; v<endA(regValS); v++){
 			d=v->n;
+			TCHAR *s = v->i;
 			convertA2T(v->s, name);
-			RegQueryValueEx(key, name, 0, 0, (BYTE *)v->i, &d);
+			RegQueryValueEx(key, name, 0, 0, (BYTE *)s, &d);
+			if(s==iniFile && s[0] && s[1]!=':' && s[0]!='\\'){
+				//convert relative path to absolute path
+				_tcscat(buf, s);
+				lstrcpyn(s, buf, v->n);
+				buf[pathLen]=0;
+			}
 		}
+
 		for(Tregs2 *z=regValS2; z<endA(regValS2); z++){
 			convertA2T(z->s, name);
 			if(RegQueryValueEx(key, name, 0, 0, 0, &d)==ERROR_SUCCESS && d<10000000){
@@ -1616,6 +1636,7 @@ void readini()
 				RegQueryValueEx(key, name, 0, 0, (BYTE*)s, &d);
 			}
 		}
+
 		for(Tregb *w=regValB; w<endA(regValB); w++){
 			d=w->n;
 			RegQueryValueExA(key, w->s, 0, 0, (BYTE *)w->i, &d);
