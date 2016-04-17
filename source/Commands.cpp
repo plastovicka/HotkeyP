@@ -899,7 +899,7 @@ BOOL CALLBACK hideProc(HWND w, LPARAM param)
 		getWindowThreadProcessId(w, &pid) && pid==info->pid){
 		if(!checkProcess(pid, _T("explorer.exe")) || 
 			//find all normal explorer windows (not desktop), ExploreWClass is on Windows XP or older after Browse context menu command
-			GetClassName(w, buf, sizeA(buf)) && (!_tcscmp(buf, _T("CabinetWClass")) || !_tcscmp(buf, _T("ExploreWClass"))))
+			GetClassName(w, buf, sizeA(buf)) && (!_tcscmp(buf, _T("CabinetWClass")) || !_tcscmp(buf, _T("ExploreWClass")) || !_tcscmp(buf, _T("#32770"))))
 		{
 			if(!info->icon || w==info->activeWnd){
 				HICON icon = (HICON)GetClassLongPtr(w, GCLP_HICONSM);
