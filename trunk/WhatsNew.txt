@@ -1,7 +1,7 @@
 HotkeyP
 -------
 
-4.8.1
+4.8.1 (2016-04-17)
 - removed shortcut Ctrl+N which used to delete all hotkeys
 - path to HTK file is not stored in the registry if the file is in the HotkeyP folder
 
@@ -9,7 +9,7 @@ fixed bugs:
 - some minimized applications could not be restored to foreground when hotkey was pressed
 - active window lost focus after waiting before executing a hotkey
 - "Maximize all" randomly activated another window
-- icon was not yellow if asking before excuting "Hide application" or "Hide window"
+- icon was not yellow if asking before executing "Hide application" or "Hide window"
 - "Send keys to window" was too quick and sometimes missed shift keys
 
 4.8 (2016-04-10)

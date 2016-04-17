@@ -73,7 +73,7 @@ END
 HOTKEYWIN DIALOGEX 34, 16, 419, 207
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Hot Key"
-FONT 9, "MS Shell Dlg"
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     EDITTEXT        103,126,9,76,12
     LTEXT           "&Command:",303,5,27,152,8
@@ -410,7 +410,7 @@ BEGIN
     BEGIN
         MENUITEM "&Open hotkeys...\tCtrl+O",    201
         MENUITEM "&Save hotkeys...\tCtrl+S",    202
-        MENUITEM "&Delete all hotkeys",     207
+        MENUITEM "&Delete all hotkeys",         207
         MENUITEM SEPARATOR
         MENUITEM "O&pen settings...\tCtrl+I",   213
         MENUITEM "S&ave settings...\tCtrl+E",   214
@@ -763,7 +763,7 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 4,8,0,0
+ FILEVERSION 4,8,1,0
  PRODUCTVERSION 0,0,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -782,7 +782,7 @@ BEGIN
             VALUE "Comments", "Shortcut key program launcher\0"
             VALUE "CompanyName", "Petr Laštovièka\0"
             VALUE "FileDescription", "HotkeyP\0"
-            VALUE "FileVersion", "4, 8, 0, 0\0"
+            VALUE "FileVersion", "4, 8, 1, 0\0"
             VALUE "InternalName", "\0"
             VALUE "LegalCopyright", "© 2004-2016  Petr Laštovièka\0"
             VALUE "LegalTrademarks", "\0"
