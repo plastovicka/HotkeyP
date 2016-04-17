@@ -361,9 +361,11 @@ void executeHotKey(int i)
 				else{
 					//bring to front
 					if(IsIconic(w)){
+						HWND w0=GetForegroundWindow();
 						if(SendMessageTimeout(w, WM_SYSCOMMAND, SC_RESTORE, 0, SMTO_ABORTIFHUNG|SMTO_BLOCK, 5000, &dp)){
+							Sleep(10);
 							HWND w1=GetForegroundWindow();
-							if(w1) w=w1;
+							if(w1 && w1!=w0) w=w1;
 						}
 					}
 					if(hk->opacity){
