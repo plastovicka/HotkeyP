@@ -1,12 +1,15 @@
 HotkeyP
 -------
 
+4.8.1
 - removed shortcut Ctrl+N which used to delete all hotkeys
 
 fixed bugs:
+- some minimized applications could not be restored to foreground when hotkey was pressed
 - active window lost focus after waiting before executing a hotkey
 - "Maximize all" randomly activated another window
 - icon was not yellow if asking before excuting "Hide application" or "Hide window"
+- "Send keys to window" was too quick and sometimes missed shift keys
 
 4.8 (2016-04-10)
 - all texts are Unicode, it's useful especially for the "Paste text" command
