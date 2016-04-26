@@ -763,7 +763,7 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 4,8,1,0
+ FILEVERSION 4,8,2,0
  PRODUCTVERSION 0,0,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -782,7 +782,7 @@ BEGIN
             VALUE "Comments", "Shortcut key program launcher\0"
             VALUE "CompanyName", "Petr Laštovièka\0"
             VALUE "FileDescription", "HotkeyP\0"
-            VALUE "FileVersion", "4, 8, 1, 0\0"
+            VALUE "FileVersion", "4, 8, 2, 0\0"
             VALUE "InternalName", "\0"
             VALUE "LegalCopyright", "© 2004-2016  Petr Laštovièka\0"
             VALUE "LegalTrademarks", "\0"
