@@ -1534,7 +1534,7 @@ void setRun()
 				d=sizeof(buf2);
 				if(RegQueryValueEx(key, runName, 0, 0, (BYTE*)buf2, &d)!=ERROR_SUCCESS ||
 					_tcscmp(buf1, buf2)){
-					RegSetValueEx(key, runName, 0, REG_SZ, (BYTE*)buf1, i+3);
+					RegSetValueEx(key, runName, 0, REG_SZ, (BYTE*)buf1, sizeof(TCHAR)*(i+3));
 				}
 			}
 			RegCloseKey(key);
