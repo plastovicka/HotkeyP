@@ -17,11 +17,12 @@ their _dupenv_s function but that function is only available when
 linking with the Microsoft C run-time libraries.
 */
 // original version using the portable std::getenv function
-static const tstring getEnv(const tstring pVar)
+static const tstring getEnv(const tstring &pVar, bool slash)
 {
-	if(pVar==_T("HotkeyP")){
+	if(pVar.length()==7 && !_tcsicmp(pVar.c_str(), _T("HotkeyP"))){
 		TCHAR fn[256];
 		getExeDir(fn, _T(""));
+		if(slash) _tcschr(fn, 0)[-1]=0;
 		return fn;
 	}
 	const TCHAR * val = _tgetenv(pVar.c_str());
@@ -75,9 +76,7 @@ tstring ExpandVars(tstring s)
 		if(var.empty())
 			ret += '%';
 		else
-		{
-			ret += getEnv(var);
-		}
+			ret += getEnv(var, s[idxBeg]=='\\');
 		// find first %
 		idxEnd = s.find('%', idxBeg);
 	} while(idxEnd != std::string::npos);

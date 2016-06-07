@@ -1,6 +1,12 @@
 HotkeyP
 -------
 
+- promìnná %HotkeyP% nerozlišuje velikost písmen a mùže za ní následovat zpìtné lomítko
+
+4.8.2 (26.4.2016)
+opravené chyby:
+- automatické spuštìní po startu Windows
+
 4.8.1 (17.4.2016)
 - zrušena zkratka Ctrl+N, která smazala všechny zkratky
 - cesta k HTK souboru se neukládá do registru, pokud je soubor v instalaèní složce
