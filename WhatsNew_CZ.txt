@@ -1,6 +1,7 @@
 HotkeyP
 -------
 
+4.8.3 (13.7.2016)
 - promìnná %HotkeyP% nerozlišuje velikost písmen a mùže za ní následovat zpìtné lomítko
 
 4.8.2 (26.4.2016)
