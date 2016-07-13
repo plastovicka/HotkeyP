@@ -76,7 +76,7 @@ tstring ExpandVars(tstring s)
 		if(var.empty())
 			ret += '%';
 		else
-			ret += getEnv(var, s[idxBeg]=='\\');
+			ret += getEnv(var, s[idxBeg]=='\\' || s[idxBeg]=='/');
 		// find first %
 		idxEnd = s.find('%', idxBeg);
 	} while(idxEnd != std::string::npos);
