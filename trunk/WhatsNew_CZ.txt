@@ -1,5 +1,8 @@
 HotkeyP
 -------
+
+- v nastavení zvuku zkratky lze použít promìnné prostøedí (napø. %windir%)
+
 opravené chyby:
 - pøíkaz "Ukázat plochu" nefungoval, když jazyk klávesnice nepoužíval latinku
 
