@@ -889,6 +889,19 @@ DWORD WINAPI restoreIconProc(LPVOID param)
 }
 //---------------------------------------------------------------------------
 
+void hideWindow(HWND w, HideInfo *info)
+{
+	if(!info->icon || w==info->activeWnd){
+		HICON icon = (HICON)GetClassLongPtr(w, GCLP_HICONSM);
+		if(icon) info->icon= icon;
+	}
+	ShowWindowAsync(w, SW_HIDE);
+	WndItem *i = new WndItem();
+	i->w= w;
+	i->nxt= info->list;
+	info->list= i;
+}
+
 BOOL CALLBACK hideProc(HWND w, LPARAM param)
 {
 	HideInfo *info = (HideInfo*)param;
@@ -901,33 +914,30 @@ BOOL CALLBACK hideProc(HWND w, LPARAM param)
 			//find all normal explorer windows (not desktop), ExploreWClass is on Windows XP or older after Browse context menu command
 			GetClassName(w, buf, sizeA(buf)) && (!_tcscmp(buf, _T("CabinetWClass")) || !_tcscmp(buf, _T("ExploreWClass")) || !_tcscmp(buf, _T("#32770"))))
 		{
-			if(!info->icon || w==info->activeWnd){
-				HICON icon = (HICON)GetClassLongPtr(w, GCLP_HICONSM);
-				if(icon) info->icon= icon;
-			}
-			ShowWindowAsync(w, SW_HIDE);
-			WndItem *i = new WndItem();
-			i->w= w;
-			i->nxt= info->list;
-			info->list= i;
+			hideWindow(w, info);
 		}
 	}
 	return TRUE;
 }
 
-void hideApp(HWND w, HideInfo *info)
+void hideApp(HWND w, HideInfo *info, bool all)
 {
 	if(w && getWindowThreadProcessId(w, &info->pid)){
 		info->icon=0;
 		info->mustDestroyIcon=false;
 		//remember foreground window
 		info->activeWnd=w;
-		DWORD pid;
-		if(getWindowThreadProcessId(info->activeWnd, &pid) && pid!=info->pid){
-			info->activeWnd=0;
+		if(all){
+			DWORD pid;
+			if(getWindowThreadProcessId(info->activeWnd, &pid) && pid!=info->pid){
+				info->activeWnd=0;
+			}
+			//hide all windows which belong to the same process as window w
+			EnumWindows(hideProc, (LPARAM)info);
 		}
-		//hide all windows which belong to the same process as window w
-		EnumWindows(hideProc, (LPARAM)info);
+		else{
+			hideWindow(w, info);
+		}
 	}
 }
 
@@ -2906,11 +2916,12 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 				unhideApp(&hiddenApp);
 			}
 			else{
-				hideApp(getWindow(param), &hiddenApp);
+				hideApp(getWindow(param), &hiddenApp, true);
 			}
 			modifyTrayIcon();
 			break;
-		case 102: //minimize to system tray
+		case 102: //minimize application to system tray
+		case 115: //minimize window to system tray
 			if(noCmdLine(param)) break;
 			w=getWindow(param);
 			if(w==hWin && trayicon){ //HotkeyP window
@@ -2924,7 +2935,7 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 					HideInfo *info = &trayIconA[i];
 					if(!info->pid){
 						//hide application and add icon
-						hideApp(w, info);
+						hideApp(w, info, cmd==102);
 						getExeIcon(info);
 						addTrayIcon(title, info->icon, 100+i);
 						break;
