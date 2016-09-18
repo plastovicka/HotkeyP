@@ -471,8 +471,8 @@ void executeHotKey(int i)
 	}
 
 	// zef: play sound
-	if(hk->sound[0] != '\0')
-		PlaySound(hk->sound, NULL, SND_FILENAME | SND_ASYNC);
+	if(*hk->sound)
+		PlaySound(ExpandVars(hk->sound).c_str(), NULL, SND_FILENAME | SND_ASYNC);
 }
 
 //-------------------------------------------------------------------------

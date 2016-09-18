@@ -1,5 +1,8 @@
 HotkeyP
 -------
+
+- environment variables can be used in a hotkey sound path
+
 fixed bugs:
 - "Show desktop" worked only on Latin keyboard layouts
 
