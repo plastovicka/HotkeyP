@@ -1,6 +1,6 @@
 HotkeyP
 -------
-
+- pøíkaz "Minimalizovat okno do malé ikony"
 - v nastavení zvuku zkratky lze použít promìnné prostøedí (napø. %windir%)
 
 opravené chyby:

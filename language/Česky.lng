@@ -315,7 +315,7 @@
 1099=Obnovit tray ikonu
 1100=Rychlost CD
 1101=Skrýt aplikaci
-1102=Minimalizovat do tray
+1102=Minimalizovat do malé ikony
 1103=Lupa
 1104=Smazat nedávné dokumenty
 1105=Smazat doèasné soubory
@@ -328,6 +328,7 @@
 1112=Maximalizovat všechna okna
 1113=Ukázat okno HotkeyP
 1114=Obnovit hook
+1115=Minimalizovat okno do malé ikony
 
 ;texty použité v programu, chybová hlášení
 730=Nelze otevøít soubor %s

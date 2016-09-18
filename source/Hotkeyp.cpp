@@ -46,18 +46,19 @@ char *cmdNames[]={
 	"Disable joystick shortcuts", "Disable remote control", "Disable keyboard shortcuts", "Hide icon", "Restore tray icon",
 	/*100*/"CD speed", "Hide application", "Minimize to tray", "Magnifier", "Clear recent documents",
 	"Delete temporary files", "Save desktop icons", "Restore desktop icons", "Horizontal wheel", "Remove drive",
-	/*110*/"Opacity +", "Opacity -", "Maximize all", "Show HotkeyP window", "Reload hook"
+	/*110*/"Opacity +", "Opacity -", "Maximize all", "Show HotkeyP window", "Reload hook",
+	"Minimize window to tray"
 };
 
 BYTE cmdIcons[]={
 	4, 4, 18, 18, 18, 18, 14, 9, 9, 21, 9, 21, 10, 25, 26,
-	/*15*/25, 26, 11, 14, 14, 9, 17, 6, 5, 8, 9, 17, 17, 20, 20,
+/*15*/25, 26, 11, 14, 14, 9, 17, 6, 5, 8, 9, 17, 17, 20, 20,
 /*30*/20, 20, 20, 20, 20, 20, 20, 13, 18, 4, 4, 4, 4, 13, 13,
 /*45*/13, 9, 9, 9, 9, 10, 10, 10, 13, 10, 10, 10, 10, 11, 9,
 /*60*/9, 22, 4, 16, 18, 9, 12, 3, 5, 5, 22, 20, 20, 17, 17,
 /*75*/13, 13, 9, 11, 13, 13, 5, 5, 23, 24, 7, 2, 2, 2, 14,
 /*90*/9, 9, 10, 10, 17, 2, 2, 2, 9, 9, 4, 9, 9, 20, 6,
-/*105*/6, 5, 5, 13, 8, 9, 9, 9, 27, 27
+/*105*/6, 5, 5, 13, 8, 9, 9, 9, 27, 27, 9
 };
 
 const BYTE specialWinKeysList[]={'E', 'R', 'D', 'F', 'M', VK_F1, VK_PAUSE, VK_TAB, //Win 98
