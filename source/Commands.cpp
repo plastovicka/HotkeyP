@@ -2760,7 +2760,7 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 			restoreShift();
 			break;
 		case 81: //show desktop
-			parseMacro(_T("\\rep\\wind"));
+			parseMacro(_T("\\rep\\win\\D"));
 			break;
 		case 83: //previous task
 		case 84: //next task
