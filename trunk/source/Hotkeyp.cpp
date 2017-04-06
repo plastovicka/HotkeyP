@@ -1,5 +1,5 @@
 /*
- (C) 2003-2016  Petr Lastovicka
+ (C) 2003-2017  Petr Lastovicka
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License.
@@ -44,7 +44,7 @@ char *cmdNames[]={
 	"Show text", "Disable key", "Disable all hotkeys", "Disable mouse shortcuts", "Desktop snapshot",
 	/*90*/"Window snapshot", "Hide tray icon", "Stop service", "Start service", "Macro to active window",
 	"Disable joystick shortcuts", "Disable remote control", "Disable keyboard shortcuts", "Hide icon", "Restore tray icon",
-	/*100*/"CD speed", "Hide application", "Minimize to tray", "Magnifier", "Clear recent documents",
+	/*100*/"CD speed", "Hide application", "Minimize app to tray", "Magnifier", "Clear recent documents",
 	"Delete temporary files", "Save desktop icons", "Restore desktop icons", "Horizontal wheel", "Remove drive",
 	/*110*/"Opacity +", "Opacity -", "Maximize all", "Show HotkeyP window", "Reload hook",
 	"Minimize window to tray"
@@ -3874,7 +3874,7 @@ int commandS(TCHAR *cmdLine)
 		for(i=0; i<sizeA(cmdNames); i++){
 			if(!strnicmpA(cmdLine, cmdNames[i])){
 				l=(int)strlen(cmdNames[i]);
-				if((cmdLine[l]==0 || cmdLine[l]==' ') && l>cmdLen){
+				if((cmdLine[l]==0 || cmdLine[l]==' ' || cmdLine[l]==';') && l>cmdLen){
 					cmdLen=l;
 					param=cmdLine+l;
 					cmd=i;
