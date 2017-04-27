@@ -1,0 +1,466 @@
+/* ========== Text Styles ========== */
+hr { color: #000000}
+body, table /* Normal text */
+{
+ font-size: 10pt;
+ font-family: 'Arial', 'Helvetica', sans-serif;
+ font-style: normal;
+ font-weight: normal;
+ color: #000000;
+ text-decoration: none;
+}
+span.rvts1 /* Heading */
+{
+ font-weight: bold;
+ color: #0000ff;
+}
+span.rvts2 /* Subheading */
+{
+ font-weight: bold;
+ color: #ff0000;
+}
+span.rvts3 /* Keywords */
+{
+ font-style: italic;
+ color: #800000;
+}
+span.rvts4
+{
+ font-weight: bold;
+ color: #000080;
+}
+a.rvts5, span.rvts5
+{
+ color: #008000;
+ text-decoration: underline;
+}
+span.rvts6
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+}
+span.rvts7
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+}
+span.rvts8
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ color: #000000;
+}
+span.rvts9
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: #000000;
+}
+span.rvts10
+{
+ font-size: 13pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: #000000;
+}
+span.rvts11
+{
+ font-size: 12pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: #000000;
+}
+span.rvts12
+{
+ font-size: 11pt;
+ font-family: 'Lucida Sans Unicode';
+ color: #000000;
+}
+span.rvts13
+{
+ font-size: 11pt;
+ font-family: 'Lucida Sans Unicode';
+ font-weight: bold;
+ color: #000000;
+}
+span.rvts14
+{
+ font-size: 11pt;
+ font-style: italic;
+ font-weight: bold;
+ color: #000000;
+}
+span.rvts15
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: #000000;
+ text-decoration: underline;
+}
+span.rvts16
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: #ff0000;
+}
+span.rvts17
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ color: #ff0000;
+}
+span.rvts18
+{
+ font-size: 11pt;
+ font-family: 'Arial Unicode MS', 'Lucida Sans Unicode', 'Arial', 'Helvetica', sans-serif;
+ font-weight: bold;
+ color: #000000;
+}
+span.rvts19
+{
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ color: #000000;
+}
+span.rvts20
+{
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: #000000;
+}
+span.rvts21
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ color: ;
+}
+span.rvts22
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: ;
+}
+a.rvts23, span.rvts23
+{
+ font-size: 12pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: ;
+ text-decoration: none;
+}
+span.rvts24
+{
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ color: ;
+}
+span.rvts25
+{
+ font-size: 12pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: ;
+}
+a.rvts26, span.rvts26
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: ;
+ text-decoration: none;
+}
+a.rvts26:hover { color: #008000; }
+a.rvts27, span.rvts27
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: #3366ff;
+ text-decoration: underline;
+}
+a.rvts27:hover { color: #0000ff; }
+span.rvts28
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: #339966;
+}
+span.rvts29
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: #008000;
+}
+span.rvts30
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-style: italic;
+ font-weight: bold;
+ color: ;
+}
+a.rvts31, span.rvts31
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: #0000ff;
+ text-decoration: underline;
+}
+a.rvts31:hover { color: #0000ff; }
+span.rvts32
+{
+ color: ;
+}
+span.rvts33
+{
+ font-weight: bold;
+ color: ;
+}
+span.rvts34
+{
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: ;
+}
+span.rvts35
+{
+ font-size: 15pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: ;
+}
+span.rvts36
+{
+ font-size: 13pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: ;
+}
+span.rvts37
+{
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: #ff0000;
+}
+a.rvts38, span.rvts38
+{
+ font-size: 13pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: ;
+ text-decoration: none;
+}
+span.rvts39
+{
+ color: #000000;
+}
+span.rvts40
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-style: italic;
+ font-weight: bold;
+ color: #000000;
+}
+a.rvts41, span.rvts41
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ color: #0000ff;
+ text-decoration: underline;
+}
+span.rvts42
+{
+ font-size: 12pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+}
+span.rvts43
+{
+ font-size: 11pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ color: #0000ff;
+ text-decoration: underline;
+}
+span.rvts44
+{
+ font-size: 11pt;
+ font-family: 'Lucida Sans Unicode';
+ color: #000000;
+}
+span.rvts45
+{
+ font-size: 11pt;
+ font-family: 'Lucida Sans Unicode';
+ color: #0000ff;
+ text-decoration: underline;
+}
+span.rvts46
+{
+ font-family: 'Lucida Sans Unicode';
+ font-weight: bold;
+}
+span.rvts47
+{
+ font-family: 'Lucida Sans Unicode';
+}
+span.rvts48
+{
+ font-size: 11pt;
+ font-family: 'Lucida Sans Unicode';
+}
+a.rvts49, span.rvts49
+{
+ font-size: 15pt;
+ font-family: 'Arial Unicode MS', 'Lucida Sans Unicode', 'Arial', 'Helvetica', sans-serif;
+ font-weight: bold;
+ color: #ffffff;
+ background-color: #000000;
+ text-decoration: underline;
+}
+a.rvts49:hover { color: #0000ff; background-color: #000000; }
+span.rvts50
+{
+ font-size: 16pt;
+ font-family: 'Times New Roman', 'Times', serif;
+ font-weight: bold;
+}
+a.rvts51, span.rvts51
+{
+ font-size: 15pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-weight: bold;
+ color: #ffffff;
+ background-color: #000000;
+ text-decoration: underline;
+}
+a.rvts51:hover { color: #0000ff; background-color: #000000; }
+/* ========== Para Styles ========== */
+p,ul,ol /* Paragraph Style */
+{
+ text-align: left;
+ text-indent: 0px;
+ padding: 0px 0px 0px 0px;
+ margin: 0px 0px 0px 0px;
+}
+.rvps1 /* Centered */
+{
+ text-align: center;
+}
+.rvps2
+{
+ text-indent: 46px;
+ margin: 0px 27px 0px 33px;
+}
+.rvps3
+{
+ text-indent: 46px;
+ margin: 0px 27px 1px 33px;
+}
+.rvps4
+{
+ text-indent: 46px;
+ margin: 0px 27px 3px 33px;
+}
+.rvps5
+{
+ text-indent: 46px;
+ margin: 0px 26px 1px 33px;
+}
+.rvps6
+{
+ text-indent: 46px;
+ margin: 0px 26px 3px 33px;
+}
+.rvps7
+{
+ text-indent: 46px;
+ margin: 0px 26px 0px 33px;
+}
+.rvps8
+{
+ text-indent: 46px;
+ margin: 1px 26px 1px 33px;
+}
+.rvps9
+{
+ text-indent: 46px;
+ margin: 0px 26px 0px 57px;
+}
+.rvps10
+{
+ text-indent: 46px;
+ margin: 0px 26px 3px 57px;
+}
+.rvps11
+{
+ text-indent: 46px;
+ margin: 1px 26px 1px 105px;
+}
+.rvps12
+{
+ text-indent: 46px;
+ margin: 1px 26px 3px 33px;
+}
+.rvps13
+{
+ text-indent: 46px;
+ margin: 1px 26px 1px 57px;
+}
+.rvps14
+{
+ text-indent: 46px;
+ margin: 0px 26px 0px 81px;
+}
+.rvps15
+{
+ text-indent: 46px;
+ margin: 0px 26px 5px 33px;
+}
+.rvps16
+{
+ text-indent: 46px;
+ margin: 0px 26px 1px 57px;
+}
+.rvps17
+{
+ text-indent: 46px;
+ page-break-after: avoid;
+ margin: 7px 27px 7px 33px;
+}
+.rvps18
+{
+ text-indent: 46px;
+ margin: 7px 27px 7px 33px;
+}
+.rvps19
+{
+ text-indent: 46px;
+ margin: 1px 27px 1px 33px;
+}
+.rvps20
+{
+ text-indent: 46px;
+ margin: 0px 27px 0px 57px;
+}
+.rvps21
+{
+ text-indent: 46px;
+ margin: 0px 27px 0px 24px;
+}
+.rvps22
+{
+ text-indent: 46px;
+ margin: 0px 27px 0px 81px;
+}
+.rvps23
+{
+ text-indent: 46px;
+ margin: 0px 27px 1px 0px;
+}

@@ -1,0 +1,25 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=..\..\..\language\Ajuda.chm
+Contents file=Ajuda.hhc
+Default Window=w1
+Default topic=10.html
+Display compile progress=No
+Language=0x416 Portugalština (Brazílie)
+Title=HotkeyP
+
+[WINDOWS]
+w1=,"Ajuda.hhc",,"10.html",,,,,,0x42120,180,0x3006,[164,79,910,620],,,,,,,0
+
+
+[FILES]
+50.html
+40.html
+30.html
+25.html
+20.html
+10.html
+styles.css
+
+[INFOTYPES]
+

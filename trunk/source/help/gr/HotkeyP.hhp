@@ -1,0 +1,20 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=..\..\..\language\gr.chm
+Contents file=toc-generado.hhc
+Default Window=w1
+Default topic=1.htm
+Display compile progress=No
+Language=0x408 Øeètina (Øecko)
+Title=HotkeyP
+
+[WINDOWS]
+w1=,"toc-generado.hhc","Index-generado.hhk","1.htm",,,,,,0x42120,250,0x3006,[164,79,964,620],,,,,,,0
+
+
+[FILES]
+1.htm
+embeddedstyles.css
+
+[INFOTYPES]
+
