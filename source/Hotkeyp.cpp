@@ -2329,13 +2329,13 @@ void addKey(TCHAR *exe, bool makeCopy, int item)
 		EnterCriticalSection(&listCritSect);
 		//insert new hotkey to the array
 		unregisterKeys();
-		correctMultiCmd(item, 2);
 		HotKey *newA= new HotKey[++numKeys];
 		memcpy(newA, hotKeyA, sizeof(HotKey)*item);
 		memcpy(newA+item, hk, sizeof(HotKey));
 		memcpy(newA+item+1, hotKeyA+item, sizeof(HotKey)*(numKeys-1-item));
 		delete[] hotKeyA;
 		hotKeyA= newA;
+		correctMultiCmd(item, 2);
 		//redraw listview
 		modified();
 		LeaveCriticalSection(&listCritSect);
