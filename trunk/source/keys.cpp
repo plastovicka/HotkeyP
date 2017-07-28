@@ -78,20 +78,13 @@ void printKey(TCHAR *s, HotKey* hk)
 void printKeyNoShift(TCHAR *s, HotKey* hk)
 {
 	TCHAR *e, *t, **p, *s0;
-	int i, scan, j, scan1, scan0, scanSh;
+	int i, scan, j;
 
 	s0=s;
 	*s=0;
 	scan=hk->scanCode;
-	scanSh=(scan>>16)&0x1ff;
-	scan1=MapVirtualKey('1', MAPVK_VK_TO_VSC);
-	scan0=MapVirtualKey('0', MAPVK_VK_TO_VSC);
 	if(hk->vkey>='0' && hk->vkey<='9'){
 		*s++=(TCHAR)hk->vkey;
-		*s=0;
-	}
-	else if(hk->vkey==255 && scanSh<=scan0 && scanSh>=scan1 && scan0-scan1==9){
-		*s++=(TCHAR)(scanSh==scan0 ? '0' : scanSh-scan1+'1');
 		*s=0;
 	}
 	else if(hk->vkey==vkMouse){
@@ -152,7 +145,7 @@ void printKeyNoShift(TCHAR *s, HotKey* hk)
 				_stprintf(s, _T("(%d)"), hk->vkey);
 			}
 			else{
-				_stprintf(s, _T("[%d]"), scanSh&255);
+				_stprintf(s, _T("[%d]"), (scan>>16)&255);
 			}
 		}
 	}
