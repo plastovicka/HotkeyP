@@ -1411,6 +1411,14 @@ void rd(TCHAR *fn)
 					fscanf(f, "%d %d %d %d %d %d %d",
 						&hk->scanCode, &hk->vkey, &hk->modifiers,
 						&hk->cmdShow, &hk->priority, &flags, &hk->cmd);
+					if(hk->vkey==255) {
+						//old version of HotkeyP used virtual key code 255 for hotkeys Win+X
+						int scan = (hk->scanCode>>16) & 0x1ff;
+						if(scan>1 && scan<12 || scan>15 && scan<26 || scan>29 && scan<39 || scan>43 && scan<51) { //1-0, Q-P, A-L, Z-M
+							int vkey = MapVirtualKey(scan, MAPVK_VSC_TO_VK);
+							if(vkey) hk->vkey=vkey;
+						}
+					}
 					hk->multInst= flags&1;
 					hk->autoStart= (flags>>1)&1;
 					hk->trayMenu= (flags>>2)&1;
