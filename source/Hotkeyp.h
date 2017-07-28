@@ -288,6 +288,7 @@ void removeUSBdrives();
 void executeHotKey(int i);
 void delayAndExecuteHotKey(HINSTANCE instance, HWND parent, int hotKeyIndex);
 void printKey(TCHAR *s, HotKey* hk);
+void printKeyNoShift(TCHAR *s, HotKey* hk);
 void correctMultiCmd(int item, int action, int item2=0);
 void keyMapChanged();
 void postHotkey(int i, LPARAM updown);
