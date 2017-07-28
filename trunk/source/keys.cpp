@@ -67,15 +67,21 @@ lend:
 
 void printKey(TCHAR *s, HotKey* hk)
 {
-	TCHAR *e, *t, **p, *s0;
-	int i, scan, j, scan1, scan0, scanSh;
-
 	*s=0;
 	if(hk->modifiers & MOD_CONTROL) _tcscat(s, _T("Ctrl+"));
 	if(hk->modifiers & MOD_SHIFT) _tcscat(s, _T("Shift+"));
 	if(hk->modifiers & MOD_ALT) _tcscat(s, _T("Alt+"));
 	if(hk->modifiers & MOD_WIN) _tcscat(s, _T("Win+"));
-	s=s0=_tcschr(s, 0);
+	printKeyNoShift(_tcschr(s, 0), hk);
+}
+
+void printKeyNoShift(TCHAR *s, HotKey* hk)
+{
+	TCHAR *e, *t, **p, *s0;
+	int i, scan, j, scan1, scan0, scanSh;
+
+	s0=s;
+	*s=0;
 	scan=hk->scanCode;
 	scanSh=(scan>>16)&0x1ff;
 	scan1=MapVirtualKey('1', MAPVK_VK_TO_VSC);

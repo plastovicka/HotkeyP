@@ -23,7 +23,7 @@
 15=General
 331=S&tart automatically at Windows startup
 320=Show &icon in the system tray
-321=&Hilite icon when a hotkey is pressed:
+321=&Highlight icon when a hotkey is pressed:
 334=&Minimize button hides the window
 335=&Close button hides the window
 342=Insert new hotkey a&fter the current item

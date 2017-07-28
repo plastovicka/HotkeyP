@@ -1158,25 +1158,37 @@ int CALLBACK sortId(LPARAM a, LPARAM b, LPARAM p)
 	return int(p)*int(b-a);
 }
 
+//alphabetical sort order
 int modifOrder(int m)
 {
-	int result=0;
-	if(m & MOD_CONTROL) result|=8;
-	if(m & MOD_SHIFT) result|=4;
-	if(m & MOD_ALT) result|=2;
-	if(m & MOD_WIN) result|=1;
+	int result=0, i=0x1000;
+	if(m & MOD_CONTROL) { result|=i<<1; i>>=4; }
+	if(m & MOD_SHIFT) { result|=i<<2; i>>=4; }
+	if(m & MOD_ALT) { result|=i; i>>=4; }
+	if(m & MOD_WIN) { result|=i<<3; i>>=4; }
 	return result;
 }
 
 int CALLBACK sortKey(LPARAM a, LPARAM b, LPARAM p)
 {
 	HotKey *ha, *hb;
+	int result, va, vb;
 	ha=&hotKeyA[a];
 	hb=&hotKeyA[b];
-	int result;
 	result= int(modifOrder(hb->modifiers) - modifOrder(ha->modifiers));
-	if(!result) result= int(hb->vkey - ha->vkey);
-	if(!result) result= int(hb->scanCode - ha->scanCode);
+	if(!result) {
+		va = ha->vkey;
+		if(va<'A' && va>0 || va>'Z' && va<512) va=255;
+		vb = hb->vkey;
+		if(vb<'A' && vb>0 || vb>'Z' && vb<512) vb=255;
+		result=vb-va;
+		if(!result) {
+			TCHAR bufa[128], bufb[128];
+			printKeyNoShift(bufa, ha);
+			printKeyNoShift(bufb, hb);
+			result= _tcsicmp(bufb, bufa);
+		}
+	}
 	return int(p)*result;
 }
 
@@ -4051,6 +4063,7 @@ WinMain
 	DWORD idJoyThread;
 	joyThread= CreateThread(0, 0, joyProc, 0, CREATE_SUSPENDED, &idJoyThread);
 
+	keyMapChanged(); //must be called before initList
 	rd(iniFile); //read HTK file
 	delRun(HKEY_LOCAL_MACHINE);
 	langChanged(); //set button captions according to selected language

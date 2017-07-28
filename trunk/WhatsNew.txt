@@ -8,6 +8,7 @@ fixed bugs:
 - "Show desktop" worked only on Latin keyboard layouts
 - command line commands required a space before semicolon
 - indexes in a new "Multi command"
+- sort list by key
 
 4.8.3 (2016-07-13)
 - %HotkeyP% variable is case-insensitive and can be followed by a backslash
