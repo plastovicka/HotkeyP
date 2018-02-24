@@ -1,5 +1,5 @@
 /*
-	(C) 2005-2014 Petr Lastovicka
+	(C) 2005-2017 Petr Lastovicka
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License.
@@ -13,7 +13,7 @@ extern HWND hWin;
 extern const TCHAR *title;
 
 //---------------------------------------------------------------------------
-void addTrayIcon(const TCHAR *tooltip, HICON icon, UINT id)
+BOOL addTrayIcon(const TCHAR *tooltip, HICON icon, UINT id)
 {
 	NOTIFYICONDATA myNID;
 	myNID.cbSize = sizeof(NOTIFYICONDATA);
@@ -26,12 +26,16 @@ void addTrayIcon(const TCHAR *tooltip, HICON icon, UINT id)
 		myNID.uFlags |= NIF_TIP;
 		lstrcpyn(myNID.szTip, tooltip, 64);
 	}
-	Shell_NotifyIcon(NIM_ADD, &myNID);
+	return Shell_NotifyIcon(NIM_ADD, &myNID);
 }
 
 void addTrayIcon()
 {
-	addTrayIcon(title, (HICON)GetClassLongPtr(hWin, GCLP_HICONSM), 1);/**/
+	for(int i=0; i<9; i++)
+	{
+		if(addTrayIcon(title, (HICON)GetClassLongPtr(hWin, GCLP_HICONSM), 1)) break;
+		Sleep(1000);
+	};
 }
 
 //---------------------------------------------------------------------------

@@ -318,9 +318,16 @@ void executeHotKey(int i)
 			//document
 			if(!hk->admin && isElevated()){
 				//use explorer.exe to open document at medium integrity level
-				if(!_tcsnicmp(exe, _T("www."), 4)){
-					_tcscpy(exeBuf, _T("http://"));
-					_tcscpy(exeBuf+7, exe);
+				if(*exe!='"') {
+					exeBuf[0]='"';
+					if(!_tcsnicmp(exe, _T("www."), 4)){
+						_tcscpy(exeBuf+1, _T("http://"));
+						_tcscpy(exeBuf+8, exe);
+					}
+					else {
+						_tcscpy(exeBuf+1, exe);
+					}
+					_tcscat(exeBuf, _T("\""));
 					exe=exeBuf;
 				}
 				ShellExecute(0, 0, _T("explorer.exe"), exe, 0, SW_SHOWNORMAL);
@@ -770,7 +777,11 @@ bool partofHotMouse(int u)
 
 bool unDelayButtons()
 {
-	if(delayButtons==-1 || delayButtons2!=-1) return false;
+	if (delayButtons == -1 || delayButtons2 != -1) {
+		if(delayButtons2!=-1) dbg("delayButtons2=%x", delayButtons2);
+		return false;
+	}
+	dbg("Undelay begin %x", delayButtons);
 	KillTimer(hWin, 3);
 	//simulate previous mouse press
 	delayButtons2=delayButtons;
@@ -778,6 +789,7 @@ bool unDelayButtons()
 		mouse_eventDown((delayButtons>>i)&15);
 	}
 	delayButtons=-1;
+	dbg("Undelay end %x", delayButtons2);
 	return true;
 }
 
@@ -822,6 +834,7 @@ LPARAM clickFromHook(WPARAM mesg, LPARAM lP)
 			return 0;
 	}
 	if(down<15){
+		dbg("click down %d, %x,%x", down, delayButtons, delayButtons2);
 		buttonDown(down, buttons);
 		lastButtons=buttons;
 		b=buttonUp(down, delayButtons2);
@@ -831,11 +844,13 @@ LPARAM clickFromHook(WPARAM mesg, LPARAM lP)
 			!checkProcessList(notDelayApp) &&
 			(!editing || GetForegroundWindow()!=hHotKeyDlg)){
 			//delay this button press
+			dbg("delay");
 			buttonDown(down, delayButtons);
 			SetTimer(hWin, 3, mouseDelay, 0);
 			return 1;
 		}
 		if(msgFromHook(vkMouse, buttons, K_ONLYDOWN)){ ///
+			dbg("ignore");
 			//ignore all pressed buttons
 			ignoreButtons|=(1<<down);
 			buttonToBitMask(delayButtons);
@@ -849,6 +864,7 @@ LPARAM clickFromHook(WPARAM mesg, LPARAM lP)
 		}
 	}
 	if(up<15){
+		dbg("click up %d, %x,%x", up, delayButtons, delayButtons2);
 		if(unDelayButtons() && isWin9X){
 			mouse_eventUp(up);
 			return 1;

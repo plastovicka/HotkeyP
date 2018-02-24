@@ -257,6 +257,7 @@ LRESULT CALLBACK DiskFreeWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP);
 LRESULT CALLBACK showTextWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP);
 HWND findWindow(TCHAR const *exe, DWORD pid); // zef: made const correct
 int msg1(int btn, TCHAR *text, ...);
+void dbg(char *text, ...);
 void keyEventUp(int c);
 void keyEventDown(int c);
 void forceNoKey();
