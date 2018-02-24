@@ -343,6 +343,19 @@ void msglng(int id, char *text, ...)
 	va_end(ap);
 }
 
+void dbg(char *text, ...)
+{
+	va_list ap;
+	va_start(ap, text);
+	char buf[1024];
+	_vsnprintf(buf, sizeA(buf)-2, text, ap);
+	buf[sizeA(buf) - 3] = 0;
+	strcat(buf, "\r\n");
+	OutputDebugStringA(buf);
+	va_end(ap);
+}
+
+
 //change button position in dialog
 void moveX(HDWP p, HWND hDlg, int id, int dx)
 {

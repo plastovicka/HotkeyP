@@ -9,7 +9,7 @@
 
 extern int trayicon;
 
-void addTrayIcon(const TCHAR *tooltip, HICON icon, UINT id);
+BOOL addTrayIcon(const TCHAR *tooltip, HICON icon, UINT id);
 void deleteTrayIcon(UINT id);
 void modifyTrayIcon(HWND hWin, int rsrcId);
 BOOL hideIcon(HWND w, UINT id, int hide);

@@ -35,6 +35,7 @@ typedef std::basic_string<TCHAR> tstring;
 #define WM_MOUSEHWHEEL                  0x020E
 #define MOUSEEVENTF_HWHEEL      0x01000 /* hwheel button rolled */
 #define MAPVK_VK_TO_VSC     (0)
+#define MAPVK_VSC_TO_VK     (1)
 #define ERROR_ELEVATION_REQUIRED         740L
 
 enum STORAGE_PROPERTY_ID {

@@ -9,6 +9,7 @@ fixed bugs:
 - command line commands required a space before semicolon
 - indexes in a new "Multi command"
 - sort list by key
+- hotkeys to url with parameters did not work if HotkeyP was running as administrator
 
 4.8.3 (2016-07-13)
 - %HotkeyP% variable is case-insensitive and can be followed by a backslash
