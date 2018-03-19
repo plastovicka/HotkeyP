@@ -803,6 +803,8 @@ END
 
 #endif    // !_MAC
 
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "HotkeyP.exe.manifest"
+
 #endif    // Czech resources
 /////////////////////////////////////////////////////////////////////////////
 
