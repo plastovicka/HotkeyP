@@ -10,6 +10,7 @@ fixed bugs:
 - indexes in a new "Multi command"
 - sort list by key
 - hotkeys to url with parameters did not work if HotkeyP was running as administrator
+- shortcuts of multiple mouse buttons on Windows 10
 
 4.8.3 (2016-07-13)
 - %HotkeyP% variable is case-insensitive and can be followed by a backslash

@@ -778,18 +778,16 @@ bool partofHotMouse(int u)
 bool unDelayButtons()
 {
 	if (delayButtons == -1 || delayButtons2 != -1) {
-		if(delayButtons2!=-1) dbg("delayButtons2=%x", delayButtons2);
 		return false;
 	}
-	dbg("Undelay begin %x", delayButtons);
+	delayButtons2 = delayButtons;
 	KillTimer(hWin, 3);
 	//simulate previous mouse press
-	delayButtons2=delayButtons;
 	for(int i=24; i>=0; i-=4){
-		mouse_eventDown((delayButtons>>i)&15);
+		int down = (delayButtons >> i) & 15;
+		if(down!=15) PostThreadMessage(idHookThreadM2, WM_USER + 203, down, 0); //mouse_eventDown
 	}
 	delayButtons=-1;
-	dbg("Undelay end %x", delayButtons2);
 	return true;
 }
 
@@ -827,14 +825,14 @@ LPARAM clickFromHook(WPARAM mesg, LPARAM lP)
 				delayButtons=-1;
 				return 1;
 			}
-			if(unDelayButtons() && isWin9X){
-				mouse_eventDown(i);
+			if(unDelayButtons()){
+				PostThreadMessage(idHookThreadM2, WM_USER + 203, i, 0); //mouse_eventDown
 				return 1;
 			}
 			return 0;
 	}
 	if(down<15){
-		dbg("click down %d, %x,%x", down, delayButtons, delayButtons2);
+		//dbg("click down %d, %x,%x", down, delayButtons, delayButtons2);
 		buttonDown(down, buttons);
 		lastButtons=buttons;
 		b=buttonUp(down, delayButtons2);
@@ -844,13 +842,11 @@ LPARAM clickFromHook(WPARAM mesg, LPARAM lP)
 			!checkProcessList(notDelayApp) &&
 			(!editing || GetForegroundWindow()!=hHotKeyDlg)){
 			//delay this button press
-			dbg("delay");
 			buttonDown(down, delayButtons);
 			SetTimer(hWin, 3, mouseDelay, 0);
 			return 1;
 		}
 		if(msgFromHook(vkMouse, buttons, K_ONLYDOWN)){ ///
-			dbg("ignore");
 			//ignore all pressed buttons
 			ignoreButtons|=(1<<down);
 			buttonToBitMask(delayButtons);
@@ -858,15 +854,15 @@ LPARAM clickFromHook(WPARAM mesg, LPARAM lP)
 			delayButtons=-1;
 			return 1;
 		}
-		if(!b && unDelayButtons() && isWin9X){
-			mouse_eventDown(down);
+		if(!b && unDelayButtons()){
+			PostThreadMessage(idHookThreadM2, WM_USER + 203, down, 0); //mouse_eventDown
 			return 1;
 		}
 	}
 	if(up<15){
-		dbg("click up %d, %x,%x", up, delayButtons, delayButtons2);
-		if(unDelayButtons() && isWin9X){
-			mouse_eventUp(up);
+		//dbg("click up %d, %x,%x", up, delayButtons, delayButtons2);
+		if(unDelayButtons()){
+			PostThreadMessage(idHookThreadM2, WM_USER + 204, up, 0); //mouse_eventUp
 			return 1;
 		}
 		buttonUp(up, buttons);
@@ -1117,13 +1113,22 @@ DWORD WINAPI hookProc(LPVOID)
 	MSG mesg;
 
 	while(GetMessage(&mesg, NULL, 0, 0)>0){
-		if(mesg.message==WM_USER+201){
+		switch (mesg.message)
+		{
+		case WM_USER + 201:
 			installHookT(mesg.wParam);
-		}
-		else if(mesg.message==WM_USER+202){
+			break;
+		case WM_USER + 202:
 			uninstallHookT(mesg.wParam);
-		}
-		else{
+			break;
+		case WM_USER + 203:
+			mouse_eventDown(mesg.wParam);
+			Sleep(10);
+			break;
+		case WM_USER + 204:
+			mouse_eventUp(mesg.wParam);
+			break;
+		default:
 			DispatchMessage(&mesg);
 		}
 	}

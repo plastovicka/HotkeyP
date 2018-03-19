@@ -182,9 +182,9 @@ extern double pcLockDx, pcLockDy;
 extern HotKey *hotKeyA;
 extern HWND hWin, hWndLock, hWndLircState, hHotKeyDlg, hWndBeforeLock;
 extern LPARAM keyLastScan;
-extern DWORD idHookThreadK, idHookThreadM;
+extern DWORD idHookThreadK, idHookThreadM, idHookThreadM2;
 extern POINT mousePos;
-extern bool modif, altDown, blockedKeys[256], pcLocked, isWin9X, isWin64, isWinXP, isVista, isWin8, disableAll, disableMouse, disableJoystick, disableLirc, disableKeys, isHilited, editing, isZoom, preventWinMenu;
+extern bool modif, altDown, blockedKeys[256], pcLocked, isWin9X, isWin64, isWinXP, isVista, isWin8, isWin10, disableAll, disableMouse, disableJoystick, disableLirc, disableKeys, isHilited, editing, isZoom, preventWinMenu;
 extern TCHAR volumeStr[256], *pcLockParam, notDelayApp[512], delayApp[512];
 extern TfileName iniFile, lockBMP, exeBuf;
 extern const TCHAR *subkey;
@@ -257,7 +257,6 @@ LRESULT CALLBACK DiskFreeWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP);
 LRESULT CALLBACK showTextWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP);
 HWND findWindow(TCHAR const *exe, DWORD pid); // zef: made const correct
 int msg1(int btn, TCHAR *text, ...);
-void dbg(char *text, ...);
 void keyEventUp(int c);
 void keyEventDown(int c);
 void forceNoKey();
@@ -414,5 +413,9 @@ extern "C"{
 #define HtmlHelp  HtmlHelpA
 #endif
 }
+
+#ifndef NDEBUG
+void dbg(char *text, ...);
+#endif
 
 #endif
