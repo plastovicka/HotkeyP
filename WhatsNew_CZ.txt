@@ -9,6 +9,7 @@ opravené chyby:
 - opraveny indexy v novì vytvoøeném vícenásobném pøíkazu
 - tøídìní seznamu podle klávesové zkratky
 - zkratky na url s parametry nefungovaly, pokud byl HotkeyP spuštìn jako správce
+- zkratky pro kombinace tlaèítek myši ve Windows 10
 
 4.8.3 (13.7.2016)
 - promìnná %HotkeyP% nerozlišuje velikost písmen a mùže za ní následovat zpìtné lomítko

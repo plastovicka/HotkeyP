@@ -103,6 +103,7 @@ modif,     //the HTK file has been modified
  isWinXP, //Windows XP or newer
  isVista, //Windows Vista or newer
  isWin8,  //Windows 8 or newer
+ isWin10, //Windows 10
  isWin64, //64bit
  disableAll,
  disableMouse,
@@ -187,7 +188,7 @@ HBRUSH brVolBk, brDskBk;
 CRITICAL_SECTION listCritSect, cdCritSect;
 HGDIOBJ lockImg;
 HIMAGELIST himl;
-DWORD idHookThreadK, idHookThreadM;
+DWORD idHookThreadK, idHookThreadM, idHookThreadM2;
 HANDLE joyThread;
 
 const TCHAR *subkey=_T("Software\\Petr Lastovicka\\hotkey");
@@ -343,18 +344,20 @@ void msglng(int id, char *text, ...)
 	va_end(ap);
 }
 
+#ifndef NDEBUG
 void dbg(char *text, ...)
 {
 	va_list ap;
 	va_start(ap, text);
 	char buf[1024];
-	_vsnprintf(buf, sizeA(buf)-2, text, ap);
+	sprintf(buf, "%d, %d: ", GetTickCount(), GetCurrentThreadId());
+	_vsnprintf(strchr(buf,0), sizeA(buf)-25, text, ap);
 	buf[sizeA(buf) - 3] = 0;
 	strcat(buf, "\r\n");
 	OutputDebugStringA(buf);
 	va_end(ap);
 }
-
+#endif
 
 //change button position in dialog
 void moveX(HDWP p, HWND hDlg, int id, int dx)
@@ -3969,6 +3972,8 @@ WinMain
 	isVista = v.dwMajorVersion > 5;
 	isWinXP = isVista || v.dwMajorVersion == 5 && v.dwMinorVersion >= 1;
 	isWin8 = v.dwMajorVersion > 6 || v.dwMajorVersion == 6 && v.dwMinorVersion >= 2;
+	isWin10 = v.dwMajorVersion >= 10;
+
 	TIsWow64Process isWow64Process = (TIsWow64Process)GetProcAddress(GetModuleHandleA("kernel32.dll"), "IsWow64Process");
 	if(isWow64Process){
 		BOOL b;
@@ -4081,6 +4086,7 @@ WinMain
 	SetThreadPriority(hThreadK, THREAD_PRIORITY_HIGHEST);
 	HANDLE hThreadM= CreateThread(0, 0, hookProc, 0, 0, &idHookThreadM);
 	SetThreadPriority(hThreadM, THREAD_PRIORITY_HIGHEST);
+	HANDLE hThreadM2 = CreateThread(0, 0, hookProc, 0, 0, &idHookThreadM2);
 	DWORD idJoyThread;
 	joyThread= CreateThread(0, 0, joyProc, 0, CREATE_SUSPENDED, &idJoyThread);
 
@@ -4115,10 +4121,13 @@ WinMain
 	UnhookWindowsHookEx(hookK);
 	messageToHook(WM_QUIT, 0, false);
 	messageToHook(WM_QUIT, 0, true);
+	PostThreadMessage(idHookThreadM2, WM_QUIT, 0, 0);
 	WaitForSingleObject(hThreadK, 5000);
 	CloseHandle(hThreadK);
 	WaitForSingleObject(hThreadM, 5000);
 	CloseHandle(hThreadM);
+	WaitForSingleObject(hThreadM2, 5000);
+	CloseHandle(hThreadM2);
 	DeleteCriticalSection(&cdCritSect);
 	DeleteCriticalSection(&listCritSect);
 	return 0;
