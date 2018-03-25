@@ -1,9 +1,12 @@
 HotkeyP
 -------
+
+4.9 (25.3.2018)
 - pøíkaz "Minimalizovat okno do malé ikony"
 - v nastavení pracovního adresáøe a zvuku zkratky lze použít promìnné prostøedí (napø. %windir%)
 
 opravené chyby:
+- HTK soubor se mohl poškodit vložením víceøádkového textu do parametrù
 - pøíkaz "Ukázat plochu" nefungoval, když jazyk klávesnice nepoužíval latinku
 - na pøíkazové øádce nemusí být mezera pøed støedníkem
 - opraveny indexy v novì vytvoøeném vícenásobném pøíkazu

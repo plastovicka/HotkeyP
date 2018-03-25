@@ -1,5 +1,5 @@
 /*
- (C) 2003-2017  Petr Lastovicka
+ (C) 2003-2018  Petr Lastovicka
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License.
@@ -396,12 +396,16 @@ bool testDir(const TCHAR *dir)
 }
 
 //read edit box
-int getText(HWND dlg, int id, TCHAR *&s)
+void getText(HWND dlg, int id, TCHAR *&s)
 {
 	delete[] s;
 	int l= (int)SendMessage(GetDlgItem(dlg, id), WM_GETTEXTLENGTH, 0, 0)+1;
 	s = new TCHAR[l];
-	return GetDlgItemText(dlg, id, s, l);
+	s[0] = 0;
+	GetDlgItemText(dlg, id, s, l);
+	//remove LF (it can be pasted from Excel)
+	TCHAR *n = _tcschr(s, '\n');
+	if (n) *n = 0;
 }
 
 void cpStr(char *&dest, char const *src)
