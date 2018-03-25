@@ -270,5 +270,9 @@ SOURCE=.\source\up.bmp
 SOURCE=.\source\up.ico
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=.\source\HotkeyP.exe.manifest
+# End Source File
 # End Target
 # End Project

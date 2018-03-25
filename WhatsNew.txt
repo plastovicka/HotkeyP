@@ -1,10 +1,12 @@
 HotkeyP
 -------
 
+4.9 (2018-03-25)
 - command "Minimize window to tray"
 - environment variables can be used in a hotkey working directory and sound path
 
 fixed bugs:
+- HTK file could be broken by pasting newline into hotkey parameters
 - "Show desktop" worked only on Latin keyboard layouts
 - command line commands required a space before semicolon
 - indexes in a new "Multi command"

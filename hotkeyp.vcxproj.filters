@@ -121,4 +121,12 @@
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="source\ico9.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="source\HotkeyP.exe.manifest" />
+  </ItemGroup>
 </Project>
