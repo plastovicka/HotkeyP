@@ -382,7 +382,7 @@
       <Culture>0x0405</Culture>
     </ResourceCompile>
     <PreLinkEvent>
-      <Command>c:\_Petr\cw\hotkeyp\hotkeyp.exe -send window command 203 C:\_Petr\CW\hotkeyp\hotkeypDBG.exe</Command>
+      <Command>c:\_Petr\cw\hotkeyp\hotkeyp.exe -send window command 203 PlasHotKey</Command>
     </PreLinkEvent>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>

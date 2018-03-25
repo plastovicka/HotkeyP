@@ -1,7 +1,7 @@
 HotkeyP
 -------
 - pøíkaz "Minimalizovat okno do malé ikony"
-- v nastavení zvuku zkratky lze použít promìnné prostøedí (napø. %windir%)
+- v nastavení pracovního adresáøe a zvuku zkratky lze použít promìnné prostøedí (napø. %windir%)
 
 opravené chyby:
 - pøíkaz "Ukázat plochu" nefungoval, když jazyk klávesnice nepoužíval latinku

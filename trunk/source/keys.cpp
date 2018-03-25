@@ -296,8 +296,8 @@ DWORD WINAPI opacityProc(LPVOID param)
 
 void executeHotKey(int i)
 {
-	TCHAR *workDir, *filePart, *s;
-	const TCHAR *exe;
+	TCHAR *filePart, *s;
+	const TCHAR *exe, *workDir;
 	HWND w;
 	DWORD d;
 	DWORD_PTR dp;
@@ -311,7 +311,11 @@ void executeHotKey(int i)
 	}
 	else{
 		workDir=0;
-		if(*hk->dir) workDir=hk->dir;
+		tstring fullDir;
+		if (*hk->dir) {
+			fullDir = ExpandVars(hk->dir);
+			workDir = fullDir.c_str();
+		}
 		tstring fullExe = hk->getFullExe(); // zef: added support for environment vars in paths
 		exe=fullExe.c_str();
 		if(!isExe(exe)){
@@ -453,7 +457,7 @@ void executeHotKey(int i)
 					}
 				}
 				else{
-					if(testDir(hk->dir)){
+					if(testDir(ExpandVars(hk->dir).c_str())){
 						msglng(740, "Invalid working directory");
 					}
 					else{
