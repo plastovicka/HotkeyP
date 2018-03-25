@@ -274,7 +274,7 @@ void createPopups();
 bool checkProcessList(TCHAR *list);
 bool checkFullscreen(TCHAR *list);
 bool isExe(TCHAR const *f);
-bool testDir(TCHAR *dir);
+bool testDir(const TCHAR *dir);
 TCHAR *getCmdName(int id);
 void unhideApp(HideInfo *info);
 bool hideMainWindow();

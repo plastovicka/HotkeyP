@@ -387,8 +387,8 @@ void moveW(HDWP p, HWND hDlg, int id, int dx, int dy)
 		SWP_NOMOVE|SWP_NOZORDER);
 }
 
-//test if folder exists
-bool testDir(TCHAR *dir)
+//return false if folder exists or is empty string
+bool testDir(const TCHAR *dir)
 {
 	if(!dir[0]) return false;
 	DWORD attr= GetFileAttributes(dir);
@@ -560,7 +560,7 @@ void HotKey::resolveLNK()
 						cpStr(args, buf);
 					}
 					if(SUCCEEDED(psl->GetWorkingDirectory(buf, sizeA(buf)))){
-						if(buf[0]!='%') cpStr(dir, buf);
+						cpStr(dir, buf);
 					}
 					if(SUCCEEDED(psl->GetShowCmd(&i))){
 						if(i==SW_MINIMIZE || i==SW_SHOWMINNOACTIVE) cmdShow=2;
@@ -660,7 +660,7 @@ int HotKey::getIcon()
 					}
 				l1:
 					//which exe is used to open the document
-					if(!docIcon) FindExecutable(_exe, dir, buf);
+					if(!docIcon) FindExecutable(_exe, ExpandVars(dir).c_str(), buf);
 				}
 				HICON hi;
 				if((int)ExtractIconEx(buf, iconIndex, 0, &hi, 1) > 0){
@@ -2140,8 +2140,9 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 							//find associated application
 							// zef: added support for environment vars in commands
 							tstring fullExe = hk->getFullExe();
+							tstring fullDir = ExpandVars(hk->dir);
 							a=GetFileAttributes(fullExe.c_str());
-							HINSTANCE result=FindExecutable(fullExe.c_str(), hk->dir, exeBuf);
+							HINSTANCE result=FindExecutable(fullExe.c_str(), fullDir.c_str(), exeBuf);
 							if(result>(HINSTANCE)32 ||
 								(a&FILE_ATTRIBUTE_DIRECTORY) && a!=0xFFFFFFFF){
 								docPart=cutPath(hk->exe);
@@ -2182,7 +2183,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 								SetFocus(GetDlgItem(hWnd, 101));
 								break;
 							}
-							if(testDir(hk->dir)){
+							if(testDir(fullDir.c_str())){
 								msglng(740, "Invalid working directory");
 								SetFocus(GetDlgItem(hWnd, 110));
 								break;
