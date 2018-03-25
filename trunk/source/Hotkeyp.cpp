@@ -2254,12 +2254,21 @@ void moveItem(int i, int &dist)
 	}
 }
 
+static int dragStart = -1;
+
 void moveSelected(int dist)
 {
 	int i;
+	static bool err;
 
 	if(sortedCol!=0){
-		msglng(762, "Moving is possible only if the list is sorted by the first column.");
+		if(!err) { //show only one message box
+			err=true;
+			msglng(762, "Moving is possible only if the list is sorted by the first column.");
+			err=false;
+		}
+		dragStart= -1;
+		ReleaseCapture();
 		return;
 	}
 	EnterCriticalSection(&listCritSect);
@@ -2279,8 +2288,6 @@ void moveSelected(int dist)
 	LeaveCriticalSection(&listCritSect);
 }
 
-static int dragStart = -1;
-
 void itemDrag(LPARAM coord)
 {
 	LVHITTESTINFO hi;
@@ -2290,7 +2297,7 @@ void itemDrag(LPARAM coord)
 	if(i<0) return;
 	if(i!=dragStart){
 		moveSelected(i-dragStart);
-		dragStart=i;
+		if(dragStart>=0) dragStart=i;
 	}
 }
 
