@@ -1294,6 +1294,7 @@ void initList1()
 	}
 	static int (CALLBACK *sortFunc[])(LPARAM, LPARAM, LPARAM)=
 	{sortId, sortKey, sortNote};
+	aminmax(sortedCol, 0, sizeA(sortFunc) - 1);
 	ListView_SortItems(listBox, sortFunc[sortedCol], (LPARAM)descending);
 	SendMessage(listBox, WM_SETREDRAW, TRUE, 0);
 	ListView_EnsureVisible(listBox, bottom, TRUE);
@@ -1305,17 +1306,32 @@ void initList()
 	buildTree();
 }
 //-------------------------------------------------------------------------
-static const int MaxLineLen = 5000;
-
 TCHAR *fReadStr(FILE *f, int htkVersion)
 {
-	char buf[MaxLineLen];
-	if(fgets(buf, MaxLineLen, f)==0){
-		buf[0]='\n';
-		buf[1]=0;
+	//read whole line from file
+	char buf0[2000];
+	char *buf = buf0;
+	int index = 0, len = sizeof(buf0);
+	for (;;)
+	{
+		buf[len - 1] = '#';
+		if (fgets(buf+index, len-index, f) == NULL) {
+			buf[index] = '\n';
+			buf[index+1] = 0;
+			break;
+		}
+		if (buf[len - 1] != '\0' || buf[len - 2] == '\n') break;
+		//buffer overflow
+		int len2 = len * 2;
+		char *buf2=(char*)_alloca(len2);
+		memcpy(buf2, buf, len);
+		buf = buf2;
+		index = len - 1;
+		len = len2;
 	}
 	if(htkVersion < 7){
 #ifdef UNICODE
+		//convert from windows codepage to Unicode
 		int l = MultiByteToWideChar(CP_ACP, 0, buf, -1, NULL, 0);
 		amin(l, 2);
 		TCHAR *s= new TCHAR[l];
@@ -1332,6 +1348,7 @@ TCHAR *fReadStr(FILE *f, int htkVersion)
 	}
 	else
 	{
+		//convert from UTF-8 to Unicode
 		int l = MultiByteToWideChar(CP_UTF8, 0, buf, -1, NULL, 0);
 		amin(l, 2);
 		WCHAR *w= new WCHAR[l];
@@ -1352,10 +1369,12 @@ TCHAR *fReadStr(FILE *f, int htkVersion)
 void fWriteStr(FILE *f, TCHAR *s)
 {
 	if(s){
-		char buf[MaxLineLen-1];
 		convertT2W(s, w);
-		WideCharToMultiByte(CP_UTF8, 0, w, -1, buf, MaxLineLen-2, 0, 0);
-		buf[MaxLineLen-2]=0;
+		int len = wcslen(w) * 4 + 1;
+		char *buf=(char*)_alloca(len);
+		buf[0]=0;
+		WideCharToMultiByte(CP_UTF8, 0, w, -1, buf, len-1, 0,0);
+		buf[len-1]=0;
 		fputs(buf, f);
 	}
 	fputc('\n', f);
@@ -1363,8 +1382,8 @@ void fWriteStr(FILE *f, TCHAR *s)
 
 char *fReadStrA(FILE *f)
 {
-	char buf[MaxLineLen];
-	if(fgets(buf, MaxLineLen, f)==0){
+	char buf[1000];
+	if(fgets(buf, sizeof(buf), f)==0){
 		buf[0]='\n';
 		buf[1]=0;
 	}
@@ -1945,6 +1964,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			SetWindowLongPtr(hWnd, GWLP_USERDATA, lP);
 			hk= (HotKey*)lP;
 			SetDlgItemText(hWnd, 101, (hk->cmd>=0) ? getCmdName(hk->cmd) : hk->exe);
+			SendDlgItemMessage(hWnd, 102, EM_SETLIMITTEXT, 65535, 0);
 			SetDlgItemText(hWnd, 102, hk->args);
 			SetDlgItemText(hWnd, 110, hk->dir);
 			SetDlgItemText(hWnd, IDC_EDIT_SOUND, hk->sound); // zef: added sound

@@ -1,5 +1,6 @@
 HotkeyP
 -------
+- maximální délka parametrù zkratky zvìtšena z 4998 na 65535 znakù
 
 4.9 (25.3.2018)
 - pøíkaz "Minimalizovat okno do malé ikony"
