@@ -1,5 +1,6 @@
 HotkeyP
 -------
+- maximal length of a hotkey parameters increased from 4998 to 65535 characters
 
 4.9 (2018-03-25)
 - command "Minimize window to tray"
