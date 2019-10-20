@@ -2929,6 +2929,7 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 			}
 			else if(w && IsWindowVisible(w)){
 				TCHAR title[64];
+				if (GetClassName(w, title, sizeA(title)) && !_tcscmp(title, _T("Shell_TrayWnd"))) break; //don't hide the taskbar
 				GetWindowText(w, title, 64);
 				//find free slot in array
 				for(i=0; i<sizeA(trayIconA); i++){

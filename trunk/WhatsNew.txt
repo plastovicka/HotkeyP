@@ -2,6 +2,9 @@ HotkeyP
 -------
 - maximal length of a hotkey parameters increased from 4998 to 65535 characters
 
+fixed bugs:
+- "Minimize window to tray" could hide taskbar
+
 4.9 (2018-03-25)
 - command "Minimize window to tray"
 - environment variables can be used in a hotkey working directory and sound path
