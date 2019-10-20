@@ -2,6 +2,9 @@ HotkeyP
 -------
 - maximální délka parametrù zkratky zvìtšena z 4998 na 65535 znakù
 
+opravené chyby:
+- pøíkaz "Minimalizovat okno do malé ikony" mohl skrýt hlavní panel Windows
+
 4.9 (25.3.2018)
 - pøíkaz "Minimalizovat okno do malé ikony"
 - v nastavení pracovního adresáøe a zvuku zkratky lze použít promìnné prostøedí (napø. %windir%)
