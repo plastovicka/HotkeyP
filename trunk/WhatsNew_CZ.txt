@@ -1,6 +1,7 @@
 HotkeyP
 -------
 - maximální délka parametrù zkratky zvìtšena z 4998 na 65535 znakù
+- pøíkaz "Vložit text" umí vložit hodnotu z registru
 
 opravené chyby:
 - pøíkaz "Minimalizovat okno do malé ikony" mohl skrýt hlavní panel Windows
