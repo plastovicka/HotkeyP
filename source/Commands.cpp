@@ -2108,12 +2108,66 @@ void copyToClipboard1(TCHAR *s)
 	}
 }
 
+struct TregKey {
+	char* s;
+	HKEY key;
+}
+regRoot[] = {
+	{"LOCAL_MACHINE", HKEY_LOCAL_MACHINE},
+	{"CURRENT_USER", HKEY_CURRENT_USER},
+	{"CLASSES_ROOT", HKEY_CLASSES_ROOT},
+	{"USERS", HKEY_USERS},
+	{"CURRENT_CONFIG", HKEY_CURRENT_CONFIG},
+};
+
+void insertReg(TCHAR *path, TCHAR*& dest, TCHAR*& buf, size_t& bufLen)
+{
+	if (!strnicmpA(path, "HKEY_")) {
+		path += 5;
+		for (TregKey* k = regRoot; k < endA(regRoot); k++) {
+			if (!strnicmpA(path, k->s)) {
+				path += strlen(k->s);
+				if (*path++ == '\\') {
+					TCHAR *val = cutPath(path);
+					val[-1] = 0;
+					HKEY key;
+					DWORD len, type;
+					if(RegOpenKeyEx(k->key, path, 0, KEY_QUERY_VALUE|KEY_WOW64_64KEY, &key) == ERROR_SUCCESS) {
+						if (RegQueryValueEx(key, val, 0, &type, 0, &len) == ERROR_SUCCESS && len < 1000000 && len > 0) {
+							switch (type){
+							case REG_DWORD:
+								DWORD d;
+								if (RegQueryValueEx(key, val, 0, 0, (BYTE*)&d, &len) == ERROR_SUCCESS) {
+									resizeBuffer(buf, bufLen, dest, 11);
+									_ultot(d, dest, 10);
+									dest = _tcschr(dest, 0);
+								}
+								break;
+							case REG_SZ:
+								resizeBuffer(buf, bufLen, dest, len / sizeof(TCHAR));
+								if (RegQueryValueEx(key, val, 0, 0, (BYTE*)dest, &len) == ERROR_SUCCESS) {
+									dest += len / sizeof(TCHAR);
+									if (!dest[-1]) dest--;
+								}
+								break;
+							}
+						}
+						RegCloseKey(key);
+					}
+					val[-1] = '\\';
+				}
+				break;
+			}
+		}
+	}
+}
+
 TCHAR *formatText(TCHAR *param)
 {
 	size_t i;
 	time_t t;
 	DWORD n;
-	TCHAR *buf, *buf2, *s, *d;
+	TCHAR *buf, *buf2, *s, *d, *s2;
 	const int M=512;
 	bool isTime=false;
 
@@ -2148,6 +2202,19 @@ TCHAR *formatText(TCHAR *param)
 					break;
 				case 'l':
 					pasteFromClipboard(d, buf, i);
+					break;
+				case '%':
+					d++;
+					break;
+				case '"':
+					s2 = _tcschr(++s, '"');
+					if (s2) {
+						*s2 = 0;
+						insertReg(s, d, buf, i);
+						*s2 = '"';
+						s = s2;
+					}
+					else s-=2;
 					break;
 			}
 		}

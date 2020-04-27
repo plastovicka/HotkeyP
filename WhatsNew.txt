@@ -1,6 +1,7 @@
 HotkeyP
 -------
 - maximal length of a hotkey parameters increased from 4998 to 65535 characters
+- command "Paste text" can paste a registry value
 
 fixed bugs:
 - "Minimize window to tray" could hide taskbar
