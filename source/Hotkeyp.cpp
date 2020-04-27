@@ -112,7 +112,8 @@ modif,     //the HTK file has been modified
  disableKeys,
  isHilited,
  isZoom,
- treeResizing;
+ treeResizing,
+ sizeInitialized;
 
 int
 dlgW=620, dlgH=375, //main window size
@@ -2416,7 +2417,7 @@ void addKey(TCHAR *exe, bool makeCopy, int item)
 
 bool hideMainWindow()
 {
-	if(!IsZoomed(hWin) && !IsIconic(hWin)){
+	if(!IsZoomed(hWin) && !IsIconic(hWin) && sizeInitialized){
 		//remember window position and size
 		RECT rc;
 		GetWindowRect(hWin, &rc);
@@ -2951,6 +2952,16 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			addKey(exeBuf, 0, numKeys);
 			break;
 
+		case WM_SHOWWINDOW:
+			if (!sizeInitialized) {
+				//set window size
+				sizeInitialized = true;
+				aminmax(dlgX, 0, GetSystemMetrics(SM_CXSCREEN) - 200);
+				aminmax(dlgY, 0, GetSystemMetrics(SM_CYSCREEN) - 100);
+				MoveWindow(hWnd, dlgX, dlgY, dlgW, dlgH, TRUE);
+			}
+			break;
+
 		case WM_GETMINMAXINFO:
 			((MINMAXINFO FAR*) lP)->ptMinTrackSize.x = treeW+260;
 			((MINMAXINFO FAR*) lP)->ptMinTrackSize.y = 280;
@@ -3126,9 +3137,6 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 							if(hotKeyA[i].autoStart) executeHotKey(i);
 						}
 					}
-					aminmax(dlgX, 0, GetSystemMetrics(SM_CXSCREEN)-200);
-					aminmax(dlgY, 0, GetSystemMetrics(SM_CYSCREEN)-100);
-					MoveWindow(hWnd, dlgX, dlgY, dlgW, dlgH, TRUE);
 					if(show==1 || !*iniFile && show!=0){
 						ShowWindow(hWin, SW_SHOWDEFAULT);
 					}
