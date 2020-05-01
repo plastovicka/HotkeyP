@@ -1,5 +1,5 @@
 /*
- (C) 2003-2019  Petr Lastovicka
+ (C) 2003-2020  Petr Lastovicka
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License.
@@ -1913,7 +1913,7 @@ int getOpacity(HWND w)
 
 void setOpacity(HWND w, int o)
 {
-	if(w && o){
+	if(w){
 		static TsetOpacityFunc p;
 		if(!p){
 			p= (TsetOpacityFunc)GetProcAddress(GetModuleHandleA("user32.dll"), "SetLayeredWindowAttributes");

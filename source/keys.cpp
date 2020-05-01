@@ -285,7 +285,7 @@ DWORD WINAPI opacityProc(LPVOID param)
 			if(w!=oi->oldW) setOpacity(w, oi->opacity);
 			break;
 		}
-		Sleep(500);
+		Sleep(i==0 ? 100 : 500);
 	}
 	CloseHandle(oi->process);
 	delete oi;
