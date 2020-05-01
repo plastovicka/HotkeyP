@@ -6,6 +6,7 @@ HotkeyP
 fixed bugs:
 - "Minimize window to tray" could hide taskbar
 - CHM help could not be opened if HotkeyP was installed in the Program Files folder
+- window opacity can be 0
 
 4.9 (2018-03-25)
 - command "Minimize window to tray"

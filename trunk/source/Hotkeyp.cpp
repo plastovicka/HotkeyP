@@ -2511,7 +2511,7 @@ void optionChanged()
 	}
 	for(int i=0; i<Npopup; i++){
 		Tpopup *p= &popup[i];
-		if(oldPopup[i].opacity!=p->opacity){
+		if(oldPopup[i].opacity!=p->opacity && p->opacity){
 			setOpacity(p->hWnd, p->opacity);
 		}
 		if(oldPopup[i].width!=p->width){
@@ -3283,12 +3283,6 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 						langChanged();
 					}
 					break;
-				case 215: //run spy
-				{
-					convertA2T("spy.exe", spyexe); //CreateProcessW can modify the contents of the string
-					createProcess(spyexe, 0, false, true); //run at medium integrity level
-					break;
-				}
 				case 217: //category up
 					swapCategory(selectedCategory-1, selectedCategory);
 					break;
@@ -3777,7 +3771,7 @@ void createPopups()
 			Tpopup *p= &popup[i];
 			p->hWnd= CreateWindowEx(WS_EX_TOOLWINDOW, _T("HotkeyPopup"), _T(""),
 				WS_POPUP, 0, 0, 100, 10, hWin, 0, inst, 0);
-			setOpacity(p->hWnd, p->opacity);
+			if(p->opacity) setOpacity(p->hWnd, p->opacity);
 		}
 	}
 }
