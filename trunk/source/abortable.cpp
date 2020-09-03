@@ -57,6 +57,9 @@ static INT_PTR CALLBACK cntDownCallback(HWND hWndDlg, UINT msg, WPARAM wParam, L
 			}
 			// - initialize countdown progress bar
 			hProgressBar = GetDlgItem(hWndDlg, IDC_PROGRESS1);
+			SendMessage(hProgressBar, PBM_SETSTATE, PBST_PAUSED, 0);
+			SendMessage(hProgressBar, PBM_SETPOS, 100, 0);
+			SendMessage(hProgressBar, PBM_SETSTATE, PBST_NORMAL, 0);
 			SendMessage(hProgressBar, PBM_SETPOS, 100, 0);
 			SendMessage(hProgressBar, PBM_SETSTEP, (WPARAM)StepSize, 0);
 			SetTimer(hWndDlg, 1, StepDurationInMilliSec, NULL);
