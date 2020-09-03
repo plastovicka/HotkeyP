@@ -2,11 +2,13 @@ HotkeyP
 -------
 - maximal length of a hotkey parameters increased from 4998 to 65535 characters
 - command "Paste text" can paste a registry value
+- "Enable multiple instances" is always enabled for explorer.exe
 
 fixed bugs:
 - "Minimize window to tray" could hide taskbar
 - CHM help could not be opened if HotkeyP was installed in the Program Files folder
 - window opacity can be 0
+- progressbar when waiting before executing a hotkey on Windows 10
 
 4.9 (2018-03-25)
 - command "Minimize window to tray"

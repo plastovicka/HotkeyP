@@ -2162,6 +2162,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 									}
 								}
 							}
+							if (!_tcsicmp(hk->exe, _T("explorer.exe"))) hk->multInst = true;
 							//find associated application
 							// zef: added support for environment vars in commands
 							tstring fullExe = hk->getFullExe();
