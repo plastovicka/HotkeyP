@@ -1,6 +1,7 @@
 [OPTIONS]
 Compatibility=1.1 or later
 Compiled file=..\..\..\language\cz.chm
+Contents file=toc.hhc
 Default Window=w1
 Default topic=main.htm
 Display compile progress=No
@@ -8,7 +9,7 @@ Language=0x405 Èeština
 Title=HotkeyP
 
 [WINDOWS]
-w1=,,,,,,,,,0x42000,,0x0,[83,26,703,486],,,,1,,,0
+w1=,"toc.hhc",,"main.htm",,,,,,0x42120,230,0x3006,[69,70,819,570],,,,,,,0
 
 
 [FILES]

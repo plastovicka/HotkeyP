@@ -1,6 +1,7 @@
 [OPTIONS]
 Compatibility=1.1 or later
 Compiled file=..\..\help.chm
+Contents file=toc.hhc
 Default Window=w1
 Default topic=main.htm
 Display compile progress=No
@@ -8,7 +9,7 @@ Language=0x409 Angliètina (Spojené státy)
 Title=HotkeyP
 
 [WINDOWS]
-w1=,,,,,,,,,0x42000,,0x0,[69,70,689,530],,,,,,,0
+w1=,"toc.hhc",,"main.htm",,,,,,0x42120,230,0x3006,[69,70,819,570],,,,,,,0
 
 
 [FILES]
