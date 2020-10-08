@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <HTML>
 <HEAD>
-<title>Untitled</title>
+<title>HotkeyP nápověda</title>
 </HEAD>
 <BODY>
 <h2>Instalace</h2>
@@ -35,7 +35,7 @@ Možnost <u>Spustit jako správce</u> zaškrtněte, pokud aplikace vyžaduje adm
 Do položky <u>Popis</u> napište text, který bude vidět v seznamu v hlavním okně. Pokud nic nezadáte, pak se bude zobrazovat název souboru bez cesty.
 <p>
 <u>Průhlednost</u> je číslo od 0 do 255, což znamená od zcela průhledného až po zcela neprůhledné. Při hodnotě 0 se průhlednost nastavovat nebude a aplikace se spustí rychleji.
-
+<A NAME=mouse>
 <h2>Myší zkratky</h2>
 V dialogovém okně pro vytvoření nové klávesové zkratky přesuňte ukazatel myši nad bílý editační obdélník v horní části okna. Pak stiskněte libovolnou kombinaci tlačítek myši, kolečka myši a kláves Ctrl, Shift, Alt, Win. Objeví se slovo Myš a za ním součet znaků L, R, M, 4, 5, Up, Down, Left, Right, které znamenají levé, pravé, prostřední, čtvrté, páté tlačítko, otočení kolečkem nahoru, dolů, vlevo, vpravo.
 <p>
@@ -44,7 +44,7 @@ Pokud vám nefunguje čtvrté a páté tlačítko, pak máte buď špatný ovlad
 Horizontální naklápění kolečka nefunguje ve Windows XP nebo starší.
 <p>
 Pro kombinace více tlačítek si v možnostech nastavte "Zpoždění tlačítek myši", což znamená maximální dobu mezi stiskem jednotlivých tlačítek. Jestliže je interval mezi stiskem tlačítek delší, pak se myší zkratka vykoná také, ale zároveň se oknu pod kurzorem pošle informace o stisknutém tlačítku. Například když máte zkratku R+L, stisknete pravé tlačítko, počkáte dostatečně dlouhou dobu a pak přidáte levé tlačítko, vykoná se příkaz pro tuto zkratku a jakmile pustíte pravé tlačítko, zobrazí se kontextové menu. Když chcete pravým tlačítkem přesunout (drag&drop) soubory v průzkumníku, musíte po stisku pravého tlačítka chvíli počkat, dokud se soubor neoznačí, a teprve pak pohnout myší. Pro levé tlačítko myši je toto zpožďování vypnuto, protože drag&drop levým tlačítkem je často používaná operace. Zpožďována nejsou taková tlačítka, pro která není vytvořena žádná myší zkratka. Například po vytvoření zkratky R+L se začne zpožďovat pravé tlačítko, po vytvoření zkratky M+R se začne zpožďovat prostřední tlačítko. Protože ve hrách je zpoždění nepřijatelné, je možné ho pro některé aplikace zakázat - do editačního pole v možnostech napište názvy exe souborů (bez cesty) oddělené středníky.         
-
+<A NAME=remote>
 <h2>Dálkové ovládání</h2>
 Zkratky lze přiřadit také tlačítkům na dálkovém ovládání. K počítači musí být připojeno infračervené čidlo a zároveň musíte mít nainstalován WinLIRC (<A href="http://winlirc.sourceforge.net" target="_blank">http://winlirc.sourceforge.net</A>). Když se vám podaří správně nakonfigurovat WinLIRC, pak v možnostech HotkeyP zadejte cestu k souboru winlirc.exe a zaškrtněte přepínač Povolit.
 
@@ -52,10 +52,10 @@ Zkratky lze přiřadit také tlačítkům na dálkovém ovládání. K počíta�
 Při prvním spuštění programu musíte vybrat soubor, do kterého se budou klávesové zkratky ukládat. Od té chvíle se budou všechny provedené změny ukládat automaticky. Pokud se k systému Windows přihlašuje více uživatelů, může si každý z nich vytvořit svůj vlastní soubor.
 <p>
 Seznam zkratek setřídíte kliknutím na záhlaví sloupců. Pokud je setříděn podle prvního sloupce, pak lze měnit pořadí položek v seznamu, buď myší nebo klávesami Ctrl+nahoru, Ctrl+dolů. Je možné označit a přesouvat více položek. Dvojklik na položku nebo klávesa Enter mají stejný význam jako tlačítko Upravit.    
-
+<A NAME=categories>
 <h2>Kategorie</h2>
 Pro přehlednost je vhodné si zkratky roztřídit, zvláště pokud jich máte hodně. V levé části hlavního okna se zobrazují kategorie. Některé z nich vznikají automaticky a nedají se upravovat (jsou to kategorie: klávesové, myš, joystick, dálkové ovládání, příkazy, programy, dokumenty, www odkazy, autostart, tray menu). Kromě nich si můžete vytvářet své vlastní kategorie. Novou kategorii vytvoříte tak, že nejdříve označíte zkratky, pak v menu "Kategorie" zvolíte "Přiřadit označeným položkám" a pak napíšete název nové kategorie a kliknete na Ok. Úplně stejným způsobem lze označené zkratky přesouvat mezi existujícími kategoriemi, pouze místo názvu nové kategorie vyberete už existující kategorii z rozbalovacího seznamu. Jestliže název kategorie dáte prázdný, potom se zkratky přesunou do kategorie "výchozí". Když odstraníte kategorii, potom se zkratky v ní obsažené také přesunou do kategorie "výchozí".
-
+<A NAME=hook>
 <h2>Hook</h2>
 Funkce, která se vykonává při stisku jakékoli klávesy, se nazývá hook (zavěšení). Obvykle jej používají škodící špehovací programy, které zjišťují vaše hesla a pak je odesílají přes internet. V programu HotkeyP můžete v možnostech hook zakázat. Potom ale nebudou fungovat některé multimediální klávesy (které se zobrazují jako číslo v hranatých závorkách) a také nebude možné přiřadit zkratku klávese CapsLock a kombinacím Win+M, Win+E, Win+R atd. Dále nebudou správně fungovat funkce "Makro" a "Vložit text". 
 Když zaškrtnete možnost "Hook používat pro všechny klávesové zkratky", budou klávesové zkratky fungovat i ve hrách a jiných DirectX aplikacích.
@@ -401,7 +401,7 @@ Pokud na počítači občas spouštíte nějaké aplikace jako správce a chcete
 <li>Na kartě Nastavení zrušte přepínač "Zastavit úlohu, pokud běží déle než 3 dny" a klikněte na OK.
 <li>V HotkeyP v možnostech nesmí být zaškrtnuto "Spouštět automaticky při startu Windows".
 </ul>
-
+<A NAME=license>
 <h2>Licence</h2>
 Na tento program se vztahuje licence "GNU General Public License". Zde jsou stručně uvedeny jen nejdůležitější body. Celé její znění lze stáhnout například z <a href="http://www.gnugpl.cz/" target="_blank">www.gnugpl.cz</a>. 
 <ol>
