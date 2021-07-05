@@ -1,0 +1,372 @@
+#CP1252
+;Übersetzt von Fritzle
+
+12=Hotkey
+303=Befehl:
+304=Parameter:
+305=Ausführen in:
+315=Sound:
+307=Prozesspriorität:
+308=Fenster:
+310=Transparenz:
+309=Mehrere Instanzen erlauben
+311=Zum Menu des Infobereichs hinzufügen
+312=Nach Windows-Start automatisch ausführen
+313=Vor der Ausführung dieses Hotkeys fragen
+316=Vor der Ausführung dieses Hotkeys warten
+317=Als Administrator ausführen
+314=Kategorie:
+306=Beschreibung:
+1=OK
+2=Abbrechen
+7=Hilfe
+
+327=Einstellungen
+15=Allgemein
+331=Bei Windows-Start automatisch ausführen
+320=Symbol im Infobereich anzeigen
+321=Symbol zeigt, wenn Hotkey gedrückt:
+334=Schaltfläche 'Minimieren' versteckt HotkeyP im Infobereich
+335=Schaltfläche 'Schließen' versteckt HotkeyP im Infobereich
+342=Neuen Hotkey nach dem aktuellen einfügen
+357=Hohe Priorität für HotkeyP-Prozess setzen
+340=Tasten umbenennen:
+341=(Beispiel:  Enter=Return; (183)=Rechner;[35]=Einfügen)
+346=Schaltflächen im Hauptfenster
+500=Editieren
+502=Einfügen
+503=Hinzufügen
+501=Löschen
+504=Duplizieren
+505=Ausführen
+510=Einstellungen
+368=Hook für Tastatur benützen
+396=Nie
+397=Nur für spezielle System-Tasten
+398=Nur für Multimedia-Tasten
+399=Für alle Hotkeys
+386=Hook neu laden alle
+
+16=Befehle
+322=Lautstärkeregler
+323=Fensterbreite:
+345=Transparenz:
+324=Sichtbarkeitsdauer:
+332=Diese Audiogeräte anzeigen:
+328=Farben:
+333=Hintergrund, Text, Rand:
+339=Text anzeigen
+344=Transparenz:
+338=Hintergrund, Text, Rand:
+325=Freier Speicher
+330=Fensterbreite:
+343=Transparenz:
+326=Anzahl der Dezimalstellen:
+329=Farben:
+353=Computer sperren
+354=Geschwindigk.:
+355=Sound stumm setzen
+356=BMP-Datei:
+350=Zufällige Farbe
+351=Konstante Farbe:
+373=Passwort...
+395=Passwort verbergen
+
+17=Maus/Fernbedienung
+358=Maus
+347=Maustasten verzögern:
+348=Keine Verzögerung für diese Maustasten:
+378=L
+379=M
+380=R
+381=4
+382=5
+385=Keine Verzögerung für diese Anwendungen:
+349=Keine Verzögerung bei Vollbild\r\naußer für diese Anwendungen:
+359=Fernbedienung
+365=Status:
+360=Aktivieren
+361=WinLIRC exe:
+362=Adresse:
+363=Port:
+364=Max. Wiederholung:
+
+18=Joystick
+387=Schwellenwert:
+389=Globale Joystick-Hotkeys in diesen Anwendungen sperren:
+390=Globale Joystick-Hotkeys in Vollbild-Anwendungen sperren außer in diesen:
+391=Maus mit Joystick bewegen
+388=Multiplikator:
+392=Horizontale Achse:
+393=Vertikale Achse:
+394=Joystick-ID:
+
+11=Über
+301=Version
+
+370=Altes Passwort:
+371=Neues Passwort:
+372=Neues Passwort bestätigen:
+
+20=Kategorie umbenennen
+374=Name:
+21=Ausgewählte Hotkeys in Kategorie verschieben
+
+22=Vorgang abbrechen
+550=Der folgende Befehl steht zur Ausführung an.\n\nFalls du aber diesen Befehl lieber nicht ausführen willst, klicke 'Abbrechen' um den Vorgang abzubrechen oder trage die Folgen!
+
+;menu
+401=&Fenster
+400=&Sprache
+206=&Font...\tCtrl+F
+212=&Einstellungen...\tCtrl+M
+203=&Beenden\tAlt+X
+204=&Verstecken\tEsc
+
+402=&Datei
+201=Hotkeys öffnen...\tCtrl+O
+202=Hotkeys sichern...\tCtrl+S
+207=Hotkeys löschen
+213=Einstellungen öffnen...\tCtrl+I
+214=Einstellungen sichern...\tCtrl+E
+205=Einstellungen zurücksetzen
+215=spy.exe ausführen\tCtrl+Y
+
+403=&Hotkey
+104=Neu einfügen\tInsert
+108=Neu anhängen\tCtrl+W
+216=Duplizieren\tCtrl+D
+102=Editieren\tEnter
+103=Löschen\tDelete
+113=Umbenennen\tF2
+107=Ausführen\tCtrl+R
+105=Nach oben\tCtrl+up
+106=Nach unten\tCtrl+down
+
+405=&Kategorie
+220=Ausgewählte Hotkeys zuweisen
+219=Umbenennen
+221=Löschen
+217=Nach oben
+218=Nach unten
+
+404=H&ilfe
+208=Hilfe\tF1
+200=Was ist neu
+209=Über...
+
+;systray icon menu
+210=Öffnen
+211=Beenden
+
+;file extensions filters
+506=Hotkeys (*.htk)\0*.htk\0Alle Dateien\0*.*\0
+507=Alle Dateien\0*.*\0Ausführbare Dateien\0*.exe;*.com;*.bat;*.scr\0
+508=Alle Dateien\0*.*\0
+509=Registry Dateien (*.reg)\0*.reg\0Alle Dateien\0*.*\0
+511=Bitmap Bilder (*.bmp)\0*.bmp\0
+512=Waveform Audio (*.wav)\0*.wav\0
+
+719=Maus
+743=%s kann nicht ausgeführt werden
+730=Datei %s kann nicht geöffnet werden
+731=Falsches Dateiformat von %s
+732=Falsche Dateiversion von %s
+733=Datei %s kann nicht erstellt werden
+734=Fehler beim Schreiben in %s
+735=Fehler beim Schreiben in die Windows Registry
+736=Wähle ein Arbeitsverzeichnis
+737=Es wurde kein Befehl eingegeben
+738=Dem angegebenen Dateityp ist keine Anwendung zugeordnet
+739=%s nicht gefunden
+740=Ungültiges Arbeitsverzeichnis
+741=Prozesspriorität kann nur für EXE-Dateien angegeben werden
+761=Transparenz kann nur für EXE-Dateien angegeben werden
+762=Verschieben ist nur möglich, wenn die Liste nach Spalte 1 sortiert ist
+764=Soll dieser Befehl ausgeführt werden ?
+760=Soll die Konfiguration aus der Registry tatsächlich gelöscht werden ?
+366=aktiv
+367=nicht gestartet
+752=Stummgeschaltet
+763=Verbindung zu WinLIRC fehlgeschlagen
+755=Fehler in %s\nZeile %d
+756=Fehler in %s\Meldungsnummer %d zu groß
+757=Fehler in %s\nMeldungsnummer %d existiert schon
+753=Datei %s ist zu groß
+754=Fehler beim Lesen von Datei %s
+744=Unbekannte Tastenbezeichnung: %s
+746=Kein Vordergrund-Fenster vorhanden
+745=Fenster '%s' nicht gefunden
+748=Laufwerk von anderem Prozess in Benutzung
+747=%s ist kein CD-Laufwerk
+749=Ordner oder Datei %s nicht gefunden
+750=Priorität kann nicht geändert werden
+759=Titel: %s\r\nFensterklasse: %s\r\nProzess: %s\r\nPath: %s\r\nPriorität: %s\r\nSpeicher: %d KB
+751=Prozess kann nicht gelöscht werden
+758=Ungültige Multi-Befehl Nummer
+765=Soll die Kategorie wirklich '%s' gelöscht werden?
+766=Position der Desktop-Symbole wurde gesichert
+767=Laufwerk %c: kann nicht entfernt werden
+
+;columns
+720=
+721=Taste
+722=Beschreibung
+
+;process priority
+700=Leerlauf
+701=Normal
+702=Hoch
+703=Echtzeit
+704=Niedriger als normal
+705=Höher als normal
+
+;window state
+710=Normal
+711=Maximiert
+712=Minimiert
+
+;help file name
+13=help.chm
+30=main.htm
+14=WhatsNew.txt
+
+;command groups
+601=System
+600=Control Panels
+602=Bildschirm
+605=Fenster
+603=Fenster verschieben
+604=Prozesspriorität
+606=Multimedia
+608=Makro
+607=Maus
+
+;categories
+980=Default
+979=Alle
+978=Tastatur
+977=Maus
+976=Joystick
+975=Fernbedienung
+974=Befehle
+973=Programme
+972=Dokumente
+971=Weblinks
+970=Autostart
+969=Tray-Menü
+
+;commands
+1000=CD auswerfen
+1001=CD-Laufwerk schließen
+1002=Herunterfahren
+1003=Neu starten
+1004=Standbymodus einschalten
+1005=Abmelden
+1006=Bildschirmschoner
+1007=Fenster maximieren
+1008=Fenster minimieren
+1009=Fenster schließen
+1010=Immer im Vordergrund
+1011=Prozess beenden
+1012=Control panel
+1013=Lautstärke +
+1014=Lautstärke -
+1015=Ausgabe-Lautstärke +
+1016=Ausgabe-Lautstärke -
+1017=Stumm schalten
+1018=Bildschirm-Auflösung
+1019=Monitor ausschalten
+1020=Prozesspriorität
+1021=Befehl an Fenster schicken
+1022=Papierkorb leeren
+1023=Zufälliger Bildschirm-Hintergrund
+1024=Freier Speicher
+1025=Fenster verbergen
+1026=Tasten an Fenster schicken
+1027=Makro
+1028=Bildschirm-Mitte
+1029=Untere linke Ecke
+1030=Unterer Rand
+1031=Untere rechte Ecke
+1032=Linker Rand
+1033=Rechter Rand
+1034=Obere linke Ecke
+1035=Oberer Rand
+1036=Obere rechte Ecke
+1037=Mit Mauszeiger verschieben
+1038=Dialog zum Herunterfahren anzeigen
+1039=CD abspielen
+1040=CD nächster Titel
+1041=CD anhalten
+1042=CD vorheriger Titel
+1043=Linksklick
+1044=Mittelklick
+1045=Rechtsklick
+1046=Leerlaufpriorität
+1047=Normale Priorität
+1048=Hohe Priorität
+1049=Echtzeitpriorität
+1050=Programme hinzufügen/löschen
+1051=Bildschirm-Eigenschaften
+1052=Internet-Einstellungen
+1053=Maus
+1054=Multimedia
+1055=Energieoptionen
+1056=System
+1057=Datum und Uhrzeit
+1058=Lautstärke stumm schalten
+1059=Niedriger als normale Priorität
+1060=Höher als normale Priorität
+1061=Multi-Befehl
+1062=CD auswerfen/Laufwerk schließen
+1063=Computer sperren
+1064=Ruhezustand einschalten
+1065=Andere Fenster minimieren
+1066=Information
+1067=Text einfügen
+1068=Nächster Bildschirm-Hintergrund
+1069=Vorheriger Bildschirm-Hintergrund
+1070=Liste der Befehle
+1071=Fenster verschieben
+1072=Fenstergröße ändern
+1073=Befehl an aktives Fenster senden
+1074=Tasten an aktives Fenster senden
+1075=Mausrad
+1076=Doppelklick
+1077=Transparenz
+1078=Lautstärke
+1079=Maustaste-4-Klick
+1080=Maustaste-5-Klick
+1081=Desktop anzeigen
+1083=Voherige Task
+1084=Nächste Task
+1085=Text anzeigen
+1086=Taste deaktivieren
+1087=Alle Hotkeys deaktivieren
+1088=Maus-Hotkeys deaktivieren
+1089=Bildschirm-Screenshot
+1090=Fenster-Screenshot
+1091=Tray-Symbol verstecken
+1092=Dienst anhalten
+1093=Dienst starten
+1094=Makro im aktiven Fenster ausführen
+1095=Joystick-Hotkeys deaktivieren
+1096=Fernbedienung deaktivieren
+1097=Tastatur-Hotkeys deaktivieren
+1099=Tray-Symbol wiederherstellen
+1100=CD-Geschwindigkeit
+1101=Anwendung verbergen
+1102=In Taskleiste minimieren
+1103=Vergrößern
+1104=Liste der zuletzt verwendeten Dokumente löschen
+1105=Temporäre Dateien löschen
+1106=Desktop-Symbole sichern
+1107=Desktop-Symbole wiederherstellen
+1108=Waagerechtes Mausrad
+1109=Laufwerk entfernen
+1110=Transparenz +
+1111=Transparenz -
+1112=Alles maximieren
+1113=HotkeyP-Fenster anzeigen
+1114=Hook neu lade
