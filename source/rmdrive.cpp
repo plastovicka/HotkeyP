@@ -220,8 +220,8 @@ void removeDrive(TCHAR DriveLetter)
 		fSetupDiEnumDeviceInterfaces = (TSetupDiEnumDeviceInterfaces)GetProcAddress(lib, "SetupDiEnumDeviceInterfaces");
 		fSetupDiGetClassDevsA = (TSetupDiGetClassDevsA)GetProcAddress(lib, "SetupDiGetClassDevsA");
 		if(fCM_Request_Device_EjectW) removeDrive1(DriveLetter);
+		FreeLibrary(lib);
 	}
-	FreeLibrary(lib);
 	if(!fCM_Request_Device_EjectW) msg(_T("Remove drive function requires Windows 2000 or later"));
 }
 

@@ -122,7 +122,7 @@ BOOL CreateMediumIntegrityProcess(LPWSTR exe, DWORD creationFlags, LPCWSTR dir, 
 {
 	static TCreateProcessWithTokenW pCreateProcessWithTokenW;
 	if(!pCreateProcessWithTokenW){
-		pCreateProcessWithTokenW = (TCreateProcessWithTokenW)GetProcAddress(GetModuleHandleA("Advapi32"), "CreateProcessWithTokenW");
+		pCreateProcessWithTokenW = (TCreateProcessWithTokenW)GetProcAddress(GetModuleHandleA("advapi32"), "CreateProcessWithTokenW");
 		if(!pCreateProcessWithTokenW) return FALSE;
 	}
 	BOOL result = FALSE;
