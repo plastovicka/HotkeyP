@@ -437,6 +437,7 @@ void parseMacro1(TCHAR *s, int cmd)
 
 	int capslock=GetKeyState(VK_CAPITAL)&1;
 	forceNoShift();
+	if (keyWin) Sleep(1); //wait for shifts keyup
 	while(*s){
 		code=parseKey(s, vk, updown);
 		if(!updown){
@@ -2020,7 +2021,7 @@ void PasteTextData::restore()
 			if(OpenClipboard(hWin)){
 				if(EmptyClipboard()){
 					for(cd=prev; cd; cd=cd->nxt){
-						if((hmem=GlobalAlloc(GMEM_DDESHARE, cd->size))!=0){
+						if((hmem=GlobalAlloc(GMEM_MOVEABLE|GMEM_DDESHARE, cd->size))!=0){
 							if((ptr=GlobalLock(hmem))!=0){
 								memcpy(ptr, cd->data, cd->size);
 								GlobalUnlock(hmem);
@@ -2089,7 +2090,7 @@ void copyToClipboard1(TCHAR *s)
 	TCHAR *ptr;
 	DWORD len=_tcslen(s)+1;
 
-	if(s && (hmem=GlobalAlloc(GMEM_DDESHARE, isWin9X ? len : 2*len))!=0){
+	if(s && (hmem=GlobalAlloc(GMEM_MOVEABLE|GMEM_DDESHARE, isWin9X ? len : 2*len))!=0){
 		if((ptr=(TCHAR*)GlobalLock(hmem))!=0){
 #ifdef UNICODE
 			memcpy(ptr, s, 2*len);
@@ -2164,10 +2165,12 @@ void insertReg(TCHAR *path, TCHAR*& dest, TCHAR*& buf, size_t& bufLen)
 
 TCHAR *formatText(TCHAR *param)
 {
-	size_t i;
+	size_t i,j;
 	time_t t;
+	tm* tloc;
 	DWORD n;
 	TCHAR *buf, *buf2, *s, *d, *s2;
+	TCHAR fmt[3];
 	const int M=512;
 	bool isTime=false;
 
@@ -2181,9 +2184,22 @@ TCHAR *formatText(TCHAR *param)
 			s++;
 			switch(*s){
 				default:
-					d++;
-					*d++=*s;
-					isTime=true;
+					//format date and time
+					if (!isTime)
+					{
+						isTime = true;
+						time(&t);
+						tloc = localtime(&t);
+						fmt[0] = '%';
+						fmt[2] = 0;
+					}
+					fmt[1] = *s;
+					j = _tcsftime(d, M, fmt, tloc);
+					d += j;
+					if(j==0){
+						*d++ = '%';
+						*d++ = *s;
+					}
 					break;
 				case 0:
 					s--;
@@ -2222,19 +2238,7 @@ TCHAR *formatText(TCHAR *param)
 			d++;
 		}
 	}
-	if(!isTime) return buf;
-
-	//format date and time
-	i+=512;
-	buf2=new TCHAR[i];
-	time(&t);
-	if(!_tcsftime(buf2, i, buf, localtime(&t))){
-		//error
-		delete[] buf2;
-		return buf;
-	}
-	delete[] buf;
-	return buf2;
+	return buf;
 }
 
 INT_PTR CALLBACK pasteTextProc(HWND hWnd, UINT msg, WPARAM wP, LPARAM)
@@ -2404,7 +2408,6 @@ void wndInfo(HWND w)
 	DWORD pid, d;
 	int i;
 	HANDLE h;
-	HMODULE psapi;
 	TmemInfo getMemInfo;
 	PROCESS_MEMORY_COUNTERS m;
 	TCHAR *p, t[128], c[128], name[MAX_PATH], path[MAX_PATH];
@@ -2420,11 +2423,12 @@ void wndInfo(HWND w)
 	if((h=OpenProcess(PROCESS_QUERY_INFORMATION, 0, pid))!=0){
 		d=GetPriorityClass(h);
 		if(!isWin9X){
-			psapi=LoadLibraryA("psapi.dll");
+			HMODULE psapi=LoadLibraryA("psapi.dll");
 			getMemInfo= (TmemInfo)GetProcAddress(psapi, "GetProcessMemoryInfo");
 			if(getMemInfo){
 				getMemInfo(h, &m, sizeof(PROCESS_MEMORY_COUNTERS));
 			}
+			FreeLibrary(psapi);
 		}
 		CloseHandle(h);
 		for(i=0; i<sizeA(priorCnst); i++){
@@ -2602,13 +2606,9 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 			break;
 		case 22: //empty recycle bin
 		{
-			HINSTANCE lib = LoadLibraryA("shell32.dll");
-			if(lib){
-				typedef int(__stdcall *TemptyBin)(HWND, LPCSTR, WORD);
-				TemptyBin emptyBin = (TemptyBin)GetProcAddress(lib, "SHEmptyRecycleBinA");
-				if(emptyBin) emptyBin(hWin, "", (WORD)iparam);
-				FreeLibrary(lib);
-			}
+			typedef int(__stdcall *TemptyBin)(HWND, LPCSTR, WORD);
+			TemptyBin emptyBin = (TemptyBin)GetProcAddress(GetModuleHandleA("shell32.dll"), "SHEmptyRecycleBinA");
+			if(emptyBin) emptyBin(hWin, "", (WORD)iparam);
 		}
 		break;
 		case 23: //random wallpaper

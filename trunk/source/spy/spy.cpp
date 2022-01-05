@@ -88,7 +88,7 @@ void copyToClipboard(char *s)
 
 	if(OpenClipboard(0)){
 		if(EmptyClipboard()){
-			if((hmem=GlobalAlloc(GMEM_DDESHARE, isWin9X ? len : 2*len))!=0){
+			if((hmem=GlobalAlloc(GMEM_MOVEABLE|GMEM_DDESHARE, isWin9X ? len : 2*len))!=0){
 				if((ptr=(char*)GlobalLock(hmem))!=0){
 					if(isWin9X){
 						strcpy(ptr, s);

@@ -133,7 +133,7 @@ BEGIN
     ICON            1,-1,83,20,20,20
     CTEXT           "Version",301,31,24,28,9
     LTEXT           "",101,61,24,15,8
-    CTEXT           "(C) 2003-2020  Petr Lastovicka",300,4,48,104,10
+    CTEXT           "(C) 2003-2022  Petr Lastovicka",300,4,48,104,10
     PUSHBUTTON      "http://petr.lastovicka.sweb.cz",123,7,64,99,11
 END
 
@@ -150,11 +150,11 @@ BEGIN
     EDITTEXT        101,137,35,29,12
     LTEXT           "ms",IDC_STATIC,170,37,24,8
     CONTROL         "&Minimize button hides the window",334,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,9,51,184,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,9,51,186,10
     CONTROL         "&Close button hides the window",335,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,9,64,184,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,9,64,186,10
     CONTROL         "Insert new hotkey a&fter the current item",342,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,9,78,184,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,9,78,186,10
     CONTROL         "&Set high priority to HotkeyP process",357,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,9,91,186,10
     GROUPBOX        "Use keyboard hook",368,9,106,174,68
@@ -763,7 +763,7 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 4,9,1,0
+ FILEVERSION 4,10,0,0
  PRODUCTVERSION 0,0,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -782,9 +782,9 @@ BEGIN
             VALUE "Comments", "Shortcut key program launcher\0"
             VALUE "CompanyName", "Petr Laštovièka\0"
             VALUE "FileDescription", "HotkeyP\0"
-            VALUE "FileVersion", "4, 9, 1, 0\0"
+            VALUE "FileVersion", "4, 10, 0, 0\0"
             VALUE "InternalName", "\0"
-            VALUE "LegalCopyright", "© 2004-2020  Petr Laštovièka\0"
+            VALUE "LegalCopyright", "© 2004-2022  Petr Laštovièka\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "hotkeyp.exe\0"
             VALUE "PrivateBuild", "\0"

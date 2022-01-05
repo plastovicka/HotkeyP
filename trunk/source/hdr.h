@@ -37,6 +37,9 @@ typedef std::basic_string<TCHAR> tstring;
 #define MAPVK_VK_TO_VSC     (0)
 #define MAPVK_VSC_TO_VK     (1)
 #define ERROR_ELEVATION_REQUIRED         740L
+#define PBM_SETSTATE            (WM_USER+16)
+#define PBST_NORMAL             0x0001
+#define PBST_PAUSED             0x0003
 
 enum STORAGE_PROPERTY_ID {
   StorageDeviceProperty,
