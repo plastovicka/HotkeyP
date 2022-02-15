@@ -1,6 +1,7 @@
 HotkeyP
 -------
-- maximální délka parametrù zkratky zvìtšena z 4998 na 65535 znakù
+5.0
+- maximální délka parametrù zkratky zvìtšena na 65535
 - pøíkaz "Vložit text" umí vložit hodnotu z registru
 - "Povolit vícenásobné spuštìní" je vždy povoleno pro explorer.exe
 

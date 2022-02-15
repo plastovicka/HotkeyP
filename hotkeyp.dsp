@@ -142,6 +142,10 @@ SOURCE=.\source\commands.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\source\DropTarget.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\source\encrypt.cpp
 # End Source File
 # Begin Source File
@@ -193,6 +197,10 @@ SOURCE=.\source\winlirc.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\source\DropTarget.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\source\hdr.h

@@ -683,7 +683,7 @@ void postHotkey(int i, LPARAM updown)
 
 //-------------------------------------------------------------------------
 
-LRESULT msgFromHook(WPARAM vk, LPARAM scan, int updown)
+LRESULT msgFromHook(WPARAM vk, DWORD scan, int updown)
 {
 	int i;
 	bool shift[Nshift];
@@ -802,7 +802,7 @@ int bitsearch(int m)
 	return i;
 }
 
-LPARAM clickFromHook(WPARAM mesg, LPARAM lP)
+LPARAM clickFromHook(WPARAM mesg, DWORD lP)
 {
 	int down, up, i;
 	bool b;
@@ -911,9 +911,9 @@ bool KeyNeedsHook(UINT vk, UINT modifiers)
 	return false;
 }
 
-LRESULT keyFromHook(WPARAM mesg, LPARAM vk, LPARAM scan)
+LRESULT keyFromHook(WPARAM mesg, DWORD vk, DWORD scan)
 {
-	if(unsigned(vk)<sizeA(keyReal)){
+	if(vk<sizeA(keyReal)){
 		keyReal[vk]= (mesg==WM_KEYDOWN || mesg==WM_SYSKEYDOWN);
 	}
 	keyLastScan = scan;
@@ -943,7 +943,7 @@ LRESULT keyFromHook(WPARAM mesg, LPARAM vk, LPARAM scan)
 		}
 		return 1;
 	}
-	if(unsigned(vk)<sizeA(blockedKeys) && blockedKeys[vk]) return 1;
+	if(vk<sizeA(blockedKeys) && blockedKeys[vk]) return 1;
 
 	if(preventWinMenu && mesg==WM_KEYUP && (vk==VK_LWIN || vk==VK_RWIN || vk==VK_LMENU)){
 		preventWinMenu=false;
@@ -1027,6 +1027,14 @@ void uninstallHookT(WPARAM mouse)
 		UnhookWindowsHookEx(hook);
 		hook=0;
 	}
+}
+
+LONG WINAPI unhandledExceptionFilter(_EXCEPTION_POINTERS* )
+{
+	uninstallHookT(true);
+	uninstallHookT(false);
+	deleteTrayIcon();
+	return EXCEPTION_CONTINUE_SEARCH;
 }
 
 void installHook(bool mouse)
@@ -1126,11 +1134,11 @@ DWORD WINAPI hookProc(LPVOID)
 			uninstallHookT(mesg.wParam);
 			break;
 		case WM_USER + 203:
-			mouse_eventDown(mesg.wParam);
+			mouse_eventDown((int)mesg.wParam);
 			Sleep(10);
 			break;
 		case WM_USER + 204:
-			mouse_eventUp(mesg.wParam);
+			mouse_eventUp((int)mesg.wParam);
 			break;
 		default:
 			DispatchMessage(&mesg);

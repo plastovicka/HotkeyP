@@ -1,6 +1,7 @@
 HotkeyP
 -------
-- maximal length of a hotkey parameters increased from 4998 to 65535 characters
+5.0
+- maximal length of hotkey parameters increased to 65535
 - command "Paste text" can paste a registry value
 - "Enable multiple instances" is always enabled for explorer.exe
 

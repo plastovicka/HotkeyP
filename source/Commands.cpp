@@ -2088,7 +2088,7 @@ void copyToClipboard1(TCHAR *s)
 {
 	HGLOBAL hmem;
 	TCHAR *ptr;
-	DWORD len=_tcslen(s)+1;
+	size_t len=_tcslen(s)+1;
 
 	if(s && (hmem=GlobalAlloc(GMEM_MOVEABLE|GMEM_DDESHARE, isWin9X ? len : 2*len))!=0){
 		if((ptr=(TCHAR*)GlobalLock(hmem))!=0){
@@ -2167,10 +2167,10 @@ TCHAR *formatText(TCHAR *param)
 {
 	size_t i,j;
 	time_t t;
-	tm* tloc;
+	tm* tloc=0;
 	DWORD n;
-	TCHAR *buf, *buf2, *s, *d, *s2;
-	TCHAR fmt[3];
+	TCHAR *buf, *s, *d, *s2;
+	TCHAR fmt[4];
 	const int M=512;
 	bool isTime=false;
 
@@ -2191,9 +2191,11 @@ TCHAR *formatText(TCHAR *param)
 						time(&t);
 						tloc = localtime(&t);
 						fmt[0] = '%';
-						fmt[2] = 0;
+						fmt[3] = 0;
 					}
 					fmt[1] = *s;
+					fmt[2] = 0;
+					if (*s == '#') fmt[2] = *++s;
 					j = _tcsftime(d, M, fmt, tloc);
 					d += j;
 					if(j==0){
@@ -2255,7 +2257,7 @@ INT_PTR CALLBACK pasteTextProc(HWND hWnd, UINT msg, WPARAM wP, LPARAM)
 			w=10;
 			for(i=0; i<pasteTextData.n; i++){
 				s= pasteTextData.L[i];
-				aminmax(w, _tcslen(s), 150);
+				aminmax(w, (int)_tcslen(s), 150);
 				SendMessage(list, LB_ADDSTRING, 0, (LPARAM)s);
 			}
 			//select the first item
@@ -2331,12 +2333,12 @@ void pasteText(TCHAR *param)
 		if(focus){
 			f = IsWindowUnicode(focus) ? SendMessageTimeoutW : SendMessageTimeoutA;
 			if(f(focus, EM_GETLINECOUNT, 0, 0, SMTO_BLOCK, 5000, &p) && p>0){
-				editSelPos = SendMessage(focus, EM_GETSEL, 0, 0); //SendMessageTimeout returns edit box length of Unicode edit boxes
+				editSelPos = (DWORD)SendMessage(focus, EM_GETSEL, 0, 0); //SendMessageTimeout returns edit box length of Unicode edit boxes
 			}
 		}
 		//show dialog box
 		pasteTextData.n=n;
-		sel= DialogBox(inst, _T("LIST"), 0, pasteTextProc);
+		sel = (int)DialogBox(inst, _T("LIST"), 0, pasteTextProc);
 		if(editSelPos!=-1){
 			//restore keyboard focus
 			DWORD tid = GetWindowThreadProcessId(focus, 0);
@@ -2472,7 +2474,7 @@ bool noCmdLine(TCHAR *param)
 	if(w){
 		COPYDATASTRUCT d;
 		d.lpData= param;
-		d.cbData= _tcslen(param)+1;
+		d.cbData= (DWORD)_tcslen(param)+1;
 		d.dwData= cmdLineCmd+13000;
 		SendMessage(w, WM_COPYDATA, (WPARAM)w, (LPARAM)&d);
 	}
