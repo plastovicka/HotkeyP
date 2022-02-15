@@ -1,5 +1,5 @@
 /*
- (C) 2008-2019  Petr Lastovicka
+ (C) Petr Lastovicka
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License.
@@ -63,7 +63,7 @@ LRESULT helpProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 	if(mesg==WM_USER+4370){
 		getExeDir(buf, lng(13, "help.chm"));
 		_stprintf(buf2, _T("%.99s#%d"), lng(30, "main.htm"), wP);
-		hHH = HtmlHelp(0, buf, 0, (!wP) ? 0 : (DWORD_PTR)buf2);
+		hHH = HtmlHelpW(0, buf, 0, (!wP) ? 0 : (DWORD_PTR)buf2);
 		return (LPARAM)hHH;
 	}
 	if(mesg==WM_TIMER && wP==11){

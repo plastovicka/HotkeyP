@@ -1,5 +1,5 @@
 /*
- (C) 2004-2016  Petr Lastovicka
+ (C) Petr Lastovicka
  
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License.
@@ -12,46 +12,10 @@
 
 #pragma hdrstop
 
-HWND hWin1,hWin2;
+HWND hWin2;
 HHOOK hookK,hookM,hookW,hookG;
 int lock;
 
-//-------------------------------------------------------------------------
-#ifndef _WIN64
-void getW1()
-{
- if(!IsWindow(hWin1)) hWin1=FindWindow("PlasHotkey",0);
-}
-
-HHOOK getH1(int cmd)
-{
- getW1();
- return (HHOOK)SendMessage(hWin1,cmd,0,0);
-}
-
-extern "C" __declspec(dllexport)
-LRESULT CALLBACK MouseProc95(int code, WPARAM wP, LPARAM lP)
-{
- if(!hookM) hookM=getH1(WM_USER+51);
- if(wP>=160 && wP<=173) wP+=512-160;
- if(wP!=WM_MOUSEMOVE && code==HC_ACTION){
-   getW1();
-   if(SendMessage(hWin1,WM_USER+53,wP,((MOUSEHOOKSTRUCT*)lP)->dwExtraInfo<<5)) return 1;
- }
- return CallNextHookEx(hookM, code, wP, lP);
-}
-
-extern "C" __declspec(dllexport)
-LRESULT CALLBACK KeyboardProc95(int code, WPARAM wP, LPARAM lP)
-{
- if(!hookK) hookK=getH1(WM_USER+54);
- if(code==HC_ACTION){
-   getW1();
-   if(SendMessage(hWin1,WM_USER+57,wP,lP)) return 1;
- }
- return CallNextHookEx(hookK, code, wP, lP);
-}
-#endif
 //-------------------------------------------------------------------------
 
 void getW2()

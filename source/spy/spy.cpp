@@ -1,5 +1,5 @@
 /*
-	(C) 2006-2016  Petr Lastovicka
+	(C) Petr Lastovicka
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License.
@@ -32,7 +32,7 @@ HHOOK hook, hookG;
 int first, count;
 int colWidth[Ncolumns+1];
 char *title="Spy";
-bool isWin9X, isWin64;
+bool isWin64;
 
 TspyItem A[Mitem];
 
@@ -88,16 +88,11 @@ void copyToClipboard(char *s)
 
 	if(OpenClipboard(0)){
 		if(EmptyClipboard()){
-			if((hmem=GlobalAlloc(GMEM_MOVEABLE|GMEM_DDESHARE, isWin9X ? len : 2*len))!=0){
+			if((hmem=GlobalAlloc(GMEM_MOVEABLE|GMEM_DDESHARE, 2*len))!=0){
 				if((ptr=(char*)GlobalLock(hmem))!=0){
-					if(isWin9X){
-						strcpy(ptr, s);
-					}
-					else{
-						MultiByteToWideChar(CP_ACP, 0, s, -1, (WCHAR*)ptr, len);
-					}
+					MultiByteToWideChar(CP_ACP, 0, s, -1, (WCHAR*)ptr, len);
 					GlobalUnlock(hmem);
-					SetClipboardData(isWin9X ? CF_TEXT : CF_UNICODETEXT, hmem);
+					SetClipboardData(CF_UNICODETEXT, hmem);
 				}
 				else{
 					GlobalFree(hmem);
@@ -378,7 +373,6 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR, int cmdShow)
 	OSVERSIONINFO v;
 	v.dwOSVersionInfoSize= sizeof(OSVERSIONINFO);
 	GetVersionEx(&v);
-	isWin9X = v.dwPlatformId==VER_PLATFORM_WIN32_WINDOWS;
 
 	typedef BOOL(__stdcall *TIsWow64Process)(HANDLE, PBOOL);
 	TIsWow64Process isWow64Process = (TIsWow64Process)GetProcAddress(GetModuleHandleA("kernel32.dll"), "IsWow64Process");

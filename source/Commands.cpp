@@ -1,5 +1,5 @@
 /*
- (C) 2003-2020  Petr Lastovicka
+ (C) Petr Lastovicka
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License.
@@ -24,7 +24,7 @@ bool keyReal[256];
 static bool shifts[Nshift], shifts0[Nshift2];
 const int shiftTab[Nshift]={VK_SHIFT, VK_CONTROL, VK_MENU, VK_LWIN, VK_RWIN};
 const int shift2Tab[Nshift2]={VK_RMENU, VK_LSHIFT, VK_RSHIFT, VK_RCONTROL, VK_LMENU, VK_LWIN, VK_RWIN, VK_LCONTROL};
-
+HMODULE klib;
 static unsigned seed; //random number seed
 HWND hiddenWin, keyWin;
 HideInfo hiddenApp;
@@ -292,29 +292,21 @@ void forceNoShift()
 {
 	int i;
 
-	if(isWin9X){
-		for(i=0; i<Nshift; i++){
-			shifts0[i]= GetAsyncKeyState(shiftTab[i])<0;
-			keyEventUp(shiftTab[i]);
-		}
+	for(i=0; i<Nshift2; i++){
+		shifts0[i]= GetAsyncKeyState(shift2Tab[i])<0;
 	}
-	else{
-		for(i=0; i<Nshift2; i++){
-			shifts0[i]= GetAsyncKeyState(shift2Tab[i])<0;
+	if(preventWinMenu){
+		keyEventDown(VK_CONTROL);
+		keyEventUp(VK_CONTROL);
+	}
+	for(i=0; i<Nshift2; i++){
+		if(shifts0[i]){
+			//NOTE: if right Alt is released in PuTTY, then CTRL+key shortcuts in PuTTY terminal stop working
+			keyEventUp(shift2Tab[i]);
 		}
-		if(preventWinMenu){
-			keyEventDown(VK_CONTROL);
-			keyEventUp(VK_CONTROL);
-		}
-		for(i=0; i<Nshift2; i++){
-			if(shifts0[i]){
-				//NOTE: if right Alt is released in PuTTY, then CTRL+key shortcuts in PuTTY terminal stop working
-				keyEventUp(shift2Tab[i]);
-			}
-			else{
-				//keyReal is unreliable if UAC is enabled in Windows Vista and later
-				keyReal[shift2Tab[i]] = false;
-			}
+		else{
+			//keyReal is unreliable if UAC is enabled in Windows Vista and later
+			keyReal[shift2Tab[i]] = false;
 		}
 	}
 }
@@ -323,36 +315,27 @@ void restoreShift()
 {
 	int i;
 
-	if(isWin9X){
-		for(i=0; i<Nshift; i++){
-			if(shifts0[i]){
-				if(i!=shLWin && i!=shRWin) keyEventDown(shiftTab[i]);
-			}
+	if(hookK){
+		for(i=0; i<Nshift2; i++){
+			shifts0[i]=keyReal[shift2Tab[i]];
 		}
 	}
-	else{
-		if(hookK){
-			for(i=0; i<Nshift2; i++){
-				shifts0[i]=keyReal[shift2Tab[i]];
-			}
-		}
-		else if(shifts0[shRAlt]) shifts0[shLCtrl]=false;
+	else if(shifts0[shRAlt]) shifts0[shLCtrl]=false;
 
+	for(i=0; i<Nshift2; i++){
+		if(shifts0[i]) keyEventDown(shift2Tab[i]);
+	}
+	if((GetAsyncKeyState(VK_LWIN)<0 || GetAsyncKeyState(VK_RWIN)<0 || GetAsyncKeyState(VK_LMENU)<0) && !shifts0[shLCtrl]){
+		//prevent the Start menu or a normal menu to show after Win+key or Alt+key
+		keyEventDown(VK_CONTROL);
+		keyEventUp(VK_CONTROL);
+	}
+
+	if(hookK){
+		//user could release shift just after reading keyReal value, but before calling keyEventDown
 		for(i=0; i<Nshift2; i++){
-			if(shifts0[i]) keyEventDown(shift2Tab[i]);
-		}
-		if((GetAsyncKeyState(VK_LWIN)<0 || GetAsyncKeyState(VK_RWIN)<0 || GetAsyncKeyState(VK_LMENU)<0) && !shifts0[shLCtrl]){
-			//prevent the Start menu or a normal menu to show after Win+key or Alt+key
-			keyEventDown(VK_CONTROL);
-			keyEventUp(VK_CONTROL);
-		}
-
-		if(hookK){
-			//user could release shift just after reading keyReal value, but before calling keyEventDown
-			for(i=0; i<Nshift2; i++){
-				if(shifts0[i] && !keyReal[shift2Tab[i]]){
-					keyEventUp(shift2Tab[i]);
-				}
+			if(shifts0[i] && !keyReal[shift2Tab[i]]){
+				keyEventUp(shift2Tab[i]);
 			}
 		}
 	}
@@ -523,7 +506,7 @@ void parseMacro1(TCHAR *s, int cmd)
 	}
 	shiftsUp();
 	if(capslock==2) keyPress(VK_CAPITAL, 0);
-	if(rep || hookK && !isWin9X) restoreShift();
+	if(rep || hookK) restoreShift();
 }
 
 void parseMacro(TCHAR *s)
@@ -728,7 +711,6 @@ void ignoreHotkey(HotKey *hk)
 	id= int(hk-hotKeyA);
 	registerHK(id, true);
 	vk=hk->vkey;
-	if(isWin9X && vk==vkMouse) hk->ignore=true;
 	keyWin=0;
 	if(hk->modifiers & MOD_SHIFT) keyDownI(VK_SHIFT);
 	if(hk->modifiers & MOD_CONTROL) keyDownI(VK_CONTROL);
@@ -1277,8 +1259,7 @@ DWORD strToDword(TCHAR *&s)
 LONG changeDisplay(char *device, DEVMODEA &dm, DWORD flag)
 {
 	if(device){
-		TChangeDisplaySettingsEx p= (TChangeDisplaySettingsEx)GetProcAddress(GetModuleHandleA("user32.dll"), "ChangeDisplaySettingsExA");
-		return p(device, &dm, 0, flag, 0);
+		return ChangeDisplaySettingsExA(device, &dm, 0, flag, 0);
 	}
 	else{
 		return ChangeDisplaySettingsA(&dm, flag);
@@ -1572,8 +1553,7 @@ void changeWallpaper(TCHAR *dir, int action)
 			hr = CoCreateInstance(CLSID_ActiveDesktop, NULL, CLSCTX_INPROC_SERVER,
 				IID_IActiveDesktop, (void**)&pActiveDesktop);
 			if(hr==S_OK){
-				convertT2W(info.result, resultW);
-				pActiveDesktop->SetWallpaper(resultW, 0);
+				pActiveDesktop->SetWallpaper(info.result, 0);
 				pActiveDesktop->ApplyChanges(AD_APPLY_ALL);
 				pActiveDesktop->Release();
 			}
@@ -1709,20 +1689,8 @@ void resetDiskfree()
 void addDrive(char *root)
 {
 	DWORDLONG free, total;
-	DiskInfo *d;
-	TdiskFreeFunc p;
-
-	p= (TdiskFreeFunc)GetProcAddress(GetModuleHandleA("kernel32.dll"), "GetDiskFreeSpaceExA");
-	if(p){
-		if(!p(root, (ULARGE_INTEGER*)&free, (ULARGE_INTEGER*)&total, 0)) return;
-	}
-	else{
-		DWORD sectPerClust, bytesPerSect, freeClust, totalClust;
-		if(!GetDiskFreeSpaceA(root, &sectPerClust, &bytesPerSect, &freeClust, &totalClust)) return;
-		free= freeClust*(DWORDLONG)sectPerClust*bytesPerSect;
-		total= totalClust*(DWORDLONG)sectPerClust*bytesPerSect;
-	}
-	d= &disks[root[0]-'A'];
+	if(!GetDiskFreeSpaceExA(root, (ULARGE_INTEGER*)&free, (ULARGE_INTEGER*)&total, 0)) return;
+	DiskInfo* d= &disks[root[0]-'A'];
 	if(d->free!=free || !d->text[0]){
 		d->free=free;
 		d->bar=(int)(free*1000/total);
@@ -2063,13 +2031,7 @@ bool pasteFromClipboard(TCHAR *&dest, TCHAR *&buf, size_t &bufLen)
 	bool result=false;
 
 	if(OpenClipboard(0)){
-		if((hmem= GetClipboardData(
-#ifdef UNICODE
-			CF_UNICODETEXT
-#else
-			CF_TEXT
-#endif
-			))!=0){
+		if((hmem= GetClipboardData(CF_UNICODETEXT))!=0){
 			if((ptr=(TCHAR*)GlobalLock(hmem))!=0){
 				len= _tcslen(ptr);
 				resizeBuffer(buf, bufLen, dest, len);
@@ -2090,18 +2052,11 @@ void copyToClipboard1(TCHAR *s)
 	TCHAR *ptr;
 	size_t len=_tcslen(s)+1;
 
-	if(s && (hmem=GlobalAlloc(GMEM_MOVEABLE|GMEM_DDESHARE, isWin9X ? len : 2*len))!=0){
+	if(s && (hmem=GlobalAlloc(GMEM_MOVEABLE|GMEM_DDESHARE, 2*len))!=0){
 		if((ptr=(TCHAR*)GlobalLock(hmem))!=0){
-#ifdef UNICODE
 			memcpy(ptr, s, 2*len);
-#else
-			if(isWin9X)
-				strcpy(ptr, s);
-			else
-				MultiByteToWideChar(CP_ACP, 0, s, -1, (WCHAR*)ptr, len);
-#endif
 			GlobalUnlock(hmem);
-			SetClipboardData(isWin9X ? CF_TEXT : CF_UNICODETEXT, hmem);
+			SetClipboardData(CF_UNICODETEXT, hmem);
 		}
 		else{
 			GlobalFree(hmem);
@@ -2293,8 +2248,7 @@ HWND GetFocusGlobal()
 {
 	GUITHREADINFO gui;
 	gui.cbSize = sizeof(GUITHREADINFO);
-	TGetGUIThreadInfo p= (TGetGUIThreadInfo)GetProcAddress(GetModuleHandleA("user32.dll"), "GetGUIThreadInfo");
-	if(p && p(0, &gui)) return gui.hwndFocus;
+	if(GetGUIThreadInfo(0, &gui)) return gui.hwndFocus;
 	return 0;
 }
 
@@ -2363,7 +2317,7 @@ void pasteText(TCHAR *param)
 			if(EmptyClipboard()){
 				pasteTextData.busy=true;
 				//WM_RENDERFORMAT will set clipboard data
-				SetClipboardData(isWin9X ? CF_TEXT : CF_UNICODETEXT, NULL);
+				SetClipboardData(CF_UNICODETEXT, NULL);
 				//Ctrl+V
 				lockPaste++;
 				SetTimer(hWin, 14, checkShifts(MOD_ALT) ? 150 : 10, 0);
@@ -2410,7 +2364,6 @@ void wndInfo(HWND w)
 	DWORD pid, d;
 	int i;
 	HANDLE h;
-	TmemInfo getMemInfo;
 	PROCESS_MEMORY_COUNTERS m;
 	TCHAR *p, t[128], c[128], name[MAX_PATH], path[MAX_PATH];
 
@@ -2424,14 +2377,10 @@ void wndInfo(HWND w)
 	m.WorkingSetSize=0;
 	if((h=OpenProcess(PROCESS_QUERY_INFORMATION, 0, pid))!=0){
 		d=GetPriorityClass(h);
-		if(!isWin9X){
-			HMODULE psapi=LoadLibraryA("psapi.dll");
-			getMemInfo= (TmemInfo)GetProcAddress(psapi, "GetProcessMemoryInfo");
-			if(getMemInfo){
-				getMemInfo(h, &m, sizeof(PROCESS_MEMORY_COUNTERS));
-			}
-			FreeLibrary(psapi);
-		}
+		HMODULE lib=LoadLibraryA("psapi.dll");
+		TmemInfo getMemInfo= (TmemInfo)GetProcAddress(lib, "GetProcessMemoryInfo");
+		if(getMemInfo) getMemInfo(h, &m, sizeof(PROCESS_MEMORY_COUNTERS));
+		FreeLibrary(lib);
 		CloseHandle(h);
 		for(i=0; i<sizeA(priorCnst); i++){
 			if(priorCnst[i]==d) p=lng(700+i, priorTab[i]);
@@ -2505,8 +2454,7 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 		case 2: //shut down
 			privilege();
 			closeAll(iparam);
-			if(isWin9X || !ExitWindowsEx(EWX_POWEROFF, iparam==1 ? TRUE : FALSE)) //Win2000
-				ExitWindowsEx(EWX_SHUTDOWN, iparam==1 ? TRUE : FALSE);   //Win98
+			ExitWindowsEx(EWX_POWEROFF, iparam == 1 ? TRUE : FALSE);
 			break;
 		case 3: //restart
 			privilege();
@@ -2607,12 +2555,8 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 			priority(iparam);
 			break;
 		case 22: //empty recycle bin
-		{
-			typedef int(__stdcall *TemptyBin)(HWND, LPCSTR, WORD);
-			TemptyBin emptyBin = (TemptyBin)GetProcAddress(GetModuleHandleA("shell32.dll"), "SHEmptyRecycleBinA");
-			if(emptyBin) emptyBin(hWin, "", (WORD)iparam);
-		}
-		break;
+			SHEmptyRecycleBin(hWin, L"", (WORD)iparam);
+			break;
 		case 23: //random wallpaper
 		case 82:
 			changeWallpaper(param, 0);
@@ -2742,8 +2686,7 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 			break;
 		case 63: //lock computer
 			if(!*param){
-				TLockWorkStation p= (TLockWorkStation)GetProcAddress(GetModuleHandleA("user32.dll"), "LockWorkStation");
-				if(p) p();
+				LockWorkStation();
 			}
 			else if(!pcLocked){
 				if(noCmdLine(param)) break;
@@ -2780,13 +2723,10 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 			if(!waitWhileKey(cmd, param)) break;
 			isHilited=false;
 			modifyTrayIcon();
-			HMODULE l= LoadLibraryA("powrprof.dll");
-			if(l){
-				TSetSuspendState p;
-				p= (TSetSuspendState)GetProcAddress(l, "SetSuspendState");
-				if(p) p(TRUE, iparam==1 ? TRUE : FALSE, FALSE);
-				FreeLibrary(l);
-			}
+			HMODULE lib = LoadLibraryA("powrprof.dll");
+			TSetSuspendState p = (TSetSuspendState)GetProcAddress(lib, "SetSuspendState");
+			if(p) p(TRUE, iparam==1 ? TRUE : FALSE, FALSE);
+			FreeLibrary(lib);
 		}
 		break;
 		case 65: //minimize others
@@ -2937,7 +2877,6 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 		case 92: //stop service
 		case 93: //start service
 		{
-			if(isWin9X) break;
 			SC_HANDLE schSCManager = OpenSCManager(0, 0, SC_MANAGER_CONNECT);
 			if(!schSCManager) msg(_T("Cannot open SC manager"));
 			else{

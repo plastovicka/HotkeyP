@@ -1,5 +1,5 @@
 /*
- (C) 2007-2014  Petr Lastovicka
+ (C) Petr Lastovicka
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License.
@@ -479,14 +479,7 @@ void TvolumeParam::propValue(TCHAR *&s, IPropertyStore *pProps, const PROPERTYKE
 	PROPVARIANT var;
 	PropVariantInit(&var);
 	if(SUCCEEDED(pProps->GetValue(key, &var))){
-		size_t len = wcslen(var.pwszVal)+1;
-		s = new TCHAR[len];
-#ifdef UNICODE
-		wcscpy(s, var.pwszVal);
-#else
-		//convert name from Unicode to ANSI
-		WideCharToMultiByte(CP_ACP, 0, var.pwszVal, -1, s, len, 0, 0);
-#endif
+		cpStr(s, var.pwszVal);
 	}
 	PropVariantClear(&var);
 }

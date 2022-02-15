@@ -1,5 +1,5 @@
 /*
- (C) 2003-2018  Petr Lastovicka
+ (C) Petr Lastovicka
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License.
@@ -62,13 +62,6 @@ BYTE cmdIcons[]={
 /*105*/6, 5, 5, 13, 8, 9, 9, 9, 27, 27, 9
 };
 
-const BYTE specialWinKeysList[]={'E', 'R', 'D', 'F', 'M', VK_F1, VK_PAUSE, VK_TAB, //Win 98
-'U', //Win 2000
- 'B', 'L', //Win XP
- 'T', 'H', 'C', 'V', 'G', ' ', 'X', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', //Win Vista
- 'P', VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT, VK_HOME, VK_ADD, VK_OEM_PLUS, //Win 7
- 0};
-
 TmainButton mainButton[]={
 	{108, 503, "&Add"},
 	{104, 502, "&Insert"},
@@ -100,7 +93,6 @@ modif,     //the HTK file has been modified
  altDown,   //used for task switch
  pcLocked,
  editing,
- isWin9X, //Windows 98/ME
  isWinXP, //Windows XP or newer
  isVista, //Windows Vista or newer
  isWin8,  //Windows 8 or newer
@@ -145,7 +137,7 @@ dlgW=620, dlgH=375, //main window size
  highPriority=1,
  disableTaskMgr=-1,
  oldMute,
- useHook=3,
+ useHook=1,
  numImages,
  notDelayFullscreen,
  keepHook=0,
@@ -553,8 +545,7 @@ void HotKey::resolveLNK()
 	if(SUCCEEDED(CoCreateInstance(CLSID_ShellLink, NULL,
 		CLSCTX_INPROC_SERVER, IID_IShellLink, (void**)&psl))){
 		if(SUCCEEDED(psl->QueryInterface(IID_IPersistFile, (void**)&ppf))){
-			convertT2W(exe, wsz);
-			if(SUCCEEDED(ppf->Load(wsz, STGM_READ))){
+			if(SUCCEEDED(ppf->Load(exe, STGM_READ))){
 				if(SUCCEEDED(psl->Resolve(0, SLR_NO_UI))){
 					if(SUCCEEDED(psl->GetPath(buf, sizeA(buf), &wfd, 0))){
 						cpStr(exe, buf);
@@ -566,13 +557,11 @@ void HotKey::resolveLNK()
 							TSHCreateShellItem pSHCreateShellItem = (TSHCreateShellItem)GetProcAddress(GetModuleHandleA("shell32.dll"), "SHCreateShellItem");
 							if (pSHCreateShellItem && SUCCEEDED((*pSHCreateShellItem)(NULL, NULL, ppidl, &pItemTarget))) {
 								if (SUCCEEDED(pItemTarget->GetDisplayName(SIGDN_DESKTOPABSOLUTEEDITING, &name))) {
-									convertW2T(name, nameT);
-									cpStr(args, nameT);
+									cpStr(args, name);
 									CoTaskMemFree(name);
 								}
 								if (SUCCEEDED(pItemTarget->GetDisplayName(SIGDN_NORMALDISPLAY, &name))) {
-									convertW2T(name, nameT);
-									cpStr(note, nameT);
+									cpStr(note, name);
 									CoTaskMemFree(name);
 								}
 								pItemTarget->Release();
@@ -1346,51 +1335,23 @@ TCHAR *fReadStr(FILE *f, int htkVersion)
 		index = len - 1;
 		len = len2;
 	}
-	if(htkVersion < 7){
-#ifdef UNICODE
-		//convert from windows codepage to Unicode
-		int l = MultiByteToWideChar(CP_ACP, 0, buf, -1, NULL, 0);
-		amin(l, 2);
-		TCHAR *s= new TCHAR[l];
-		MultiByteToWideChar(CP_ACP, 0, buf, -1, s, l);
-		s[l-2]=0; //trim '\n'
-		return s;
-#else
-		size_t l= strlen(buf);
-		char *s= new char[l];
-		s[--l]=0;
-		memcpy(s, buf, l);
-		return s;
-#endif
-	}
-	else
-	{
-		//convert from UTF-8 to Unicode
-		int l = MultiByteToWideChar(CP_UTF8, 0, buf, -1, NULL, 0);
-		amin(l, 2);
-		WCHAR *w= new WCHAR[l];
-		MultiByteToWideChar(CP_UTF8, 0, buf, -1, w, l);
-		w[l-2]=0; //trim '\n'
-#ifdef UNICODE
-		return w;
-#else
-		l = WideCharToMultiByte(CP_ACP, 0, w, -1, NULL, 0, 0, 0);
-		char *a= new char[l];
-		WideCharToMultiByte(CP_ACP, 0, w, -1, a, l, 0, 0);
-		delete[] w;
-		return a;
-#endif
-	}
+	//convert to Unicode
+	UINT cp = (htkVersion < 7) ? CP_ACP : CP_UTF8;
+	int l = MultiByteToWideChar(cp, 0, buf, -1, NULL, 0);
+	amin(l, 2);
+	WCHAR *w= new WCHAR[l];
+	MultiByteToWideChar(cp, 0, buf, -1, w, l);
+	w[l-2]=0; //trim '\n'
+	return w;
 }
 
 void fWriteStr(FILE *f, TCHAR *s)
 {
 	if(s){
-		convertT2W(s, w);
-		int len = (int)wcslen(w) * 4 + 1;
+		int len = (int)wcslen(s) * 4 + 1;
 		char *buf=(char*)_alloca(len);
 		buf[0]=0;
-		WideCharToMultiByte(CP_UTF8, 0, w, -1, buf, len-1, 0,0);
+		WideCharToMultiByte(CP_UTF8, 0, s, -1, buf, len-1, 0,0);
 		buf[len-1]=0;
 		fputs(buf, f);
 	}
@@ -2861,11 +2822,7 @@ void search(UINT vkey)
 	BYTE keystate[256];
 	GetKeyboardState(keystate);
 	TCHAR ch[2];
-#ifdef UNICODE
 	if(ToUnicode(vkey, 0, keystate, ch, 2, 0)!=1) return;
-#else
-	if(ToAscii(vkey, 0, keystate, (LPWORD)&ch, 0)!=1) return;
-#endif
 	//append character to the search string
 	if(searchLen==sizeA(searchBuf)) return;
 	searchBuf[searchLen++]=ch[0];
@@ -2989,7 +2946,8 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 				MoveWindow(hWnd, dlgX, dlgY, dlgW, dlgH, TRUE);
 			}
 			if (wP) {
-				if (!dropTarget) dropTarget = CDropTarget::RegisterDropWindow(hWnd);
+				//it does not work if HotkeyP is running as admin
+				if (!dropTarget && !isElevated()) dropTarget = CDropTarget::RegisterDropWindow(hWnd);
 			}
 			else {
 				if (dropTarget) { dropTarget->UnregisterDropWindow(); dropTarget = 0; }
@@ -3403,9 +3361,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			break;
 		case WM_USER + 1427: //drag & drop
 			if (dropTarget) {
-				convertW2T(dropTarget->command, c);
-				convertW2T(dropTarget->name, n);
-				dropFiles(hWnd, c, n);
+				dropFiles(hWnd, dropTarget->command, dropTarget->name);
 				if(dropTarget) dropTarget->FreeNames();
 			}
 			break;
@@ -3515,7 +3471,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			break;
 
 		case WM_RENDERFORMAT:
-			if(wP!=(WPARAM)(isWin9X ? CF_TEXT : CF_UNICODETEXT)) break;
+			if(wP!=CF_UNICODETEXT) break;
 			//!
 		case WM_RENDERALLFORMATS:
 			copyToClipboard1(pasteTextData.text);
@@ -4014,19 +3970,12 @@ int commandS(TCHAR *cmdLine)
 	return 0;
 }
 //-------------------------------------------------------------------------
-int PASCAL
-#ifdef UNICODE
-wWinMain
-#else
-WinMain
-#endif
-(HINSTANCE hInstance, HINSTANCE, LPTSTR cmdLine, int cmdShow)
+int PASCAL wWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR cmdLine, int cmdShow)
 {
 	MSG mesg;
 	WNDCLASS wc;
 	size_t l;
 	OSVERSIONINFO v;
-	BYTE c;
 
 	inst=hInstance;
 #if _MSC_VER>=1400
@@ -4034,8 +3983,8 @@ WinMain
 #endif
 
 	//DPIAware
-	typedef BOOL(WINAPI *TGetProcAddress)();
-	TGetProcAddress DPIAware = (TGetProcAddress)GetProcAddress(GetModuleHandleA("user32"), "SetProcessDPIAware");
+	typedef BOOL(WINAPI *TDPIAware)();
+	TDPIAware DPIAware = (TDPIAware)GetProcAddress(GetModuleHandleA("user32"), "SetProcessDPIAware");
 	if(DPIAware) DPIAware();
 
 	if(!_tcscmp(cmdLine, _T("--htmlhelp"))) return helpProcess();
@@ -4044,7 +3993,6 @@ WinMain
 	//Windows version
 	v.dwOSVersionInfoSize= sizeof(OSVERSIONINFO);
 	GetVersionEx(&v);
-	isWin9X = v.dwPlatformId==VER_PLATFORM_WIN32_WINDOWS;
 	isVista = v.dwMajorVersion > 5;
 	isWinXP = isVista || v.dwMajorVersion == 5 && v.dwMinorVersion >= 1;
 	isWin8 = v.dwMajorVersion > 6 || v.dwMajorVersion == 6 && v.dwMinorVersion >= 2;
@@ -4054,26 +4002,6 @@ WinMain
 	if(isWow64Process){
 		BOOL b;
 		if(isWow64Process(GetCurrentProcess(), &b) && b) isWin64=true;
-	}
-	//init specialWinKeys
-	if(isVista){
-		useHook=1;
-		c=0; //Win 7
-		if(v.dwMinorVersion == 0 && v.dwMajorVersion==6) c='P'; //Win Vista
-		if(v.dwMinorVersion > 1 || v.dwMajorVersion>6){ //Win 8
-			//there are too many system hotkeys in Windows 8
-			memset(specialWinKeys, 1, 256);
-		}
-	}
-	else if(isWin9X){
-		c='U';
-	}
-	else{
-		c='T'; //Win XP
-		if(v.dwMajorVersion<5 || v.dwMinorVersion == 0) c='B'; //Win 2000
-	}
-	for(const BYTE *p=specialWinKeysList; *p!=c; p++){
-		specialWinKeys[*p]=1;
 	}
 
 	//default options
@@ -4112,15 +4040,10 @@ WinMain
 		}
 		return 1;
 	}
-	if(GetProcAddress(GetModuleHandleA("comctl32.dll"), "DllGetVersion")){
-		INITCOMMONCONTROLSEX iccs;
-		iccs.dwSize= sizeof(INITCOMMONCONTROLSEX);
-		iccs.dwICC= ICC_LISTVIEW_CLASSES|ICC_TREEVIEW_CLASSES;
-		InitCommonControlsEx(&iccs);
-	}
-	else{
-		InitCommonControls();
-	}
+	INITCOMMONCONTROLSEX iccs;
+	iccs.dwSize= sizeof(INITCOMMONCONTROLSEX);
+	iccs.dwICC= ICC_LISTVIEW_CLASSES|ICC_TREEVIEW_CLASSES;
+	InitCommonControlsEx(&iccs);
 	initLang();
 	//delete old help files
 	getExeDir(exeBuf, _T("hotkeyp_CZ.txt"));
@@ -4179,6 +4102,7 @@ WinMain
 	TChangeWindowMessageFilter pChangeWindowMessageFilter = (TChangeWindowMessageFilter)GetProcAddress(GetModuleHandleA("user32.dll"), "ChangeWindowMessageFilter");
 	if(pChangeWindowMessageFilter){
 		pChangeWindowMessageFilter(WM_DROPFILES, 1);
+		pChangeWindowMessageFilter(WM_COPYDATA, 1);
 		pChangeWindowMessageFilter(0x0049, 1);
 	}
 	//show main window if the program is run for the first time
