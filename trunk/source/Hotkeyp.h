@@ -18,7 +18,7 @@ struct HotKey {
 	TCHAR *sound;     //sound to play (zef)
 	UINT modifiers;  //ctrl,shift,alt,win
 	UINT vkey;       //virtual key code
-	LPARAM scanCode; //scan key code (lParam from WM_KEYDOWN)
+	DWORD scanCode;  //scan key code (lParam from WM_KEYDOWN)
 	int cmdShow;     //0=normal,1=maximized,2=minimized
 	int opacity;     //0 to 255 (transparent to opaque)
 	int priority;    //0=idle,1=normal,2=high,3=realtime
@@ -177,11 +177,11 @@ const int diskSepH=2, showTextBorder=7;
 
 typedef TCHAR TfileName[MAX_PATH];
 
-extern int numKeys, fontH, sentToActiveWnd, buttons, ignoreButtons, ignoreButtons2, passwdLen, pcLockX, pcLockY, diskfreePrec, curVolume[Mvolume][2], iconDelay, oldMute, lockSpeed, lockMute, disableTaskMgr, lircEnabled, useHook, cmdLineCmd, lastButtons, notDelayButtons[15], notDelayFullscreen, mouseDelay, keepHook, keepHookInterval, oldCDautorun, passwdAlg, hidePasswd, cmdFromKeyPress, lockPaste;
-extern double pcLockDx, pcLockDy;
+extern int numKeys, fontH, sentToActiveWnd, buttons, ignoreButtons, ignoreButtons2, passwdLen, diskfreePrec, curVolume[Mvolume][2], iconDelay, oldMute, lockSpeed, lockMute, disableTaskMgr, lircEnabled, useHook, cmdLineCmd, lastButtons, notDelayButtons[15], notDelayFullscreen, mouseDelay, keepHook, keepHookInterval, oldCDautorun, passwdAlg, hidePasswd, cmdFromKeyPress, lockPaste;
+extern double pcLockX, pcLockY, pcLockDx, pcLockDy;
 extern HotKey *hotKeyA;
 extern HWND hWin, hWndLock, hWndLircState, hHotKeyDlg, hWndBeforeLock;
-extern LPARAM keyLastScan;
+extern DWORD keyLastScan;
 extern DWORD idHookThreadK, idHookThreadM, idHookThreadM2;
 extern POINT mousePos;
 extern bool modif, altDown, blockedKeys[256], pcLocked, isWin9X, isWin64, isWinXP, isVista, isWin8, isWin10, disableAll, disableMouse, disableJoystick, disableLirc, disableKeys, isHilited, editing, isZoom, preventWinMenu;
@@ -292,10 +292,11 @@ void printKeyNoShift(TCHAR *s, HotKey* hk);
 void correctMultiCmd(int item, int action, int item2=0);
 void keyMapChanged();
 void postHotkey(int i, LPARAM updown);
-LRESULT keyFromHook(WPARAM mesg, LPARAM vk, LPARAM scan);
-LPARAM clickFromHook(WPARAM mesg, LPARAM lP);
+LRESULT keyFromHook(WPARAM mesg, DWORD vk, DWORD scan);
+LPARAM clickFromHook(WPARAM mesg, DWORD lP);
 void installHook(bool mouse);
 void uninstallHook(bool mouse);
+LONG WINAPI unhandledExceptionFilter(_EXCEPTION_POINTERS* ExceptionInfo);
 void reloadHook();
 DWORD WINAPI hookProc(LPVOID);
 void messageToHook(UINT mesg, WPARAM wP, bool mouse);
@@ -336,7 +337,7 @@ typedef LONG(__stdcall *TChangeDisplaySettingsEx)(LPCSTR, LPDEVMODEA, HWND, DWOR
 typedef BOOL(__stdcall *TChangeWindowMessageFilter)(UINT message, DWORD dwFlag);
 typedef BOOL(__stdcall *TIsWow64Process)(HANDLE, PBOOL);
 typedef BOOL(__stdcall *TCreateProcessWithTokenW)(HANDLE, DWORD, LPCWSTR, LPWSTR, DWORD, LPVOID, LPCWSTR, LPSTARTUPINFOW, LPPROCESS_INFORMATION);
-
+typedef HRESULT(__stdcall *TSHCreateShellItem)(LPCITEMIDLIST pidlParent, IShellFolder* psfParent, LPCITEMIDLIST pidl, IShellItem** ppsi);
 
 #define popupVolume popup[P_Volume]
 #define popupDiskFree popup[P_DiskFree]
@@ -369,11 +370,11 @@ inline int random(int num){ return(int)(((long)rand()*num)/(RAND_MAX+1)); }
 #define convertW2T(w,t) \
 	TCHAR *t=w
 #define convertA2T(a,t) \
-	int cnvlen##t=strlen(a)+1;\
+	int cnvlen##t=(int)strlen(a)+1;\
 	TCHAR *t=(TCHAR*)_alloca(2*cnvlen##t);\
 	MultiByteToWideChar(CP_ACP, 0, a, -1, t, cnvlen##t);
 #define convertT2A(t,a) \
-	int cnvlen##a=wcslen(t)*2+1;\
+	int cnvlen##a=(int)wcslen(t)*2+1;\
 	char *a=(char*)_alloca(cnvlen##a);\
 	a[0]=0;\
 	WideCharToMultiByte(CP_ACP, 0, t, -1, a, cnvlen##a, 0,0);

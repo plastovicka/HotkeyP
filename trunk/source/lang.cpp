@@ -39,7 +39,7 @@ TCHAR *lng(int i, char *s)
 #ifdef UNICODE
 	if(!s) return 0;
 	if(!lngstrEng[i]) {
-		int len=strlen(s)+1;
+		int len=(int)strlen(s)+1;
 		MultiByteToWideChar(CP_ACP, 0, s, -1, lngstrEng[i] = new TCHAR[len], len);
 	}
 	return lngstrEng[i];

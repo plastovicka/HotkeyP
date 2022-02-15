@@ -8,6 +8,7 @@
 #include "hdr.h"
 #pragma hdrstop
 #include "hotkeyp.h"
+#include "DropTarget.h"
 #include "resource.h"   // for resource generated identifiers
 
 #pragma comment(lib, "htmlhelp.lib")
@@ -136,7 +137,6 @@ dlgW=620, dlgH=375, //main window size
  iconDelay=600,     //tray icon highlight duration
  insertAfterCurrent=1,
  mainBtnEnabled[sizeA(mainButton)]={1, 1, 1, 0, 1, 0, 1},
- pcLockX, pcLockY,
  curVolume[Mvolume][2], //volume, [line][mute]
  optionsPage,
  isLockColor,
@@ -160,8 +160,8 @@ dlgW=620, dlgH=375, //main window size
 
 const int splitterW=4;
 
-double pcLockDx, pcLockDy;
-LPARAM keyLastScan;
+double pcLockX, pcLockY, pcLockDx, pcLockDy;
+DWORD keyLastScan;
 TCHAR *pcLockParam;
 TCHAR *showTextStr;
 static HotKey dlgKey;
@@ -542,6 +542,9 @@ void HotKey::resolveLNK()
 	IPersistFile *ppf;
 	WIN32_FIND_DATA wfd;
 	TCHAR buf[MAX_PATH];
+	ITEMIDLIST *ppidl;
+	IShellItem* pItemTarget;
+	LPWSTR name;
 
 	TCHAR *s=_tcschr(exe, 0)-4;
 	if(s<=exe || (_tcsicmp(s, _T(".lnk")) && _tcsicmp(s, _T(".pif")))) return;
@@ -550,12 +553,7 @@ void HotKey::resolveLNK()
 	if(SUCCEEDED(CoCreateInstance(CLSID_ShellLink, NULL,
 		CLSCTX_INPROC_SERVER, IID_IShellLink, (void**)&psl))){
 		if(SUCCEEDED(psl->QueryInterface(IID_IPersistFile, (void**)&ppf))){
-#ifdef UNICODE
-			WCHAR *wsz=exe;
-#else
-			WCHAR wsz[MAX_PATH];
-			MultiByteToWideChar(CP_ACP, 0, exe, -1, wsz, MAX_PATH);
-#endif
+			convertT2W(exe, wsz);
 			if(SUCCEEDED(ppf->Load(wsz, STGM_READ))){
 				if(SUCCEEDED(psl->Resolve(0, SLR_NO_UI))){
 					if(SUCCEEDED(psl->GetPath(buf, sizeA(buf), &wfd, 0))){
@@ -563,6 +561,24 @@ void HotKey::resolveLNK()
 					}
 					if(SUCCEEDED(psl->GetArguments(buf, sizeA(buf)))){
 						cpStr(args, buf);
+						if (!*exe && !*args && SUCCEEDED(psl->GetIDList(&ppidl))) {
+							//UWP app
+							TSHCreateShellItem pSHCreateShellItem = (TSHCreateShellItem)GetProcAddress(GetModuleHandleA("shell32.dll"), "SHCreateShellItem");
+							if (pSHCreateShellItem && SUCCEEDED((*pSHCreateShellItem)(NULL, NULL, ppidl, &pItemTarget))) {
+								if (SUCCEEDED(pItemTarget->GetDisplayName(SIGDN_DESKTOPABSOLUTEEDITING, &name))) {
+									convertW2T(name, nameT);
+									cpStr(args, nameT);
+									CoTaskMemFree(name);
+								}
+								if (SUCCEEDED(pItemTarget->GetDisplayName(SIGDN_NORMALDISPLAY, &name))) {
+									convertW2T(name, nameT);
+									cpStr(note, nameT);
+									CoTaskMemFree(name);
+								}
+								pItemTarget->Release();
+							}
+							CoTaskMemFree(ppidl);
+						}
 					}
 					if(SUCCEEDED(psl->GetWorkingDirectory(buf, sizeA(buf)))){
 						cpStr(dir, buf);
@@ -736,12 +752,12 @@ void drawLockText()
 	dc=GetDC(hWndLock);
 	oldF=SelectObject(dc, CreateFontIndirect(&logfont));
 	//move
-	pcLockX=int(pcLockX+pcLockDx);
-	pcLockY=int(pcLockY+pcLockDy);
+	pcLockX+=pcLockDx;
+	pcLockY+=pcLockDy;
 	//calculate size of new text
 	rc.left=rc.top=0;
 	DrawText(dc, s, -1, &rc, DT_CALCRECT|DT_NOPREFIX|DT_NOCLIP|DT_CENTER);
-	OffsetRect(&rc, pcLockX-(rc.right>>1), pcLockY-(rc.bottom>>1));
+	OffsetRect(&rc, int(pcLockX)-(rc.right>>1), int(pcLockY)-(rc.bottom>>1));
 	//bounce
 	i=-rc.left;
 	if(i>0){
@@ -1371,7 +1387,7 @@ void fWriteStr(FILE *f, TCHAR *s)
 {
 	if(s){
 		convertT2W(s, w);
-		int len = wcslen(w) * 4 + 1;
+		int len = (int)wcslen(w) * 4 + 1;
 		char *buf=(char*)_alloca(len);
 		buf[0]=0;
 		WideCharToMultiByte(CP_UTF8, 0, w, -1, buf, len-1, 0,0);
@@ -1643,14 +1659,14 @@ void writeini()
 			if(s==iniFile && !_tcsnicmp(path, s, pathLen)) s += pathLen; //convert absolute path to relative path
 			convertA2T(v->s, name);
 			RegSetValueEx(key, name, 0, REG_SZ,
-				(BYTE *)s, (DWORD)sizeof(TCHAR)*(_tcslen(s)+1));
+				(BYTE *)s, (DWORD)sizeof(TCHAR)*((DWORD)_tcslen(s)+1));
 		}
 
 		for(Tregs2 *z=regValS2; z<endA(regValS2); z++){
 			TCHAR *t= *z->i;
 			convertA2T(z->s, name);
 			if(t) RegSetValueEx(key, name, 0, REG_SZ,
-				(BYTE *)t, (DWORD)sizeof(TCHAR)*(_tcslen(t)+1));
+				(BYTE *)t, (DWORD)sizeof(TCHAR)*((DWORD)_tcslen(t)+1));
 		}
 
 		for(Tregb *w=regValB; w<endA(regValB); w++){
@@ -1755,7 +1771,7 @@ BOOL CALLBACK AboutProc(HWND hWnd, UINT msg, WPARAM wP, LPARAM)
 					EndDialog(hWnd, wP);
 					return TRUE;
 				case 123:
-					GetDlgItemTextA(hWnd, wP, buf, static_cast<int>(sizeA(buf)-13));
+					GetDlgItemTextA(hWnd, (int)wP, buf, static_cast<int>(sizeA(buf)-13));
 					if(!_tcscmp(lang, _T("English"))) strcat(buf, "/indexEN.html");
 					ShellExecuteA(0, 0, buf, 0, 0, SW_SHOWNORMAL);
 					break;
@@ -1810,7 +1826,7 @@ LRESULT CALLBACK hotKeyClassProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 	switch(mesg){
 		case WM_KEYDOWN:
 		case WM_SYSKEYDOWN:
-			if(!isShiftKey(wP)){
+			if(!isShiftKey((int)wP)){
 				if((wP==VK_BACK || wP==VK_DELETE) && dlgKey.vkey) wP=0, lP=0;
 				//write key name to edit box
 				acceptKey((UINT)wP, (DWORD)lP);
@@ -1823,7 +1839,7 @@ LRESULT CALLBACK hotKeyClassProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 		case WM_XBUTTONDOWN:
 		case WM_MOUSEWHEEL:
 		case WM_MOUSEHWHEEL:
-			if(wP==MK_LBUTTON && !shiftPressed()) break;
+			if(wP==MK_LBUTTON && !shiftPressed() || lastButtons==-1) break;
 			//write mouse buttons to edit box
 			acceptKey(vkMouse, lastButtons);
 			return 0;
@@ -1840,7 +1856,7 @@ LRESULT CALLBACK hotKeyClassProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 		case WM_KEYUP:
 		case WM_SYSKEYUP:
 			if(wP==VK_SNAPSHOT){
-				acceptKey(wP, 0x1370001);
+				acceptKey((UINT)wP, 0x1370001);
 				break;
 			}
 			if(wP==VK_ESCAPE || wP==VK_CANCEL){
@@ -1891,7 +1907,7 @@ BOOL CALLBACK passwdClassProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			len=0;
 			SetWindowText(hWnd, _T(""));
 		default:
-			return CallWindowProc((WNDPROC)editWndProc, hWnd, mesg, wP, lP);
+			return (BOOL)CallWindowProc((WNDPROC)editWndProc, hWnd, mesg, wP, lP);
 	}
 	return TRUE;
 }
@@ -1999,6 +2015,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			SendMessage(combo, CB_SETCURSEL, hk->cmdShow, 0);
 			fillCategories(hWnd, hk->category);
 
+			lastButtons = -1;
 			editWndProc = (WNDPROC)SetWindowLongPtr(GetDlgItem(hWnd, 103),
 									 GWLP_WNDPROC, (LONG_PTR)hotKeyClassProc);
 			DragAcceptFiles(hWnd, TRUE);
@@ -2068,7 +2085,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					bi.ulFlags=BIF_RETURNONLYFSDIRS;
 					bi.lpfn=0;
 					bi.iImage=0;
-					ITEMIDLIST *iil;
+					LPITEMIDLIST iil;
 					iil=SHBrowseForFolder(&bi);
 					if(iil){
 						if(SHGetPathFromIDList(iil, exeBuf)){
@@ -2365,7 +2382,7 @@ void delKey(int item)
 }
 
 //create new hotkey
-void addKey(TCHAR *exe, bool makeCopy, int item)
+void addKey(bool makeCopy, int item, TCHAR* exe = NULL, TCHAR *note = NULL)
 {
 	if(item<0) item=0;
 	//default attributes
@@ -2389,7 +2406,10 @@ void addKey(TCHAR *exe, bool makeCopy, int item)
 		hk->opacity=copy->opacity;
 		hk->category=copy->category;
 	}
-	//exe file name from drag&drop
+	//file from drag&drop
+	if(note){
+		cpStr(hk->note, note);
+	}
 	if(exe){
 		cpStr(hk->exe, exe);
 		hk->resolveLNK();
@@ -2415,6 +2435,13 @@ void addKey(TCHAR *exe, bool makeCopy, int item)
 		hk->destroy();
 	}
 }
+
+void dropFiles(HWND hWnd, TCHAR *exe, TCHAR *note)
+{
+	SetForegroundWindow(hWnd);
+	addKey(false, numKeys, exe, note);
+}
+
 
 bool hideMainWindow()
 {
@@ -2900,6 +2927,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 	HBITMAP hbmp;
 	ULONG_PTR u;
 	static UINT taskbarRestart;
+	static CDropTarget *dropTarget;
 
 	switch(mesg) {
 		case WM_INITDIALOG:
@@ -2949,8 +2977,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 		case WM_DROPFILES:
 			DragQueryFile((HDROP)wP, 0, exeBuf, sizeA(exeBuf));
 			DragFinish((HDROP)wP);
-			SetForegroundWindow(hWnd);
-			addKey(exeBuf, 0, numKeys);
+			dropFiles(hWnd, exeBuf, 0);
 			break;
 
 		case WM_SHOWWINDOW:
@@ -2960,6 +2987,12 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 				aminmax(dlgX, 0, GetSystemMetrics(SM_CXSCREEN) - 200);
 				aminmax(dlgY, 0, GetSystemMetrics(SM_CYSCREEN) - 100);
 				MoveWindow(hWnd, dlgX, dlgY, dlgW, dlgH, TRUE);
+			}
+			if (wP) {
+				if (!dropTarget) dropTarget = CDropTarget::RegisterDropWindow(hWnd);
+			}
+			else {
+				if (dropTarget) { dropTarget->UnregisterDropWindow(); dropTarget = 0; }
 			}
 			break;
 
@@ -3040,7 +3073,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					break;
 				case TVN_SELCHANGED:
 					if(!treeLock){
-						i=((NMTREEVIEW*)lP)->itemNew.lParam;
+						i=(int)((NMTREEVIEW*)lP)->itemNew.lParam;
 						if(i!=selectedCategory){
 							selectedCategory=i;
 							setSel(-1, false);
@@ -3165,14 +3198,14 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					setCurIndex(index-j);
 					break;
 				case 104: //Insert
-					addKey(0, 0, item+insertAfterCurrent);
+					addKey(false, item+insertAfterCurrent);
 					break;
 				case 108: //Add
-					addKey(0, 0, numKeys);
+					addKey(false, numKeys);
 					break;
 				case 216: //Copy
 					if(item>=0 && item<numKeys){
-						addKey(0, true, item+1);
+						addKey(true, item+1);
 					}
 					break;
 				case 105: //Up
@@ -3368,7 +3401,14 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 				}
 			}
 			break;
-
+		case WM_USER + 1427: //drag & drop
+			if (dropTarget) {
+				convertW2T(dropTarget->command, c);
+				convertW2T(dropTarget->name, n);
+				dropFiles(hWnd, c, n);
+				if(dropTarget) dropTarget->FreeNames();
+			}
+			break;
 		case WM_TIMER:
 			if(wP>=50 && wP<50+Npopup){ //hide window
 				ShowWindow(popup[wP-50].hWnd, SW_HIDE);
@@ -3470,6 +3510,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			hWin= listBox= 0;
 			DeleteObject(hFont);
 			unregisterKeys();
+			if (dropTarget) { dropTarget->UnregisterDropWindow(); dropTarget = 0; }
 			PostQuitMessage(0);
 			break;
 
@@ -3496,11 +3537,11 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 		case WM_USER+57:
 		{
 			static const WPARAM M[]={WM_KEYDOWN, WM_KEYUP, WM_SYSKEYDOWN, WM_SYSKEYUP};
-			SetWindowLongPtr(hWnd, DWLP_MSGRESULT, keyFromHook(M[((lP>>31)&1)|((lP>>28)&2)], wP, lP));
+			SetWindowLongPtr(hWnd, DWLP_MSGRESULT, keyFromHook(M[((lP>>31)&1)|((lP>>28)&2)], (DWORD)wP, (DWORD)lP));
 			return TRUE;
 		}
 		case WM_USER+53:
-			SetWindowLongPtr(hWnd, DWLP_MSGRESULT, clickFromHook(wP, lP));
+			SetWindowLongPtr(hWnd, DWLP_MSGRESULT, clickFromHook(wP, (DWORD)lP));
 			return TRUE;
 
 		case WM_USER+55:
@@ -3584,7 +3625,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			else{
 				for(i=0; i<numKeys; i++){
 					hk= &hotKeyA[i];
-					if(hk->vkey==vkJoy && !hk->disable && hk->scanCode==lP){
+					if(hk->vkey==vkJoy && !hk->disable && hk->scanCode==(DWORD)lP){
 						if(hk->isLocal() || joyGlobalEnabled()){
 							postHotkey(i, wP);
 						}
@@ -4125,6 +4166,7 @@ WinMain
 	DWORD idJoyThread;
 	joyThread= CreateThread(0, 0, joyProc, 0, CREATE_SUSPENDED, &idJoyThread);
 
+	SetUnhandledExceptionFilter(unhandledExceptionFilter);
 	keyMapChanged(); //must be called before initList
 	rd(iniFile); //read HTK file
 	delRun(HKEY_LOCAL_MACHINE);

@@ -189,7 +189,7 @@
       <Culture>0x0405</Culture>
     </ResourceCompile>
     <PreLinkEvent>
-      <Command>c:\_Petr\cw\hotkeyp\hotkeyp.exe -send window command 203 PlasHotKey</Command>
+      <Command>C:\Programy\HotkeyP.exe -send window command 203 PlasHotKey</Command>
     </PreLinkEvent>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -236,7 +236,7 @@
       <Culture>0x0405</Culture>
     </ResourceCompile>
     <PreLinkEvent>
-      <Command>c:\_Petr\cw\hotkeyp\hotkeyp.exe -send window command 203 PlasHotKey</Command>
+      <Command>C:\Programy\HotkeyP.exe -send window command 203 PlasHotKey</Command>
     </PreLinkEvent>
     <Link>
       <AdditionalDependencies>htmlhelp.lib;version.lib;winmm.lib;comctl32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -286,7 +286,7 @@
       <Culture>0x0405</Culture>
     </ResourceCompile>
     <PreLinkEvent>
-      <Command>c:\_Petr\cw\hotkeyp\hotkeypnhk.exe -send window command 203 PlasHotKey</Command>
+      <Command>C:\Programy\HotkeyP.exe -send window command 203 PlasHotKey</Command>
     </PreLinkEvent>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -338,7 +338,7 @@
       <Culture>0x0405</Culture>
     </ResourceCompile>
     <PreLinkEvent>
-      <Command>c:\_Petr\cw\hotkeyp\hotkeypnhk.exe -send window command 203 PlasHotKey</Command>
+      <Command>C:\Programy\HotkeyP.exe -send window command 203 PlasHotKey</Command>
     </PreLinkEvent>
     <Link>
       <AdditionalDependencies>htmlhelp.lib;version.lib;winmm.lib;comctl32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -383,7 +383,7 @@
       <Culture>0x0405</Culture>
     </ResourceCompile>
     <PreLinkEvent>
-      <Command>c:\_Petr\cw\hotkeyp\hotkeyp.exe -send window command 203 PlasHotKey</Command>
+      <Command>C:\Programy\HotkeyP.exe -send window command 203 PlasHotKey</Command>
     </PreLinkEvent>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -426,7 +426,7 @@
       <Culture>0x0405</Culture>
     </ResourceCompile>
     <PreLinkEvent>
-      <Command>c:\_Petr\cw\hotkeyp\hotkeyp.exe -send window command 203 C:\_Petr\CW\hotkeyp\hotkeypDBG.exe</Command>
+      <Command>C:\Programy\HotkeyP.exe -send window command 203 PlasHotKey</Command>
     </PreLinkEvent>
     <Link>
       <AdditionalDependencies>htmlhelp.lib;version.lib;winmm.lib;comctl32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -473,6 +473,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">hdr.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="source\DropTarget.cpp" />
     <ClCompile Include="source\encrypt.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">hdr.h</PrecompiledHeaderFile>
@@ -672,6 +673,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\DropTarget.h" />
     <ClInclude Include="source\hdr.h" />
     <ClInclude Include="source\hotkeyp.h" />
     <ClInclude Include="source\lang.h" />
