@@ -212,17 +212,14 @@ int removeDrive1(TCHAR DriveLetter)
 void removeDrive(TCHAR DriveLetter)
 {
 	HMODULE lib = LoadLibraryA("setupapi.dll");
-	if(lib){
-		fCM_Request_Device_EjectW = (TCM_Request_Device_EjectW)GetProcAddress(lib, "CM_Request_Device_EjectW");
-		fCM_Get_Parent = (TCM_Get_Parent)GetProcAddress(lib, "CM_Get_Parent");
-		fSetupDiDestroyDeviceInfoList = (TSetupDiDestroyDeviceInfoList)GetProcAddress(lib, "SetupDiDestroyDeviceInfoList");
-		fSetupDiGetDeviceInterfaceDetailA = (TSetupDiGetDeviceInterfaceDetailA)GetProcAddress(lib, "SetupDiGetDeviceInterfaceDetailA");
-		fSetupDiEnumDeviceInterfaces = (TSetupDiEnumDeviceInterfaces)GetProcAddress(lib, "SetupDiEnumDeviceInterfaces");
-		fSetupDiGetClassDevsA = (TSetupDiGetClassDevsA)GetProcAddress(lib, "SetupDiGetClassDevsA");
-		if(fCM_Request_Device_EjectW) removeDrive1(DriveLetter);
-		FreeLibrary(lib);
-	}
-	if(!fCM_Request_Device_EjectW) msg(_T("Remove drive function requires Windows 2000 or later"));
+	fCM_Request_Device_EjectW = (TCM_Request_Device_EjectW)GetProcAddress(lib, "CM_Request_Device_EjectW");
+	fCM_Get_Parent = (TCM_Get_Parent)GetProcAddress(lib, "CM_Get_Parent");
+	fSetupDiDestroyDeviceInfoList = (TSetupDiDestroyDeviceInfoList)GetProcAddress(lib, "SetupDiDestroyDeviceInfoList");
+	fSetupDiGetDeviceInterfaceDetailA = (TSetupDiGetDeviceInterfaceDetailA)GetProcAddress(lib, "SetupDiGetDeviceInterfaceDetailA");
+	fSetupDiEnumDeviceInterfaces = (TSetupDiEnumDeviceInterfaces)GetProcAddress(lib, "SetupDiEnumDeviceInterfaces");
+	fSetupDiGetClassDevsA = (TSetupDiGetClassDevsA)GetProcAddress(lib, "SetupDiGetClassDevsA");
+	if(fCM_Request_Device_EjectW) removeDrive1(DriveLetter);
+	FreeLibrary(lib);
 }
 
 void removeUSBdrives()

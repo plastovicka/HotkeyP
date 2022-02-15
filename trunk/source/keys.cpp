@@ -1,5 +1,5 @@
 /*
-(C) 2003-2018  Petr Lastovicka
+(C) Petr Lastovicka
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License.
@@ -15,7 +15,6 @@ delayButtons=-1,
 	lastButtons=-1;
 bool preventWinMenu;
 
-HMODULE klib;
 char passwd[Dpasswd];
 int passwdLen;
 BYTE password[Dpasswd];
@@ -44,8 +43,6 @@ const BYTE specialKeys[256]={
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 };
-
-BYTE specialWinKeys[256];
 
 //-------------------------------------------------------------------------
 void keyMapChanged()
@@ -416,7 +413,7 @@ void executeHotKey(int i)
 				DWORD prior = priorCnst[hk->priority];
 				//run process
 				if(!hk->admin && isElevated() && CreateMediumIntegrityProcess(s, prior, workDir, &si, &pi) ||
-					(!hk->admin || isElevated() || isWin9X) && CreateProcess(0, s, 0, 0, 0, prior, 0, workDir, &si, &pi)){
+					(!hk->admin || isElevated()) && CreateProcess(0, s, 0, 0, 0, prior, 0, workDir, &si, &pi)){
 					if(hk->process) CloseHandle(hk->process);
 					hk->process=pi.hProcess;
 					hk->processId=pi.dwProcessId;
@@ -712,7 +709,6 @@ LRESULT msgFromHook(WPARAM vk, DWORD scan, int updown)
 				(shift[shAlt]==((mod&MOD_ALT)!=0) || altDown) &&
 				(shift[shLWin]|shift[shRWin])==((mod&MOD_WIN)!=0)){
 				if(hk->disable) break;
-				if(hk->ignore){ hk->ignore=false; break; }
 				if(hk->isActive()){
 					//prevent the Start menu or a normal menu to show after Win+key or Alt+key
 					if((hk->modifiers&(MOD_WIN|MOD_ALT))!=0 &&
@@ -897,13 +893,12 @@ bool KeyNeedsHook(UINT vk, UINT modifiers)
 	{
 		if(useHook==3 || useHook==2 && vk>=0xA6 && vk<=0xB9 || specialKeys[vk]) return true;
 
-		if((modifiers&MOD_WIN)!=0 && specialWinKeys[vk])
-		{
-			return modifiers==MOD_WIN
-				|| vk>='0' && vk<='9' && (modifiers==(MOD_WIN|MOD_CONTROL) || modifiers==(MOD_WIN|MOD_SHIFT) || modifiers==(MOD_WIN|MOD_ALT))
-				|| modifiers==(MOD_WIN|MOD_CONTROL) && (vk=='P' || vk=='F')
-				|| modifiers==(MOD_WIN|MOD_SHIFT) && (vk=='M' || vk=='T' || vk==VK_UP || vk==VK_LEFT || vk==VK_RIGHT || vk==VK_DOWN);
-		}
+		if ((modifiers & MOD_WIN) != 0)
+			return modifiers == MOD_WIN || vk >= '0' && vk <= '9'
+			|| modifiers == (MOD_WIN | MOD_CONTROL) && (vk == 'C' || vk == 'D' || vk == 'F' || vk == 'P' || vk == 'Q' || vk == VK_BACK || vk == VK_F4 || vk == VK_LEFT || vk == VK_RETURN || vk == VK_RIGHT || vk == VK_SPACE)
+			|| modifiers == (MOD_WIN | MOD_SHIFT) && (vk == 'C' || vk == 'M' || vk == 'S' || vk == 'T' || vk == 'V' || vk == VK_DOWN || vk == VK_LEFT || vk == VK_RIGHT || vk == VK_SPACE || vk == VK_UP)
+			|| modifiers == (MOD_WIN | MOD_ALT) && (vk == 'B' || vk == 'R' || vk == VK_DOWN || vk == VK_SNAPSHOT || vk == VK_UP)
+			|| modifiers == (MOD_WIN | MOD_CONTROL | MOD_SHIFT) && (vk == 'B');
 	}
 #else
 	(void)vk; (void)modifiers;
@@ -952,7 +947,7 @@ LRESULT keyFromHook(WPARAM mesg, DWORD vk, DWORD scan)
 	}
 
 	UINT modifiers=0;
-	if(vk<255 && specialWinKeys[vk] && (GetAsyncKeyState(VK_LWIN)<0 || GetAsyncKeyState(VK_RWIN)<0)){
+	if(vk<255 && (GetAsyncKeyState(VK_LWIN)<0 || GetAsyncKeyState(VK_RWIN)<0)){
 		modifiers=MOD_WIN;
 		if(GetAsyncKeyState(VK_SHIFT)<0) modifiers|=MOD_SHIFT;
 		if(GetAsyncKeyState(VK_CONTROL)<0) modifiers|=MOD_CONTROL;
@@ -985,37 +980,27 @@ LRESULT CALLBACK LowLevelKeyboardProc(int code, WPARAM wP, LPARAM lP)
 	return CallNextHookEx(hookK, code, wP, lP);
 }
 
-void installHook(HHOOK &hook, int type, char *proc, HOOKPROC hproc)
+void installHook(HHOOK &hook, int type, HOOKPROC hproc)
 {
-	HINSTANCE mod;
-
 	if(!hook){
-		mod=inst;
-		if(isWin9X){
-			if(!klib) klib=LoadLibrary(_T("hook.dll"));
-			hproc = (HOOKPROC)GetProcAddress(mod=klib, proc);
-		}
-		if(hproc){
 #ifndef NOHOOK
-			hook= SetWindowsHookEx(type, hproc, mod, 0);
-			//if(!hook) msg("SetWindowsHookEx failed");
+		hook= SetWindowsHookEx(type, hproc, inst, 0);
+		//if(!hook) msg("SetWindowsHookEx failed");
 #else
-			type;
+		UNREFERENCED_PARAMETER(type);
+		UNREFERENCED_PARAMETER(hproc);
 #endif
-		}
 	}
 }
 
 void installHookT(WPARAM mouse)
 {
 	if(mouse){
-		installHook(hookM, isWin9X ? WH_MOUSE : WH_MOUSE_LL,
-			"_MouseProc95@12", LowLevelMouseProc);
+		installHook(hookM, WH_MOUSE_LL, LowLevelMouseProc);
 	}
 	else{
 		memset(keyReal, 0, sizeof(keyReal));
-		installHook(hookK, isWin9X ? WH_KEYBOARD : WH_KEYBOARD_LL,
-			"_KeyboardProc95@12", LowLevelKeyboardProc);
+		installHook(hookK, WH_KEYBOARD_LL, LowLevelKeyboardProc);
 	}
 }
 

@@ -26,7 +26,6 @@ struct HotKey {
 	DWORD processId; //running process pid, otherwise 0
 	HANDLE process;  //running process handle, otherwise  0
 	mutable int lock;//for multi command (zef: made mutable)
-	bool ignore;
 	bool disable;    //unregistered hotkey (for mouse buttons or when useHook==3)
 	bool multInst;   //enable multiple instances
 	bool trayMenu;   //show item in the system tray popup menu
@@ -184,14 +183,12 @@ extern HWND hWin, hWndLock, hWndLircState, hHotKeyDlg, hWndBeforeLock;
 extern DWORD keyLastScan;
 extern DWORD idHookThreadK, idHookThreadM, idHookThreadM2;
 extern POINT mousePos;
-extern bool modif, altDown, blockedKeys[256], pcLocked, isWin9X, isWin64, isWinXP, isVista, isWin8, isWin10, disableAll, disableMouse, disableJoystick, disableLirc, disableKeys, isHilited, editing, isZoom, preventWinMenu;
+extern bool modif, altDown, blockedKeys[256], pcLocked, isWin64, isWinXP, isVista, isWin8, isWin10, disableAll, disableMouse, disableJoystick, disableLirc, disableKeys, isHilited, editing, isZoom, preventWinMenu;
 extern TCHAR volumeStr[256], *pcLockParam, notDelayApp[512], delayApp[512];
 extern TfileName iniFile, lockBMP, exeBuf;
 extern const TCHAR *subkey;
-extern BYTE specialWinKeys[256];
 extern CRITICAL_SECTION cdCritSect, listCritSect;
 extern HHOOK hookK, hookM;
-extern HMODULE klib;
 extern HGDIOBJ lockImg;
 extern const DWORD priorCnst[Npriority];
 extern char *priorTab[Npriority];
@@ -325,15 +322,12 @@ bool queryProcessImageName(DWORD pid, TCHAR *buf);
 
 typedef BOOL(__stdcall *TSetSuspendState)(BOOL, BOOL, BOOL);
 typedef BOOL(__stdcall *TLockWorkStation)();
-typedef BOOL(__stdcall *TdiskFreeFunc)(LPCSTR, ULARGE_INTEGER*, ULARGE_INTEGER*, ULARGE_INTEGER*);
 typedef BOOL(__stdcall *TmemInfo)(HANDLE, PROCESS_MEMORY_COUNTERS*, DWORD);
 typedef BOOL(__stdcall *TsetOpacityFunc)(HWND, COLORREF, BYTE, DWORD);
 typedef BOOL(__stdcall *TGetLayeredWindowAttributes)(HWND, COLORREF*, BYTE*, DWORD*);
 typedef DWORD(__stdcall *TregisterServiceProcess)(DWORD, DWORD);
-typedef BOOL(__stdcall *TGetGUIThreadInfo)(DWORD, LPGUITHREADINFO);
 typedef LRESULT(__stdcall *TSendMessageTimeout)(HWND, UINT, WPARAM, LPARAM, UINT, UINT, PDWORD_PTR);
 typedef DWORD(__stdcall *TGetProcessId)(HANDLE);
-typedef LONG(__stdcall *TChangeDisplaySettingsEx)(LPCSTR, LPDEVMODEA, HWND, DWORD, LPVOID);
 typedef BOOL(__stdcall *TChangeWindowMessageFilter)(UINT message, DWORD dwFlag);
 typedef BOOL(__stdcall *TIsWow64Process)(HANDLE, PBOOL);
 typedef BOOL(__stdcall *TCreateProcessWithTokenW)(HANDLE, DWORD, LPCWSTR, LPWSTR, DWORD, LPVOID, LPCWSTR, LPSTARTUPINFOW, LPPROCESS_INFORMATION);
@@ -362,13 +356,8 @@ inline int random(int num){ return(int)(((long)rand()*num)/(RAND_MAX+1)); }
 
 //-------------------------------------------------------------------------
 
-#ifdef UNICODE 
 #define tcscpyA(d,s) \
 	MultiByteToWideChar(CP_ACP, 0, s, -1, d, 256)
-#define convertT2W(t,w) \
-	WCHAR *w=t
-#define convertW2T(w,t) \
-	TCHAR *t=w
 #define convertA2T(a,t) \
 	int cnvlen##t=(int)strlen(a)+1;\
 	TCHAR *t=(TCHAR*)_alloca(2*cnvlen##t);\
@@ -378,41 +367,11 @@ inline int random(int num){ return(int)(((long)rand()*num)/(RAND_MAX+1)); }
 	char *a=(char*)_alloca(cnvlen##a);\
 	a[0]=0;\
 	WideCharToMultiByte(CP_ACP, 0, t, -1, a, cnvlen##a, 0,0);
-#else
-#define tcscpyA(d,s) \
-	strcpy(d,s)
-#define convertT2A(t,a) \
-	char *a=t
-#define convertA2T(a,t) \
-	TCHAR *t=a
-#define convertW2T(w,t) \
-	int cnvlen##t=wcslen(w)*2+1;\
-	TCHAR *t=(TCHAR*)_alloca(cnvlen##t);\
-	WideCharToMultiByte(CP_ACP, 0, w, -1, t, cnvlen##t, 0,0);
-#define convertT2W(t,w) \
-	WCHAR *w=0;\
-	if(t){\
-		int cnvlen##w=strlen(t)+1;\
-		w=(WCHAR*)_alloca(2*cnvlen##w);\
-		MultiByteToWideChar(CP_ACP, 0, t, -1, w, cnvlen##w);\
-	}
-#endif
-
-#define convertA2W(cp,a,w) \
-	int cnvlen##w=strlen(a)+1;\
-	WCHAR *w=(WCHAR*)_alloca(2*cnvlen##w);\
-	MultiByteToWideChar(cp, 0, a, -1, w, cnvlen##w);
 
 //-------------------------------------------------------------------------
 
 extern "C"{
-	HWND WINAPI HtmlHelpA(HWND hwndCaller, LPCSTR pszFile, UINT uCommand, DWORD_PTR dwData);
 	HWND WINAPI HtmlHelpW(HWND hwndCaller, LPCWSTR pszFile, UINT uCommand, DWORD_PTR dwData);
-#ifdef UNICODE
-#define HtmlHelp  HtmlHelpW
-#else
-#define HtmlHelp  HtmlHelpA
-#endif
 }
 
 #ifndef NDEBUG

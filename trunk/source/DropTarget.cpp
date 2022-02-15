@@ -8,6 +8,8 @@
 #pragma hdrstop
 #include "DropTarget.h"
 
+//drag & drop does not work if HotkeyP is running as admin
+
 CDropTarget::CDropTarget()
 {
 	refCount = 1;

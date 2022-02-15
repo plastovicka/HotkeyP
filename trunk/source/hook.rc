@@ -23,8 +23,8 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Petr Laštovièka\0"
             VALUE "FileDescription", "HotkeyP - hook\0"
-            VALUE "FileVersion", "4, 8, 0, 0\0"
-            VALUE "LegalCopyright", "© 2004-2016  Petr Laštovièka\0"
+            VALUE "FileVersion", "4, 9, 0, 0\0"
+            VALUE "LegalCopyright", "© 2004-2022  Petr Laštovièka\0"
 #ifdef _WIN64
 						VALUE "OriginalFilename", "hook64.dll\0"
 #else

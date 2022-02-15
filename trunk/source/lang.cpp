@@ -1,5 +1,5 @@
 /*
-	(C) 2002-2021 Petr Lastovicka
+	(C) Petr Lastovicka
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License.
@@ -28,7 +28,6 @@ TCHAR *langFile;        //file content (\n replaced with \0)
 TCHAR *lngstr[MAXLNGSTR];   //pointers to lines in langFile
 TCHAR *lngstrEng[MAXLNGSTR]; //English Unicode strings
 TCHAR *lngNames[MAXLANG+1]; //all found languages names
-extern bool isWin9X;
 //-------------------------------------------------------------------------
 #define sizeA(A) (sizeof(A)/sizeof(*A))
 
@@ -36,25 +35,19 @@ TCHAR *lng(int i, char *s)
 {
 	if(i<0 || i>=MAXLNGSTR) return _T("");
 	if(lngstr[i]) return lngstr[i];
-#ifdef UNICODE
 	if(!s) return 0;
 	if(!lngstrEng[i]) {
 		int len=(int)strlen(s)+1;
 		MultiByteToWideChar(CP_ACP, 0, s, -1, lngstrEng[i] = new TCHAR[len], len);
 	}
 	return lngstrEng[i];
-#else
-	return s;
-#endif
 }
 
-#ifdef UNICODE
 WCHAR *lng(int i, WCHAR *s)
 {
 	if(i>=0 && i<sizeA(lngstr) && lngstr[i]) return lngstr[i];
 	return s;
 }
-#endif
 
 //return pointer to name after a path
 TCHAR const *cutPath(TCHAR const *s) // zef: made const correct
@@ -133,13 +126,11 @@ static void fillPopup(HMENU h)
 			for(j=0; (a=lngNames[j])!=0; j++){
 				f=MF_BYPOSITION|(_tcsicmp(a, lang) ? 0 : MF_CHECKED);
 				w[0]=0;
-				if(!isWin9X){
-					size_t len = _tcslen(a);
-					// L"\x10c" does not compile correctly in Microsoft Visual C++ 6.0
-					if(len==5 && !_tcsnicmp(a+1, _T("esky"), 4)){ wcscpy(w, L"0esky"); w[0]=0x10c; }
-					if(len==7 && !_tcsnicmp(a, _T("Espa"), 4)){ wcscpy(w, L"Espa0ol"); w[4]=0xf1; }
-					if(len==20 && !_tcsnicmp(a, _T("Portugu"), 7)){ wcscpy(w, L"Portugu0s brasileiro"); w[7]=0xea; }
-				}
+				size_t len = _tcslen(a);
+				// L"\x10c" does not compile correctly in Microsoft Visual C++ 6.0
+				if(len==5 && !_tcsnicmp(a+1, _T("esky"), 4)){ wcscpy(w, L"0esky"); w[0]=0x10c; }
+				if(len==7 && !_tcsnicmp(a, _T("Espa"), 4)){ wcscpy(w, L"Espa0ol"); w[4]=0xf1; }
+				if(len==20 && !_tcsnicmp(a, _T("Portugu"), 7)){ wcscpy(w, L"Portugu0s brasileiro"); w[7]=0xea; }
 				if(w[0]) InsertMenuW(h, 0xFFFFFFFF, f, 30000+j, w);
 				else InsertMenu(h, 0xFFFFFFFF, f, 30000+j, a);
 			}
@@ -305,13 +296,9 @@ void loadLang()
 				if(langFileA[0]=='#' && langFileA[1]=='C' && langFileA[2]=='P'){
 					cp=atoi(langFileA+3);
 				}
-#ifdef UNICODE
 				langFile= new TCHAR[len+3];
 				len= MultiByteToWideChar(cp, 0, langFileA, len, langFile, len);
 				delete[] langFileA;
-#else
-				langFile= langFileA;
-#endif
 				langFile[len]='\n';
 				langFile[len+1]='\n';
 				langFile[len+2]='\0';

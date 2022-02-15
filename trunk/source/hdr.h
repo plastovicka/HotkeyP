@@ -4,7 +4,7 @@
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License.
 */  
-#define _WIN32_WINNT 0x600
+#define _WIN32_WINNT 0x500
 #define _WIN32_IE 0x0500
 #define _CRT_SECURE_NO_DEPRECATE 1
 #define _CRT_NON_CONFORMING_SWPRINTFS
@@ -30,16 +30,16 @@
 
 typedef std::basic_string<TCHAR> tstring;
 
-#ifndef WM_MOUSEHWHEEL
-
 #define WM_MOUSEHWHEEL                  0x020E
 #define MOUSEEVENTF_HWHEEL      0x01000 /* hwheel button rolled */
-#define MAPVK_VK_TO_VSC     (0)
 #define MAPVK_VSC_TO_VK     (1)
 #define ERROR_ELEVATION_REQUIRED         740L
 #define PBM_SETSTATE            (WM_USER+16)
 #define PBST_NORMAL             0x0001
 #define PBST_PAUSED             0x0003
+#define ICON_SMALL2         2
+
+#ifndef IOCTL_STORAGE_QUERY_PROPERTY
 
 enum STORAGE_PROPERTY_ID {
   StorageDeviceProperty,
@@ -81,19 +81,13 @@ struct STORAGE_ADAPTER_DESCRIPTOR {
 
 #define IOCTL_STORAGE_QUERY_PROPERTY   CTL_CODE(IOCTL_STORAGE_BASE, 0x0500, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
+#endif
+
 #ifndef SECURITY_MANDATORY_LABEL_AUTHORITY
 
 #define SECURITY_MANDATORY_LABEL_AUTHORITY          {0,0,0,0,0,16}
 #define SECURITY_MANDATORY_MEDIUM_RID               (0x00002000L)
-#define SE_GROUP_INTEGRITY                 (0x00000020L)
 #define TokenIntegrityLevel ((TOKEN_INFORMATION_CLASS)25)
-
-struct TOKEN_MANDATORY_LABEL {
-	SID_AND_ATTRIBUTES Label;
-};
-
 #define PROCESS_QUERY_LIMITED_INFORMATION  (0x1000)  
-
-#endif
 
 #endif
