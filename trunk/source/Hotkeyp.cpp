@@ -13,7 +13,6 @@
 
 #pragma comment(lib, "htmlhelp.lib")
 #pragma comment(lib, "version.lib")
-#pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "comctl32.lib")
 #pragma comment(lib, "ws2_32.lib")
 
@@ -148,7 +147,8 @@ dlgW=620, dlgH=375, //main window size
  numCategories=1,
  passwdAlg,
  hidePasswd=0, //don't show Password:*** when computer is locked
- cmdFromKeyPress=0;
+ cmdFromKeyPress=0,
+ enableJoystick=0;
 
 const int splitterW=4;
 
@@ -246,6 +246,7 @@ struct Treg { char *s; int *i; } regVal[]={
 	{"treeW", &treeW},
 	{"vers", &passwdAlg},
 	{"hidePasswd", &hidePasswd},
+	{"enableJoystick", &enableJoystick},
 };
 struct Tregs { char *s; TCHAR *i; DWORD n; } regValS[]={
 	{"file", iniFile, sizeof(iniFile)}, //n is size in bytes
@@ -2596,6 +2597,7 @@ static TboolValue boolOpts[]={
 	{&joyNotFullscreen, 390, 3},
 	{&joyMouseEnabled, 391, 3},
 	{&hidePasswd, 395, 1},
+	{&enableJoystick, 360, 3},
 };
 static TstrValue strOpts[]={
 	{volumeStr, sizeA(volumeStr), 151, 1},
@@ -3560,7 +3562,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			DestroyWindow(hWndLock);
 			DeleteObject(lockImg);
 			setHook();
-			TregisterServiceProcess p= (TregisterServiceProcess)GetProcAddress(GetModuleHandleA("kernel32.dll"), "RegisterServiceProcess");
+			TRegisterServiceProcess p= (TRegisterServiceProcess)GetProcAddress(GetModuleHandleA("kernel32.dll"), "RegisterServiceProcess");
 			if(p) p(0, 0);
 			restoreAfterLock();
 			cpStr(pcLockParam, _T(""));
@@ -3983,8 +3985,7 @@ int PASCAL wWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR cmdLine, int cmdShow)
 #endif
 
 	//DPIAware
-	typedef BOOL(WINAPI *TDPIAware)();
-	TDPIAware DPIAware = (TDPIAware)GetProcAddress(GetModuleHandleA("user32"), "SetProcessDPIAware");
+	TSetProcessDPIAware DPIAware = (TSetProcessDPIAware)GetProcAddress(GetModuleHandleA("user32"), "SetProcessDPIAware");
 	if(DPIAware) DPIAware();
 
 	if(!_tcscmp(cmdLine, _T("--htmlhelp"))) return helpProcess();

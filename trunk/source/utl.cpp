@@ -120,9 +120,9 @@ bool isElevated()
 
 BOOL CreateMediumIntegrityProcess(LPWSTR exe, DWORD creationFlags, LPCWSTR dir, STARTUPINFOW *si, PROCESS_INFORMATION *pi)
 {
-	static TCreateProcessWithTokenW pCreateProcessWithTokenW;
+	static TCreateProcessWithToken pCreateProcessWithTokenW;
 	if(!pCreateProcessWithTokenW){
-		pCreateProcessWithTokenW = (TCreateProcessWithTokenW)GetProcAddress(GetModuleHandleA("advapi32"), "CreateProcessWithTokenW");
+		pCreateProcessWithTokenW = (TCreateProcessWithToken)GetProcAddress(GetModuleHandleA("advapi32"), "CreateProcessWithTokenW");
 		if(!pCreateProcessWithTokenW) return FALSE;
 	}
 	BOOL result = FALSE;
@@ -172,10 +172,9 @@ bool queryFullProcessImageName(DWORD pid, TCHAR *buf)
 {
 	if(isVista){
 		//Windows Vista or later
-		typedef BOOL(__stdcall *Tfunc)(HANDLE, DWORD, LPTSTR, PDWORD);
-		static Tfunc queryFullProcessImageNameW;
+		static TQueryFullProcessImageName queryFullProcessImageNameW;
 		if(!queryFullProcessImageNameW)
-			queryFullProcessImageNameW = (Tfunc)GetProcAddress(GetModuleHandleA("kernel32.dll"), "QueryFullProcessImageNameW");
+			queryFullProcessImageNameW = (TQueryFullProcessImageName)GetProcAddress(GetModuleHandleA("kernel32.dll"), "QueryFullProcessImageNameW");
 		if(queryFullProcessImageNameW){
 			HANDLE h = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
 			if(h){
@@ -188,7 +187,6 @@ bool queryFullProcessImageName(DWORD pid, TCHAR *buf)
 	}
 
 	//Windows XP or Windows 2000
-	typedef DWORD(__stdcall *TGetModuleFileNameEx)(HANDLE, HMODULE, LPTSTR, DWORD);
 	static TGetModuleFileNameEx getModuleFileNameEx=0;
 	if(!getModuleFileNameEx){
 		getModuleFileNameEx= (TGetModuleFileNameEx)GetProcAddress(LoadLibraryA("psapi.dll"), "GetModuleFileNameExW");

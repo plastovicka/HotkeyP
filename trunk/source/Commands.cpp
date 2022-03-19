@@ -1146,6 +1146,9 @@ DWORD WINAPI cdProc(LPVOID param)
 	MCI_STATUS_PARMS sp;
 	MCI_GENERIC_PARMS gp;
 
+	static TmciSendCommand pmciSendCommand;
+	winmm((FARPROC&)pmciSendCommand, "mciSendCommandW");
+
 	int op=(((int)param)>>8)&255;
 	int speed=((int)param)>>16;
 	TCHAR d[3];
@@ -1158,7 +1161,7 @@ DWORD WINAPI cdProc(LPVOID param)
 	m.lpstrDeviceType=_T("CDAudio");
 	m.lpstrElementName=d;
 	m.lpstrAlias=0;
-	if(mciSendCommand(0, MCI_OPEN, MCI_OPEN_TYPE|MCI_OPEN_ELEMENT, (WPARAM)&m)){
+	if(pmciSendCommand(0, MCI_OPEN, MCI_OPEN_TYPE|MCI_OPEN_ELEMENT, (WPARAM)&m)){
 		msglng(748, "Drive is already used by another process");
 	}
 	else{
@@ -1175,32 +1178,32 @@ DWORD WINAPI cdProc(LPVOID param)
 			}
 			else{ //Windows 95/98/ME
 				DWORD t=GetTickCount();
-				mciSendCommand(m.wDeviceID, MCI_SET, MCI_SET_DOOR_OPEN, 0);
+				pmciSendCommand(m.wDeviceID, MCI_SET, MCI_SET_DOOR_OPEN, 0);
 				if(GetTickCount()-t < 200) op=1;
 			}
 		}
 		switch(op){
 			case 0: //eject
-				mciSendCommand(m.wDeviceID, MCI_SET, MCI_SET_DOOR_OPEN, 0);
+				pmciSendCommand(m.wDeviceID, MCI_SET, MCI_SET_DOOR_OPEN, 0);
 				break;
 			case 1: //close
-				mciSendCommand(m.wDeviceID, MCI_SET, MCI_SET_DOOR_CLOSED, 0);
+				pmciSendCommand(m.wDeviceID, MCI_SET, MCI_SET_DOOR_CLOSED, 0);
 				break;
 			case 39: //play
-				mciSendCommand(m.wDeviceID, MCI_PLAY, 0, 0);
+				pmciSendCommand(m.wDeviceID, MCI_PLAY, 0, 0);
 				break;
 			case 41: //stop
-				mciSendCommand(m.wDeviceID, MCI_STOP, 0, (WPARAM)&gp);
+				pmciSendCommand(m.wDeviceID, MCI_STOP, 0, (WPARAM)&gp);
 				break;
 			case 40: //next
 			case 42: //previous
 				sp.dwItem=MCI_STATUS_CURRENT_TRACK;
-				if(!mciSendCommand(m.wDeviceID, MCI_STATUS, MCI_STATUS_ITEM, (WPARAM)&sp)){
+				if(!pmciSendCommand(m.wDeviceID, MCI_STATUS, MCI_STATUS_ITEM, (WPARAM)&sp)){
 					sp.dwTrack=(DWORD)sp.dwReturn+41-op;
 					sp.dwItem=MCI_STATUS_POSITION;
-					if(!mciSendCommand(m.wDeviceID, MCI_STATUS, MCI_TRACK|MCI_STATUS_ITEM, (WPARAM)&sp)){
+					if(!pmciSendCommand(m.wDeviceID, MCI_STATUS, MCI_TRACK|MCI_STATUS_ITEM, (WPARAM)&sp)){
 						pp.dwFrom=(DWORD)sp.dwReturn;
-						mciSendCommand(m.wDeviceID, MCI_PLAY, MCI_FROM, (WPARAM)&pp);
+						pmciSendCommand(m.wDeviceID, MCI_PLAY, MCI_FROM, (WPARAM)&pp);
 					}
 				}
 				break;
@@ -1208,7 +1211,7 @@ DWORD WINAPI cdProc(LPVOID param)
 				cdCmd(d[0], 4, speed);
 				break;
 		}
-		mciSendCommand(m.wDeviceID, MCI_CLOSE, MCI_OPEN_TYPE|MCI_OPEN_ELEMENT, (WPARAM)&m);
+		pmciSendCommand(m.wDeviceID, MCI_CLOSE, MCI_OPEN_TYPE|MCI_OPEN_ELEMENT, (WPARAM)&m);
 	}
 	LeaveCriticalSection(&cdCritSect);
 	return 0;
@@ -1883,16 +1886,11 @@ int getOpacity(HWND w)
 void setOpacity(HWND w, int o)
 {
 	if(w){
-		static TsetOpacityFunc p;
-		if(!p){
-			p= (TsetOpacityFunc)GetProcAddress(GetModuleHandleA("user32.dll"), "SetLayeredWindowAttributes");
-			if(!p) return;
-		}
 		LONG s=GetWindowLong(w, GWL_EXSTYLE);
 		if(((s&0x80000)==0) != (o==255)){
 			SetWindowLong(w, GWL_EXSTYLE, s^0x80000);
 		}
-		p(w, 0, (BYTE)min(o, 255), 2);
+		SetLayeredWindowAttributes(w, 0, (BYTE)min(o, 255), 2);
 	}
 }
 
@@ -2378,7 +2376,7 @@ void wndInfo(HWND w)
 	if((h=OpenProcess(PROCESS_QUERY_INFORMATION, 0, pid))!=0){
 		d=GetPriorityClass(h);
 		HMODULE lib=LoadLibraryA("psapi.dll");
-		TmemInfo getMemInfo= (TmemInfo)GetProcAddress(lib, "GetProcessMemoryInfo");
+		TGetProcessMemoryInfo getMemInfo= (TGetProcessMemoryInfo)GetProcAddress(lib, "GetProcessMemoryInfo");
 		if(getMemInfo) getMemInfo(h, &m, sizeof(PROCESS_MEMORY_COUNTERS));
 		FreeLibrary(lib);
 		CloseHandle(h);
@@ -2705,7 +2703,7 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 				pcLockDx=lockSpeed*cos(alpha)/2;
 				pcLockDy=lockSpeed*sin(alpha)/2;
 				SetTimer(hWin, 8, 60, 0);
-				TregisterServiceProcess p= (TregisterServiceProcess)GetProcAddress(GetModuleHandleA("kernel32.dll"), "RegisterServiceProcess");
+				TRegisterServiceProcess p= (TRegisterServiceProcess)GetProcAddress(GetModuleHandleA("kernel32.dll"), "RegisterServiceProcess");
 				if(p) p(0, 1);
 				if(RegOpenKeyExA(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", 0, KEY_QUERY_VALUE|KEY_SET_VALUE, &key)==ERROR_SUCCESS){
 					d=4;

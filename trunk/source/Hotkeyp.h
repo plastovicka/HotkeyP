@@ -176,7 +176,7 @@ const int diskSepH=2, showTextBorder=7;
 
 typedef TCHAR TfileName[MAX_PATH];
 
-extern int numKeys, fontH, sentToActiveWnd, buttons, ignoreButtons, ignoreButtons2, passwdLen, diskfreePrec, curVolume[Mvolume][2], iconDelay, oldMute, lockSpeed, lockMute, disableTaskMgr, lircEnabled, useHook, cmdLineCmd, lastButtons, notDelayButtons[15], notDelayFullscreen, mouseDelay, keepHook, keepHookInterval, oldCDautorun, passwdAlg, hidePasswd, cmdFromKeyPress, lockPaste;
+extern int numKeys, fontH, sentToActiveWnd, buttons, ignoreButtons, ignoreButtons2, passwdLen, diskfreePrec, curVolume[Mvolume][2], iconDelay, oldMute, lockSpeed, lockMute, disableTaskMgr, lircEnabled, useHook, cmdLineCmd, lastButtons, notDelayButtons[15], notDelayFullscreen, mouseDelay, keepHook, keepHookInterval, oldCDautorun, passwdAlg, hidePasswd, cmdFromKeyPress, lockPaste, enableJoystick;
 extern double pcLockX, pcLockY, pcLockDx, pcLockDy;
 extern HotKey *hotKeyA;
 extern HWND hWin, hWndLock, hWndLircState, hHotKeyDlg, hWndBeforeLock;
@@ -308,6 +308,7 @@ void lircStart();
 void lircEnd(bool wait=false);
 void lircNotify();
 
+void winmm(FARPROC &addr, char* proc);
 DWORD WINAPI joyProc(void *);
 TCHAR axisInd2Name(int i);
 int axisName2Ind(TCHAR c);
@@ -320,18 +321,33 @@ DWORD getWindowThreadProcessId(HWND w, DWORD *pid);
 bool queryFullProcessImageName(DWORD pid, TCHAR *buf);
 bool queryProcessImageName(DWORD pid, TCHAR *buf);
 
-typedef BOOL(__stdcall *TSetSuspendState)(BOOL, BOOL, BOOL);
-typedef BOOL(__stdcall *TLockWorkStation)();
-typedef BOOL(__stdcall *TmemInfo)(HANDLE, PROCESS_MEMORY_COUNTERS*, DWORD);
-typedef BOOL(__stdcall *TsetOpacityFunc)(HWND, COLORREF, BYTE, DWORD);
-typedef BOOL(__stdcall *TGetLayeredWindowAttributes)(HWND, COLORREF*, BYTE*, DWORD*);
-typedef DWORD(__stdcall *TregisterServiceProcess)(DWORD, DWORD);
-typedef LRESULT(__stdcall *TSendMessageTimeout)(HWND, UINT, WPARAM, LPARAM, UINT, UINT, PDWORD_PTR);
-typedef DWORD(__stdcall *TGetProcessId)(HANDLE);
-typedef BOOL(__stdcall *TChangeWindowMessageFilter)(UINT message, DWORD dwFlag);
-typedef BOOL(__stdcall *TIsWow64Process)(HANDLE, PBOOL);
-typedef BOOL(__stdcall *TCreateProcessWithTokenW)(HANDLE, DWORD, LPCWSTR, LPWSTR, DWORD, LPVOID, LPCWSTR, LPSTARTUPINFOW, LPPROCESS_INFORMATION);
-typedef HRESULT(__stdcall *TSHCreateShellItem)(LPCITEMIDLIST pidlParent, IShellFolder* psfParent, LPCITEMIDLIST pidl, IShellItem** ppsi);
+typedef BOOL(WINAPI *TSetProcessDPIAware)();
+typedef BOOL(WINAPI *TIsWow64Process)(HANDLE, PBOOL);
+typedef BOOL(WINAPI *TSetSuspendState)(BOOL, BOOL, BOOL);
+typedef BOOL(WINAPI *TGetProcessMemoryInfo)(HANDLE, PROCESS_MEMORY_COUNTERS*, DWORD);
+typedef BOOL(WINAPI *TGetLayeredWindowAttributes)(HWND, COLORREF*, BYTE*, DWORD*);
+typedef DWORD(WINAPI *TRegisterServiceProcess)(DWORD, DWORD);
+typedef LRESULT(WINAPI *TSendMessageTimeout)(HWND, UINT, WPARAM, LPARAM, UINT, UINT, PDWORD_PTR);
+typedef DWORD(WINAPI *TGetProcessId)(HANDLE);
+typedef BOOL(WINAPI *TChangeWindowMessageFilter)(UINT, DWORD);
+typedef BOOL(WINAPI *TIsWow64Process)(HANDLE, PBOOL);
+typedef BOOL(WINAPI *TCreateProcessWithToken)(HANDLE, DWORD, LPCWSTR, LPWSTR, DWORD, LPVOID, LPCWSTR, LPSTARTUPINFOW, LPPROCESS_INFORMATION);
+typedef BOOL(WINAPI *TQueryFullProcessImageName)(HANDLE, DWORD, LPTSTR, PDWORD);
+typedef DWORD(WINAPI *TGetModuleFileNameEx)(HANDLE, HMODULE, LPTSTR, DWORD);
+typedef HRESULT(WINAPI *TSHCreateShellItem)(LPCITEMIDLIST, IShellFolder*, LPCITEMIDLIST, IShellItem**);
+
+typedef BOOL(WINAPI *TPlaySound)(LPCWSTR, HMODULE, DWORD);
+typedef MCIERROR(WINAPI *TmciSendCommand)(MCIDEVICEID, UINT, DWORD_PTR, DWORD_PTR);
+typedef MMRESULT(WINAPI *TjoyGetPosEx)(UINT, LPJOYINFOEX);
+typedef MMRESULT(WINAPI *TjoyGetDevCaps)(UINT_PTR, LPJOYCAPSW, UINT);
+typedef UINT (WINAPI *TmixerGetNumDevs)();
+typedef MMRESULT(WINAPI *TmixerGetLineControls)(HMIXEROBJ, LPMIXERLINECONTROLSW, DWORD);
+typedef MMRESULT(WINAPI *TmixerGetControlDetails)(HMIXEROBJ, LPMIXERCONTROLDETAILS, DWORD);
+typedef MMRESULT(WINAPI *TmixerSetControlDetails)(HMIXEROBJ, LPMIXERCONTROLDETAILS, DWORD);
+typedef MMRESULT(WINAPI *TmixerGetLineInfo)(HMIXEROBJ, LPMIXERLINEW, DWORD);
+typedef MMRESULT(WINAPI *TmixerOpen)(LPHMIXER, UINT, DWORD_PTR, DWORD_PTR, DWORD);
+typedef MMRESULT(WINAPI *TmixerClose)(HMIXER);
+
 
 #define popupVolume popup[P_Volume]
 #define popupDiskFree popup[P_DiskFree]
