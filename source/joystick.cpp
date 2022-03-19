@@ -40,6 +40,11 @@ DWORD WINAPI joyProc(void *)
 	static JOYINFOEX jiA[MAX_JOYSTICKS][2];
 	JOYCAPS jc;
 
+	static TjoyGetPosEx pjoyGetPosEx;
+	winmm((FARPROC&)pjoyGetPosEx, "joyGetPosEx");
+	static TjoyGetDevCaps pjoyGetDevCaps;
+	winmm((FARPROC&)pjoyGetDevCaps, "joyGetDevCapsW");
+
 	for(swap=0;; swap=1-swap){
 		Sleep(10);
 		dx=dy=0;
@@ -83,7 +88,7 @@ DWORD WINAPI joyProc(void *)
 			}else 
 #endif
 
-			if(joyGetPosEx(j, &ji) != JOYERR_NOERROR) continue; //error
+			if(pjoyGetPosEx(j, &ji) != JOYERR_NOERROR) continue; //error
 
 			//buttons
 			DWORD diff = ji.dwButtons ^ jiPrev.dwButtons;
@@ -108,7 +113,7 @@ DWORD WINAPI joyProc(void *)
 							jc.wYmin=0; jc.wYmax=Ymax;
 						}else 
 #endif
-						joyGetDevCaps(j, &jc, sizeof(JOYCAPS));
+						pjoyGetDevCaps(j, &jc, sizeof(JOYCAPS));
 					}
 					//get center
 					UINT *u = (i<3) ? (&jc.wXmin)+2*i : (&jc.wRmin)+2*(i-3);

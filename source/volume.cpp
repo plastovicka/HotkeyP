@@ -10,6 +10,10 @@
 #include "VistaVol.h"
 #include "hotkeyp.h"
 
+#ifndef _WIN64
+#define XP_MIXER
+#endif
+
 class TvolumeParam
 {
 	IMMDevice *pEndpoint;
@@ -29,8 +33,10 @@ class TvolumeParam
 	LPWSTR endpointId;
 
 	bool IsMatch();
+#ifdef XP_MIXER
 	void volume1();
 	void volume2(DWORD controlType, int m);
+#endif
 	void volumeVista();
 	void volumeVista1();
 	void volumeVista2();
@@ -555,6 +561,24 @@ void TvolumeParam::volumeVista()
 //  Windows XP and older - winmm.dll
 //---------------------------------------------------------------------------
 
+void winmm(FARPROC &addr, char* proc)
+{
+	if(!addr) {
+		static HMODULE lib=0;
+		if(!lib) lib=LoadLibraryA("winmm.dll");
+		addr=GetProcAddress(lib, proc);
+	}
+}
+
+#ifdef XP_MIXER
+TmixerGetNumDevs pmixerGetNumDevs;
+TmixerGetLineControls pmixerGetLineControls;
+TmixerGetControlDetails pmixerGetControlDetails;
+TmixerSetControlDetails pmixerSetControlDetails;
+TmixerGetLineInfo pmixerGetLineInfo;
+TmixerOpen pmixerOpen;
+TmixerClose pmixerClose;
+
 //action: 0= Volume +/-, 1= Mute On/Off, 2= Set volume, 3= Set mute, 4= Read value and redraw if changed
 //m: 0= controlType is volume, 1= controlType is mute
 void TvolumeParam::volume2(DWORD controlType, int m)
@@ -571,14 +595,14 @@ void TvolumeParam::volume2(DWORD controlType, int m)
 	mlc.pamxctrl=&mc;
 	mlc.dwLineID=mixerLine.dwLineID;
 	mlc.dwControlType= controlType;
-	if(mixerGetLineControls(hMix, &mlc, MIXER_GETLINECONTROLSF_ONEBYTYPE)==MMSYSERR_NOERROR){
+	if(pmixerGetLineControls(hMix, &mlc, MIXER_GETLINECONTROLSF_ONEBYTYPE)==MMSYSERR_NOERROR){
 		mcd.cbStruct=sizeof(MIXERCONTROLDETAILS);
 		mcd.dwControlID=mc.dwControlID;
 		mcd.cChannels=1;
 		mcd.cMultipleItems=0;
 		mcd.cbDetails=4;
 		mcd.paDetails=&mcu;
-		if(mixerGetControlDetails(hMix, &mcd, MIXER_GETCONTROLDETAILSF_VALUE)==MMSYSERR_NOERROR){
+		if(pmixerGetControlDetails(hMix, &mcd, MIXER_GETCONTROLDETAILSF_VALUE)==MMSYSERR_NOERROR){
 			minBound= ((LONG*)&mc.Bounds)[0];
 			maxBound= ((LONG*)&mc.Bounds)[1];
 			rng = maxBound - minBound;
@@ -604,7 +628,7 @@ void TvolumeParam::volume2(DWORD controlType, int m)
 						mcu= value;
 					}
 				}
-				if(mcu!=mcu0) mixerSetControlDetails(hMix, &mcd, MIXER_SETCONTROLDETAILSF_VALUE);
+				if(mcu!=mcu0) pmixerSetControlDetails(hMix, &mcd, MIXER_SETCONTROLDETAILSF_VALUE);
 			}
 
 			setCurVolume(popupLine, m, (rng<1000) ? (mcu*100)/rng : mcu/(rng/100));
@@ -628,6 +652,7 @@ void TvolumeParam::volume1()
 		volume2(MIXERCONTROL_CONTROLTYPE_MUTE, 1);
 	}
 }
+#endif
 
 //volume action for all devices and all audio lines
 void TvolumeParam::volume(TCHAR *which1, int _value, int _action)
@@ -655,13 +680,22 @@ l1:
 	memset(curVolume, -1, sizeof(curVolume));
 	if(isVista){ volumeVista(); return; }
 
-	int numDevs= mixerGetNumDevs();
+#ifdef XP_MIXER
+	winmm((FARPROC&)pmixerGetNumDevs, "mixerGetNumDevs");
+	winmm((FARPROC&)pmixerGetLineControls, "mixerGetLineControlsW");
+	winmm((FARPROC&)pmixerGetControlDetails, "mixerGetControlDetailsW");
+	winmm((FARPROC&)pmixerSetControlDetails, "mixerSetControlDetails");
+	winmm((FARPROC&)pmixerGetLineInfo, "mixerGetLineInfoW");
+	winmm((FARPROC&)pmixerOpen, "mixerOpen");
+	winmm((FARPROC&)pmixerClose, "mixerClose");
+
+	int numDevs= pmixerGetNumDevs();
 	for(mxId=0; mxId<numDevs; mxId++){
-		if(mixerOpen((HMIXER*)&hMix, mxId, 0, 0, 0)==MMSYSERR_NOERROR){
+		if(pmixerOpen((HMIXER*)&hMix, mxId, 0, 0, 0)==MMSYSERR_NOERROR){
 			mixerLine.cbStruct=sizeof(MIXERLINE);
 			for(rec=0; rec<2; rec++){
 				mixerLine.dwComponentType= rec ? MIXERLINE_COMPONENTTYPE_DST_WAVEIN : MIXERLINE_COMPONENTTYPE_DST_SPEAKERS;
-				if(mixerGetLineInfo(hMix, &mixerLine, MIXER_GETLINEINFOF_COMPONENTTYPE)==MMSYSERR_NOERROR){
+				if(pmixerGetLineInfo(hMix, &mixerLine, MIXER_GETLINEINFOF_COMPONENTTYPE)==MMSYSERR_NOERROR){
 					//speakers volume
 					volume1();
 					//bass
@@ -674,15 +708,16 @@ l1:
 					//source line volume
 					for(int src=mixerLine.cConnections-1; src>=0; src--){
 						mixerLine.dwSource=src;
-						if(mixerGetLineInfo(hMix, &mixerLine, MIXER_GETLINEINFOF_SOURCE)==MMSYSERR_NOERROR){
+						if(pmixerGetLineInfo(hMix, &mixerLine, MIXER_GETLINEINFOF_SOURCE)==MMSYSERR_NOERROR){
 							volume1();
 						}
 					}
 				}
 			}
-			mixerClose((HMIXER)hMix);
+			pmixerClose((HMIXER)hMix);
 		}
 	}
+#endif
 }
 
 void volume(TCHAR *which, int value, int action)

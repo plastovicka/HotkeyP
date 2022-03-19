@@ -478,8 +478,11 @@ void executeHotKey(int i)
 	}
 
 	// zef: play sound
-	if(*hk->sound)
-		PlaySound(ExpandVars(hk->sound).c_str(), NULL, SND_FILENAME | SND_ASYNC);
+	if(*hk->sound) {
+		static TPlaySound pPlaySound;
+		winmm((FARPROC&)pPlaySound, "PlaySoundW");
+		pPlaySound(ExpandVars(hk->sound).c_str(), NULL, SND_FILENAME | SND_ASYNC);
+	}
 }
 
 //-------------------------------------------------------------------------
@@ -1080,13 +1083,16 @@ void setHook()
 		SetTimer(hWin, 10, keepHookInterval, 0);
 	}
 	//joystick
-	bool b=editing;
-	if(!disableJoystick && !disableAll){
-		if(joyMouseEnabled) b=true;
-		else
-			for(int i=0; i<numKeys; i++){
-				if(hotKeyA[i].vkey==vkJoy) b=true;
-			}
+	bool b=false;
+	if(enableJoystick) {
+		b=editing;
+		if(!disableJoystick && !disableAll) {
+			if(joyMouseEnabled) b=true;
+			else
+				for(int i=0; i<numKeys; i++) {
+					if(hotKeyA[i].vkey==vkJoy) b=true;
+				}
+		}
 	}
 	if(b){
 		while((signed)ResumeThread(joyThread) > 1);

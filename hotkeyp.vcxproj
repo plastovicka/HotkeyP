@@ -239,7 +239,7 @@
       <Command>C:\Programy\HotkeyP.exe -send window command 203 PlasHotKey</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>htmlhelp.lib;version.lib;winmm.lib;comctl32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>htmlhelp.lib;version.lib;comctl32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -341,7 +341,7 @@
       <Command>C:\Programy\HotkeyP.exe -send window command 203 PlasHotKey</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>htmlhelp.lib;version.lib;winmm.lib;comctl32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>htmlhelp.lib;version.lib;comctl32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -429,7 +429,7 @@
       <Command>C:\Programy\HotkeyP.exe -send window command 203 PlasHotKey</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>htmlhelp.lib;version.lib;winmm.lib;comctl32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>htmlhelp.lib;version.lib;comctl32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
