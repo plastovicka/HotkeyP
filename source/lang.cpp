@@ -330,6 +330,7 @@ void initLang()
 		{
 			case LANG_CATALAN: s=_T("Catalan"); break;
 			case LANG_CZECH: s=_T("Èesky"); break;
+			case LANG_DANISH: s=_T("Danish"); break;
 			case LANG_FRENCH: s=_T("French"); break;
 			case LANG_GERMAN: s = _T("German"); break;
 			case LANG_GREEK: s = _T("Greek"); break;
