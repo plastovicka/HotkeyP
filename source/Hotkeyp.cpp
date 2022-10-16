@@ -1734,7 +1734,7 @@ BOOL CALLBACK AboutProc(HWND hWnd, UINT msg, WPARAM wP, LPARAM)
 					return TRUE;
 				case 123:
 					GetDlgItemTextA(hWnd, (int)wP, buf, static_cast<int>(sizeA(buf)-13));
-					if(!_tcscmp(lang, _T("English"))) strcat(buf, "/indexEN.html");
+					if(!_tcscmp(lang, _T("Èesky"))) strcat(buf, "/indexCS.html");
 					ShellExecuteA(0, 0, buf, 0, 0, SW_SHOWNORMAL);
 					break;
 			}
