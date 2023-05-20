@@ -342,6 +342,7 @@ void initLang()
 			case LANG_RUSSIAN: s=_T("Russian"); break;
 			case LANG_SLOVAK: s=_T("Slovak"); break;
 			case LANG_SPANISH: s = _T("Spanish"); break;
+			case LANG_UKRAINIAN: s = _T("Ukrainian"); break;
 			default: s=_T("English"); break;
 		}
 		_tcscpy(lang, s);
