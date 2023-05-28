@@ -24,10 +24,10 @@ char *showTab[]={"normal", "maximized", "minimized"};
 char *categoryTab[]={"default", "all", "keyboard", "mouse", "joystick", "remote", "commands", "programs", "documents", "web links", "autorun", "tray menu"};
 
 char *cmdNames[]={
-	"Eject CD", "Close CD", "Shutdown", "Reboot", "Suspend",
+	"Eject CD", "Close CD", "Shutdown", "Reboot", "Sleep/Suspend",
 	"Logoff", "Screen saver", "Maximize window", "Minimize window", "Close window",
 	/*10*/"Always on top", "Terminate process", "Control panel", "Volume +", "Volume -",
-	"Wave volume +", "Wave volume -", "Mute", "Desktop resolution", "Monitor power off",
+	"Wave volume +", "Wave volume -", "Mute", "Desktop resolution", "Display power off",
 	/*20*/"Process priority", "Send window command", "Empty recycle bin", "Random wallpaper", "Disk free space",
 	"Hide window", "Send keys to window", "Macro", "Center of the desktop", "Bottom left corner",
 	/*30*/"Bottom", "Bottom right corner", "Left", "Right", "Top left corner",
@@ -458,7 +458,7 @@ bool strnicmpA(TCHAR *s1, char *s2)
 	return true; //different
 }
 
-bool isWWW(TCHAR const *s) // zef: made const correct
+bool isWWW(TCHAR const *s)
 {
 	return !_tcsnicmp(s, _T("www."), 4) || !_tcsnicmp(s, _T("http://"), 7)
 		|| !_tcsnicmp(s, _T("https://"), 8) || !_tcsnicmp(s, _T("mailto:"), 7);
@@ -616,7 +616,7 @@ int HotKey::getIcon()
 		else{
 			const tstring fullExe = getFullExe();
 			const TCHAR *_exe = fullExe.c_str();
-			if(isWWW(_exe)){
+			if(isWWW(_exe)) {
 				icon= !_tcsnicmp(_exe, _T("mailto:"), 7) ? 15 : 19;
 			}
 			else{
@@ -860,7 +860,7 @@ HMENU insertSubmenu(HMENU menu, TCHAR const *name)
 		}
 	}
 	p=CreatePopupMenu();
-	AppendMenu(menu, MF_POPUP, (UINT)p, name);
+	AppendMenu(menu, MF_POPUP, (UINT_PTR)p, name);
 	return p;
 }
 
@@ -2974,7 +2974,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 						int n = pnmv->item.cchTextMax;
 						switch(pnmv->item.iSubItem){
 							case 0:
-								_stprintf(buf, _T("%d"), (hk-hotKeyA)+1);
+								_stprintf(buf, _T("%d"), int(hk-hotKeyA)+1);
 								break;
 							case 1:
 								printKey(buf, hk);

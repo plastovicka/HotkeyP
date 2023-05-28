@@ -68,11 +68,7 @@ Parameter:<br>
 2 - safe shutdown, all windows will be closed before shutdown<br>
 
 <A NAME=4><A NAME=64>
-<h3>Suspend, Hibernate</h3>
-Parameter:<br>
-0 - normal shutdown<br>
-1 - forced shutdown, unsaved data may be lost<br>
-<p>
+<h3>Sleep/Suspend, Hibernate</h3>
 WARNING!  Hibernation does not work if it is not enabled in Control Panel\Power options.
 
 <A NAME=38>
@@ -140,18 +136,18 @@ Parameter is a service name, see <A href=#93>Start service</A> for more details.
 Runs screen saver which is selected in the desktop properties.
 
 <A NAME=19>
-<h3>Monitor power off</h3>
-Switches a monitor to power saving mode.<br>
+<h3>Display power off</h3>
+Switches a display to power saving mode.<br>
 Parameter (for CRT monitors, useless for LCD):<br>
 1 - less saving mode, fast restore<br>
 2 - more saving mode, slow restore<br>
 
 <A NAME=18>
 <h3>Desktop resolution</h3>
-Parameters are width, height, colors, frequency, display number. These numbers have to be separated by spaces. Width and height are measured in pixels. Colors can be 8,16,24 or 32. The fifth parameter is needed only if you have more than one monitor.
+Parameters are width, height, colors, frequency, display number. These numbers have to be separated by spaces. Width and height are measured in pixels. Colors can be 8,16,24 or 32. The fifth parameter is needed only if you have more than one display.
 This command can also be used to switch between two resolutions.<br>
 Example: 1280 1024 16 60, 1024 768 32 75<br>
-Be careful. Use only resolutions that are supported by your monitor. 
+Be careful. Use only resolutions that are supported by your display.
 
 <A NAME=81>
 <h3>Show desktop</h3>

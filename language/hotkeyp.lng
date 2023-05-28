@@ -259,7 +259,7 @@
 1001=Close CD
 1002=Shutdown
 1003=Reboot
-1004=Suspend
+1004=Sleep/Suspend
 1005=Logoff
 1006=Screen saver
 1007=Maximize window
@@ -274,7 +274,7 @@
 1016=Wave volume -
 1017=Mute
 1018=Desktop resolution
-1019=Monitor power off
+1019=Display power off
 1020=Process priority
 1021=Send window command
 1022=Empty recycle bin
