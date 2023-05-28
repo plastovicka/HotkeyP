@@ -316,8 +316,8 @@ void executeHotKey(int i)
 		tstring fullExe = hk->getFullExe(); // zef: added support for environment vars in paths
 		exe=fullExe.c_str();
 		if(!isExe(exe)){
-			//document
-			if(!hk->admin && isElevated()){
+			//document or shell
+			if(!hk->admin && isElevated() && !isShell(exe)){
 				//use explorer.exe to open document at medium integrity level
 				if(*exe!='"') {
 					exeBuf[0]='"';
@@ -335,7 +335,7 @@ void executeHotKey(int i)
 			}
 			else{
 				//use ShellExecute to open document in associated application
-				if(!workDir){
+				if(!workDir && !isShell(exe)){
 					_tcscpy(exeBuf, exe);
 					filePart=cutPath(exeBuf);
 					if(filePart>exeBuf){

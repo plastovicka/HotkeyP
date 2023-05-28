@@ -36,7 +36,7 @@ bool showHelp(int anchorId)
 		//run another hotkeyp.exe process
 		TCHAR buf[MAX_PATH];
 		GetModuleFileName(0, buf, 192);
-		if((int)ShellExecute(0, unblockHelp() ? _T("runas") : 0, buf, _T("--htmlhelp"), 0, SW_SHOWNORMAL)<=32){
+		if((INT_PTR)ShellExecute(0, unblockHelp() ? _T("runas") : 0, buf, _T("--htmlhelp"), 0, SW_SHOWNORMAL)<=32){
 			return false;
 		}
 		//find hidden window which is used to receive commands
@@ -62,7 +62,7 @@ LRESULT helpProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 	TCHAR buf[MAX_PATH], buf2[MAX_PATH+24];
 	if(mesg==WM_USER+4370){
 		getExeDir(buf, lng(13, "help.chm"));
-		_stprintf(buf2, _T("%.99s#%d"), lng(30, "main.htm"), wP);
+		_stprintf(buf2, _T("%.99s#%d"), lng(30, "main.htm"), (int)wP);
 		hHH = HtmlHelpW(0, buf, 0, (!wP) ? 0 : (DWORD_PTR)buf2);
 		return (LPARAM)hHH;
 	}

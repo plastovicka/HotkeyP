@@ -464,9 +464,14 @@ bool isWWW(TCHAR const *s)
 		|| !_tcsnicmp(s, _T("https://"), 8) || !_tcsnicmp(s, _T("mailto:"), 7);
 }
 
-bool isExe(TCHAR const *f) // zef: made const correct
+bool isShell(TCHAR const *s)
 {
-	if(isWWW(f)) return false;
+	return !_tcsnicmp(s, _T("shell:"), 6);
+}
+
+bool isExe(TCHAR const *f)
+{
+	if(isWWW(f) || isShell(f)) return false;
 	TCHAR const *s=_tcschr(f, 0)-3;
 	if(s<=f || s[-1]!='.') return false;
 	return !_tcsicmp(s, _T("exe")) || !_tcsicmp(s, _T("com")) ||
@@ -558,7 +563,7 @@ void HotKey::resolveLNK()
 							TSHCreateShellItem pSHCreateShellItem = (TSHCreateShellItem)GetProcAddress(GetModuleHandleA("shell32.dll"), "SHCreateShellItem");
 							if (pSHCreateShellItem && SUCCEEDED((*pSHCreateShellItem)(NULL, NULL, ppidl, &pItemTarget))) {
 								if (SUCCEEDED(pItemTarget->GetDisplayName(SIGDN_DESKTOPABSOLUTEEDITING, &name))) {
-									cpStr(args, name);
+									cpStr(exe, (tstring(L"shell:Appsfolder\\") + name).c_str());
 									CoTaskMemFree(name);
 								}
 								if (SUCCEEDED(pItemTarget->GetDisplayName(SIGDN_NORMALDISPLAY, &name))) {
@@ -619,6 +624,8 @@ int HotKey::getIcon()
 			if(isWWW(_exe)) {
 				icon= !_tcsnicmp(_exe, _T("mailto:"), 7) ? 15 : 19;
 			}
+			else if(isShell(_exe))
+				icon=9;
 			else{
 				icon= -1;
 				TCHAR *s;
@@ -1230,27 +1237,27 @@ bool HotKey::inCategory(int _category)
 		return this->category==_category;
 	}
 	switch(_category){
-		case -1:
+		case -1: //all
 			return true;
-		case -2:
+		case -2: //keyboard
 			return vkey<512;
-		case -3:
+		case -3: //mouse
 			return vkey==vkMouse;
-		case -4:
+		case -4: //joystick
 			return vkey==vkJoy;
-		case -5:
+		case -5: //remote
 			return vkey==vkLirc;
-		case -6:
+		case -6: //commands
 			return cmd>=0;
-		case -7:
-			return cmd<0 && isExe(exe);
-		case -8:
-			return cmd<0 && !isExe(exe) && !isWWW(exe);
-		case -9:
+		case -7: //programs
+			return cmd<0 && (isExe(exe) || isShell(exe));
+		case -8: //documents
+			return cmd<0 && !isExe(exe) && !isShell(exe) && !isWWW(exe);
+		case -9: //web links
 			return cmd<0 && isWWW(exe);
-		case -10:
+		case -10: //autorun
 			return autoStart;
-		case -11:
+		case -11: //tray menu
 			return trayMenu;
 	}
 	return false;;
@@ -2112,7 +2119,7 @@ BOOL CALLBACK hotkeyProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 							SetFocus(GetDlgItem(hWnd, 101));
 							break;
 						}
-						if(isWWW(hk->exe)){
+						if(isWWW(hk->exe) || isShell(hk->exe)){
 							if(!*hk->note){
 								cpStr(hk->note, hk->exe);
 							}
@@ -2344,7 +2351,7 @@ void delKey(int item)
 }
 
 //create new hotkey
-void addKey(bool makeCopy, int item, TCHAR* exe = NULL, TCHAR *note = NULL)
+void addKey(bool makeCopy, int item, const TCHAR* exe = NULL, TCHAR *note = NULL)
 {
 	if(item<0) item=0;
 	//default attributes
@@ -2398,7 +2405,7 @@ void addKey(bool makeCopy, int item, TCHAR* exe = NULL, TCHAR *note = NULL)
 	}
 }
 
-void dropFiles(HWND hWnd, TCHAR *exe, TCHAR *note)
+void dropFiles(HWND hWnd, const TCHAR *exe, TCHAR *note)
 {
 	SetForegroundWindow(hWnd);
 	addKey(false, numKeys, exe, note);
@@ -3363,7 +3370,8 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 			break;
 		case WM_USER + 1427: //drag & drop
 			if (dropTarget) {
-				dropFiles(hWnd, dropTarget->command, dropTarget->name);
+				WCHAR *e = dropTarget->command;
+				dropFiles(hWnd, (e && *e && e[1]!=':' && e[0]!='\\' && !isExe(e)) ? (tstring(L"shell:Appsfolder\\") + e).c_str() : e, dropTarget->name);
 				if(dropTarget) dropTarget->FreeNames();
 			}
 			break;
