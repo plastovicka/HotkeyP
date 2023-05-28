@@ -1,10 +1,11 @@
 HotkeyP
 -------
-4.10
+4.10 (28.5.2023)
 - maximální délka parametrù zkratky zvìtšena na 65535
 - pøíkaz "Vložit text" umí vložit hodnotu z registru
 - "Povolit vícenásobné spuštìní" je vždy povoleno pro explorer.exe
 - winmm.dll se naèítá pouze když je potøeba
+- nápovìda má obsah
 
 opravené chyby:
 - pøíkaz "Vložit text" zpùsoboval kritické chyby ve Windows 11

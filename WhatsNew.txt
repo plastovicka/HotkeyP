@@ -1,10 +1,13 @@
 HotkeyP
 -------
-4.10
+4.10 (2023-05-28)
 - maximal length of hotkey parameters increased to 65535
 - command "Paste text" can paste a registry value
 - "Enable multiple instances" is always enabled for explorer.exe
 - winmm.dll is loaded only if needed
+- help has a content
+- renamed "Suspend" to "Sleep/Suspend"
+- renamed "Monitor power off" to "Display power off"
 
 fixed bugs:
 - "Paste text" command was causing critical errors on Windows 11
