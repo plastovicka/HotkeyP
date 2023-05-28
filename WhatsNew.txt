@@ -1,12 +1,13 @@
 HotkeyP
 -------
-5.0
+4.10
 - maximal length of hotkey parameters increased to 65535
 - command "Paste text" can paste a registry value
 - "Enable multiple instances" is always enabled for explorer.exe
 - winmm.dll is loaded only if needed
 
 fixed bugs:
+- "Paste text" command was causing critical errors on Windows 11
 - "Minimize window to tray" could hide taskbar
 - CHM help could not be opened if HotkeyP was installed in the Program Files folder
 - window opacity can be 0

@@ -1957,18 +1957,23 @@ void PasteTextData::save()
 		pnxt= &prev;
 		f=0;
 		while((f=EnumClipboardFormats(f))!=0){
-			if((hmem= GetClipboardData(f))!=0){
-				if((ptr=GlobalLock(hmem))!=0){
-					cd= new ClipboardData;
-					cd->format=f;
-					cd->size= GlobalSize(hmem);
-					cd->data= operator new(cd->size);
-					memcpy(cd->data, ptr, cd->size);
-					GlobalUnlock(hmem);
-					*pnxt= cd;
-					pnxt= &cd->nxt;
+			if(f!=CF_BITMAP && f!=CF_ENHMETAFILE) //these formats crash on Windows 11
+				if((hmem= GetClipboardData(f))!=0){
+					if((ptr=GlobalLock(hmem))!=0){
+						size_t sz = GlobalSize(hmem);
+						if(sz < 100000000)
+						{
+							cd = new ClipboardData;
+							cd->format = f;
+							cd->size = sz;
+							cd->data = operator new(cd->size);
+							memcpy(cd->data, ptr, cd->size);
+							*pnxt = cd;
+							pnxt = &cd->nxt;
+						}
+						GlobalUnlock(hmem);
+					}
 				}
-			}
 		}
 		*pnxt=0;
 		CloseClipboard();
@@ -2048,16 +2053,18 @@ void copyToClipboard1(TCHAR *s)
 {
 	HGLOBAL hmem;
 	TCHAR *ptr;
-	size_t len=_tcslen(s)+1;
 
-	if(s && (hmem=GlobalAlloc(GMEM_MOVEABLE|GMEM_DDESHARE, 2*len))!=0){
-		if((ptr=(TCHAR*)GlobalLock(hmem))!=0){
-			memcpy(ptr, s, 2*len);
-			GlobalUnlock(hmem);
-			SetClipboardData(CF_UNICODETEXT, hmem);
-		}
-		else{
-			GlobalFree(hmem);
+	if(s) {
+		size_t len = (_tcslen(s) + 1) * 2;
+		if((hmem = GlobalAlloc(GMEM_MOVEABLE | GMEM_DDESHARE, len)) != 0) {
+			if((ptr = (TCHAR*)GlobalLock(hmem)) != 0) {
+				memcpy(ptr, s, len);
+				GlobalUnlock(hmem);
+				SetClipboardData(CF_UNICODETEXT, hmem);
+			}
+			else {
+				GlobalFree(hmem);
+			}
 		}
 	}
 }

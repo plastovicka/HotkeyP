@@ -1,12 +1,13 @@
 HotkeyP
 -------
-5.0
+4.10
 - maximální délka parametrù zkratky zvìtšena na 65535
 - pøíkaz "Vložit text" umí vložit hodnotu z registru
 - "Povolit vícenásobné spuštìní" je vždy povoleno pro explorer.exe
 - winmm.dll se naèítá pouze když je potøeba
 
 opravené chyby:
+- pøíkaz "Vložit text" zpùsoboval kritické chyby ve Windows 11
 - pøíkaz "Minimalizovat okno do malé ikony" mohl skrýt hlavní panel Windows
 - nápovìda nemohla být zobrazena, pokud byl HotkeyP nainstalován ve složce Program Files
 - prùhlednost okna mùže být 0
