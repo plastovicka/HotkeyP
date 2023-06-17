@@ -90,12 +90,6 @@
     <None Include="source\ascdesc.bmp">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="source\bitmap1.bmp">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="source\down.bmp">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="source\down.ico">
       <Filter>Resource Files</Filter>
     </None>
@@ -118,9 +112,6 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="source\keys2.ico">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="source\up.bmp">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="source\up.ico">

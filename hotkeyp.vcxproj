@@ -683,8 +683,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="source\ascdesc.bmp" />
-    <None Include="source\bitmap1.bmp" />
-    <None Include="source\down.bmp" />
     <None Include="source\down.ico" />
     <None Include="source\ico5.ico" />
     <None Include="source\ico6.ico" />
@@ -693,7 +691,6 @@
     <None Include="source\icons.bmp" />
     <None Include="source\keys.ico" />
     <None Include="source\keys2.ico" />
-    <None Include="source\up.bmp" />
     <None Include="source\up.ico" />
   </ItemGroup>
   <ItemGroup>
