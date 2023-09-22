@@ -1,0 +1,10 @@
+*.exe
+*.pdb
+*.ilk
+*.aps
+*.ncb
+*.opt
+*.user
+*.tlog
+/.vs
+/tmp

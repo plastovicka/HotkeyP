@@ -288,6 +288,15 @@ void forceNoKey()
 	}
 }
 
+void forceNoLeftButton()
+{
+	if(GetAsyncKeyState(VK_LBUTTON)<0 || GetAsyncKeyState(VK_RBUTTON)<0) { //check both buttons because they can be swapped
+		mouse_event1(MOUSEEVENTF_LEFTUP);
+		Sleep(10);
+	}
+}
+
+
 void forceNoShift()
 {
 	int i;
@@ -2479,10 +2488,12 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 			break;
 		case 7: //maximize
 			w=getWindow(param);
+			forceNoLeftButton();
 			if(w) PostMessage(w, WM_SYSCOMMAND, IsZoomed(w) ? SC_RESTORE : SC_MAXIMIZE, 0);
 			break;
 		case 8: //minimize
 			w=getWindow(param);
+			forceNoLeftButton();
 			if(w) PostMessage(w, WM_SYSCOMMAND, IsIconic(w) ? SC_RESTORE : SC_MINIMIZE, 0);
 			break;
 		case 9: //close
