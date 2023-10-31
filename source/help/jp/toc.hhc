@@ -1,0 +1,339 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="CHM Editor">
+</HEAD><BODY>
+<OBJECT type="text/site properties">
+<param name="ImageType" value="Folder">
+</OBJECT>
+<UL>
+  <LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="新規ホットキーの作成">
+    <param name="Local" value="main.htm#-1">
+    </OBJECT>
+  <LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="マウス ショートカット">
+    <param name="Local" value="main.htm#mouse">
+    </OBJECT>
+  <LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="リモート コントロール">
+    <param name="Local" value="main.htm#remote">
+    </OBJECT>
+  <LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="カテゴリー">
+    <param name="Local" value="main.htm#categories">
+    </OBJECT>
+  <LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="フック">
+    <param name="Local" value="main.htm#hook">
+    </OBJECT>
+  <LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="システム コマンド">
+    <param name="Local" value="main.htm#5">
+    </OBJECT>
+  <UL>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="シャットダウン、再起動、ログオフ">
+      <param name="Local" value="main.htm#5">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="サスペンド、休止状態">
+      <param name="Local" value="main.htm#64">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="シャットダウンダイアログを表示">
+      <param name="Local" value="main.htm#38">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="コンピューターをロック">
+      <param name="Local" value="main.htm#63">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="ディスクの空き容量">
+      <param name="Local" value="main.htm#24">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="ドライブの取り外し">
+      <param name="Local" value="main.htm#109">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="ごみ箱を空にする">
+      <param name="Local" value="main.htm#22">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="最近使ったドキュメントを消去">
+      <param name="Local" value="main.htm#104">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="一時ファイルを削除">
+      <param name="Local" value="main.htm#105">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="コントロール パネル">
+      <param name="Local" value="main.htm#57">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="キーを無効にする">
+      <param name="Local" value="main.htm#86">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="トレイアイコンを隠す">
+      <param name="Local" value="main.htm#98">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="トレイアイコンを復元">
+      <param name="Local" value="main.htm#99">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="サービスの開始">
+      <param name="Local" value="main.htm#93">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="サービスの停止">
+      <param name="Local" value="main.htm#92">
+      </OBJECT>
+  </UL>
+  <LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="ディスプレイ コマンド">
+    <param name="Local" value="main.htm#6">
+    </OBJECT>
+  <UL>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="スクリーン セーバー">
+      <param name="Local" value="main.htm#6">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="ディスプレイの電源オフ">
+      <param name="Local" value="main.htm#19">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="デスクトップの解像度">
+      <param name="Local" value="main.htm#18">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="デスクトップの表示">
+      <param name="Local" value="main.htm#81">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="デスクトップのスナップショット">
+      <param name="Local" value="main.htm#89">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="ランダム壁紙、次の壁紙、前の壁紙">
+      <param name="Local" value="main.htm#82">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="デスクトップアイコンの保存">
+      <param name="Local" value="main.htm#106">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="デスクトップアイコンを復元">
+      <param name="Local" value="main.htm#107">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="拡大鏡">
+      <param name="Local" value="main.htm#103">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="テキストの表示">
+      <param name="Local" value="main.htm#85">
+      </OBJECT>
+  </UL>
+  <LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="ウィンドウ コマンド">
+    <param name="Local" value="main.htm#10">
+    </OBJECT>
+  <UL>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Minimize window, Maximize window, Close window, Always on top">
+      <param name="Local" value="main.htm#10">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Maximize all">
+      <param name="Local" value="main.htm#112">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Minimize others">
+      <param name="Local" value="main.htm#65">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Minimize to tray">
+      <param name="Local" value="main.htm#102">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Minimize window to tray">
+      <param name="Local" value="main.htm#115">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Hide window">
+      <param name="Local" value="main.htm#25">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Hide application">
+      <param name="Local" value="main.htm#101">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Resize window, Move window">
+      <param name="Local" value="main.htm#71">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Window snapshot">
+      <param name="Local" value="main.htm#90">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Opacity">
+      <param name="Local" value="main.htm#77">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Opacity -, Opacity +">
+      <param name="Local" value="main.htm#111">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Information">
+      <param name="Local" value="main.htm#66">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Terminate process">
+      <param name="Local" value="main.htm#11">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Process priority">
+      <param name="Local" value="main.htm#60">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Next task, Previous task">
+      <param name="Local" value="main.htm#84">
+      </OBJECT>
+  </UL>
+  <LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="マルチメディア コマンド">
+    <param name="Local" value="main.htm#78">
+    </OBJECT>
+  <UL>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Volume, Volume +, Volume -">
+      <param name="Local" value="main.htm#78">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Mute">
+      <param name="Local" value="main.htm#58">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Eject/Close CD">
+      <param name="Local" value="main.htm#62">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Play CD, Stop, Next track, Previous track">
+      <param name="Local" value="main.htm#42">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="CD speed">
+      <param name="Local" value="main.htm#100">
+      </OBJECT>
+  </UL>
+  <LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="マクロ コマンド">
+    <param name="Local" value="main.htm#67">
+    </OBJECT>
+  <UL>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Paste text">
+      <param name="Local" value="main.htm#67">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Macro">
+      <param name="Local" value="main.htm#27">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Macro to active window">
+      <param name="Local" value="main.htm#94">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Send keys to window">
+      <param name="Local" value="main.htm#26">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Keys to active window">
+      <param name="Local" value="main.htm#74">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Send window command">
+      <param name="Local" value="main.htm#21">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Command to active window">
+      <param name="Local" value="main.htm#73">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Multi command">
+      <param name="Local" value="main.htm#61">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Commands list">
+      <param name="Local" value="main.htm#70">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Move mouse cursor">
+      <param name="Local" value="main.htm#37">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Wheel">
+      <param name="Local" value="main.htm#75">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Horizontal wheel">
+      <param name="Local" value="main.htm#108">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Left click, Middle click, Right click, Fourth button click, Fifth button click">
+      <param name="Local" value="main.htm#45">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Double click">
+      <param name="Local" value="main.htm#76">
+      </OBJECT>
+  </UL>
+  <LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="HotkeyP コマンド">
+    <param name="Local" value="main.htm#113">
+    </OBJECT>
+  <UL>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Show HotkeyP window">
+      <param name="Local" value="main.htm#113">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Disable all hotkeys">
+      <param name="Local" value="main.htm#87">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Disable keyboard shortcuts">
+      <param name="Local" value="main.htm#97">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Disable mouse shortcuts">
+      <param name="Local" value="main.htm#88">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Disable joystick shortcuts">
+      <param name="Local" value="main.htm#95">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Disable remote control">
+      <param name="Local" value="main.htm#96">
+      </OBJECT>
+    <LI> <OBJECT type="text/sitemap">
+      <param name="Name" value="Reload hook">
+      <param name="Local" value="main.htm#114">
+      </OBJECT>
+  </UL>
+  <LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Run HotkeyP を管理者として実行する">
+    <param name="Local" value="main.htm#admin">
+    </OBJECT>
+  <LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="ライセンス">
+    <param name="Local" value="main.htm#license">
+    </OBJECT>
+</UL>
+</BODY></HTML>

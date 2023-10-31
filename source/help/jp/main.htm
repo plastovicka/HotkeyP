@@ -1,0 +1,446 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>HotkeyP help</TITLE>
+<META content="text/html; charset=shift_jis" http-equiv=Content-Type>
+<META name=GENERATOR content="MSHTML 11.00.10570.1001"></HEAD>
+<BODY><FONT face="Yu Gothic UI">「追加」ボタンをクリックすると、リストの最後に新しいホットキーが作成されます。 
+「挿入」ボタンは、現在の項目の前に新しいホットキーを作成します。 ホットキーは、デスクトップからアイコンをドラッグ アンド 
+ドロップするか、エクスプローラーからファイルをドラッグ アンド ドロップすることによっても作成できます。 
+リストボックス内の項目をダブルクリックすると、既存のホットキーを編集できます。 列ヘッダーをクリックすると、リストを並べ替えることができます。 
+最初の列で並べ替えると、マウスを使用して項目の順序を変更できます。 </FONT>
+<P><FONT face="Yu Gothic UI">HotkeyP を初めて実行するときは、ホットキーをファイルに保存する必要があります。 
+次回、ホットキー ウィンドウを閉じると、すべての変更が自動的に保存されます。 Windows にログインするすべてのユーザーは、独自の HTK 
+ファイルを作成できます。 </FONT>
+<P><FONT face="Yu Gothic UI">ホットキーには、Ctrl、Shift、Alt、Win を組み合わせた任意のキーを使用できます。 
+ほとんどのキーボードには、Ctrl と Alt の間に Win キーが配置されています。 CapsLock、F1、Shift+A、Ctrl+C、Alt+F4 
+などのホットキーを定義することは可能ですが、推奨されません。 すべてのマルチメディア 
+キーを使用できますが、他のプログラムによってブロックされる可能性があるため、それらのプログラムを閉じるかアンインストールする必要があります。 
+一部の不明なキーは括弧内の数字として表示されますが、オプションで名前を変更できます。</FONT><A name=-1><FONT 
+face="Yu Gothic UI"> </FONT>
+<P><FONT face="Yu Gothic UI">各ホットキーは、実行可能ファイル、ドキュメント、www 
+ページ、または内部コマンドに割り当てることができます。 
+「コマンド:」編集ボックスにファイル名を直接書き込むことも、「...」ボタンを使用してファイルダイアログを開くことも、エクスプローラーからファイルをドラッグアンドドロップすることもできます。 
+ファイル パスで環境変数 (%SystemRoot% など) を使用できます。 変数 %HotkeyP% は、HotkeyP.exe があるインストール 
+フォルダーに置き換えられます。 ファイル名の前にパスを指定しない場合は、システム変数 PATH のディレクトリが検索されます。 </FONT>
+<P><FONT face="Yu Gothic UI">Web ページまたは電子メール アドレスをコマンド編集ボックスに直接書き込むこともできます。 www 
+で始まる必要があります。 または http:// または https:// または mailto:。 </FONT>
+<P><FONT face="Yu Gothic UI">内部コマンドは、「&lt;」ボタンをクリックした後のポップアップメニューから簡単に選択できます。 
+</FONT>
+<P><FONT face="Yu Gothic UI">ホットキーを押すたびにサウンドを聞きたい場合は、「サウンド:」フィールドに WAV 
+ファイルを入力できます。 </FONT>
+<P><FONT face="Yu Gothic UI">「複数起動を有効にする」にチェックを入れると、各ホットキーが新しいアプリケーションを起動します。 
+このオプションをオンにせず、アプリケーションがすでに実行されている場合、アプリケーションはアクティブ化されます。 すでにアクティブな場合は最小化されます。 
+オプション「複数起動を有効にする」は、実行可能ファイルに対してのみ機能します。 
+ドキュメントを開く場合、そのドキュメントを新しいウィンドウで開くか、既存のウィンドウで開くかはアプリケーションによって異なります。 </FONT>
+<P><FONT 
+face="Yu Gothic UI">「通知アイコンメニューに追加」にチェックを入れると、システムトレイアイコンを右クリックしたときに表示されるポップアップメニューにこのホットキーが追加されます。 
+メニュー項目の文字列を説明フィールドに書き込みます。 説明に -&gt; の 2 文字が含まれる場合、サブメニューが作成されます。 サブメニューはネストできます 
+(たとえば、サブメニュー1-&gt;サブメニュー2-&gt;項目)。 </FONT>
+<P><FONT face="Yu Gothic UI">「Windows起動時に自動的に実行」チェックボックス ([ホット キー] ダイアログ ボックス内) 
+は、Windows の起動後に HotkeyP が自動的に実行される場合、またはパラメーター 0 を使用して HotkeyP 
+を手動で起動する場合にのみ機能します。 </FONT>
+<P><FONT face="Yu Gothic UI">アプリケーションに管理者権限が必要な場合にのみ、「管理者として実行」をチェックしてください。 
+このオプションは、Windows コントロール パネルでユーザー アカウント制御 (UAC) が有効になっている場合に役立ちます 
+(デフォルトで有効になっています)。 HotkeyP が管理者として実行されていない場合、ホットキーを押すと煩わしい「ユーザー 
+アカウント制御」ダイアログが表示されます。 HotkeyP 
+が管理者として実行されている場合、同意なしにアプリケーションを管理者として直接起動できます。</FONT></A><FONT 
+face="Yu Gothic UI"> </FONT>
+<P><FONT face="Yu Gothic UI">コマンドの説明を「説明:」フィールドに書き込みます。 
+このメモを空のままにすると、パスのないファイル名が使用されます。 説明はメイン ウィンドウのリストボックスに表示されます。 </FONT>
+<P><FONT face="Yu Gothic UI">不透明度は 0 ～ 255 の整数で、透明から不透明を意味します。 
+値がゼロの場合、不透明度は設定されず、プログラムの起動が速くなります。 </FONT><A name=mouse>
+<H2><FONT face="Yu Gothic UI">マウス ショートカット</FONT></H2><FONT 
+face="Yu Gothic UI">マウス ショートカットは、キーボード ショートカットと同様に作成されます。 
+「ホットキー」ウィンドウの上部にある白い編集ボックス上にマウス カーソルを移動します。 次に、1 つ以上のマウス ボタンを押すか、マウス 
+ホイールを回転させます。 「マウス」という単語と、L、R、M、4、5、上、下、左、右の合計が編集ボックスに表示されます。 
+つまり、左ボタン、右ボタン、中央ボタン、X1 ボタン、X2 ボタン、ホイール上、ホイール下、ホイール左、ホイール右です。 マウス 
+ボタンは、Ctrl、Shift、Alt、Win キーと組み合わせることができます。 </FONT>
+<P><FONT face="Yu Gothic UI">マウスに 5 つのボタンがあるにもかかわらず、HotkeyP で 4 番目と 5 
+番目のボタンが使用できない場合は、間違ったドライバーがインストールされているか、これらのボタンをブロックするアプリケーション (例: Genius 
+Netscroll+ Optical Mouse) が存在する可能性があります。 そのアプリケーションを閉じて、スタートアップ 
+グループから削除する必要があります。 Genius 
+ソフトウェアをアンインストールするとドライバーもアンインストールされてしまうため、アンインストールしないでください。 ただし、代わりに HotkeyP 
+を使用したい場合は、gnetmous.exe ファイルを削除するか名前を変更できます。 </FONT>
+<P><FONT face="Yu Gothic UI">水平ホイールは Windows XP 以前では機能しません。 </FONT>
+<P><FONT face="Yu Gothic UI">オプションダイアログボックスには「マウスボタンの遅延」オプションがあります。 2 
+つ以上のボタンで構成されるショートカットに使用されます。 HotkeyP は、ショートカットが存在するボタンのみを遅延させます。 たとえば、ショートカット 
+R+L を作成すると右ボタンが遅れ、ショートカット M+R を作成すると中央ボタンが遅れます。 
+マウスボタン間の間隔が「マウスボタンの遅延」の値よりも長い場合、ショートカットも実行されますが、ボタンの押下に関するメッセージがマウスカーソルの下のウィンドウに送信されます。 
+たとえば、ショートカット R+L があり、ボタン R と L の間で待機時間が長すぎると、ショートカットが実行され、右ボタンを放した後、コンテキスト 
+メニューが表示されます。 右ボタンでファイルをドラッグ アンド 
+ドロップする場合は、右ボタンを押して、ファイルが選択されるまで待つ必要があり、その後マウスを動かし始めることができます。 
+左ボタンによるドラッグ&amp;ドロップは頻繁に使用されるため、この動作は左ボタンでは無効になっています。 
+ボタンの遅延はゲームにとって不便であるため、一部のアプリケーションでは無効にするオプションがあります。 パスを付けずに exe 
+ファイル名を編集ボックスに入力し、セミコロンで区切ります。 </FONT>
+<P><FONT face="Yu Gothic UI"></FONT><A name=remote>
+<H2><FONT face="Yu Gothic UI">リモート コントロール</FONT></H2><FONT 
+face="Yu Gothic UI">ホットキーはリモコンのボタンにも定義できます。 WinLIRCをインストールする必要があります。 (</FONT><A 
+href="http://winlirc.sourceforge.net" target=_blank><FONT 
+face="Yu Gothic UI">http://winlirc.sourceforge.net</FONT></A><FONT 
+face="Yu Gothic UI">) WinLIRC をインストールして構成した後、HotkeyP オプションに移動し、パスを winlirc.exe 
+に設定し、有効にチェックを入れます。 </FONT><A name=categories>
+<H2><FONT face="Yu Gothic UI">カテゴリー</FONT></H2><FONT 
+face="Yu Gothic UI">特にホットキーが多数ある場合は、ホットキーを分類すると便利です。 HotkeyP ウィンドウの左側にカテゴリ 
+パネルがあります。 一部のカテゴリは自動的に作成され、変更できません 
+(これらのカテゴリは、キーボード、マウス、ジョイスティック、リモート、コマンド、プログラム、ドキュメント、Web リンク、自動実行、トレイ メニューです)。 
+それらに加えて、独自のカテゴリを作成することもできます。 
+新しいカテゴリに含めるホットキーを選択し、[カテゴリ]メニューから[選択したホットキーに割り当てる]コマンドを選択し、新しいカテゴリの名前を入力して[OK]をクリックします。 
+「選択したホットキーに割り当てる」コマンドは、新しいカテゴリを作成するだけでなく、ドロップダウン 
+リストから既存のカテゴリを選択するだけで、あるカテゴリから別のカテゴリにホットキーを移動するためにも使用されます。 
+カテゴリ名を空のままにすると、選択したホットキーはカテゴリ「デフォルト」に移動されます。 カテゴリを削除すると、そのカテゴリのすべてのホットキーがデフォルト 
+カテゴリに移動されます。 </FONT><A name=hook>
+<H2><FONT face="Yu Gothic UI">フック</FONT></H2><FONT 
+face="Yu Gothic UI">フックは、キーが押されるたびに呼び出されるプロシージャです。 
+オプションでフックを無効にすることはできますが、一部のマルチメディア キー (括弧内の数字で表示されます) が機能しなくなり、CapsLock や 
+Win+M、Win+E、Win+R などのホットキーを設定できなくなります。 
+フックは、「マクロ」および「テキストの貼り付け」コマンドが正しく動作するためにも必要です。 「すべてのホットキーにキーボード 
+フックを使用する」オプションをチェックすると、ホットキーはゲームや他の DirectX アプリケーションでも機能します。 </FONT>
+<P><FONT face="Yu Gothic UI">このフックは、HotkeyP 
+も管理者として実行されていない限り、管理者として実行されているアプリケーションでは機能しません。</FONT></A><FONT 
+face="Yu Gothic UI"> </FONT>
+<H2><FONT face="Yu Gothic UI">内部コマンド</FONT></H2><FONT 
+face="Yu Gothic UI">ほとんどのコマンドには、通常はオプションのパラメーターがいくつかあります。 パラメータはスペースで区切られます。 
+</FONT>
+<P><FONT face="Yu Gothic UI">内部コマンドはホットキーだけでなく、コマンド ラインからも実行できます。 たとえば、コマンド 
+hotkeyp -reboot によってコンピュータを再起動できます。 これは、スクリプトまたは BAT ファイルで役立ちます。 
+これらはスケジューラで使用することも、スタートアップ グループに追加することもできます。 コマンド ラインで hotkeyp 
+の後に複数のコマンドを使用する場合は、セミコロンで区切ってください。 </FONT><A name=2><A name=3><A name=5>
+<H3><FONT face="Yu Gothic UI">シャットダウン、再起動、ログオフ</FONT></H3><FONT 
+face="Yu Gothic UI">パラメータ:<BR>0 - 通常のシャットダウン<BR>1 - 
+強制的にシャットダウン。保存されていないデータはすべて失われます<BR>2 - 
+安全なシャットダウン。シャットダウン前にすべてのウィンドウが閉じられます<BR></FONT><A name=4><A name=64>
+<H3><FONT face="Yu Gothic UI">スリープ/サスペンド、休止状態</FONT></H3><FONT 
+face="Yu Gothic UI">警告！ 休止状態は、コントロール パネルの電源オプションで有効になっていないと機能しません。 </FONT><A 
+name=38>
+<H3><FONT face="Yu Gothic UI">シャットダウンダイアログを表示</FONT></H3><FONT 
+face="Yu Gothic UI">「スタート」ボタンをクリックして「シャットダウン」を選択した場合と同じです... </FONT><A name=63>
+<H3><FONT face="Yu Gothic UI">コンピューターをロック</FONT></H3><FONT 
+face="Yu Gothic UI">パラメータは、日付/時刻、ユーザー名などの特別な % 
+シーケンスを含めることができるテキストです。詳細については、テキストの貼り付けコマンドを参照してください。 
+テキストが不要な場合は、パラメータとしてスペースを使用します。 このホットキーを作成すると、パスワードのダイアログ ウィンドウが表示されます。 
+パスワードには、Enter、Escape、Backspace、Tab、Alt を除く任意のキーを使用できます。 パスワードは 64 
+キーを超えることはできません。<BR>パラメータが空の場合、コマンドは標準システム関数を呼び出してコンピュータをロックし、ログイン 
+パスワードのみを受け入れます。</FONT></A><FONT face="Yu Gothic UI"> </FONT><A name=24>
+<H3><FONT face="Yu Gothic UI">ディスクの空き容量</FONT></H3><FONT 
+face="Yu Gothic UI">すべての固定ドライブとネットワーク ドライブの空き容量を表示します。 パラメータは、ポップアップ 
+ウィンドウを表示する時間をミリ秒単位で指定します。 ホットキーをもう一度押すと、ウィンドウも消えます。 ウィンドウはマウスで移動できます。 </FONT><A 
+name=109>
+<H3><FONT face="Yu Gothic UI">ドライブの取り外し</FONT></H3><FONT 
+face="Yu Gothic UI">システムからドライブを安全に取り外します。 そのドライブ上でファイルやフォルダーを開いてはいけません。 
+パラメータはドライブ文字です。 パラメーターを指定せずにこのコマンドを実行すると、すべての USB ドライブが削除されます。 </FONT><A 
+name=22>
+<H3><FONT face="Yu Gothic UI">ごみ箱を空にする</FONT></H3><FONT 
+face="Yu Gothic UI">パラメータはこれらのオプションの合計です (既定 0):<BR>1 - 確認なし<BR>2 - 
+進行状況ウィンドウなし<BR>4 - サウンドなし<BR></FONT><A name=104>
+<H3><FONT face="Yu Gothic UI">最近使ったドキュメントを消去</FONT></H3><FONT 
+face="Yu Gothic UI">[スタート] サブメニュー [ドキュメント] 内のすべての項目を削除します。 
+ショートカットのみが削除され、ドキュメントは削除されません。 </FONT><A name=105>
+<H3><FONT face="Yu Gothic UI">一時ファイルを削除</FONT></H3><FONT 
+face="Yu Gothic UI">TEMP フォルダー内の 7 日より古い (またはパラメーターより古い) ファイルを削除します。 
+変更日と作成日の両方を比較します。 </FONT><A name=12><A name=50><A name=51><A name=52><A 
+name=53><A name=54><A name=55><A name=56><A name=57>
+<H3><FONT face="Yu Gothic UI">コントロール パネル</FONT></H3><FONT 
+face="Yu Gothic UI">パラメーターには、パスと拡張子を含まない *.CPL ファイルの名前を指定できます。 </FONT><A 
+name=86>
+<H3><FONT face="Yu Gothic UI">キーを無効にする</FONT></H3><FONT 
+face="Yu Gothic UI">パラメータは、ホットキーが押されるたびにブロック/ブロック解除される 1 つ以上のキーです。 
+キー名のリストについては、「コマンド マクロ」を参照してください。 最も一般的なパラメータは \win です。 Win キーはゲームでよく使用される Ctrl 
+キーと Alt キーの間にあり、誤って Win キーを押すとフルスクリーン ゲームが中断されます。<BR>この機能はキーを一時的に無効にするために使用されます。 
+一部のキーを永続的に無効にしたい場合は、そのキーのキーボード ショートカットを作成します (たとえば、空のパラメーターを指定したコマンド 
+マクロ)。</FONT></A><FONT face="Yu Gothic UI"> </FONT><A name=91><A name=98>
+<H3><FONT face="Yu Gothic UI">トレイアイコンを隠す</FONT></H3><FONT 
+face="Yu Gothic UI">システム トレイの小さなアイコンを非表示にします。 最初のパラメータはアイコンの識別番号です。 2 
+番目のパラメータはアイコンを作成したウィンドウです。 これらの情報は spy.exe で確認できます。 トレイ 
+アイコンをマウスの左ボタンでクリックするだけで、アイコン番号とウィンドウ プロセス/クラス/タイトルが Spy ウィンドウに表示されます。 </FONT><A 
+name=99>
+<H3><FONT face="Yu Gothic UI">トレイアイコンを復元</FONT></H3><FONT 
+face="Yu Gothic UI">[トレイ アイコンを隠す] コマンドによって以前に非表示にされたアイコンを表示します。 
+パラメータはアイコン番号とそのウィンドウ名です。</FONT></A><FONT face="Yu Gothic UI"> </FONT><A name=93>
+<H3><FONT face="Yu Gothic UI">サービスの開始</FONT></H3><FONT 
+face="Yu Gothic UI">システムサービスを実行します。 パラメータはサービスの短縮名です (表示される名前や説明ではありません)。 
+この名前は、サービス リスト ([このコンピューター]/[管理]) 
+を開いて、リスト内の項目をダブルクリックすると確認できます。<BR>この機能は、HotkeyP 
+が管理者として実行されている場合にのみ機能します。</FONT></A><FONT face="Yu Gothic UI"> </FONT><A 
+name=92>
+<H3><FONT face="Yu Gothic UI">サービスの停止</FONT></H3><FONT 
+face="Yu Gothic UI">パラメータはサービス名です。詳細については、「サービスの開始」を参照してください。<BR>この機能は、HotkeyP 
+が管理者として実行されている場合にのみ機能します。</FONT></A><FONT face="Yu Gothic UI"> </FONT><A name=6>
+<H3><FONT face="Yu Gothic UI">スクリーン セーバー</FONT></H3><FONT 
+face="Yu Gothic UI">デスクトップのプロパティで選択されたスクリーン セーバーを実行します。 </FONT><A name=19>
+<H3><FONT face="Yu Gothic UI">ディスプレイの電源オフ</FONT></H3><FONT 
+face="Yu Gothic UI">ディスプレイを省電力モードに切り替えます。<BR>パラメータ (CRT モニターの場合、LCD 
+には使用不可):<BR>1 - 省電力モード、高速復元<BR>2 - より高い節約モード、遅い復元<BR></FONT><A name=18>
+<H3><FONT face="Yu Gothic UI">デスクトップの解像度</FONT></H3><FONT 
+face="Yu Gothic UI">パラメータは幅、高さ、色、頻度、表示数です。 これらの数字はスペースで区切る必要があります。 
+幅と高さはピクセル単位で測定されます。 色は 8、16、24、または 32 です。5 番目のパラメータは、複数のディスプレイがある場合にのみ必要です。 
+このコマンドを使用して、2 つの解像度を切り替えることもできます。<BR>例: 1280 1024 16 60, 1024 768 32 
+75<BR>注意:&nbsp;ディスプレイでサポートされている解像度のみを使用してください。 </FONT><A name=81>
+<H3><FONT face="Yu Gothic UI">デスクトップの表示</FONT></H3><FONT 
+face="Yu Gothic UI">Win+Dと同じです。 </FONT><A name=89>
+<H3><FONT face="Yu Gothic UI">デスクトップのスナップショット</FONT></H3><FONT 
+face="Yu Gothic UI">PrintScreenと似ていますが、キャプチャした画像はBMPファイルに保存されます。 </FONT><A 
+name=23><A name=68><A name=69><A name=82>
+<H3><FONT face="Yu Gothic UI">ランダム壁紙、次の壁紙、前の壁紙</FONT></H3><FONT 
+face="Yu Gothic UI">パラメータはフォルダー、または BMP、JPG、または GIF ファイルです。 
+フォルダーの場合は、すべてのサブフォルダーが検索され、デスクトップの壁紙として設定される画像が 1 つ選択されます。 JPG または GIF 
+の壁紙がある場合は、アクティブ デスクトップを有効にする必要があります。 (デスクトップを右クリックし、「Web 
+コンテンツを表示」にチェックを入れます)。<BR>「ランダム壁紙」コマンドはファイルをランダムに選択します。 
+コマンド「次の壁紙」または「前の壁紙」は、ファイルがハードディスクにどのように保存されているかに応じて、フォルダ内の次/前のファイルを選択します。 
+</FONT><A name=106>
+<H3><FONT face="Yu Gothic UI">デスクトップアイコンの保存</FONT></H3><FONT 
+face="Yu Gothic UI">デスクトップ上のすべてのアイコンの位置を記憶します。 (それらはレジストリに保存されます)。<BR>この機能は 64 
+ビット Windows では動作しません。 </FONT><A name=107>
+<H3><FONT face="Yu Gothic UI">デスクトップアイコンを復元</FONT></H3><FONT 
+face="Yu Gothic UI">デスクトップ アイコンの位置を、最後にコマンド「デスクトップ 
+アイコンを保存」を実行したときの状態に戻します。<BR>この機能は 64 ビット Windows では動作しません。</FONT></A><FONT 
+face="Yu Gothic UI"> </FONT><A name=103>
+<H3><FONT face="Yu Gothic UI">拡大鏡</FONT></H3><FONT face="Yu Gothic UI">この機能には 3 
+つのパラメータがありますが、すべてオプションです。 最初の整数パラメータはズームです。 2 番目のパラメータはウィンドウの幅、3 
+番目のパラメータはウィンドウの高さです。 マウス ポインタの代わりに拡大鏡ウィンドウが表示されます。 このホットキーをもう一度押すか、マウス 
+ボタンを押すと、このホットキーが消えます。<BR>警告: 拡大鏡ウィンドウは、マウスの移動中にのみ更新されます。 マウスを動かさないと静止画が表示されます。 
+</FONT><A name=85>
+<H3><FONT face="Yu Gothic UI">テキストの表示</FONT></H3><FONT face="Yu Gothic UI">2 
+番目のパラメータは、ポップアップ ウィンドウに表示されるテキストです。 最初のオプションのパラメータは、ウィンドウが表示される時間をミリ秒単位で意味します。 
+ホットキーをもう一度押すと、ウィンドウも消えます。 ウィンドウはマウスで移動できます。 テキストには特殊な % 
+シーケンスを含めることができます。詳細については、「テキストの貼り付け」コマンドを参照してください。</FONT></A><FONT 
+face="Yu Gothic UI"> </FONT><A name=8><A name=7><A name=9><A name=10>
+<H3><FONT 
+face="Yu Gothic UI">ウィンドウを最小化、ウィンドウを最大化、ウィンドウを閉じる、常に手前に表示</FONT></H3><FONT 
+face="Yu Gothic UI">ウィンドウを最小化、最大化、閉じるか、常に最前面のプロパティを変更します。 パラメータはウィンドウ名です。 
+これは、ウィンドウ タイトル、ウィンドウ タイトルの部分文字列、ウィンドウ クラス、またはパスのない実行可能ファイル名を意味します。 
+パラメータを省略した場合、これらの関数は現在アクティブなウィンドウで動作します。 </FONT><A name=112>
+<H3><FONT face="Yu Gothic UI">すべて最大化</FONT></H3><FONT 
+face="Yu Gothic UI">すべてのウィンドウを最大化します。 </FONT><A name=65>
+<H3><FONT face="Yu Gothic UI">その他を最小化</FONT></H3><FONT 
+face="Yu Gothic UI">現在最前面にあるウィンドウを除くすべてのウィンドウを最小化します。 </FONT><A name=102>
+<H3><FONT face="Yu Gothic UI">トレイに最小化</FONT></H3><FONT 
+face="Yu Gothic UI">アクティブなアプリケーションのすべてのウィンドウを非表示にし、システム トレイの通知領域に小さなアイコンを作成します。 
+トレイアイコンをクリックするとアプリケーションが復元され、アイコンが消えます。 </FONT><A name=115>
+<H3><FONT face="Yu Gothic UI">ウィンドウをシステムトレイに最小化</FONT></H3><FONT 
+face="Yu Gothic UI">アクティブなウィンドウを非表示にし、システム トレイの通知領域に小さなアイコンを作成します。 
+トレイアイコンをクリックするとウィンドウが元に戻り、アイコンが消えます。 </FONT><A name=25>
+<H3><FONT face="Yu Gothic UI">ウィンドウを隠す</FONT></H3><FONT 
+face="Yu Gothic UI">ウィンドウを非表示または再表示します。 パラメータはウィンドウ名です。 
+パラメータが空の場合、この関数は現在アクティブなウィンドウで動作します。<BR>パラメータを Shell_TrayWnd に設定すると、システム 
+トレイを非表示にすることができます。 デスクトップ アイコンを非表示にしたい場合は、パラメータをプログラム マネージャーに設定します。 </FONT><A 
+name=101>
+<H3><FONT face="Yu Gothic UI">アプリを非表示にする</FONT></H3><FONT 
+face="Yu Gothic UI">この機能はウィンドウの非表示に似ていますが、アクティブなアプリケーションのすべてのウィンドウを非表示にします。 
+ホットキーをもう一度押すと、以前に非表示にしたすべてのウィンドウが復元されます。</FONT></A><FONT face="Yu Gothic UI"> 
+</FONT><A name=72><A name=71>
+<H3><FONT face="Yu Gothic UI">ウィンドウのサイズ変更、ウィンドウの移動</FONT></H3><FONT 
+face="Yu Gothic UI">カーソルキーでウィンドウのサイズ変更や移動を行うときに使用します。 サイズ変更または移動が終了したら、Enter 
+キーを押す必要があります。 </FONT><A name=90>
+<H3><FONT face="Yu Gothic UI">ウィンドウのスナップショット</FONT></H3><FONT 
+face="Yu Gothic UI">Alt+PrintScreen と似ていますが、キャプチャした画像は BMP ファイルに保存されます。 
+</FONT><A name=77>
+<H3><FONT face="Yu Gothic UI">不透明度</FONT></H3><FONT 
+face="Yu Gothic UI">最初のパラメータは 0 ～ 255 の整数で、透明から不透明までを意味します。 2 
+番目のオプションのパラメータはウィンドウです。 </FONT><A name=110><A name=111>
+<H3><FONT face="Yu Gothic UI">不透明度 -, 不透明度 +</FONT></H3><FONT 
+face="Yu Gothic UI">ウィンドウの不透明度を増減します。 最初のオプションのパラメータは、不透明度がどの程度変更されるかを意味する整数です 
+(デフォルト値は 10)。 2 番目のオプションのパラメーターはウィンドウを指定します。<BR>この機能には Windows XP 以降が必要です。 
+</FONT><A name=66>
+<H3><FONT face="Yu Gothic UI">情報</FONT></H3><FONT 
+face="Yu Gothic UI">前景ウィンドウのタイトル、クラス、プロセス、優先度を表示します。 Win2000/XP 
+では、そのプロセスに割り当てられたメモリも表示されます。 </FONT><A name=11>
+<H3><FONT face="Yu Gothic UI">プロセスの終了</FONT></H3><FONT 
+face="Yu Gothic UI">このコマンドは、アプリケーションが応答しない場合にのみフォアグラウンド 
+アプリケーションを強制終了するために使用します。<BR>オプションのパラメータは、終了するアプリケーションの名前です。 </FONT><A name=20><A 
+name=46><A name=47><A name=48><A name=49><A name=59><A name=60>
+<H3><FONT face="Yu Gothic UI">プロセスの優先度</FONT></H3><FONT 
+face="Yu Gothic UI">アクティブなウィンドウのプロセス優先度を設定します。 リアルタイム優先度は、HotkeyP 
+が管理者として実行されている場合にのみ使用できます。</FONT></A><FONT face="Yu Gothic UI"> </FONT><A 
+name=83><A name=84>
+<H3><FONT face="Yu Gothic UI">次のタスク、前のタスク</FONT></H3><FONT 
+face="Yu Gothic UI">これは、Alt+Tab または Alt+Shift+Tab と同じです。 Windows NT/2000/XP 
+上でのみ動作し、マウス ショートカットでのみ動作します。 マウスの 4 番目のボタン + ホイール。 </FONT><A name=13><A 
+name=14><A name=15><A name=16><A name=78>
+<H3><FONT face="Yu Gothic UI">音量, 音量 +, 音量 -</FONT></H3><FONT 
+face="Yu Gothic UI">このコマンドは、オーディオの音量を設定または増減します。 最初のパラメータはパーセント (0 ～ 100 の整数) 
+です。 2 番目のパラメータはオーディオ ライン名 (ミキサー、ウェーブ、MIDI、CD オーディオ、ライン入力、マイク、ベース、トレブルなど) です。 
+実際の名前はサウンド カードによって異なり、Windows アクセサリのボリューム コントロール アプリケーションで確認できます。 
+ミキサーはデフォルトの出力ボリュームと同義です。 録音音量を変更する場合は、オーディオ ライン名に接頭辞 R: を追加します (例: 
+R:Microphone)。 </FONT>
+<P><FONT face="Yu Gothic UI">複数のサウンド カードがある場合は、Windows 2000/XP ではオーディオ 
+ライン名の前に数字とコロンを書きます (例: 2:Mixer)。Windows Vista/7/8/10 ではスペースを 1 つ追加し、かっこ内にサウンド 
+カード名を追加します ( 例: スピーカー (Creative SB X-Fi))。 </FONT>
+<P><FONT face="Yu Gothic UI">オプション ダイアログ ボックスの [これらのオーディオ ラインを表示:] 
+編集ボックスには、このホットキーを押すたびに表示されるカンマ区切りのオーディオ ライン名が含まれています。 オーディオ ライン名の前に表示名と等号を指定できます 
+(たとえば、 Volume=Mixer,Record=R:Microphone )。<BR></FONT><A name=17><A name=58>
+<H3><FONT face="Yu Gothic UI">ミュート</FONT></H3><FONT 
+face="Yu Gothic UI">音声回線を無効または有効にします。 パラメータはオーディオ ライン名 (ミキサー、ウェーブ、MIDI、CD 
+オーディオ、ライン入力、マイクなど) です。<BR></FONT><A name=0><A name=1><A name=62>
+<H3><FONT face="Yu Gothic UI">CD の取り出し/閉じる</FONT></H3><FONT 
+face="Yu Gothic UI">CD または DVD ドライブのイジェクトまたはドアを閉じます。 オプションのパラメータはドライブ文字です。<BR>注: 
+このコマンドが CD を取り出すだけで閉じることができない場合は、「CD の取り出し」コマンドと「CD を閉じる」コマンド用に 2 
+つの異なるホットキーを作成する必要があります。 これらのコマンドはドロップダウン メニューにないため、コマンド編集ボックスに手動で書き込む必要があります。 
+</FONT><A name=39><A name=40><A name=41><A name=42>
+<H3><FONT face="Yu Gothic UI">CD 再生、停止、次のトラック、前のトラック</FONT></H3><FONT 
+face="Yu Gothic UI">オーディオ CD を再生します。 CD を再生するための他のプログラムが実行されていない必要があります。 
+オプションのパラメータはドライブ文字です。 </FONT><A name=100>
+<H3><FONT face="Yu Gothic UI">CD 速度</FONT></H3><FONT 
+face="Yu Gothic UI">最初のパラメータは速度 (10、16、24、32、40 など) です。 2 番目のパラメータはドライブ文字です。 
+</FONT><A name=67>
+<H3><FONT face="Yu Gothic UI">テキストの貼り付け</FONT></H3><FONT 
+face="Yu Gothic UI">パラメータは、Ctrl+V によってクリップボードを介してアクティブなウィンドウに貼り付けられるテキストです。 %| 
+で区切って複数のテキストを指定できます。 その場合、ホットキーを押すとリストボックスが表示され、ダブルクリックするか、キーを押して Enter 
+を押して項目を選択します。 たとえば、パラメータ ab%|cdef%|ghi を指定すると、ab、cdef、ghi の 3 行を含むポップアップ 
+ウィンドウが表示されます。 ポップアップウィンドウはEscキーでキャンセルできます。<BR>テキストには、いくつかの特別なシーケンスを含めることができます: 
+%r - 行末、%u - ユーザー名、%o - コンピュータ名、%l - クリップボードからのプレーンテキスト、%% - パーセント記号、%x - 日付、%X 
+- 時刻、%c - 日付と時刻、%d - 日、%m - 月、%Y - 年、%y - 世紀なしの年、%H - 時 [0-23]、%I - 時 [1-12] 、%p 
+- AM/PM、%M - 分、%S - 秒、%A - 曜日名、%a - 曜日の短縮名、%B - 月名、%b - 月の短縮名、%#d - 日付のない日 
+先行ゼロも同様に %#m、%#H、%#I、%#M、%#S </FONT><A name=27>
+<H3><FONT face="Yu Gothic UI">マクロ</FONT></H3><FONT 
+face="Yu Gothic UI">パラメータは、これらのシーケンスを含むテキスト文字列です。 \esc, \tab, \backspace, 
+\enter, \space, \left, \right, \up, \down, \ins, \del, \home, \end, \pageup, 
+\pagedown, \f1, \f2, ..., \shift, \rshift, \ctrl, \rctrl, \alt, \ralt, \win, 
+\rwin, \apps, \capslock, \scrolllock, \numlock, \pause, \printscreen, \divide, 
+\multiply, \add, \subtract, \decimal, \0, \1, ..., \num0, \num1, ..., \A, \B, 
+..., \back, \forward, \refresh, \search, \favorites, \browser, \mail, \power, 
+\volume_down, \volume_up, \mute, \play_pause, \stop, \prev_track, \next_track, 
+\media_select, \launch_app1, \launch_app2, \lbutton, \rbutton, \mbutton, 
+\xbutton1, \xbutton2, \wheelup, \wheeldown, \wheelleft, \wheelright, 
+\doubleclick, \sleep, \rep, \xAB.<BR>特別なシーケンスごとにドットが存在する場合があります。 
+キーを押すか放すだけの場合は、サフィックス down または up を使用します。 2 つ以上のキーまたはボタンを組み合わせる場合に便利です。 
+たとえば、\lbuttondown\rbutton\lbuttonup はマウス ボタン L+R を意味します。 Shift、Ctrl、Alt、Win 
+キーは、次の文字と同時に押したままになります。 たとえば、\shift.a\shift.b は 
+\shiftdown.a\shiftup\shiftdown.b\shiftup と同じであり、これは AB と同じです。 Ctrl キーは \^ 
+と書くことができます。<BR>マクロ \A \B \C などは、任意のキーボード レイアウト (ロシア語やギリシャ語など) で動作し、\ctrl\C や 
+\ctrl\V などのショートカットに使用できます。 a b c または A B C の文字を使用する場合、現在の言語にローマ字 (ラテン語) 
+が含まれている場合にのみ機能します。 また、大文字の場合は Shift キーを押したままにします (Caps Lock がアクティブな場合は小文字も押します)。 
+同様に、マクロ \1 \2 \3 などはキーボード レイアウトに依存しません。<BR>\sleep コマンドの後にある数字は、10 分の 1 
+秒の遅延を意味します。<BR>\x シーケンスの後に 2 つの 16 進数があり、これは仮想キー コードを意味します。<BR>キーボード 
+フックを使用しないオプションを設定した場合、ホットキーをしばらく押している間、マクロは繰り返されません。 それでもマクロを繰り返したい場合は、マクロ 
+パラメータの先頭にシーケンス \rep を追加します。 これには欠点があります。シフトをあまりにも早く放すと、シフトが押されたままになります。 
+</FONT><A name=94>
+<H3><FONT face="Yu Gothic UI">アクティブウィンドウへのマクロ</FONT></H3><FONT 
+face="Yu Gothic UI">最初のパラメータはマクロパラメータのようなものです。 2 番目のパラメータはウィンドウを示します。 
+このウィンドウがフォアグラウンドにない場合、このコマンドは実行されません。 2 番目のパラメータには、文字 &amp;、|、! を含めることができます。 
+これは、論理演算子、または、そうでないことを意味します。 これらの演算子の前後にスペースを入れてはなりません。 演算子 &amp; は | よりも優先されます。 
+括弧を使用すると、より複雑な式を作成できます。 ウィンドウ名に特殊文字 &amp; | が含まれる場合は、ウィンドウ名をアポストロフィで記述する必要があります。 
+！ ()。 ウィンドウ名にスペース文字が含まれている場合は、2 番目のパラメータ全体を引用符で囲む必要があります。 たとえば、「ウィンドウ 1」|「ウィンドウ 
+2」はエラーです。「ウィンドウ 1|ウィンドウ 2」である必要があります。<BR>「すべてのホットキーにフックを使用する」オプションを選択した場合、「アクティブ 
+ウィンドウへのマクロ」ホットキーを押すとキーダウン イベントがシミュレートされ、このホットキーを放すとキーアップ イベントがシミュレートされます。 キーボード 
+フックを無効にすると、このホットキーを押したときにキーダウン イベントとキーアップ イベントの両方がシミュレートされ、このホットキーを放しても何も起こりません。 
+</FONT><A name=26>
+<H3><FONT face="Yu Gothic UI">キーをウィンドウに送信する</FONT></H3><FONT 
+face="Yu Gothic UI">メッセージ WM_KEYDOWN を送信し、次に WM_KEYUP を送信します。 最初のパラメータはマクロです。 2 
+番目のパラメータはウィンドウを決定します。 このウィンドウは、最初のパラメータが \show で始まる場合にアクティブになります。 
+このコマンドは、最小化されたウィンドウでは機能しません。 一部のアプリケーションでは、キー、EXE 名、ウィンドウ クラスまたはタイトルの 3 
+つのパラメータが必要です。 EXE 名のみを指定した場合、複数のウィンドウを持つアプリケーションでは機能しない可能性があります。 ウィンドウ 
+クラスまたはウィンドウ タイトルのみを指定し、そのウィンドウを持つアプリケーションがさらにある場合、キーは 1 つのアプリケーションにランダムに送信されます。 
+</FONT><A name=74>
+<H3><FONT face="Yu Gothic UI">アクティブ ウィンドウへのキー</FONT></H3><FONT 
+face="Yu Gothic UI">このコマンドは「キーをウィンドウに送信」に似ていますが、2 
+番目のパラメーターで決定されたウィンドウがフォアグラウンドにない場合は無視されます。 
+ほぼすべてのアプリケーションのキーボードまたはマウスのアクセラレータを変更するために使用できます。 3 
+番目のオプションのパラメータは、キーの送信先のウィンドウを決定します。 このウィンドウにはキーボード フォーカスがある必要はありませんが、フォアグラウンド 
+アプリケーションに属している必要があります。 </FONT><A name=21>
+<H3><FONT face="Yu Gothic UI">ウィンドウ コマンドの送信</FONT></H3><FONT 
+face="Yu Gothic UI">メッセージ WM_COMMAND を別のウィンドウに送信します。 最初のパラメータはコマンド番号です。 数値は 
+spy.exe で確認できます。 残念ながら、すべてのアプリケーション (Java や .Net Framework で書かれたプログラム、Unix ユーザー 
+インターフェイスを持つプログラムなど) では機能しません。 2 番目と 3 
+番目のパラメータは、「キーをウィンドウに送信」コマンドと同様にウィンドウを決定します。 </FONT>
+<P><FONT face="Yu Gothic UI">Windows Media Player 9<BR>18808 - play/pause, 18809 
+- stop, 18810 - previous, 18811 - next </FONT>
+<P><FONT face="Yu Gothic UI">Tiny Player<BR>264 - play/pause, 204 - stop, 227 - 
+previous, 228 - next, 255 - stop after current </FONT>
+<P><FONT face="Yu Gothic UI">Winamp<BR>40044 - previous, 40045 - play, 40046 - 
+pause, 40047 - stop, 40157 - stop after current, 40048 - next, 40022 - repeat, 
+40023 - shuffle, 40029 open, 40040 playlist, 40061 - back, 40060 - forward 
+</FONT>
+<P><FONT face="Yu Gothic UI"></FONT><A name=73>
+<H3><FONT face="Yu Gothic UI">アクティブ ウィンドウへのコマンド</FONT></H3><FONT 
+face="Yu Gothic UI">このコマンドは「ウィンドウ コマンドの送信」に似ていますが、2 
+番目のパラメータで決定されたウィンドウが前景にない場合は無視されます。 コマンドは、3 番目のオプションのパラメータによって決定されるウィンドウに送信されます。 
+プレーヤー Winamp の例: 2 番目のパラメータは winamp.exe、3 番目のパラメータは「Winamp v1.x」である必要があります。 
+</FONT><A name=61>
+<H3><FONT face="Yu Gothic UI">マルチコマンド</FONT></H3><FONT 
+face="Yu Gothic UI">複数のプログラムまたは内部コマンドを実行するホットキーを割り当てるために使用されます。 
+パラメータは、以前に作成されたホットキーの番号です。 </FONT><A name=70>
+<H3><FONT face="Yu Gothic UI">コマンド リスト</FONT></H3><FONT 
+face="Yu Gothic UI">パラメータはマルチ コマンドに似ていますが、このホットキーを押すと最初のパラメータのみが実行されます。 
+その後、最初の番号がパラメータ リストの最後に移動されます。 したがって、リスト内のすべての項目を実行するには、ホットキーを繰り返し押す必要があります。 
+</FONT><A name=37>
+<H3><FONT face="Yu Gothic UI">マウスカーソルの移動</FONT></H3><FONT face="Yu Gothic UI">2 
+つのパラメータはマウスの動きの相対座標です。 それらはスペースで区切る必要があります。 パラメータが空の場合、マウス カーソルは画面の中央に移動します。 
+</FONT><A name=75>
+<H3><FONT face="Yu Gothic UI">ホイール</FONT></H3><FONT 
+face="Yu Gothic UI">マウスホイールのシミュレーション。 パラメータはホイールの移動量です。 値 120 は基本的な上回転を意味し、値 
+-120 は下回転を意味します。 </FONT><A name=108>
+<H3><FONT face="Yu Gothic UI">水平ホイール</FONT></H3><FONT 
+face="Yu Gothic UI">水平マウスホイールのシミュレーション。 パラメータはホイールの移動量です。 値 120 は基本的な右回転を意味し、値 
+-120 は左回転を意味します。<BR>この機能はWindows XP以前では動作しません。 </FONT><A name=79><A name=80><A 
+name=43><A name=44><A name=45>
+<H3><FONT 
+face="Yu Gothic UI">左クリック、中クリック、右クリック、第4ボタンのクリック、第5ボタンのクリック</FONT></H3><FONT 
+face="Yu Gothic UI">マウスボタンを押すシミュレーション。 </FONT><A name=76>
+<H3><FONT face="Yu Gothic UI">ダブル クリック</FONT></H3><FONT face="Yu Gothic UI">左ボタン 
+ダブルクリックのシミュレーション。 注: このコマンドは Shift キーを解放しません。 </FONT><A name=113>
+<H3><FONT face="Yu Gothic UI">HotkeyPウィンドウを表示</FONT></H3><FONT 
+face="Yu Gothic UI">HotkeyP メイン ウィンドウをアクティブにします。 このコマンドは、システム通知領域の HotkeyP 
+アイコンをクリックするのと同じです。 </FONT><A name=87>
+<H3><FONT face="Yu Gothic UI">すべてのホットキーを無効にする</FONT></H3><FONT 
+face="Yu Gothic UI">パラメータ 1 は無効を意味し、0 は有効を意味し、空のパラメータはトグルを意味します。 
+すべてのキーボードとマウスのショートカットを無効にします (「すべてのホットキーを無効にする」コマンドを除く)。 特にゲームに役立ちます。 </FONT><A 
+name=97>
+<H3><FONT face="Yu Gothic UI">キーボードショートカットを無効にする</FONT></H3><FONT 
+face="Yu Gothic UI">すべてのキーボード ショートカット (HotkeyP アプリケーション内) が無効になりますが、キーボード 
+フックは引き続きアクティブになります。 パラメータ 1 は無効を意味し、0 は有効を意味し、空のパラメータはトグルを意味します。 </FONT><A 
+name=88>
+<H3><FONT face="Yu Gothic UI">マウスのショートカットを無効にする</FONT></H3><FONT 
+face="Yu Gothic UI">マウスのショートカットを無効にし、マウス フックをアンインストールします。 パラメータ 1 は無効を意味し、0 
+は有効を意味し、空のパラメータはトグルを意味します。 </FONT><A name=95>
+<H3><FONT face="Yu Gothic UI">ジョイスティックのショートカットを無効にする</FONT></H3><FONT 
+face="Yu Gothic UI">ジョイスティックのショートカットを無効にし、10 
+ミリ秒ごとにジョイスティックからデータを読み取るスレッドを一時停止します。 パラメータ 1 は無効を意味し、0 
+は有効を意味し、空のパラメータはトグルを意味します。 </FONT><A name=96>
+<H3><FONT face="Yu Gothic UI">リモートコントロールを無効にする</FONT></H3><FONT 
+face="Yu Gothic UI">リモート コントロールのショートカットは無効になりますが、WinLIRC からは切断されません。 WinLIRC 
+への接続も閉じたい場合は、[マウス/リモート] オプション タブにある [有効] オプションのチェックを外す必要があります。 パラメータ 1 は無効を意味し、0 
+は有効を意味し、空のパラメータはトグルを意味します。 </FONT><A name=114>
+<H3><FONT face="Yu Gothic UI">フックを再読み込み</FONT></H3><FONT 
+face="Yu Gothic UI">このコマンドは、複数のキーボード 
+アプリケーションがインストールされており、他のアプリケーションがキーボード入力をキャプチャし、キーストロークを HotkeyP に転送しない場合に便利です。 
+HotkeyP で一部のキーボード ショートカットが機能しなくなった場合は、このコマンドを使用して修復できます。 </FONT><A name=admin>
+<H2><FONT face="Yu Gothic UI">HotkeyP を管理者として実行する</FONT></H2><FONT 
+face="Yu Gothic UI">Windows XP 以前を使用している場合、またはユーザー 
+アカウント制御を無効にしている場合は、この章をスキップできます。<BR>管理者権限が必要なアプリケーションを使用する場合は、HotkeyP 
+も管理者として実行する必要があります。 そうしないと、一部のキーボード ショートカットと HotkeyP コマンドが機能しません 
+(特にマクロとテキストの貼り付け)。 Windows 起動時に HotkeyP を自動的に起動したい場合は、タスクを作成する必要があります。 </FONT>
+<UL>
+  <LI><FONT face="Yu Gothic UI">[スタート] メニューでコマンド 
+  プロンプトを見つけ、マウスの右ボタンをクリックして、[管理者として実行] を選択します。 </FONT>
+  <LI><FONT face="Yu Gothic UI">このコマンドをコピーしてコマンド プロンプトに貼り付けます (Program Files を 
+  HotkeyP がインストールされているパスに置き換えます)<BR><CODE>schtasks.exe /create /sc onlogon /tn 
+  HotkeyP /rl highest /tr "'C:\Program Files (x86)\HotkeyP\HotkeyP.exe' 0" 
+  /f</CODE> </FONT>
+  <LI><FONT face="Yu Gothic UI">タスクスケジューラを起動します。 </FONT>
+  <LI><FONT face="Yu Gothic UI">左側のパネルで「タスク スケジューラ ライブラリ」を選択します。 次に、HotkeyP 
+  タスクをダブルクリックしてそのプロパティを表示します。 </FONT>
+  <LI><FONT face="Yu Gothic UI">[設定] タブをクリックし、[3 日以上実行される場合はタスクを停止する] 
+  オプションを無効にします。 次に、「OK」をクリックしてタスクスケジューラウィンドウを閉じます。 </FONT>
+  <LI><FONT face="Yu Gothic UI">HotkeyP を起動し、「Windows 起動時に自動的に起動する」オプションを無効にします。 
+  </FONT></LI></UL><A name=license>
+<H2><FONT face="Yu Gothic UI">ライセンス</FONT></H2><FONT 
+face="Yu Gothic UI">このプログラムは、「GNU General Public License」の条件に基づいて配布されています。 
+これは、作成者の Web ページまたは </FONT><A href="http://opensource.org/licenses" 
+target=_blank><FONT 
+face="Yu Gothic UI">http://opensource.org/licenses</FONT></A><FONT 
+face="Yu Gothic UI">&nbsp;から入手できます。 以下はこのライセンスの短い要約です: </FONT>
+<OL>
+  <LI><FONT face="Yu Gothic UI">プログラムは無料です。 どのような媒体で配布しても構いません。 同じメディア上に他のプログラム 
+  (無料または商用) が存在する可能性があります。 </FONT>
+  <LI><FONT 
+  face="Yu Gothic UI">お客様はプログラムを変更したり、プログラムの一部をお客様のプログラムに組み込んだりすることができます。 
+  どちらの場合も、次の条件をすべて満たす場合にのみ、修正バージョンまたは派生バージョンを配布できます: </FONT>
+  <OL type=a>
+    <LI><FONT face="Yu Gothic UI">このライセンスを削除または変更してはなりません。 </FONT>
+    <LI><FONT face="Yu Gothic UI">元の作成者の名前を削除してはなりません。 </FONT>
+    <LI><FONT face="Yu Gothic UI">すべての変更と変更の日付を文書化します。 </FONT>
+    <LI><FONT face="Yu Gothic UI">派生ソース コードを FTP または HTTP 経由で利用できるようにします。 
+    </FONT></LI></OL>
+  <LI><FONT face="Yu Gothic UI">プログラムは無保証で提供されます。 </FONT></LI></OL>
+<P><FONT face="Yu Gothic UI"></FONT><PRE><A href="https://plastovicka.github.io" target=_blank><FONT face="Yu Gothic UI">https://plastovicka.github.io</FONT></A><BR>
+<A href="http://sourceforge.net/projects/hotkeyp/" target=_blank><FONT face="Yu Gothic UI">http://sourceforge.net/projects/hotkeyp/</FONT></A>
+</PRE></BODY></HTML>
