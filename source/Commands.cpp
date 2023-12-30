@@ -2437,7 +2437,7 @@ bool noCmdLine(TCHAR *param)
 	if(w){
 		COPYDATASTRUCT d;
 		d.lpData= param;
-		d.cbData= (DWORD)_tcslen(param)+1;
+		d.cbData= (DWORD)(_tcslen(param)+1)*sizeof(TCHAR);
 		d.dwData= cmdLineCmd+13000;
 		SendMessage(w, WM_COPYDATA, (WPARAM)w, (LPARAM)&d);
 	}
@@ -2670,6 +2670,7 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 			break;
 		case 61: //multi command
 		case 70: //commands list
+			if(noCmdLine(param)) break;
 			if(hk){
 				if(hk->lock) return;
 				hk->lock++;

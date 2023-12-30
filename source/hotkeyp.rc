@@ -133,7 +133,7 @@ BEGIN
     ICON            1,-1,83,20,20,20
     CTEXT           "Version",301,31,24,28,9
     LTEXT           "",101,61,24,15,8
-    CTEXT           "(C) 2003-2023  Petr Lastovicka",300,4,48,104,10
+    CTEXT           "(C) 2003-2024  Petr Lastovicka",300,4,48,104,10
     PUSHBUTTON      "https://plastovicka.github.io",123,7,64,99,11
 END
 
@@ -640,7 +640,6 @@ BEGIN
     "M",            212,                    VIRTKEY, CONTROL
     "I",            213,                    VIRTKEY, CONTROL
     "E",            214,                    VIRTKEY, CONTROL
-    "Y",            215,                    VIRTKEY, CONTROL
     "D",            216,                    VIRTKEY, CONTROL
     "P",            216,                    VIRTKEY, CONTROL
     "A",            222,                    VIRTKEY, CONTROL
@@ -786,7 +785,7 @@ BEGIN
             VALUE "FileDescription", "HotkeyP\0"
             VALUE "FileVersion", "4.10.0.2\0"
             VALUE "InternalName", "\0"
-            VALUE "LegalCopyright", "© 2004-2023  Petr Laštovièka\0"
+            VALUE "LegalCopyright", "© 2004-2024  Petr Laštovièka\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "hotkeyp.exe\0"
             VALUE "PrivateBuild", "\0"
