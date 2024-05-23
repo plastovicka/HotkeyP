@@ -2332,6 +2332,11 @@ void pasteText(TCHAR *param)
 				pasteTextData.busy=true;
 				//WM_RENDERFORMAT will set clipboard data
 				SetClipboardData(CF_UNICODETEXT, NULL);
+				//activation is needed for Notepad++
+				HWND w=GetForegroundWindow();
+				TCHAR c[12];
+				if(GetClassName(w, c, sizeA(c))==9 && !_tcscmp(c, _T("Notepad++")))
+					PostMessage(w, WM_ACTIVATE, WA_ACTIVE, 0);
 				//Ctrl+V
 				lockPaste++;
 				SetTimer(hWin, 14, checkShifts(MOD_ALT) ? 150 : 10, 0);
