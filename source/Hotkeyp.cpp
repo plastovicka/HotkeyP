@@ -4041,7 +4041,9 @@ int PASCAL wWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR cmdLine, int cmdShow)
 	if(cmdLine[l-1]=='1') show=1;
 
 	//only activate window if this program is already running
-	HWND w=FindWindowA("PlasHotKey", 0);
+	HANDLE mutex = CreateMutex(0, FALSE, _T("PlasHotKey"));
+	WaitForSingleObject(mutex, 30000);
+	HWND w=FindWindow(_T("PlasHotKey"), 0);
 	if(w){
 		if(show!=0){
 			ShowWindow(w, cmdShow);
@@ -4058,6 +4060,8 @@ int PASCAL wWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR cmdLine, int cmdShow)
 	getExeDir(exeBuf, _T("hotkeyp_CZ.txt"));
 	DeleteFile(exeBuf);
 	getExeDir(exeBuf, _T("hotkeyp_EN.txt"));
+	DeleteFile(exeBuf);
+	getExeDir(exeBuf, _T("WhatsNew_CZ.txt"));
 	DeleteFile(exeBuf);
 	//register classes
 	wc.style=0;
@@ -4084,6 +4088,8 @@ int PASCAL wWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR cmdLine, int cmdShow)
 
 	//create main window
 	hWin = CreateDialog(hInstance, _T("WIN"), 0, (DLGPROC)MainWndProc);
+	ReleaseMutex(mutex);
+	CloseHandle(mutex);
 	if(!hWin){ msg(_T("CreateDialog error")); return 3; }
 	haccel=LoadAccelerators(hInstance, MAKEINTRESOURCE(3));
 	createPopups();
