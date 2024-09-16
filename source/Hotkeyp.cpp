@@ -34,7 +34,7 @@ char *cmdNames[]={
 	"Top", "Top right corner", "Move mouse cursor", "Show shutdown dialog", "Play CD",
 	/*40*/"CD next track", "CD stop", "CD previous track", "Left click", "Middle click",
 	"Right click", "Idle priority", "Normal priority", "High priority", "Realtime priority",
-	/*50*/"Add/Remove programs", "Display properties", "Internet options", "Mouse", "Multimedia",
+	/*50*/"Apps and Features", "Display properties", "Internet options", "Mouse", "Multimedia",
 	"Power options", "System", "Date and time", "Mute Wave", "Below normal priority",
 	/*60*/"Above normal priority", "Multi command", "Eject/Close CD", "Lock computer", "Hibernate",
 	"Minimize others", "Information", "Paste text", "Next wallpaper", "Previous wallpaper",

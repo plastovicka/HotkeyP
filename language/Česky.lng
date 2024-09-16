@@ -1,7 +1,7 @@
 #CP1250
 ;soubor s nápovìdou
 13=language\\cz.chm
-14=WhatsNew_CZ.txt
+14=language\\WhatsNew_CZ.txt
 
 ;okno about
 300=(C) 2003-2023  Petr Laštovièka
@@ -218,7 +218,7 @@
 1001=Zasunout CD
 1002=Vypnout poèítaè
 1003=Restartovat
-1004=Úsporný režim
+1004=Režim spánku
 1005=Odhlásit uživatele
 1006=Spoøiè obrazovky
 1007=Maximalizovat okno
@@ -264,7 +264,7 @@
 1047=Normální priorita
 1048=Vysoká priorita
 1049=Nejvyšší priorita
-1050=Pøidat nebo odebrat programy
+1050=Programy a funkce
 1051=Obrazovka
 1052=Možnosti internetu
 1053=Myš
@@ -278,7 +278,7 @@
 1061=Vícenásobný pøíkaz
 1062=Vysunout/Zasunout CD
 1063=Uzamknout poèítaè
-1064=Režim spánku
+1064=Režim hibernace
 1065=Minimalizovat ostatní
 1066=Informace
 1067=Vložit text

@@ -34,7 +34,7 @@
 		</OBJECT>
 	<UL>
 <LI> <OBJECT type="text/sitemap"><param name="Name" value="Vypnout poèítaè, Restartovat, Odhlásit uživatele"><param name="Local" value="main.htm#5"></OBJECT>
-<LI> <OBJECT type="text/sitemap"><param name="Name" value="Úsporný režim, Režim spánku"><param name="Local" value="main.htm#64"></OBJECT>
+<LI> <OBJECT type="text/sitemap"><param name="Name" value="Režim spánku, Režim hibernace"><param name="Local" value="main.htm#64"></OBJECT>
 <LI> <OBJECT type="text/sitemap"><param name="Name" value="Dialog vypnutí systému"><param name="Local" value="main.htm#38"></OBJECT>
 <LI> <OBJECT type="text/sitemap"><param name="Name" value="Uzamknout poèítaè"><param name="Local" value="main.htm#63"></OBJECT>
 <LI> <OBJECT type="text/sitemap"><param name="Name" value="Volné místo na disku"><param name="Local" value="main.htm#24"></OBJECT>

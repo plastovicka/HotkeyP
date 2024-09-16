@@ -415,8 +415,8 @@ BEGIN
         MENUITEM "&Save hotkeys...\tCtrl+S",    202
         MENUITEM "&Delete all hotkeys",         207
         MENUITEM SEPARATOR
-        MENUITEM "O&pen settings...\tCtrl+I",   213
-        MENUITEM "S&ave settings...\tCtrl+E",   214
+        MENUITEM "&Import settings...\tCtrl+I",   213
+        MENUITEM "&Export settings...\tCtrl+E",   214
         MENUITEM "&Clear settings",             205
     END
     POPUP "&Hotkey"
@@ -764,7 +764,7 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 4,10,0,2
+ FILEVERSION 4,10,0,3
  PRODUCTVERSION 0,0,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -783,7 +783,7 @@ BEGIN
             VALUE "Comments", "Shortcut key program launcher\0"
             VALUE "CompanyName", "Petr Laštovièka\0"
             VALUE "FileDescription", "HotkeyP\0"
-            VALUE "FileVersion", "4.10.0.2\0"
+            VALUE "FileVersion", "4.10.0.3\0"
             VALUE "InternalName", "\0"
             VALUE "LegalCopyright", "© 2004-2024  Petr Laštovièka\0"
             VALUE "LegalTrademarks", "\0"

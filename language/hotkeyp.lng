@@ -125,8 +125,8 @@
 201=&Open hotkeys...\tCtrl+O
 202=&Save hotkeys...\tCtrl+S
 207=&Delete hotkeys
-213=O&pen settings...\tCtrl+I
-214=S&ave settings...\tCtrl+E
+213=&Import settings...\tCtrl+I
+214=&Export settings...\tCtrl+E
 205=&Clear settings
 
 403=&Hotkey
@@ -304,7 +304,7 @@
 1047=Normal priority
 1048=High priority
 1049=Realtime priority
-1050=Add/Remove programs
+1050=Apps and Features
 1051=Display properties
 1052=Internet options
 1053=Mouse
