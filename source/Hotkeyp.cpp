@@ -3112,6 +3112,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 		case WM_COMMAND:
 			cmd=LOWORD(wP);
 			item= getItemFromIndex(index= ListView_GetNextItem(listBox, -1, LVNI_FOCUSED));
+			if(item>=numKeys) item = -1;
 			switch(cmd){
 				default:
 					if(cmd>=1000 && cmd<1000+numKeys){
@@ -3143,9 +3144,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					}
 					break;
 				case 102: //Edit
-					if(item>=0 && item<numKeys){
-						editKey(item);
-					}
+					if(item>=0) editKey(item);
 					break;
 				case 103: //Remove
 					EnterCriticalSection(&listCritSect);
@@ -3171,9 +3170,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					addKey(false, numKeys);
 					break;
 				case 216: //Copy
-					if(item>=0 && item<numKeys){
-						addKey(true, item+1);
-					}
+					if(item>=0) addKey(true, item+1);
 					break;
 				case 105: //Up
 					moveSelected(-1);
@@ -3184,10 +3181,10 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 					ListView_EnsureVisible(listBox, ListView_GetNextItem(listBox, ListView_GetItemCount(listBox)-1, LVNI_SELECTED|LVNI_ABOVE), FALSE);
 					break;
 				case 107: //Run
-					executeHotKey(item);
+					if(item>=0) executeHotKey(item);
 					break;
 				case 113: //Rename
-					if(item>=0 && item<numKeys){
+					if(item>=0){
 						renaming=true;
 						editKey(item);
 						renaming=false;
