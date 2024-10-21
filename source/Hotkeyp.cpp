@@ -4132,14 +4132,14 @@ int PASCAL wWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR cmdLine, int cmdShow)
 	lircEnd();
 	UnhookWindowsHookEx(hookM);
 	UnhookWindowsHookEx(hookK);
-	messageToHook(WM_QUIT, 0, false);
-	messageToHook(WM_QUIT, 0, true);
-	PostThreadMessage(idHookThreadM2, WM_QUIT, 0, 0);
-	WaitForSingleObject(hThreadK, 5000);
+	if(PostThreadMessage(idHookThreadK, WM_QUIT, 0, 0))
+		WaitForSingleObject(hThreadK, 1000);
 	CloseHandle(hThreadK);
-	WaitForSingleObject(hThreadM, 5000);
+	if(PostThreadMessage(idHookThreadM, WM_QUIT, 0, 0))
+		WaitForSingleObject(hThreadM, 1000);
 	CloseHandle(hThreadM);
-	WaitForSingleObject(hThreadM2, 5000);
+	if(PostThreadMessage(idHookThreadM2, WM_QUIT, 0, 0))
+		WaitForSingleObject(hThreadM2, 1000);
 	CloseHandle(hThreadM2);
 	DeleteCriticalSection(&cdCritSect);
 	DeleteCriticalSection(&listCritSect);
