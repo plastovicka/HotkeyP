@@ -379,10 +379,7 @@ void executeHotKey(int i)
 						setOpacity(w, hk->opacity);
 						InvalidateRect(w, 0, TRUE);
 					}
-					if(!SetForegroundWindow(w)){
-						PostMessage(w, WM_SYSCOMMAND, SC_MINIMIZE, 0);
-						PostMessage(w, WM_SYSCOMMAND, SC_RESTORE, 0);
-					}
+					SetForegroundWindow(w);
 				}
 			}
 			else{
