@@ -1148,7 +1148,7 @@ void cdCmd(TCHAR letter, int action, int param=0)
 	CloseHandle(hDevice);
 }
 
-DWORD WINAPI cdProc(LPVOID param)
+DWORD WINAPI cdProc(LPVOID param0)
 {
 	MCI_OPEN_PARMS m;
 	MCI_PLAY_PARMS pp;
@@ -1158,10 +1158,11 @@ DWORD WINAPI cdProc(LPVOID param)
 	static TmciSendCommand pmciSendCommand;
 	winmm((FARPROC&)pmciSendCommand, "mciSendCommandW");
 
-	int op=(((int)param)>>8)&255;
-	int speed=((int)param)>>16;
+	int param = (int)(INT_PTR)param0;
+	int op=(param>>8)&255;
+	int speed=param>>16;
 	TCHAR d[3];
-	d[0]=(TCHAR)(int)param;
+	d[0]=(TCHAR)(char)param;
 	d[1]=':';
 	d[2]=0;
 
@@ -1252,7 +1253,7 @@ void audioCD(TCHAR *drive, int op, int speed=0)
 		msglng(747, "%s is not a CD drive", d);
 		return;
 	}
-	LPVOID param = (LPVOID)((op<<8)|d[0]|(speed<<16));
+	LPVOID param = (LPVOID)(INT_PTR)((op<<8)|d[0]|(speed<<16));
 	if(cmdLineCmd>=0){
 		//do not create a thread if running from the command line,
 		// because it would be immediately terminated at the end of WinMain
