@@ -1,5 +1,21 @@
 HotkeyP
 -------
+4.11 (2024-10-29)
+- "Add/Remove programs" renamed to "Apps and Features"
+- Open/Save settings renamed to Import/Export settings
+- smaller font size
+- changed the small highlighted HotkeyP icon
+- removed Spy app, but if you need it, you can download it from https://github.com/plastovicka/HotkeyP/issues/2
+
+fixed bugs:
+- "Paste text" in Notepad++
+- start only one process of HotkeyP.exe
+- command line multi command with parameters
+- hook thread quit timeout changed from 5s to 1s
+- removed minimize/restore after SetForegroundWindow
+- "Run" button crashed if nothing was selected
+- "Maximize window" with the left mouse button
+
 4.10 (2023-05-28)
 - maximal length of hotkey parameters increased to 65535
 - command "Paste text" can paste a registry value

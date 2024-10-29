@@ -1,5 +1,23 @@
 HotkeyP
 -------
+4.11 (29.10.2024)
+- "Pøidat nebo odebrat programy" pøejmenováno na "Programy a funkce"
+- "Úsporný režim" pøejmenováno na "Režim spánku"
+- "Režim spánku" pøejmenováno na "Režim hibernace"
+- menší velikost písma
+- zmìnìna malá zvýraznìná ikona HotkeyP
+- odstranìna aplikace Spy
+- soubor WhatsNew_CZ.txt pøesunut do složky language
+
+opravené chyby:
+- "Vložit text" v programu Notepad++
+- spouští se pouze jeden proces HotkeyP.exe
+- vícenásobný pøíkaz s parametry na pøíkazovém øádku
+- timeout pøi ukonèení HotkeyP snížen z 5s na 1s
+- odstranìna obèasná minimalizace pøi aktivaci okna klávesovou zkratkou
+- tlaèítko "Spustit" selhalo, pokud nebylo nic vybráno
+- "Maximalizovat okno" nefungovalo s levým tlaèítkem myši
+
 4.10 (28.5.2023)
 - maximální délka parametrù zkratky zvìtšena na 65535
 - pøíkaz "Vložit text" umí vložit hodnotu z registru
