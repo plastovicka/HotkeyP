@@ -1,6 +1,6 @@
 #CP1250
 ; Translated by Tibor Kozma
-; Last update - 15.04.2016 for v4.8
+; Last update - 01.11.2024 for v4.11
 
 ;súbor s nápovedou
 13=language\\cz.chm
@@ -178,8 +178,8 @@
 209=&O programe...
 212=&Monosti...\tCtrl+M
 200=Èo &je nové
-213=O&tvori nastavenia...\tCtrl+I
-214=U&loi nastavenia...\tCtrl+E
+213=&Importova nastavenia...\tCtrl+I
+214=&Exportova nastavenia...\tCtrl+E
 216=&Kópia\tCtrl+P
 217=&Hore
 218=&Dole
@@ -221,7 +221,7 @@
 1001=Zasunú CD
 1002=Vypnú poèítaè
 1003=Reštartova
-1004=Úspornı reim
+1004=Reim spánku
 1005=Odhlási uivate¾a
 1006=Šetriè obrazovky
 1007=Maximalizova okno
@@ -267,7 +267,7 @@
 1047=Normálna priorita
 1048=Vysoká priorita
 1049=Najvyššia priorita
-1050=Prida alebo odobra programy
+1050=Programy a funkcie
 1051=Obrazovka
 1052=Monosti siete Internet
 1053=Myš

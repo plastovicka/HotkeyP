@@ -171,7 +171,7 @@ BEGIN
     EDITTEXT        145,131,179,29,12,ES_AUTOHSCROLL | ES_NUMBER
     LTEXT           "ms",IDC_STATIC,165,181,21,8
     LTEXT           "&Rename keys:",340,197,4,166,8
-    LTEXT           "(example:  Enter=Return; (183)=Calculator; [35]=Paste)",
+    LTEXT           "(Example:  Enter=Return; (183)=Calculator; [35]=Paste)",
                     341,197,16,178,16
     EDITTEXT        152,199,36,167,79,ES_MULTILINE | ES_AUTOVSCROLL
     GROUPBOX        "Buttons in the main window",346,193,129,174,59
