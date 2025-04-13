@@ -1,0 +1,409 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<Title>HotkeyP-hjælp</Title>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+</HEAD>
+<BODY>
+Knappen "Tilføj" opretter en ny genvejstast i slutningen af listen. Knappen "Indsæt" opretter en ny genvejstast før det aktuelle element. Genvejstaster kan også oprettes ved at trække og slippe ikoner fra skrivebordet eller filer fra stifinderen. Eksisterende genvejstast kan redigeres ved at dobbeltklikke på punktet i listeboksen. Du kan sortere listen ved at klikke på kolonneoverskriften. Hvis du sorterer efter den første kolonne, kan du bruge en mus til at ændre rækkefølgen af elementer.
+<p>
+Når du kører HotkeyP for første gang, skal du gemme dine genvejstaster i filen. Næste gang gemmes alle ændringer automatisk i det øjeblik, du lukker genvejstaster-vinduet. Hver bruger, der logger på Windows, kan oprette sin egen HTK-fil.
+<p>
+<A NAME=-1>
+Genvejstaster kan være enhver tast kombineret med Ctrl, Shift, Alt, Win. De fleste tastaturer har Win-tasten placeret mellem Ctrl og Alt. Det er muligt, men anbefales ikke at definere genvejstaster som CapsLock, F1, Shift+A, Ctrl+C, Alt+F4. Alle multimedienøgler kan bruges, men nogle andre programmer kan blokere dem, og disse programmer skal lukkes eller afinstalleres. Nogle ukendte taster vises som et tal i parentes, men du kan omdøbe dem i indstillingerne.
+<p>
+Hver genvejstast kan tildeles en eksekverbar fil, dokument, www-side eller til en intern kommando. Du kan skrive filnavnet direkte i "<u>Kommando:</u>" redigeringsfeltet, eller du kan bruge knappen "..." til at åbne fildialogen, eller du kan trække og slippe filer fra Stifinder. Du kan bruge miljøvariabler i filstien, for eksempel %SystemRoot%. Variabel %HotkeyP% erstattes af installationsmappen, hvor er HotkeyP.exe. Hvis du ikke angiver stien før filnavnet, søges der i mapper fra systemvariablen PATH.
+<p>
+Du kan også skrive en webside eller e-mailadresse direkte til kommandoredigeringsfeltet. Det skal begynde med www. eller http:// eller https:// eller mailto:.
+<p>
+Intern kommando kan nemt vælges fra popup-menuen efter museklik på "&lt;" knap.
+<p>
+Hvis du vil høre lyd, hver gang du trykker på en genvejstast, kan du indtaste WAV-fil i feltet "<u>Lyd</u>:".
+<p>
+Hvis du markerer "<u>Aktiver flere forekomster</u>", starter hver genvejstast et nyt program. Hvis du ikke markerer denne mulighed, og applikationen allerede kører, er applikationen aktiveret. Hvis den allerede er aktiv, er den minimeret. Indstillingen "Aktiver flere forekomster" virker kun for eksekverbare filer. Hvis du åbner et dokument, afhænger det af programmet, om det åbner dokumentet i et nyt vindue eller i et allerede eksisterende vindue.
+<p>
+Hvis du markerer "<u>Føj til meddelelsesikoneets menu</u>", tilføjes denne genvejstast pop op-menuen, som vises, når du højreklikker på systembakkeikonet. Skriv menupunktstreng til beskrivelsesfeltet. Hvis beskrivelsen indeholder to tegn <tt>-></tt>, oprettes en undermenu. Undermenuer kan indlejres (for eksempel undermenu1<tt>-></tt>undermenu2<tt>-></tt>emne).
+<p>
+Afkrydsningsfeltet "<u>Kør automatisk efter Windows start</u>" (i genvejstastdialogboksen) virker kun, hvis genvejstasten køres automatisk efter Windows starter, eller hvis du starter genvejstasten manuelt med parameter 0.
+<p>
+Du bør kun markere "<u>Kør som administrator</u>", hvis applikationen har brug for administratorrettigheder. Denne indstilling er nyttig, hvis brugerkontokontrol (UAC) er aktiveret i Windows kontrolpanel (det er aktiveret som standard). Hvis HotkeyP ikke kører som admin, vil den irriterende "Brugerkontokontrol"-dialog blive vist, når genvejstasten trykkes ned. Hvis genvejstasten <a href="#admin">kører som admin</a>, vil den så være i stand til at starte applikationer som administrator direkte uden samtykke.
+<p>
+Skriv en beskrivelse af kommandoen i feltet "<u>Beskrivelse:</u>". Hvis du lader denne note være tom, bruges filnavnet uden sti. Beskrivelsen er synlig i listeboksen i hovedvinduet.
+<p>
+Opacitet er et heltal fra 0 til 255, hvilket betyder fra transparent til uigennemsigtig. Hvis værdien er nul, indstilles opaciteten ikke, og et program starter hurtigere.
+<A NAME=mouse>
+<h2>Musegenveje</h2>
+Musegenveje oprettes på samme måde som tastaturgenveje. Flyt musemarkøren på den hvide redigeringsboks, der er øverst i "Hot Key" vinduet. Tryk derefter på en eller flere museknapper eller drej musehjulet. Ordet Mus vises i redigeringsfeltet og summen af L, R, M, 4, 5, Op, Ned, Venstre, Højre. Det betyder venstre knap, højre knap, midterste knap, X1 knap, X2 knap, hjul op, hjul ned, hjul venstre, hjul højre. Museknapper kan kombineres med tasterne Ctrl, Shift, Alt, Win.
+<p>
+Hvis din mus har 5 knapper, men du ikke kan bruge den fjerde og femte knap i HotkeyP, kan du have installeret en forkert driver, eller der er et program, der blokerer disse knapper (f.eks. Genius Netscroll+ Optical Mouse). Du bliver nødt til at lukke denne applikation og fjerne den fra startgruppen. Du må ikke afinstallere Genius-softwaren, fordi den også ville afinstallere driveren. Men du kan slette eller omdøbe gnetmous.exe-filen hvis du vil bruge HotkeyP i stedet for.
+<p>
+Et vandret hjul virker ikke på Windows XP eller ældre.
+<p>
+Der er mulighed for "Forsink museknapper" i indstillingsdialogboksen. Det bruges til genveje, som består af to eller flere knapper. HotkeyP vil kun forsinke de knapper, for hvilke der findes en genvej. For eksempel, hvis du opretter genvej R+L, vil den højre knap blive forsinket, hvis du opretter genvej M+R, vil den midterste knap blive forsinket. Hvis intervallet mellem museknapper er længere end værdien "Forsink museknapper", vil genvejen også blive udført, men en besked om tryk på knapper vil blive sendt til et vindue under musemarkøren. For eksempel, hvis du har en genvej R+L, og du venter for længe mellem knapperne R og L, vil genvejen blive udført, og når du slipper den højre knap, vil en kontekstmenu blive vist. Hvis du vil trække og slippe filer med højre knap, skal du trykke på højre knap, så skal du vente til filen er valgt og derefter kan du begynde at flytte musen. Denne adfærd er deaktiveret for venstre knap, fordi træk og slip med venstre knap bruges meget ofte. Knappernes forsinkelse er ikke praktisk til spil, så der er mulighed for at deaktivere den for nogle applikationer. Skriv exe-filnavne uden stier til redigeringsboksen, adskil dem med semikolon.
+<p>
+<A NAME=remote>
+<h2>Fjernbetjening</h2>
+Genvejstaster kan også defineres for en fjernbetjeningsknapper. Du skal installere WinLIRC (<A href="http://winlirc.sourceforge.net" target="_blank">http://winlirc.sourceforge.net</A>). Når du har installeret og konfigureret WinLIRC, skal du gå til HotkeyP-indstillinger, indstille stien til winlirc.exe og markere Aktiver.
+<A NAME=categories>
+<h2>Kategorier</h2>
+Det er praktisk at klassificere dine genvejstaster, især hvis du har mange genvejstaster. Der er et kategoripanel i venstre side af HotkeyP-vinduet. Nogle kategorier oprettes automatisk og kan ikke ændres (disse kategorier er: keyboard, mouse, joystick, remote, commands, programs, documents, web links, autorun, tray menu). Udover dem kan du oprette dine egne kategorier. Vælg genvejstaster, som skal være i en ny kategori, vælg derefter kommandoen "Tildel til valgte genvejstaster" fra menuen Kategori, skriv navnet på den nye kategori og klik OK. Kommandoen "Tildel til valgte genvejstaster" bruges ikke kun til at oprette nye kategorier, men også til at flytte genvejstaster fra en kategori til en anden, vælg blot en eksisterende kategori fra rullelisten. Hvis du lader kategorinavnet stå tomt, flyttes valgte genvejstaster til kategorien "standard". Hvis du sletter en kategori, vil alle genvejstaster fra den kategori blive flyttet til standardkategori.
+<A NAME=hook>
+<h2>Hook</h2>
+Hook er en procedure (tastaturkrog), der kaldes, hver gang der trykkes på en tast. Du kan deaktivere "krogen" i indstillingerne, men så vil nogle multimedietaster (som vises som tal i parentes) ikke virke, og du vil ikke kunne indstille genvejstaster til CapsLock og Win+M, Win+E, Win+R osv. "Krogen" er også nødvendig for at kommandoerne "Makro" og "Indsæt tekst" fungerer korrekt.
+Hvis du markerer indstillingen "Brug tastaturkrog til alle genvejstaster", vil genvejstasterne også fungere i spil og andre DirectX-applikationer.
+<p>
+"Krogen" virker ikke i programmer, der kører som administrator, medmindre genvejstasten <a href="#admin">kører som administrator</a> også.
+
+<h2>Interne kommandoer</h2>
+
+De fleste kommandoer har nogle parametre, som normalt er valgfrie. Parametre er adskilt af et mellemrum.
+<p>
+Interne kommandoer kan udføres ikke kun med genvejstaster, men også fra kommandolinjen. For eksempel kan computeren genstartes med kommandoen genvejstast -genstart. Det er nyttigt i scripts eller BAT-filer. De kan bruges til skemalægning, eller du kan lægge dem til startgruppen.
+Hvis du bruger mere end én kommando efter genvejstasten på kommandolinjen, skal du adskille dem med semikolon.
+
+<A NAME=2><A NAME=3><A NAME=5>
+<h3>Shutdown, Reboot, Logoff</h3>
+Parameter:<br>
+0 - normal nedlukning<br>
+1 - tvungen nedlukning, vil alle ikke-gemte data gå tabt<br>
+2 - sikker nedlukning, alle vinduer lukkes før nedlukning<br>
+
+<A NAME=4><A NAME=64>
+<h3>Sleep/Suspend, Hibernate</h3>
+ADVARSEL! Dvaletilstand fungerer ikke, hvis den ikke er aktiveret i Kontrolpanel\Strømindstillinger.
+
+<A NAME=38>
+<h3>Show shutdown dialog</h3>
+Det samme som hvis du klikker på "Start"-knappen og vælger Shutdown...
+
+<A NAME=63>
+<h3>Lock computer</h3>
+Parameter er en tekst, der kan indeholde specielle %-sekvenser for dato/klokkeslæt, brugernavn osv. Se kommandoen <A href=#67>Paste text</A> for flere detaljer. Hvis du ikke vil have nogen tekst, skal du bruge et mellemrum som parameter. Når du har oprettet denne genvejstast, vil dialogvinduet for en adgangskode blive vist. Adgangskoden kan bestå af alle taster undtagen Enter, Escape, Backspace, Tab, Alt. Adgangskoden må ikke være længere end 64 nøgler.<br>
+Hvis parameteren er tom, kalder kommandoen standard systemfunktionen for at låse computeren, og den accepterer kun dit login-adgangskode.
+
+<A NAME=24>
+<h3>Disk free space</h3>
+Viser ledig plads på alle faste drev og netværksdrev. Parameter angiver den tid, i millisekunder, der skal vise hvordan popup-vinduet. Vinduet forsvinder også, når du trykker på genvejstasten igen. Vinduet kan flyttes med en mus.
+
+<A NAME=109>
+<h3>Remove drive</h3>
+Fjerner sikkert et drev fra systemet. Der må IKKE være nogen fil eller mappe åbnet på det drev. Parameteren er et drevbogstav. Hvis du kører denne kommando uden parametre, fjernes alle USB-drev.
+
+<A NAME=22>
+<h3>Empty recycle bin</h3>
+Parameter er summen af disse muligheder (standard er 0):<br>
+1 - ingen bekræftelse<br>
+2 - ingen fremskridtsvindue<br>
+4 - ingen lyd<br>
+
+<A NAME=104>
+<h3>Clear recent documents</h3>
+Sletter alle elementer i undermenuen Start Dokumenter. Kun genveje vil blive slettet, ikke dine dokumenter.
+
+<A NAME=105>
+<h3>Delete temporary files</h3>
+Sletter filer i TEMP-mappen, som er ældre end 7 dage (eller som er ældre end parameteren). Den sammenligner både ændringsdatoer og oprettelsesdatoer.
+
+<A NAME=12><A NAME=50><A NAME=51><A NAME=52><A NAME=53><A NAME=54><A NAME=55><A NAME=56><A NAME=57>
+<h3>Control panels</h3>
+Parameter kan have navnet *.CPL fil uden sti og uden filtypenavn.
+
+<A NAME=86>
+<h3>Disable key</h3>
+Parameter er en eller flere taster, der vil blive spærret/ophævet, hver gang der trykkes på genvejstasten. Se kommandoen <A href=#27>Makro</A> for en liste over nøglenavne. Den mest almindelige parameter er \win. Win-tasten er mellem Ctrl- og Alt-tasterne, som ofte bruges i spil, og et fuldskærmsspil afbrydes, når du ved et uheld trykker på Win-tasten.
+<br>Denne funktion bruges til midlertidigt at deaktivere en nøgle. Hvis du vil deaktivere en tast permanent, skal du oprette en tastaturgenvej til den tast, for eksempel kommandoen Makro med en tom parameter.
+
+<A NAME=91>
+<A NAME=98>
+<h3>Hide tray icon</h3>
+Skjuler et lille ikon i proceslinjen. Den første parameter er et ikon-identifikationsnummer. Den anden parameter er vindue, som har skabt ikonet. Disse oplysninger kan findes af spy.exe. Bare klik med venstre museknap på et bakkeikon, og ikonnummeret og vinduets proces/klasse/titel vil blive vist i spionvinduet.
+
+<A NAME=99>
+<h3>Restore tray icon</h3>
+Viser et ikon, som tidligere er blevet skjult af en kommando <A href=#91>Skjul bakkeikon</A>. Parametre er ikonnummeret og dets vinduesnavn.
+
+<A NAME=93>
+<h3>Start service</h3>
+Kører en systemtjeneste. Parameteren er et kort servicenavn (ikke et synligt navn eller en synlig beskrivelse). Navnet kan findes, hvis du åbner tjenestelisten (i Denne computer / Administrer) og derefter dobbeltklikker på et element på listen.
+<br>Denne funktion virker kun, hvis genvejstasten <a href="#admin">kører som administrator</a>.
+
+<A NAME=92>
+<h3>Stop service</h3>
+Parameter er et tjenestenavn, se <A href=#93>Start tjeneste</A> for flere detaljer.
+<br>Denne funktion virker kun, hvis genvejstasten <a href="#admin">kører som administrator</a>.
+
+<A NAME=6>
+<h3>Screen saver</h3>
+Kører pauseskærm, som er valgt i skrivebordsegenskaberne.
+
+<A NAME=19>
+<h3>Display power off</h3>
+Skifter en skærm til strømbesparende tilstand.<br>
+Parameter (for CRT-skærme, ubrugelig for LCD):<br>
+1 - mindre sparetilstand, hurtig gendannelse<br>
+2 - mere gemmetilstand, langsom gendannelse<br>
+
+<A NAME=18>
+<h3>Desktop resolution</h3>
+Parametre er bredde, højde, farver, frekvens, displaynummer. Disse tal skal adskilles med mellemrum. Bredde og højde måles i pixels. Farver kan være 8,16,24 eller 32. Den femte parameter er kun nødvendig, hvis du har mere end én skærm.
+Denne kommando kan også bruges til at skifte mellem to opløsninger.<br>
+Eksempel: 1280 1024 16 60, 1024 768 32 75<br>
+Vær forsigtig. Brug kun opløsninger, der understøttes af din skærm.
+
+<A NAME=81>
+<h3>Show desktop</h3>
+Det er det samme som Win+D.
+
+<A NAME=89>
+<h3>Desktop snapshot</h3>
+Det ligner PrintScreen, men et optaget billede gemmes i en BMP-fil.
+
+<A NAME=23><A NAME=68><A NAME=69><A NAME=82>
+<h3>Random wallpaper, Next wallpaper, Previous wallpaper</h3>
+Parameter er en mappe eller en BMP-, JPG- eller GIF-fil. Hvis det er en mappe, søges alle undermapper for at vælge ét billede, der er indstillet som skrivebordsbaggrund. Hvis du har JPG- eller GIF-baggrunde, skal du aktivere Aktivt skrivebord. (Højreklik på skrivebordet og marker 'Vis webindhold').<br>
+Kommandoen "Random wallpaper" vælger en fil tilfældigt. Kommandoer "Næste tapet" eller "Forrige tapet" vælger næste/forrige fil i en mappe i henhold til hvordan filerne er gemt på din harddisk.
+
+<A NAME=106>
+<h3>Save desktop icons</h3>
+Husker placeringen af alle ikoner på skrivebordet. (De er gemt i registreringsdatabasen).
+<br>Denne funktion virker ikke på 64-bit Windows.
+
+<A NAME=107>
+<h3>Restore desktop icons</h3>
+Gendanner skrivebordsikonpositioner til situationen, da du sidst udførte kommandoen <A href="#106">Save desktop icons</A>.
+<br>Denne funktion virker ikke på 64-bit Windows.
+
+<A NAME=103>
+<h3>Magnifier</h3>
+Denne funktion har 3 parametre, men alle er valgfrie. Den første heltalsparameter er zoomen. Den anden parameter er vinduesbredde, den tredje parameter er vindueshøjde. Forstørrelsesvinduet vises i stedet for musemarkøren. Den forsvinder, når du trykker denne genvejstast igen eller efter at du har trykket på en museknap.<br>
+Advarsel: Forstørrelsesvinduet opdateres kun under musebevægelser. Hvis du ikke bevæger musen, vil du se et stillbillede.
+
+<A NAME=85>
+<h3>Show text</h3>
+Den anden parameter er en tekst, der vil blive vist i et popup-vindue. Den første valgfri parameter betyder, hvor længe vinduet er synligt (i millisekunder). Vinduet forsvinder også, når du trykker på genvejstasten igen. Vinduet kan flyttes med en mus. Teksten kan indeholde specielle %-sekvenser, se kommandoen <A href=#67>Paste text</A> for flere detaljer.
+
+<A NAME=8><A NAME=7><A NAME=9><A NAME=10>
+<h3>Minimize window, Maximize window, Close window, Always on top</h3>
+Minimerer, maksimerer, lukker vinduet eller ændrer altid på øverste værdi.
+Parameter er et vinduesnavn. Det betyder en vinduestitel, en vinduestitelunderstreng, en vinduesklasse eller et eksekverbart filnavn uden en sti. Hvis parameteren udelades, fungerer disse funktioner med det aktuelt aktive vindue.
+
+<A NAME=112>
+<h3>Maximize all</h3>
+Maksimerer alle vinduer.
+
+<A NAME=65>
+<h3>Minimize others</h3>
+Minimer alle vinduer undtagen et aktuelt forgrundsvindue.
+
+<A NAME=102>
+<h3>Minimize to tray</h3>
+Det skjuler alle vinduer i en aktiv applikation og opretter et lille ikon i meddelelsesområdet på systembakken. Hvis du klikker på bakkeikonet, vil applikationen blive gendannet, og ikonet forsvinder.
+
+<A NAME=115>
+<h3>Minimize window to tray</h3>
+Det skjuler et aktivt vindue og skaber et lille ikon i meddelelsesområdet på systembakken. Hvis du klikker på bakkeikonet, gendannes vinduet, og ikonet forsvinder.
+
+<A NAME=25>
+<h3>Hide window</h3>
+Skjuler eller viser et vindue.
+Parameter er vinduesnavn. Hvis parameteren er tom, fungerer denne funktion med det aktuelt aktive vindue.<br>
+Du kan indstille parameteren til Shell_TrayWnd for at skjule systembakken.
+Hvis du vil skjule skrivebordsikoner, skal du indstille parameteren til Program Manager.
+
+<A NAME=101>
+<h3>Hide application</h3>
+Denne funktion ligner <A href=#25>Hide window</A>, men den skjuler alle vinduer i det aktive program. Hvis du trykker på genvejstasten igen, gendannes alle tidligere skjulte vinduer.
+
+<A NAME=72><A NAME=71>
+<h3>Resize window, Move window</h3>
+Det bruges til at ændre størrelsen på eller flytte et vindue med piletasterne. Du skal trykke på Enter-tasten, når du er færdig med at ændre størrelse eller flytte.
+
+<A NAME=90>
+<h3>Window snapshot</h3>
+Det ligner Alt+PrintScreen, men et optaget billede gemmes i BMP-fil.
+
+<A NAME=77>
+<h3>Opacity</h3>
+Den første parameter er et heltal fra 0 til 255, hvilket betyder fra transparent til uigennemsigtig. Den anden valgfri parameter er et vindue.
+
+<A NAME=110><A NAME=111>
+<h3>Opacity -, Opacity +</h3>
+Øger eller mindsker vinduets opacitet. Den første valgfri parameter er et heltal, som betyder, hvor meget opaciteten er ændret (standardværdien er 10). Den anden valgfri parameter angiver et vindue.
+<br>Denne funktion kræver Windows XP eller nyere.
+
+<A NAME=66>
+<h3>Information</h3>
+Viser titel, klasse, proces, prioritet for et forgrundsvindue. På Win2000/XP viser også hukommelse allokeret til denne proces.
+
+<A NAME=11>
+<h3>Terminate process</h3>
+Brug denne kommando til kun at dræbe forgrundsapplikationen, hvis applikationen ikke svarer.
+<br>Valgfri parameter er navnet på applikationen, som du ønsker at afslutte.
+
+<A NAME=20><A NAME=46><A NAME=47><A NAME=48><A NAME=49><A NAME=59><A NAME=60>
+<h3>Process priority</h3>
+Indstiller procesprioritet for et aktivt vindue. Realtidsprioritet kan kun bruges, hvis genvejstasten <a href="#admin">kører som administrator</a>.
+
+<A NAME=83><A NAME=84>
+<h3>Next task, Previous task</h3>
+Dette er det samme som Alt+Tab eller Alt+Shift+Tab. Det virker kun på Windows NT/2000/XP og kun med musegenveje, f.eks. den fjerde museknap + hjul.
+
+<A NAME=13><A NAME=14><A NAME=15><A NAME=16><A NAME=78>
+<h3>Volume, Volume +, Volume -</h3>
+Denne kommando indstiller eller øger eller sænker lydstyrken. Den første parameter er procent (et heltal fra 0 til 100). Den anden parameter er et lydlinjenavn (mixer, højttalere, digital lyd (S/PDIF), linjeindgang, mikrofon, bas, diskant, ...). Faktiske navne afhænger af dit lydkort, og du kan se dem i applikationen Lydstyrkekontrol i Windows-tilbehør. Mixeren er synonym for standard outputvolumen. Hvis du vil ændre optagelydstyrken, skal du tilføje præfiks R: til lydlinjenavnet (for eksempel R:Mikrofon).
+<p>Hvis du har mere end ét lydkort, skal du tilføje et mellemrum og lydkortnavn i parentes, for eksempel højttalere (Realtek High Definition Audio).
+<p>Redigeringsboksen "Vis disse lydlinjer:" i indstillingsdialogboksen indeholder kommaseparerede lydlinjenavne, der vises hver gang der trykkes på denne genvejstast. Der kan være et visningsnavn og lighedstegn før et lydlinjenavn (f.eks. Volume=Mixer, Record=R:Microphone ).<br>
+
+<A NAME=17><A NAME=58>
+<h3>Mute</h3>
+Deaktiverer eller aktiverer en lydlinje. Parameteren er et lydlinjenavn (Mixer, Wave, MIDI, CD Audio, Line In, Microphone, ...).<br>
+
+<A NAME=0><A NAME=1><A NAME=62>
+<h3>Eject/Close CD</h3>
+Udskyder eller lukker døren til cd- eller dvd-drevet. Valgfri parameter er drevbogstavet.<br>
+BEMÆRK: Hvis denne kommando kun skubber CD ud, men ikke kan lukke den, så skal du oprette to forskellige genvejstaster til kommandoerne Skub CD ud og Luk CD. Disse kommandoer er ikke i rullemenuen, så du skal skrive dem manuelt i kommandoredigeringsboksen.
+
+<A NAME=39><A NAME=40><A NAME=41><A NAME=42>
+<h3>Play CD, Stop, Next track, Previous track</h3>
+Afspiller lyd-cd. Andre programmer til afspilning af CD må ikke køre.
+Valgfri parameter er drevbogstavet.
+
+<A NAME=100>
+<h3>CD speed</h3>
+Den første parameter er hastighed (10, 16, 24, 32, 40 osv.). Den anden parameter er drevbogstav.
+
+<A NAME=67>
+<h3>Paste text</h3>
+Parameter er en tekst, der indsættes i et aktivt vindue gennem udklipsholderen med Ctrl+V. Du kan angive flere tekster adskilt af T-shirt. I så fald vil et tryk på genvejstasten vise en listeboks, og derefter vil du vælge et element ved at dobbeltklikke eller ved at trykke på tasten ned og Enter. For eksempel fører parameter ab%|cdef%|ghi til et popup-vindue, som har 3 rækker: ab, cdef, ghi. Pop op-vinduet kan annulleres med Esc-tasten.<br>
+Teksten kan indeholde nogle specielle sekvenser: %r - slutningen af ??linjen, %u - brugernavn, %o - computernavn, %l - almindelig tekst fra udklipsholderen, %% - procenttegn, %x - dato, %X - klokkeslæt, %c - dato og klokkeslæt, %d - dag, %m - måned, %Y - år, %y - år uden århundrede, %H - time [0-23 - time] [0-23 - time [0-23] minut, %S - sekund, %A - ugedagsnavn, %a - forkortet ugedagsnavn, %B - månedsnavn, %b - forkortet månedsnavn, %#d - dag uden foranstillede nuller, på samme måde %#m, %#H, %#I, %#M, %#S
+
+<A NAME=27>
+<h3>Macro</h3>
+Parameter er en tekststreng, som kan indeholde sekvenser \esc, \tab, \backspace, \enter, \space, \left, \right, \up, \down, \ins, \del, \home, \end, \pageup, \pagedown, \f1, \f2, ..., \shift, \rshift, \ctrl, \rctrl, \rctrl, \r, \s, \capslock, \scrolllock, \numlock, \pause, \printscreen, \divide, \multiply, \add, \subtract, \decimal, \0, \1, ..., \num0, \num1, ..., \A, \B, ..., \tilbage, \forward, \refresh, \søg, \foretrukne, \volumen_, \volumen_, \power, down, \play_pause, \stop, \prev_track, \next_track, \media_select, \launch_app1, \launch_app2, \lbutton, \rbutton, \mbutton, \xbutton1, \xbutton2, \wheelup, \wheeldown, \wheelleft, \wheelright, \>doubleclick, \br.<
+Der kan være en prik efter hver speciel sekvens. Hvis du kun vil trykke ned eller slippe en tast, skal du bruge suffikset ned eller op. Det er nyttigt til kombinationer af to eller flere taster eller knapper. For eksempel betyder \lbuttondown\rbutton\lbuttonup museknapperne L+R. Tasterne shift, ctrl, alt, win forbliver nede sammen med det næste tegn. For eksempel er \shift.a\shift.b det samme som \shiftdown.a\shiftup\shiftdown.b\shiftup og dette er det samme som AB. ctrl-tasten kan skrives som \^ .<br>
+Makroer \A \B \C osv. fungerer med ethvert tastaturlayout (f.eks. russisk eller græsk) og kan bruges til genveje som \ctrl\C eller \ctrl\V. Hvis du bruger bogstaverne a b c eller A B C, vil det kun fungere, hvis det aktuelle sprog har romersk alfabet (latin). Den vil også holde shift-tasten nede for store bogstaver (eller små bogstaver, hvis Caps Lock er aktiv). På samme måde afhænger makroer \1 \2 \3 osv. ikke af tastaturlayoutet.<br>
+Der er et tal efter \sleep-kommandoen, som betyder forsinkelse i tiendedel af et sekund.<br>
+Der er to hexadecimale cifre efter \x-sekvensen, som betyder en virtuel nøglekode.<br>
+Hvis du har indstillet muligheden, brug aldrig tastaturkrogen, så vil en makro IKKE blive gentaget, mens du holder en genvejstast nede i et stykke tid. Hvis du stadig ønsker, at en makro skal gentages, skal du sætte sekvensen \rep foran makroparameteren. Det har en ulempe - skift vil forblive trykket ned, hvis du slipper dem for hurtigt.
+
+<A NAME=94>
+<h3>Macro to active window</h3>
+Den første parameter er som makroparameter. Den anden parameter angiver et vindue. Hvis dette vindue ikke er i forgrunden, udføres denne kommando ikke. Den anden parameter kan indeholde tegn &, |, ! hvilket betyder logiske operatorer og, eller ikke. Der må ikke være et mellemrum før eller efter disse operatører. Operatør & har højere prioritet end |. Du kan bruge parentes til at lave mere komplekse udtryk. Vinduets navn skal skrives med apostrof, hvis det indeholder specialtegn & | ! ( ). Hvis der er et mellemrum i vinduesnavnet, skal hele den anden parameter skrives i anførselstegn. For eksempel "vindue 1"|"vindue 2" er fejl, det skulle være "vindue 1|vindue 2".<br>Hvis du vælger muligheden "Brug hook for alle genvejstaster", vil en nedtastningshændelse blive simuleret, når du trykker på en "Makro til aktivt vindue" genvejstast, og en indtastningshændelse vil blive simuleret, når du slipper denne genvejstast. Hvis du deaktiverer tastaturkrogen, vil både nedtastnings- og optastningshændelser blive simuleret, når du trykker på denne genvejstast, og der sker ikke noget, når du slipper denne genvejstast.
+
+<A NAME=26>
+<h3>Send keys to window</h3>
+Sender beskeder WM_KEYDOWN og derefter WM_KEYUP. Den første parameter er en makro. Den anden parameter bestemmer et vindue. Dette vindue er aktiveret hvis den første parameter starter med \show. Denne kommando virker ikke for minimerede vinduer. Nogle programmer kræver tre parametre: nøgler, EXE-navn, vinduesklasse eller titel. Hvis du kun angiver EXE-navn, virker det muligvis ikke for programmer, der har mere end ét vindue. Hvis du kun angiver vinduesklasse eller vinduestitel, og der er flere programmer, der har det vindue, sendes nøglerne tilfældigt til ét program.
+
+<A NAME=74>
+<h3>Keys to active window</h3>
+Denne kommando ligner "Send keys to window", men den ignoreres, når vinduet bestemt af den anden parameter ikke er i forgrunden. Den kan bruges til at ændre tastatur- eller museacceleratorer for næsten enhver applikation. Den tredje valgfri parameter bestemmer vinduet, som nøglerne sendes til. Dette vindue behøver ikke have tastaturfokus, men skal tilhøre forgrundsapplikationen.
+
+<A NAME=21>
+<h3>Send window command</h3>
+Sender beskeden WM_COMMAND til et andet vindue. Den første parameter er et kommandonummer. Numre kan findes af spy.exe. Desværre virker det ikke for alle applikationer (f.eks. programmer skrevet i Java eller .Net Framework eller programmer med Unix-brugergrænseflade). Den anden og den tredje parameter bestemmer et vindue, på samme måde som kommandoen "Send nøgler til vinduet".
+<p>
+Windows Media Player 9<br>
+18808 - afspil/pause, 18809 - stop, 18810 - forrige, 18811 - næste
+<p>
+Tiny Player<br>
+264 - afspil/pause, 204 - stop, 227 - forrige, 228 - næste, 255 - stop efter nuværende
+<p>
+Winamp<br>
+40044 - forrige, 40045 - afspil, 40046 - pause, 40047 - stop, 40157 - stop efter nuværende, 40048 - næste, 40022 - gentag, 40023 - bland, 40029 åben, 40040 afspilningsliste, -400 frem, 600 tilbage
+<p>
+
+<A NAME=73>
+<h3>Command to active window</h3>
+Denne kommando ligner "Send vindueskommando", men den ignoreres, når vinduet bestemt af den anden parameter ikke er i forgrunden. Kommandoen sendes til et vindue, som bestemmes af den tredje valgfri parameter. Eksempel for spiller Winamp: den anden parameter skal være winamp.exe, den tredje parameter skal være "Winamp v1.x".
+
+<A NAME=61>
+<h3>Multi command</h3>
+Den bruges til at tildele en genvejstast til at udføre mere end ét program eller intern kommando. Parametre er antallet af tidligere oprettede genvejstaster.
+
+<A NAME=70>
+<h3>Commands list</h3>
+Parametre ligner Multi-kommando, men kun den første parameter udføres, når denne genvejstast trykkes. Derefter flyttes det første tal til slutningen af parameterlisten. Så du skal gentage tryk på genvejstasten for at udføre alle elementer på listen.
+
+<A NAME=37>
+<h3>Move mouse cursor</h3>
+To parametre er relative koordinater for musebevægelser. De skal være adskilt af et mellemrum. Hvis parametrene er tomme, flyttes musemarkøren til midten af skærmen.
+
+<A NAME=75>
+<h3>Wheel</h3>
+Simulering af et musehjul. Parameter er mængden af hjulbevægelser. Værdi 120 betyder elementær rotation op, værdi -120 betyder rotation ned.
+
+<A NAME=108>
+<h3>Vandret hjul</h3>
+Simulering af et vandret musehjul. Parameter er mængden af hjulbevægelser. Værdi 120 betyder elementær rotation til højre, værdi -120 betyder rotation til venstre.
+<br>Denne funktion virker ikke på Windows XP eller ældre.
+
+<A NAME=79><A NAME=80><A NAME=43><A NAME=44><A NAME=45>
+<h3>Venstre klik, Mellemklik, Højreklik, Fjerde knap klik, Femte knap klik</h3>
+Simulering af museknaptryk.
+
+<A NAME=76>
+<h3>Dobbeltklik</h3>
+Simulering af to venstreknapklik. Bemærk: denne kommando frigiver ikke shift-taster.
+
+<A NAME=113>
+<h3>Show HotkeyP window</h3>
+Aktiverer hovedvinduet HotkeyP. Denne kommando er den samme som at klikke på HotkeyP-ikonet i systemmeddelelsesområdet.
+
+<A NAME=87>
+<h3>Disable all hotkeys</h3>
+Parameter 1 betyder deaktiver, 0 betyder aktiv, tom parameter betyder skifte. Den deaktiverer alle tastatur- og musgenveje (undtagen kommandoen "Deaktiver alle genvejstaster"). Det er især nyttigt til spil.
+
+<A NAME=97>
+<h3>Disable keyboard shortcuts</h3>
+Den deaktiverer alle tastaturgenveje (i HotkeyP-applikationen), men tastaturkrogen vil stadig være aktiv. Parameter 1 betyder deaktiver, 0 betyder aktiv, tom parameter betyder skifte.
+
+<A NAME=88>
+<h3>Disable mouse shortcuts</h3>
+Det deaktiverer musegenveje og afinstallerer musekrogen. Parameter 1 betyder deaktiver, 0 betyder aktiv, tom parameter betyder skifte.
+
+<A NAME=95>
+<h3>Disable joystick shortcuts</h3>
+Det deaktiverer joystick-genveje og suspenderer også tråden, som hver 10. ms læser data fra et joystick. Parameter 1 betyder deaktiver, 0 betyder aktiv, tom parameter betyder skifte.
+
+<A NAME=96>
+<h3>Disable remote control</h3>
+Det deaktiverer fjernbetjeningsgenveje, men det afbrydes ikke fra WinLIRC. Hvis du også vil lukke en forbindelse til WinLIRC, skal du fjerne markeringen i indstillingen "Aktiver", som er på fanen "Mouse/Remote". Parameter 1 betyder deaktiver, 0 betyder aktiv, tom parameter betyder skifte.
+
+<A NAME=114>
+<h3>Reload hook</h3>
+Denne kommando er nyttig, hvis du har flere tastaturapplikationer installeret og den anden applikation fanger tastaturinput og videresender ikke tastetryk til HotkeyP. Hvis nogle tastaturgenveje holder op med at virke i HotkeyP, kan du bruge denne kommando til at reparere den.
+
+<A NAME=admin>
+<h2>Kør HotkeyP som administrator</h2>
+Du kan springe dette kapitel over, hvis du har Windows XP eller ældre, eller hvis du har deaktiveret brugerkontokontrol.<br>
+Hvis du bruger nogle programmer, der kræver administratorrettigheder, skal du også køre HotkeyP som administrator. Ellers ville nogle tastaturgenveje og HotkeyP-kommandoer ikke fungere (især makro og indsæt tekst). Hvis du vil starte HotkeyP automatisk ved Windows opstart, skal du oprette en opgave.
+<ul>
+<li>Find kommandoprompten i menuen Start, klik med højre museknap og vælg Kør som administrator.
+<li>Kopiér denne kommando og indsæt den i kommandoprompten (erstat programfiler med stien, hvor genvejstasten er installeret):<br>
+<code>schtasks.exe /create /sc onlogon /tn HotkeyP /rl højeste /tr "'C:\Program Files (x86)\HotkeyP\HotkeyP.exe' 0" /f</code>
+<li>Start opgaveplanlæggeren.
+<li>Vælg "Opgaveplanlægningsbibliotek" i venstre panel. Dobbeltklik derefter på HotkeyP-opgaven for at vise dens egenskaber.
+<li>Klik på fanen Indstillinger og deaktiver indstillingen "Stop opgaven, hvis den varer længere end 3 dage". Klik derefter på OK og luk opgaveplanlægningsvinduet.
+<li>Start HotkeyP og deaktiver muligheden "Start automatisk ved Windows-start".
+</ul>
+<A NAME=license>
+<h2>License</h2>
+Dette program distribueres under betingelserne i "GNU General Public License". Du kan få det fra forfatterens webside eller fra <a href="http://opensource.org/licenses" target="_blank">http://opensource.org/licenses</a>. Her er kun et kort uddrag af denne licens:
+<ol>
+<li>Programmet er gratis. Du kan distribuere det i ethvert medie. Der kan være andre programmer (gratis eller kommercielle) på samme medie.
+<li>Du kan ændre programmet, og du kan inkorporere dele af programmet i dine programmer. I begge tilfælde må du kun distribuere modificerede eller afledte versioner, hvis du også opfylder alle disse betingelser:
+ <ol type=a>
+ <li>Du må ikke fjerne eller ændre denne licens.
+ <li>Du må ikke slette den oprindelige forfatters navn.
+ <li>Du skriver dokumentation for alle ændringer og datoen for enhver ændring.
+ <li>Du vil gøre den afledte kildekode tilgængelig via FTP eller HTTP.
+ </ol>
+<li>Programmet leveres uden garanti.
+</ol>
+<p>
+<pre>
+<a href="https://plastovicka.github.io" target="_blank">https://plastovicka.github.io</a><br>
+<a href="http://sourceforge.net/projects/hotkeyp/" target="_blank">http://sourceforge.net/projects/hotkeyp/</a>
+</pre>
+</BODY>
+</HTML>

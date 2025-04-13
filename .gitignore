@@ -6,5 +6,6 @@
 *.opt
 *.user
 *.tlog
+*.chm
 /.vs
 /tmp
