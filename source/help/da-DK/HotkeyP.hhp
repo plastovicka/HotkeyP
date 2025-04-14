@@ -1,6 +1,6 @@
 [OPTIONS]
 Compatibility=1.1 or later
-Compiled file=..\..\..\language\dk.chm
+Compiled file=..\..\..\language\da.chm
 Contents file=toc.hhc
 Default Window=w1
 Default topic=main.htm
