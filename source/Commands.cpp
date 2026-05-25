@@ -34,8 +34,10 @@ struct Tvk {
 	char *s;
 	int vk;
 } vks[]={
-	{"ESCAPE", VK_ESCAPE}, {"ESC", VK_ESCAPE}, {"F10", VK_F10},
-	{"F11", VK_F11}, {"F12", VK_F12}, {"F23", VK_F23},{"F1", VK_F1}, {"F2", VK_F2},
+	{"ESCAPE", VK_ESCAPE}, {"ESC", VK_ESCAPE}, {"F10", VK_F10}, {"F11", VK_F11}, {"F12", VK_F12},
+	{"F13", VK_F13}, {"F14", VK_F14}, {"F15", VK_F15}, {"F16", VK_F16}, {"F17", VK_F17},
+	{"F18", VK_F18}, {"F19", VK_F19}, {"F20", VK_F20}, {"F21", VK_F21}, {"F22", VK_F22},
+	{"F23", VK_F23}, {"F24", VK_F24}, {"F1", VK_F1}, {"F2", VK_F2},
 	{"F3", VK_F3}, {"F4", VK_F4}, {"F5", VK_F5}, {"F6", VK_F6}, {"F7", VK_F7},
 	{"F8", VK_F8}, {"F9", VK_F9}, {"PRINTSCREEN", VK_SNAPSHOT},
 	{"PRINTSCRN", VK_SNAPSHOT}, {"SCROLLLOCK", VK_SCROLL},
@@ -354,7 +356,7 @@ int hex(TCHAR c)
 {
 	if(c>='0' && c<='9') return c-'0';
 	if(c>='A' && c<='F') return c-'A'+10;
-	if(c>='a' && c<='f') return c-'A'+10;
+	if(c>='a' && c<='f') return c-'a'+10;
 	return -1;
 }
 
