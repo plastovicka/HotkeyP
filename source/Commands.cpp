@@ -2651,7 +2651,9 @@ void command(int cmd, TCHAR *param, HotKey *hk)
 					32767, 32767, 0, 0);
 			}
 			else{
-				mouse_event(MOUSEEVENTF_MOVE, x, y, 0, 0);
+				POINT pt;
+				if(GetCursorPos(&pt)) SetCursorPos(pt.x+x, pt.y+y);
+				else mouse_event(MOUSEEVENTF_MOVE, x, y, 0, 0);
 			}
 		}
 		break;

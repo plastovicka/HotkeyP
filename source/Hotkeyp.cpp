@@ -2261,13 +2261,31 @@ void moveItem(int i, int &dist)
 		int j=i+dist;
 		if(j<0){ j=0; dist=-i; }
 		if(j>=numList){ j=numList-1; dist=j-i; }
+		bool focused = ListView_GetItemState(listBox, i, LVIS_FOCUSED)!=0;
 		swapKey(i, j);
 		setSel(i, false);
 		setSel(j, true);
+		//move focus together with the item, the Edit button uses the focused item
+		if(focused) ListView_SetItemState(listBox, j, LVIS_FOCUSED, LVIS_FOCUSED);
 	}
 }
 
 static int dragStart = -1;
+
+//terminals (PuTTY, console, ...) do not accept Ctrl+V, use Shift+Insert for them
+TCHAR *pasteKeysMacro()
+{
+	static const TCHAR *const terminals[] = {_T("PuTTY"), _T("KiTTY"), _T("mintty"),
+		_T("ConsoleWindowClass"), _T("VirtualConsoleClass"), 0};
+	TCHAR cls[64];
+	HWND w = GetForegroundWindow();
+	if(w && GetClassName(w, cls, sizeA(cls))){
+		for(int i=0; terminals[i]; i++){
+			if(!_tcscmp(cls, terminals[i])) return _T("\\SHIFT\\INS");
+		}
+	}
+	return _T("\\^\\V");
+}
 
 void moveSelected(int dist)
 {
@@ -3417,7 +3435,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 				 break;
 			 case 12: //paste text - try again
 				 KillTimer(hWin, 12);
-				 if(pasteTextData.busy) parseMacro(_T("\\^\\V"));
+				 if(pasteTextData.busy) parseMacro(pasteKeysMacro());
 				 break;
 			 case 13: //paste text - restore clipboard or paste next text
 				 KillTimer(hWin, 13);
@@ -3426,7 +3444,7 @@ BOOL CALLBACK MainWndProc(HWND hWnd, UINT mesg, WPARAM wP, LPARAM lP)
 				 break;
 			 case 14: //paste text - Ctrl+V
 				 KillTimer(hWin, 14);
-				 parseMacro(_T("\\^\\V"));
+				 parseMacro(pasteKeysMacro());
 				 SetTimer(hWin, 12, 1000, 0);
 				 lockPaste--;
 				 break;
